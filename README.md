@@ -1,7 +1,7 @@
-# volto-addon-template
-[![Releases](https://img.shields.io/github/v/release/eea/volto-addon-template)](https://github.com/eea/volto-addon-template/releases)
-[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-addon-template%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-addon-template/job/master/display/redirect)
-[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-addon-template%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-addon-template/job/develop/display/redirect)
+# volto-searchlib
+[![Releases](https://img.shields.io/github/v/release/eea/volto-searchlib)](https://github.com/eea/volto-searchlib/releases)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-searchlib%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-searchlib/job/master/display/redirect)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-searchlib%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-searchlib/job/develop/display/redirect)
 
 [Volto](https://github.com/plone/volto) add-on
 
@@ -11,7 +11,7 @@ Demo GIF
 
 ## Getting started
 
-### Try volto-addon-template with Docker
+### Try volto-searchlib with Docker
 
 1. Get the latest Docker images
 
@@ -28,12 +28,12 @@ Demo GIF
 1. Start Volto frontend
 
    ```
-   docker run -it --rm -p 3000:3000 --link plone -e ADDONS="@eeacms/volto-addon-template" plone/volto
+   docker run -it --rm -p 3000:3000 --link plone -e ADDONS="@eeacms/volto-searchlib" plone/volto
    ```
 
 1. Go to http://localhost:3000
 
-### Add volto-addon-template to your Volto project
+### Add volto-searchlib to your Volto project
 
 1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
 
@@ -43,11 +43,11 @@ Demo GIF
 
    ```JSON
    "addons": [
-       "@eeacms/volto-addon-template"
+       "@eeacms/volto-searchlib"
    ],
 
    "dependencies": {
-       "@eeacms/volto-addon-template": "^1.0.0"
+       "@eeacms/volto-searchlib": "^1.0.0"
    }
    ```
 
@@ -55,7 +55,7 @@ Demo GIF
 
    ```
    npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --addon @eeacms/volto-addon-template
+   yo @plone/volto my-volto-project --addon @eeacms/volto-searchlib
    cd my-volto-project
    ```
 
@@ -72,14 +72,19 @@ Demo GIF
 
 ## How to contribute
 
-See [DEVELOP.md](https://github.com/eea/volto-addon-template/blob/master/DEVELOP.md).
+See [DEVELOP.md](https://github.com/eea/volto-searchlib/blob/master/DEVELOP.md).
 
 ## Copyright and license
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
 
-See [LICENSE.md](https://github.com/eea/volto-addon-template/blob/master/LICENSE.md) for details.
+See [LICENSE.md](https://github.com/eea/volto-searchlib/blob/master/LICENSE.md) for details.
+
+## Funding
+
+[European Environment Agency (EU)](http://eea.europa.eu)
+ils.
 
 ## Funding
 

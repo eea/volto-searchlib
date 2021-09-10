@@ -1,11 +1,11 @@
 {
-  "name": "@eeacms/volto-addon-template",
+  "name": "@eeacms/volto-searchlib",
   "version": "0.1.0",
-  "description": "@eeacms/volto-addon-template: Volto add-on",
+  "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
   "license": "MIT",
-  "homepage": "https://github.com/eea/volto-addon-template",
+  "homepage": "https://github.com/eea/volto-searchlib",
   "keywords": [
     "volto-addon",
     "volto",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:eea/volto-addon-template.git"
+    "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
   },
@@ -38,5 +38,8 @@
     "lint:fix": "if [ -d ./project ]; then ./project/node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'; else ../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'; fi",
     "cypress:run": "if [ -d ./project ]; then ./project/node_modules/cypress/bin/cypress run; else ../../../node_modules/cypress/bin/cypress run; fi",
     "cypress:open": "if [ -d ./project ]; then ./project/node_modules/cypress/bin/cypress open; else ../../../node_modules/cypress/bin/cypress open; fi"
+  }
+}
+ess open; fi"
   }
 }
