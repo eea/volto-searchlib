@@ -40,6 +40,3 @@
     "cypress:open": "if [ -d ./project ]; then ./project/node_modules/cypress/bin/cypress open; else ../../../node_modules/cypress/bin/cypress open; fi"
   }
 }
-ess open; fi"
-  }
-}
