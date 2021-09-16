@@ -30,6 +30,8 @@ const applyConfig = (config) => {
 
 export const installGlobalSearch = (config) => {
   config.settings.searchlib = installConfig(config.settings.searchlib);
+  console.log(config.settings.searchlib);
+  return config;
 };
 
 export default applyConfig;
