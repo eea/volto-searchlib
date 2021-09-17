@@ -68,6 +68,7 @@ const handleDownload = (req, res, next, { appName, urlQA, urlES }) => {
 
 export const createHandler = ({ urlQA, urlES }) => {
   return function esProxyHandler(req, res, next) {
+    // console.log('req', req);
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
     let appName;

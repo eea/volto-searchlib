@@ -39,7 +39,7 @@ const applyConfig = (config) => {
 
     const middleware = express.Router();
     middleware.use(express.json());
-    middleware.use(express.urlencoded({ extended: true }));
+    // middleware.use(express.urlencoded({ extended: true }));
     middleware.all('**/_es/*', handler);
     middleware.id = 'esProxyMiddleware';
 
