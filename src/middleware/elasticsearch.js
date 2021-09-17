@@ -40,7 +40,7 @@ const handleSearch = (req, res, next, { appName, urlQA, urlES }) => {
       .end((err, resp) => {
         // eslint-disable-next-line
         console.log(err, resp);
-        res.send(resp.body);
+        if (resp && resp.body) res.send(resp.body);
       });
   } else {
     const url = `${urlES}/_search`;
@@ -49,7 +49,7 @@ const handleSearch = (req, res, next, { appName, urlQA, urlES }) => {
       .send(body)
       .set('accept', 'application/json')
       .end((err, resp) => {
-        res.send(resp.body);
+        if (resp && resp.body) res.send(resp.body);
       });
   }
 };
@@ -57,7 +57,7 @@ const handleSearch = (req, res, next, { appName, urlQA, urlES }) => {
 const handleSettings = (req, res, next, { appName, urlQA, urlES }) => {
   const url = `${urlES}/_settings`;
   superagent.get(url).end((err, resp) => {
-    res.send(resp.body);
+    if (resp && resp.body) res.send(resp.body);
   });
 };
 
@@ -76,7 +76,7 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      // console.log('handle search', req.path, urlQA, urlES);
+      console.log('handle search', req.path, urlQA, urlES);
       handleSearch(req, res, next, { appName, urlQA, urlES });
       return;
     }
@@ -86,7 +86,7 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      // console.log('handle settings', req.path, urlQA, urlES);
+      console.log('handle settings', req.path, urlQA, urlES);
       handleSettings(req, res, next, { appName, urlQA, urlES });
       return;
     }
@@ -96,11 +96,12 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      // console.log('handle download', req.path, urlQA, urlES);
+      console.log('handle download', req.path, urlQA, urlES);
       handleDownload(req, res, next, { appName, urlQA, urlES });
       return;
     }
 
+    console.log('next', req.path);
     next();
   };
 };
