@@ -7,6 +7,8 @@ import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
 
 const applyConfig = (config) => {
+  config.settings.searchlib = registry;
+
   config.blocks.blocksConfig.searchlib = {
     id: 'searchlib',
     title: 'Searchlib',
@@ -24,13 +26,35 @@ const applyConfig = (config) => {
     },
   };
 
-  config.settings.searchlib = registry;
+  if (__SERVER__) {
+    const express = require('express');
+    const { createHandler } = require('./middleware/elasticsearch');
+
+    const handler = createHandler({
+      urlES: process.env.RAZZLE_PROXY_ES_DSN || 'http://localhost:9200/_all',
+      urlQA:
+        process.env.RAZZLE_PROXY_QA_DSN || 'http://localhost:8000/api/query',
+    });
+
+    const middleware = express.Router();
+    middleware.use(express.json());
+    middleware.use(express.urlencoded({ extended: true }));
+    middleware.all('**/_es/*', handler);
+    middleware.id = 'esProxyMiddleware';
+
+    config.settings.expressMiddleware = [
+      middleware,
+      ...config.settings.expressMiddleware,
+    ];
+  }
   return config;
 };
 
 export const installGlobalSearch = (config) => {
+  // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
-  console.log(config.settings.searchlib);
+  config.settings.searchlib.searchui.globalsearch.elastic_index =
+    '_es/globalsearch';
   return config;
 };
 

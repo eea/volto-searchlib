@@ -6,7 +6,7 @@ export const SearchBlockSchema = () => ({
       id: 'default',
       title: 'Default',
       fields: [
-        'registry',
+        'appName',
         // 'es_index'
       ],
     },
@@ -18,10 +18,9 @@ export const SearchBlockSchema = () => ({
   ],
 
   properties: {
-    registry: {
-      title: 'Configuration registry',
-      // choices: [
-      // ],
+    appName: {
+      title: 'Searchlib app',
+      choices: [],
     },
     // url: {
     //   title: 'ES URL',
@@ -48,5 +47,5 @@ export const SearchBlockSchema = () => ({
     // },
   },
 
-  required: ['url'],
+  required: ['appName'],
 });
