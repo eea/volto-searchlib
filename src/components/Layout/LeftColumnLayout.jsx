@@ -14,10 +14,10 @@ const LeftColumnLayout = (props) => {
 
       <Grid columns={2} container stackable className="body-content">
         <Grid.Row>
-          <Grid.Column widescreen="4">
+          <Grid.Column widescreen="3">
             <div>{sideContent}</div>
           </Grid.Column>
-          <Grid.Column widescreen="8">
+          <Grid.Column widescreen="9">
             <div>{bodyHeader}</div>
             <div>{bodyContent}</div>
           </Grid.Column>
