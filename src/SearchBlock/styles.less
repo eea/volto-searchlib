@@ -5,6 +5,9 @@
 
 @import (multiple) '~@eeacms/search-less/theme.less';
 
+@s-dark-gray: rgba(0, 0, 0, 0.87);
+@s-light-gray: #edf1f2;
+
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
 }
@@ -13,4 +16,68 @@
   // overflow: hidden;
   // white-space: nowrap;
   // max-width: 15em;
+}
+
+div#page-document {
+  h1.documentFirstHeading {
+    display: none;
+  }
+
+  div.searchapp {
+    background-color: @s-light-gray;
+
+    div.sui-search-box {
+      div.search-input {
+        border-radius: 0;
+      }
+
+      div#archived-facet {
+        label {
+          color: @s-dark-gray !important;
+        }
+      }
+    }
+
+    div.filter-list {
+      background-color: @s-light-gray;
+      border-radius: 0px;
+
+      .ui.inverted.accordion .title:not(.ui) {
+        color: @s-dark-gray;
+      }
+
+      div.filter-name {
+        color: @s-dark-gray;
+      }
+
+      .ui.divider {
+        border-top: 1px solid #000 !important;
+      }
+
+      div.ui.label {
+        background: white;
+      }
+
+      button {
+        color: @s-dark-gray !important;
+      }
+    }
+
+    div.cards {
+      margin-bottom: 0px;
+
+      div.card-item {
+        border-radius: 0px;
+
+        div.header {
+          padding: 10px 0px 0px 0px;
+
+          a {
+            font-size: 0.9em;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
 }
