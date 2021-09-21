@@ -6,6 +6,7 @@
 @import (multiple) '~@eeacms/search-less/theme.less';
 
 @s-dark-gray: rgba(0, 0, 0, 0.87);
+@s-medium-gray: #e0e1e2;
 @s-light-gray: #edf1f2;
 
 .sui-multi-checkbox-facet__option-input-wrapper {
@@ -47,7 +48,7 @@ div#page-document {
     }
 
     div.filter-list {
-      background-color: #e0e1e2;
+      background-color: @s-medium-gray;
 
       .ui.inverted.accordion .title:not(.ui) {
         color: @s-dark-gray;
@@ -142,6 +143,7 @@ div#page-document {
           button {
             display: none;
             margin-top: 5px;
+            margin-right: 5px;
           }
         }
       }
