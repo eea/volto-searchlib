@@ -28,9 +28,12 @@ const handleSearch = (req, res, next, { appName, urlQA, urlES }) => {
     delete body.question;
     const qaBody = {
       query: question,
-      custom_query: JSON.stringify(body),
-      top_k_retriever: 100,
-      top_k_reader: 4,
+      params: {
+        use_dp: true,
+        // custom_query: JSON.stringify(body),
+        // top_retriever: 100,
+        // top_reader: 4,
+      },
     };
     //console.log('qa req', qa, question, qaBody);
     superagent
