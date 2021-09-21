@@ -95,6 +95,14 @@ div#page-document {
     }
 
     div.search-result {
+      &:hover {
+        div.controls {
+          button {
+            display: initial !important;
+          }
+        }
+      }
+
       width: 100%;
       padding-bottom: 10px;
       border-bottom: 1px solid @s-light-gray;
@@ -109,11 +117,16 @@ div#page-document {
         img {
           width: 220px;
         }
+
+        img {
+          padding: 10px;
+        }
       }
 
       div.col-right {
         width: calc(100% - 220px);
         padding-top: 10px;
+        padding-left: 10px;
         float: right;
 
         h4,
@@ -126,8 +139,11 @@ div#page-document {
           font-size: 12.8px;
         }
 
-        button {
-          margin-top: 5px;
+        div.controls {
+          button {
+            display: none;
+            margin-top: 5px;
+          }
         }
       }
     }
