@@ -21,39 +21,75 @@ function filterRequests(req, whitelist, retVal) {
   return matches > 0 ? retVal : false;
 }
 
-const handleSearch = (req, res, next, { appName, urlQA, urlES }) => {
-  const body = req.body;
-  if (body.question) {
-    const { question } = body;
-    delete body.question;
-    const qaBody = {
-      query: question,
-      params: {
-        use_dp: true,
-        // custom_query: JSON.stringify(body),
-        // top_retriever: 100,
-        // top_reader: 4,
-      },
-    };
-    //console.log('qa req', qa, question, qaBody);
-    superagent
-      .post(urlQA)
-      .send(qaBody)
-      .set('accept', 'application/json')
-      .end((err, resp) => {
-        // eslint-disable-next-line
-        console.log(err, resp);
-        if (resp && resp.body) res.send(resp.body);
-      });
-  } else {
-    const url = `${urlES}/_search`;
-    superagent
-      .post(url)
-      .send(body)
-      .set('accept', 'application/json')
-      .end((err, resp) => {
-        if (resp && resp.body) res.send(resp.body);
-      });
+function handleQuestionRequest(req, res, params) {
+  const { urlQA } = params;
+  const { body } = req;
+  const { question } = body;
+
+  const qaBody = {
+    query: question,
+    params: {
+      use_dp: true,
+      // custom_query: JSON.stringify(body),
+    },
+  };
+
+  superagent
+    .post(urlQA)
+    .send(qaBody)
+    .set('accept', 'application/json')
+    .end((err, resp) => {
+      if (resp && resp.body) res.send(resp.body);
+    });
+}
+
+function handleSearchRequest(req, res, params) {
+  const { body } = req;
+  const { urlES } = params;
+  const url = `${urlES}/_search`;
+
+  superagent
+    .post(url)
+    .send(body)
+    .set('accept', 'application/json')
+    .end((err, resp) => {
+      if (resp && resp.body) res.send(resp.body);
+    });
+}
+
+function handleNlpRequest(req, res, params) {
+  const { body } = req;
+  const { urlQA } = params;
+  const { endpoint } = body;
+  delete body.endpoint;
+  const url = `${urlQA}/${endpoint}`;
+
+  superagent
+    .post(url)
+    .send(body)
+    .set('accept', 'application/json')
+    .end((err, resp) => {
+      if (resp && resp.body) res.send(resp.body);
+    });
+}
+
+const handleSearch = (req, res, next, params) => {
+  // This handler is used for both the main (search) request, but also for
+  // requests coming for questions.
+
+  const body = req.body || {};
+  const { requestType } = body;
+  if (requestType) delete body.requestType; // TODO: is this safe?
+
+  switch (requestType) {
+    case 'question':
+      handleQuestionRequest(req, res, params);
+      break;
+    case 'nlp':
+      handleNlpRequest(req, res, params);
+      break;
+    default:
+      handleSearchRequest(req, res, params);
   }
 };
 
@@ -71,7 +107,6 @@ const handleDownload = (req, res, next, { appName, urlQA, urlES }) => {
 
 export const createHandler = ({ urlQA, urlES }) => {
   return function esProxyHandler(req, res, next) {
-    // console.log('req', req);
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
     let appName;
@@ -80,7 +115,6 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      console.log('handle search', req.path, urlQA, urlES);
       handleSearch(req, res, next, { appName, urlQA, urlES });
       return;
     }
@@ -90,7 +124,6 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      console.log('handle settings', req.path, urlQA, urlES);
       handleSettings(req, res, next, { appName, urlQA, urlES });
       return;
     }
@@ -100,12 +133,10 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      console.log('handle download', req.path, urlQA, urlES);
       handleDownload(req, res, next, { appName, urlQA, urlES });
       return;
     }
 
-    console.log('next', req.path);
     next();
   };
 };
