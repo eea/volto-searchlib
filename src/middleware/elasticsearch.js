@@ -22,7 +22,7 @@ function filterRequests(req, whitelist, retVal) {
 }
 
 function handleQuestionRequest(req, res, params) {
-  const { urlQA } = params;
+  const { urlNLP } = params;
   const { body } = req;
   const { question } = body;
 
@@ -35,7 +35,7 @@ function handleQuestionRequest(req, res, params) {
   };
 
   superagent
-    .post(urlQA)
+    .post(urlNLP)
     .send(qaBody)
     .set('accept', 'application/json')
     .end((err, resp) => {
@@ -48,6 +48,7 @@ function handleSearchRequest(req, res, params) {
   const { urlES } = params;
   const url = `${urlES}/_search`;
 
+  console.log('handle search', url);
   superagent
     .post(url)
     .send(body)
@@ -59,10 +60,10 @@ function handleSearchRequest(req, res, params) {
 
 function handleNlpRequest(req, res, params) {
   const { body } = req;
-  const { urlQA } = params;
+  const { urlNLP } = params;
   const { endpoint } = body;
   delete body.endpoint;
-  const url = `${urlQA}/${endpoint}`;
+  const url = `${urlNLP}/${endpoint}`;
 
   superagent
     .post(url)
@@ -93,19 +94,19 @@ const handleSearch = (req, res, next, params) => {
   }
 };
 
-const handleSettings = (req, res, next, { appName, urlQA, urlES }) => {
+const handleSettings = (req, res, next, { appName, urlNLP, urlES }) => {
   const url = `${urlES}/_settings`;
   superagent.get(url).end((err, resp) => {
     if (resp && resp.body) res.send(resp.body);
   });
 };
 
-const handleDownload = (req, res, next, { appName, urlQA, urlES }) => {
+const handleDownload = (req, res, next, { appName, urlNLP, urlES }) => {
   const appConfig = config.settings.searchlib.searchui[appName];
   download(urlES, appConfig, req, res);
 };
 
-export const createHandler = ({ urlQA, urlES }) => {
+export const createHandler = ({ urlNLP, urlES }) => {
   return function esProxyHandler(req, res, next) {
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
@@ -115,7 +116,12 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      handleSearch(req, res, next, { appName, urlQA, urlES });
+      const conf = config.settings.searchlib.searchui[appName];
+      handleSearch(req, res, next, {
+        appName,
+        urlNLP,
+        urlES: conf.enableNLP ? urlNLP : urlES,
+      });
       return;
     }
 
@@ -124,7 +130,7 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      handleSettings(req, res, next, { appName, urlQA, urlES });
+      handleSettings(req, res, next, { appName, urlNLP, urlES });
       return;
     }
 
@@ -133,7 +139,7 @@ export const createHandler = ({ urlQA, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      handleDownload(req, res, next, { appName, urlQA, urlES });
+      handleDownload(req, res, next, { appName, urlNLP, urlES });
       return;
     }
 
