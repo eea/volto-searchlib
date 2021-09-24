@@ -46,10 +46,20 @@ div#page-document {
   div.searchapp {
     background-color: @s-light-gray;
 
-    div.sui-facet-search i.icon.search {
-      position: relative;
-      top: 2px;
-      left: 7px;
+    div.sui-facet-search {
+      margin: 0px;
+
+      i.icon.search {
+        position: relative !important;
+        top: 2px;
+        left: 7px;
+      }
+    }
+
+    div.facets {
+      div.content.active {
+        padding-top: 0px;
+      }
     }
 
     div.body-content {
