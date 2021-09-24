@@ -33,8 +33,7 @@ const applyConfig = (config) => {
 
     const handler = createHandler({
       urlES: process.env.RAZZLE_PROXY_ES_DSN || 'http://localhost:9200/_all',
-      urlQA:
-        process.env.RAZZLE_PROXY_QA_DSN || 'http://localhost:8000/api/query',
+      urlNLP: process.env.RAZZLE_PROXY_QA_DSN || 'http://localhost:8000/api',
     });
 
     const middleware = express.Router();
@@ -55,10 +54,12 @@ export const installGlobalSearch = (config) => {
   // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
   config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
-  config.settings.searchlib.searchui.globalsearch.elastic_index =
-    '_es/globalsearch';
-  config.settings.searchlib.searchui.globalsearch.layoutComponent =
-    'LeftColumnLayout';
+
+  const { globalsearch } = config.settings.searchlib.searchui;
+
+  globalsearch.elastic_index = '_es/globalsearch';
+  globalsearch.layoutComponent = 'LeftColumnLayout';
+
   return config;
 };
 
