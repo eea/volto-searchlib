@@ -9,7 +9,7 @@
 @s-medium-gray: #e0e1e2;
 @s-light-gray: #edf1f2;
 @s-light-orange: #ffdfbb;
-@s-dark-orange: #b5762a;
+@s-dark-orange: #9c5a0a;
 
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
@@ -46,10 +46,14 @@ div#page-document {
   }
 
   div.searchapp {
-    background-color: @s-light-gray;
+    background-color: @s-medium-gray;
+
+    div.sui-layout-header {
+      border-bottom: none;
+    }
 
     div.sui-paging-info {
-      color: rgba(0, 0, 0, 0.4);
+      color: @s-dark-gray;
     }
 
     div.sui-facet-search {
@@ -86,10 +90,6 @@ div#page-document {
 
     div.sui-search-box {
       padding-top: 10px;
-
-      .ui.toggle.checkbox input ~ label:after {
-        background: @s-medium-gray;
-      }
 
       div.search-input {
         flex-wrap: wrap;
@@ -184,6 +184,14 @@ div#page-document {
         margin: 0px;
       }
 
+      .ui.dropdown {
+        border-bottom: 1px solid @s-dark-gray;
+
+        .text {
+          color: @s-dark-gray;
+        }
+      }
+
       div.sorting i.dropdown.icon {
         position: absolute;
         right: 20px;
@@ -220,7 +228,7 @@ div#page-document {
 
       width: 100%;
       padding-bottom: 5px;
-      border-bottom: 1px solid @s-light-gray;
+      border-bottom: 1px solid @s-medium-gray;
       margin-top: 5px;
       clear: both;
 
@@ -257,7 +265,7 @@ div#page-document {
         }
 
         p {
-          color: rgba(0, 0, 0, 0.4);
+          color: @s-dark-gray;
           font-size: 12.8px;
         }
 
