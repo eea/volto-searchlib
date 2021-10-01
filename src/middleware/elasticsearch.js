@@ -21,34 +21,11 @@ function filterRequests(req, whitelist, retVal) {
   return matches > 0 ? retVal : false;
 }
 
-function handleQuestionRequest(req, res, params) {
-  const { urlNLP } = params;
-  const { body } = req;
-  const { question } = body;
-
-  const qaBody = {
-    query: question,
-    params: {
-      use_dp: true,
-      // custom_query: JSON.stringify(body),
-    },
-  };
-
-  superagent
-    .post(urlNLP)
-    .send(qaBody)
-    .set('accept', 'application/json')
-    .end((err, resp) => {
-      if (resp && resp.body) res.send(resp.body);
-    });
-}
-
 function handleSearchRequest(req, res, params) {
   const { body } = req;
   const { urlES } = params;
   const url = `${urlES}/_search`;
 
-  console.log('handle search', url);
   superagent
     .post(url)
     .send(body)
@@ -83,9 +60,6 @@ const handleSearch = (req, res, next, params) => {
   if (requestType) delete body.requestType; // TODO: is this safe?
 
   switch (requestType) {
-    case 'question':
-      handleQuestionRequest(req, res, params);
-      break;
     case 'nlp':
       handleNlpRequest(req, res, params);
       break;
