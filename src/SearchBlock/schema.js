@@ -9,8 +9,8 @@ export const SearchBlockSchema = () => ({
     },
     {
       id: 'nlp',
-      title: 'NLP Settings',
-      fields: ['use_qa_dp', 'qa_queryTypes'],
+      title: 'NLP Capabilities Settings',
+      fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
     },
   ],
 
@@ -38,6 +38,13 @@ export const SearchBlockSchema = () => ({
       isMulti: true,
       // modifyConfig: (config) => config,
       // default: ['query:interrogative']
+    },
+    cutoffScore: {
+      title: 'Cutoff score',
+      description:
+        'Only answers with scores bigget then the cuttof score will be displayed. A float number smaller then 1',
+      default: 0.1,
+      configPath: 'nlp.qa.cuttoffScore',
     },
   },
 
