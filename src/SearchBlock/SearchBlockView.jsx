@@ -54,7 +54,7 @@ export default function SearchBlockView(props) {
     data,
     schema,
   );
-  console.log('registry', registry);
+  console.log('registry', { data, registry });
   return (
     <div className="searchlib-block">
       <SearchApp registry={registry} appName={appName} />

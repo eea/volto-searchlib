@@ -36,6 +36,7 @@ export const SearchBlockSchema = () => ({
       ],
       configPath: 'nlp.qa.qa_queryTypes',
       isMulti: true,
+      // modifyConfig: (config) => config,
       // default: ['query:interrogative']
     },
   },
