@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const SearchBlockSchema = () => ({
   title: 'Searchlib Block',
 
@@ -20,9 +22,14 @@ export const SearchBlockSchema = () => ({
       choices: [],
     },
     use_qa_dp: {
-      title: 'Use DeepPassageRetrieval for QA?',
-      description:
-        'If enabled, it will use DPR for basic query retrieval instead of ES BM25',
+      title: 'Use DensePassageRetrieval for QA?',
+      description: (
+        <>
+          If enabled, it will use{' '}
+          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
+          query retrieval instead of ES BM25
+        </>
+      ),
       type: 'boolean',
       configPath: 'nlp.qa.use_dp',
     },
@@ -42,7 +49,7 @@ export const SearchBlockSchema = () => ({
     cutoffScore: {
       title: 'Cutoff score',
       description:
-        'Only answers with scores bigget then the cuttof score will be displayed. A float number smaller then 1',
+        'Only answers with scores bigger then the cuttoff score will be displayed. Enter a float number smaller then 1.',
       default: 0.1,
       configPath: 'nlp.qa.cuttoffScore',
     },
