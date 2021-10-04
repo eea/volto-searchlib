@@ -7,6 +7,8 @@ import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
 import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
+import SelectWidget from './SearchBlock/SelectWidget';
+
 const applyConfig = (config) => {
   config.settings.searchlib = registry;
 
@@ -54,6 +56,7 @@ export const installGlobalSearch = (config) => {
   // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
   config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
+  config.widgets.id.qa_queryTypes = SelectWidget;
 
   const { globalsearch } = config.settings.searchlib.searchui;
 

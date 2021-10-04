@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const SearchBlockSchema = () => ({
   title: 'Searchlib Block',
 
@@ -5,16 +7,13 @@ export const SearchBlockSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: [
-        'appName',
-        // 'es_index'
-      ],
+      fields: ['appName'],
     },
-    // {
-    //   id: 'tile',
-    //   title: 'Tile rendering',
-    //   fields: ['tile_title', 'tile_description', 'tile_url', 'tile_image'],
-    // },
+    {
+      id: 'nlp',
+      title: 'NLP Capabilities Settings',
+      fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
+    },
   ],
 
   properties: {
@@ -22,30 +21,68 @@ export const SearchBlockSchema = () => ({
       title: 'Searchlib app',
       choices: [],
     },
-    // url: {
-    //   title: 'ES URL',
-    //   default: '',
-    // },
-    // es_index: {
-    //   widget: 'elasticsearch_select_index',
-    // },
-    // tile_title: {
-    //   title: 'Title field',
-    //   widget: 'elasticsearch_select_field',
-    // },
-    // tile_description: {
-    //   title: 'Description field',
-    //   widget: 'elasticsearch_select_field',
-    // },
-    // tile_url: {
-    //   title: 'Primary URL field',
-    //   widget: 'elasticsearch_select_field',
-    // },
-    // tile_image: {
-    //   title: 'Image field',
-    //   widget: 'elasticsearch_select_field',
-    // },
+    use_qa_dp: {
+      title: 'Use DensePassageRetrieval for QA?',
+      description: (
+        <>
+          If enabled, it will use{' '}
+          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
+          query retrieval instead of ES BM25
+        </>
+      ),
+      type: 'boolean',
+      configPath: 'nlp.qa.use_dp',
+    },
+    qa_queryTypes: {
+      title: 'QA Query types',
+      description: 'The QA system will be used for these types of queries',
+      choices: [
+        ['query:interrogative', 'Question'],
+        ['query:declarative', 'Statement'],
+        ['query:keyword', 'Keyword'],
+      ],
+      configPath: 'nlp.qa.qa_queryTypes',
+      isMulti: true,
+      // modifyConfig: (config) => config,
+      // default: ['query:interrogative']
+    },
+    cutoffScore: {
+      title: 'Cutoff score',
+      description:
+        'Only answers with scores bigger then the cuttoff score will be displayed. Enter a float number smaller then 1.',
+      default: 0.1,
+      configPath: 'nlp.qa.cuttoffScore',
+    },
   },
 
   required: ['appName'],
 });
+
+// {
+//   id: 'tile',
+//   title: 'Tile rendering',
+//   fields: ['tile_title', 'tile_description', 'tile_url', 'tile_image'],
+// },
+// url: {
+//   title: 'ES URL',
+//   default: '',
+// },
+// es_index: {
+//   widget: 'elasticsearch_select_index',
+// },
+// tile_title: {
+//   title: 'Title field',
+//   widget: 'elasticsearch_select_field',
+// },
+// tile_description: {
+//   title: 'Description field',
+//   widget: 'elasticsearch_select_field',
+// },
+// tile_url: {
+//   title: 'Primary URL field',
+//   widget: 'elasticsearch_select_field',
+// },
+// tile_image: {
+//   title: 'Image field',
+//   widget: 'elasticsearch_select_field',
+// },
