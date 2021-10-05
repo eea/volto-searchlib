@@ -37,7 +37,7 @@ const applyBlockSettings = (config, appName, data, schema) => {
         }
         branch = branch[bit];
       });
-      console.log('set', { branch, key, field: data[fieldName], fieldName });
+      // console.log('set', { branch, key, field: data[fieldName], fieldName });
       branch[key] = data[fieldName];
     }
   });
@@ -54,7 +54,7 @@ export default function SearchBlockView(props) {
     data,
     schema,
   );
-  console.log('registry', { data, registry });
+  // console.log('registry', { data, registry });
   return (
     <div className="searchlib-block">
       <SearchApp registry={registry} appName={appName} mode={mode} />

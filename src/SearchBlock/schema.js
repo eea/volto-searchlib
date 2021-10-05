@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SearchBlockSchema = () => ({
+export const SearchBlockSchema = ({ formData }) => ({
   title: 'Searchlib Block',
 
   fieldsets: [
@@ -12,19 +12,29 @@ export const SearchBlockSchema = () => ({
     {
       id: 'general',
       title: 'General settings',
-      fields: ['headline', 'subheadline'],
+      fields: ['headline', 'subheadline', 'enableNLP'],
     },
-    {
-      id: 'nlp',
-      title: 'NLP Capabilities Settings',
-      fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
-    },
+    ...(formData.enableNLP
+      ? [
+          {
+            id: 'nlp',
+            title: 'NLP Capabilities Settings',
+            fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
+          },
+        ]
+      : []),
   ],
 
   properties: {
     appName: {
       title: 'Searchlib app',
       choices: [],
+    },
+
+    enableNLP: {
+      type: 'boolean',
+      title: 'Enable NLP capabilities?',
+      configPath: 'enableNLP',
     },
 
     headline: {
