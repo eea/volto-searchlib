@@ -51,7 +51,7 @@ div#page-document {
   }
 
   div.searchapp {
-    background-color: @s-medium-gray;
+    background-color: white;
 
     div.sui-layout-header {
       border-bottom: none;
@@ -99,7 +99,8 @@ div#page-document {
     }
 
     h1 {
-      margin-bottom: 0px;
+      font-weight: 700;
+      text-align: center;
     }
 
     div.mlt-card {
@@ -116,6 +117,8 @@ div#page-document {
 
     div.sui-search-box {
       padding-top: 10px;
+      width: 60%;
+      margin: auto;
 
       div.search-input {
         flex-wrap: wrap;
@@ -144,6 +147,10 @@ div#page-document {
       div#archived-facet {
         label {
           color: @s-dark-gray !important;
+
+          :after {
+            background: @s-medium-gray;
+          }
         }
       }
     }
