@@ -205,10 +205,13 @@ div#page-document {
     }
 
     div.above-results {
+      display: initial;
       margin-bottom: 10px;
 
       div.view-selector {
+        width: auto !important;
         padding-left: 0px !important;
+        float: right !important;
         font-size: 12px;
 
         div.buttons {
@@ -236,16 +239,18 @@ div#page-document {
       }
 
       div.sorting {
+        width: auto;
+        float: right;
         font-size: 12px;
+      }
 
-        i.dropdown.icon {
-          position: absolute;
-          right: 20px;
-        }
+      div.answers-list {
+        clear: both;
       }
     }
 
     div.cards {
+      clear: both;
       margin-bottom: 0px;
 
       div.card-item {
