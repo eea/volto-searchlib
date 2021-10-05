@@ -45,7 +45,7 @@ const applyBlockSettings = (config, appName, data, schema) => {
 };
 
 export default function SearchBlockView(props) {
-  const { data = {} } = props;
+  const { data = {}, mode = 'view' } = props;
   const schema = SearchBlockSchema(props);
   const { appName = 'default' } = data;
   const registry = applyBlockSettings(
@@ -57,7 +57,7 @@ export default function SearchBlockView(props) {
   console.log('registry', { data, registry });
   return (
     <div className="searchlib-block">
-      <SearchApp registry={registry} appName={appName} />
+      <SearchApp registry={registry} appName={appName} mode={mode} />
     </div>
   );
 }

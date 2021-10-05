@@ -15,7 +15,7 @@ const SearchBlockEdit = (props) => {
 
   return (
     <div>
-      <SearchBlockView {...props} />
+      <SearchBlockView {...props} mode="edit" />
       <SidebarPortal selected={props.selected}>
         <BlockDataForm
           schema={schema}

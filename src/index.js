@@ -61,7 +61,7 @@ export const installGlobalSearch = (config) => {
   const { globalsearch } = config.settings.searchlib.searchui;
 
   globalsearch.elastic_index = '_es/globalsearch';
-  globalsearch.layoutComponent = 'LeftColumnLayout';
+  // globalsearch.layoutComponent = 'LeftColumnLayout';
 
   return config;
 };

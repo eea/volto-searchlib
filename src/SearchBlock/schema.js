@@ -10,6 +10,11 @@ export const SearchBlockSchema = () => ({
       fields: ['appName'],
     },
     {
+      id: 'general',
+      title: 'General settings',
+      fields: ['headline', 'subheadline'],
+    },
+    {
       id: 'nlp',
       title: 'NLP Capabilities Settings',
       fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
@@ -21,6 +26,16 @@ export const SearchBlockSchema = () => ({
       title: 'Searchlib app',
       choices: [],
     },
+
+    headline: {
+      title: 'Main headline',
+      configPath: 'title',
+    },
+    subheadline: {
+      title: 'Text below headline',
+      configPath: 'subheadline',
+    },
+
     use_qa_dp: {
       title: 'Use DensePassageRetrieval for QA?',
       description: (
