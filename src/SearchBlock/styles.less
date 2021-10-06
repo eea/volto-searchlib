@@ -90,8 +90,28 @@ div#page-document {
     }
 
     div.stackable.cards {
-      a.card.active {
-        border-bottom: 2px solid red !important;
+      a.card {
+        border-radius: 2px;
+
+        div.content {
+          padding: 5px;
+
+          div.header {
+            padding: 0px;
+            margin: 0px;
+            font-size: 12px;
+            font-weight: 600;
+          }
+
+          div.meta {
+            font-size: 10px;
+            text-align: right;
+          }
+        }
+
+        &.active {
+          border-bottom: 2px solid red !important;
+        }
       }
     }
 
