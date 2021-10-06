@@ -11,6 +11,8 @@
 @s-light-gray: #edf1f2;
 @s-light-orange: #ffdfbb;
 @s-dark-orange: #9c5a0a;
+@s-light-blue: #6cbbf6;
+@s-dark-blue: #184799;
 
 @sf-light-gray: #f9f9f9;
 @sf-light-gray2: #e0e1e2;
@@ -21,8 +23,6 @@
 @sf-medium-gray2: #606060;
 @sf-dark-gray: #303030;
 
-@s-light-blue: #6cbbf6;
-@s-dark-blue: #184799;
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
 }
@@ -261,6 +261,16 @@ div#page-document {
         float: right !important;
         font-size: 12px;
 
+        .ui.dropdown {
+          div.text {
+            color: @sf-azure;
+          }
+
+          i.dropdown {
+            font-size: 12px;
+          }
+        }
+
         div.buttons {
           button {
             background: @s-light-gray;
@@ -277,19 +287,21 @@ div#page-document {
         margin: 0px;
       }
 
-      .ui.dropdown {
-        border-bottom: 1px solid @s-dark-gray;
-
-        .text {
-          color: @s-dark-gray;
-        }
-      }
-
       div.sorting {
         width: auto;
         margin: 0px 10px 0px 10px;
         float: right;
         font-size: 12px;
+
+        .ui.dropdown {
+          div.text {
+            color: @sf-azure;
+          }
+
+          i.dropdown {
+            font-size: 12px;
+          }
+        }
       }
 
       div.answers-list {
@@ -298,8 +310,8 @@ div#page-document {
     }
 
     div.cards {
-      clear: both;
       margin-bottom: 0px;
+      clear: both;
 
       div.card-item {
         border-radius: 0px;
