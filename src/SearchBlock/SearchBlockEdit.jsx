@@ -5,7 +5,7 @@ import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 
 const SearchBlockEdit = (props) => {
-  const schema = SearchBlockSchema({ formData: props.data });
+  const schema = SearchBlockSchema({ formData: props.data || {} });
   const conf = config.settings.searchlib.searchui;
   schema.properties.appName.choices = Object.keys(conf).map((k) => [
     k,

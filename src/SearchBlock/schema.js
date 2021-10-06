@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SearchBlockSchema = ({ formData }) => ({
+export const SearchBlockSchema = ({ formData = {} }) => ({
   title: 'Searchlib Block',
 
   fieldsets: [

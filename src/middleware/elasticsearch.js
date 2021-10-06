@@ -25,6 +25,7 @@ function handleSearchRequest(req, res, params) {
   const { body } = req;
   const { urlES } = params;
   const url = `${urlES}/_search`;
+  console.log('handle search', url, urlES);
 
   superagent
     .post(url)
@@ -41,6 +42,7 @@ function handleNlpRequest(req, res, params) {
   const { endpoint } = body;
   delete body.endpoint;
   const url = `${urlNLP}/${endpoint}`;
+  console.log('handle nlp', url, urlNLP);
 
   superagent
     .post(url)
@@ -91,6 +93,7 @@ export const createHandler = ({ urlNLP, urlES }) => {
 
     if (appName) {
       const conf = config.settings.searchlib.searchui[appName];
+      console.log('conf', appName, conf.enableNLP);
       handleSearch(req, res, next, {
         appName,
         urlNLP,
