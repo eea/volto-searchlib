@@ -12,6 +12,14 @@
 @s-light-orange: #ffdfbb;
 @s-dark-orange: #9c5a0a;
 
+@sf-light-gray: #f9f9f9;
+@sf-azure: #2d9390;
+@sf-dark-azure: #267f7c;
+@sf-blue: #0f4b87;
+@sf-medium-gray: #cccccc;
+@sf-medium-gray2: #606060;
+@sf-dark-gray: #303030;
+
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
 }
@@ -99,8 +107,11 @@ div#page-document {
           div.header {
             padding: 0px;
             margin: 0px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
+            position: relative;
+            top: 5px;
+            left: 5px;
           }
 
           div.meta {
@@ -110,7 +121,13 @@ div#page-document {
         }
 
         &.active {
-          border-bottom: 2px solid red !important;
+          background: @sf-light-gray;
+
+          div.content {
+            div.header {
+              color: @sf-blue;
+            }
+          }
         }
       }
     }
