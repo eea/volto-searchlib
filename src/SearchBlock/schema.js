@@ -14,15 +14,15 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       title: 'General settings',
       fields: ['headline', 'subheadline', 'enableNLP'],
     },
-    // ...(formData.enableNLP
-    //   ? [
-    //       {
-    //         id: 'nlp',
-    //         title: 'NLP Capabilities Settings',
-    //         fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
-    //       },
-    //     ]
-    //   : []),
+    ...(formData?.enableNLP
+      ? [
+          {
+            id: 'nlp',
+            title: 'NLP Capabilities Settings',
+            fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
+          },
+        ]
+      : []),
   ],
 
   properties: {

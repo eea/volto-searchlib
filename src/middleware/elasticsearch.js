@@ -25,7 +25,10 @@ function handleSearchRequest(req, res, params) {
   const { body } = req;
   const { urlES } = params;
   const url = `${urlES}/_search`;
-  console.log('handle search', url, urlES);
+  if (body?.params?.config) {
+    delete body.params.config;
+  }
+  // console.log('handle search', url, urlES);
 
   superagent
     .post(url)
@@ -41,8 +44,13 @@ function handleNlpRequest(req, res, params) {
   const { urlNLP } = params;
   const { endpoint } = body;
   delete body.endpoint;
+
+  if (body?.params?.config) {
+    delete body.params.config;
+  }
+
   const url = `${urlNLP}/${endpoint}`;
-  console.log('handle nlp', url, urlNLP);
+  // console.log('handle nlp', url, urlNLP);
 
   superagent
     .post(url)
@@ -78,7 +86,9 @@ const handleSettings = (req, res, next, { appName, urlNLP, urlES }) => {
 };
 
 const handleDownload = (req, res, next, { appName, urlNLP, urlES }) => {
-  const appConfig = config.settings.searchlib.searchui[appName];
+  const body = req.body || {};
+  const appConfig =
+    body.params?.config || config.settings.searchlib.searchui[appName];
   download(urlES, appConfig, req, res);
 };
 
@@ -92,8 +102,12 @@ export const createHandler = ({ urlNLP, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      const conf = config.settings.searchlib.searchui[appName];
-      console.log('conf', appName, conf.enableNLP);
+      const body = req.body || {};
+      const conf =
+        body.params?.config || config.settings.searchlib.searchui[appName];
+
+      // console.log('conf', appName, conf.enableNLP);
+
       handleSearch(req, res, next, {
         appName,
         urlNLP,
