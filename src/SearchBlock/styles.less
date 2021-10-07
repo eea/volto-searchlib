@@ -22,6 +22,7 @@
 @sf-medium-gray: #cccccc;
 @sf-medium-gray2: #606060;
 @sf-dark-gray: #303030;
+@sf-medium-blue: #1C6CA4;
 
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
@@ -70,10 +71,10 @@ div#page-document {
 
       h3 {
         margin-top: 5px;
+        color: @sf-medium-gray2;
         font-size: 12px;
         font-weight: 400;
         text-align: center;
-        color: @sf-medium-gray2;
       }
     }
 
@@ -442,7 +443,11 @@ button.download-btn {
 div.ui.modal {
   background: @sf-light-gray;
 
-  button {
+  div.multitermlist__facet__header {
+    display: flex; // TODO improve
+  }
+
+  button.term {
     padding: 15px 10px 15px 10px;
     border: 1px solid @sf-medium-gray;
     margin: 5px;
@@ -463,12 +468,16 @@ div.ui.modal {
     }
 
     &.active {
-      border-color: @sf-blue;
-      background: @sf-blue !important; // TODO fix conflict with button.less
+      border-color: @sf-medium-blue;
+      background: @sf-medium-blue !important;
       box-shadow: none;
 
       span.count {
         color: white;
+      }
+
+      &:hover {
+        background: @sf-medium-blue !important;
       }
     }
 
