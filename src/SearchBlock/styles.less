@@ -165,11 +165,19 @@ div#page-document {
       float: left;
 
       div.col-left {
-        width: 100px;
+        width: calc(100% - 100px);
+        padding-right: 2em;
         float: left;
+      }
+
+      div.col-right {
+        width: 100px;
+        float: right;
 
         img {
-          width: 80px;
+          position: relative;
+          top: 10px;
+          width: 100px;
           height: auto;
         }
       }
