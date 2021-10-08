@@ -1,5 +1,6 @@
 import React from 'react';
 import config from '@plone/volto/registry';
+// import { cloneDeep } from 'lodash';
 import { SearchApp } from '@eeacms/search';
 import { SearchBlockSchema } from './schema';
 
@@ -18,6 +19,10 @@ import './styles.less';
  */
 const applyBlockSettings = (config, appName, data, schema) => {
   // apply mutations inline to the config
+
+  // config = cloneDeep(config);
+  // TODO: this has the side-effect that it mutates the global config
+  // Viewing this block will also "fix" the global config for the middleware
   const settings = config.searchui[appName];
   Object.keys(data).forEach((fieldName) => {
     const field = schema.properties[fieldName];
