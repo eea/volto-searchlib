@@ -74,9 +74,9 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     cutoffScore: {
       title: 'Cutoff score',
       description:
-        'Only answers with scores bigger then the cuttoff score will be displayed. Enter a float number smaller then 1.',
+        'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
       default: 0.1,
-      configPath: 'nlp.qa.cuttoffScore',
+      configPath: 'nlp.qa.cutoffScore',
     },
   },
 
