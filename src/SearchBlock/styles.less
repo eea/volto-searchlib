@@ -46,11 +46,6 @@ a.centered.fluid.image.img-thumbnail {
   color: @s-medium-gray2 !important;
 }
 
-.sui-search-box #exact-phrases-facet label {
-  padding-left: 3rem !important;
-  color: black !important;
-}
-
 div#page-document {
   h1.documentFirstHeading {
     display: none;
@@ -239,6 +234,13 @@ div#page-document {
       width: 60%;
       padding-top: 10px;
       margin: 2em auto 1em auto;
+
+      div.extra-facets {
+        div#exact-phrases-facet label {
+          padding-left: 3rem !important;
+          color: black !important;
+        }
+      }
 
       div.search-input {
         flex-wrap: wrap;
