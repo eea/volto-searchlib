@@ -32,10 +32,6 @@
   font-size: 0.8em;
 }
 
-.ui.cards > .card .meta {
-  color: @s-medium-gray2 !important;
-}
-
 div#page-document {
   h1.documentFirstHeading {
     display: none;
@@ -132,6 +128,10 @@ div#page-document {
     }
 
     div.stackable.cards {
+      .card .meta {
+        color: @s-medium-gray2 !important;
+      }
+
       a.card {
         border: 1px solid @sf-light-gray2;
         margin-top: 3px;
