@@ -566,11 +566,19 @@ div.ui.modal {
       div.search {
         width: 40%;
         float: left;
+
+        input.multitermlist__search__text-input {
+          width: calc(100% - 30px);
+        }
       }
 
       div.toggleSort {
         width: 15%;
-        float: left;
+        float: right;
+
+        div.toggle-label {
+          font-size: 14px;
+        }
       }
     }
   }
