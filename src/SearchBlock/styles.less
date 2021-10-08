@@ -583,44 +583,42 @@ div.ui.modal {
     }
   }
 
-  div.content {
-    button.term {
-      padding: 12px 10px 12px 10px;
-      border: 1px solid @sf-light-gray2;
-      margin: 5px;
-      background: white;
-      border-radius: 2px;
-      color: @sf-dark-gray;
-      font-size: 12px;
-      font-weight: 600;
+  button.term {
+    padding: 12px 10px 12px 10px;
+    border: 1px solid @sf-light-gray2;
+    margin: 5px;
+    background: white;
+    border-radius: 2px;
+    color: @sf-dark-gray;
+    font-size: 12px;
+    font-weight: 600;
 
-      span.title {
-        margin-right: 5px;
-      }
+    span.title {
+      margin-right: 5px;
+    }
+
+    span.count {
+      color: @sf-medium-gray2;
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    &.active {
+      border-color: @sf-medium-blue;
+      background: @sf-medium-blue !important;
+      box-shadow: none;
 
       span.count {
-        color: @sf-medium-gray2;
-        font-size: 10px;
-        font-weight: 400;
-      }
-
-      &.active {
-        border-color: @sf-medium-blue;
-        background: @sf-medium-blue !important;
-        box-shadow: none;
-
-        span.count {
-          color: white;
-        }
-
-        &:hover {
-          background: @sf-medium-blue !important;
-        }
+        color: white;
       }
 
       &:hover {
-        background: @sf-light-gray;
+        background: @sf-medium-blue !important;
       }
+    }
+
+    &:hover {
+      background: @sf-light-gray;
     }
   }
 
