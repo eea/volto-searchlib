@@ -20,7 +20,7 @@
 @sf-dark-azure: #267f7c;
 @sf-blue: #0f4b87;
 @sf-medium-gray: #cccccc;
-@sf-medium-gray2: #606060;
+@sf-medium-gray2: #808080;
 @sf-dark-gray: #303030;
 @sf-medium-blue: #1c6ca4;
 
@@ -93,26 +93,44 @@ div#page-document {
     }
 
     div.content-section-tabs.menu {
+      overflow: hidden; // TODO limit the number of items I guess
+      width: 100%;
       max-width: 100%;
       border-top: none;
       border-right: none;
       border-bottom: 1px solid @sf-light-gray2;
       border-left: none;
+      margin-left: 10px;
       border-radius: 0px;
       box-shadow: none;
 
       a.item {
-        border-bottom: 3px solid white;
         padding: 0px;
-        margin-right: 20px;
+        border-bottom: 4px solid white;
+        margin-right: 3em;
+        border-radius: 0px;
         color: @sf-dark-gray;
+        font-size: 14px;
+
+        &:hover {
+          background: white;
+        }
 
         &:before {
           display: none;
         }
 
         &.active {
-          border-bottom: 3px solid @sf-azure;
+          border-bottom: 4px solid @sf-azure;
+        }
+
+        span.title {
+          margin-right: 5px;
+        }
+
+        span.count {
+          color: @sf-medium-gray2;
+          font-weight: 400;
         }
       }
     }
