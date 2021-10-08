@@ -92,6 +92,25 @@ div#page-document {
       }
     }
 
+    div.content-section-tabs.menu {
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      box-shadow: none;
+
+      a.item {
+        border: none;
+
+        &:before {
+          display: none;
+        }
+
+        &.active {
+          color: red;
+        }
+      }
+    }
+
     div.facets {
       i.icon.dropdown {
         margin-right: 0px;
