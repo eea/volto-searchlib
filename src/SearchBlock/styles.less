@@ -93,20 +93,26 @@ div#page-document {
     }
 
     div.content-section-tabs.menu {
+      max-width: 100%;
       border-top: none;
       border-right: none;
+      border-bottom: 1px solid @sf-light-gray2;
       border-left: none;
+      border-radius: 0px;
       box-shadow: none;
 
       a.item {
-        border: none;
+        border-bottom: 3px solid white;
+        padding: 0px;
+        margin-right: 20px;
+        color: @sf-dark-gray;
 
         &:before {
           display: none;
         }
 
         &.active {
-          color: red;
+          border-bottom: 3px solid @sf-azure;
         }
       }
     }
