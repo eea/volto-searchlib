@@ -81,7 +81,7 @@ div#page-document {
       border-right: none;
       border-bottom: 1px solid @sf-light-gray2;
       border-left: none;
-      margin-left: 10px;
+      margin-bottom: 0px;
       border-radius: 0px;
       box-shadow: none;
 
@@ -270,7 +270,7 @@ div#page-document {
     div.inline-filter-list {
       button.show-filters {
         position: relative;
-        top: 8px;
+        top: 9px;
         margin-left: 10px;
         background: white !important;
         border-radius: 2px;
@@ -280,9 +280,10 @@ div#page-document {
       }
 
       div.filter-list {
-        margin-top: 10px;
+        margin-top: 0px;
         margin-bottom: 10px;
-        background-color: @s-medium-gray;
+        background-color: @sf-light-gray;
+        border-radius: 0px;
 
         div.filter-list-header {
           padding-right: 0.5rem;
@@ -295,6 +296,7 @@ div#page-document {
           padding-right: 0.5rem !important;
           padding-bottom: 0.5rem !important;
           padding-left: 0.5rem !important;
+          background: @s-medium-gray;
         }
 
         .ui.inverted.accordion .title:not(.ui) {
@@ -308,7 +310,7 @@ div#page-document {
         }
 
         .ui.divider {
-          border-top: 1px solid #000 !important;
+          border-top: none !important;
         }
 
         div.ui.label {
