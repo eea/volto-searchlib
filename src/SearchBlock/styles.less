@@ -263,11 +263,26 @@ div#page-document {
       }
 
       div#archived-facet {
-        label {
-          color: @s-dark-gray !important;
+        div.toggle {
+          label {
+            color: @s-dark-gray !important;
 
-          :after {
-            background: @s-medium-gray;
+            &:before {
+              box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
+            }
+
+            &:after {
+              background: white;
+            }
+          }
+
+          &.checked {
+            label {
+              &:before {
+                background-color: @sf-azure !important;
+                box-shadow: 0px 0px 0px 2px @sf-azure !important;
+              }
+            }
           }
         }
       }
