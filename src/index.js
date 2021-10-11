@@ -5,7 +5,7 @@ import { registry } from '@eeacms/search';
 import codeSVG from '@plone/volto/icons/code.svg';
 import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
-import LeftColumnLayout from './components/Layout/LeftColumnLayout';
+// import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
 import SelectWidget from './SearchBlock/SelectWidget';
 
@@ -55,7 +55,7 @@ const applyConfig = (config) => {
 export const installGlobalSearch = (config) => {
   // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
-  config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
+  // config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
   config.widgets.id.qa_queryTypes = SelectWidget;
 
   const { globalsearch } = config.settings.searchlib.searchui;
