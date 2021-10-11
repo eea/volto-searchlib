@@ -393,6 +393,10 @@ div#page-document {
 
     div.search-result {
       overflow: auto;
+      width: 100%;
+      padding-bottom: 5px;
+      margin-top: 5px;
+      clear: both;
 
       &:hover {
         div.controls {
@@ -402,102 +406,103 @@ div#page-document {
         }
       }
 
-      width: 100%;
-      padding-bottom: 5px;
-      margin-top: 5px;
-      clear: both;
+      div.meta.col-full {
+        width: 100%;
+        margin-bottom: 5px;
+        font-size: 12px !important;
 
-      div.col-right {
-        max-width: 180px;
-        float: right;
-        text-align: center;
-
-        a,
-        img {
-          width: 180px;
+        span.score {
+          padding: 0px 5px 0px 5px;
+          border: 1px solid @sf-light-gray2;
+          margin-right: 20px;
+          background: @sf-light-gray;
+          border-radius: 2px;
         }
 
-        img {
-          padding: 10px;
+        span.date {
+          margin-right: 20px;
         }
 
-        div.controls {
-          display: flex;
-          justify-content: center;
+        span.tags {
+          margin-right: 10px;
+        }
 
-          button {
-            margin: 3px;
-            font-size: 10px;
-            opacity: 0;
+        i.icon {
+          margin-left: 3px;
+          background: @sf-light-gray;
+          line-height: 1em;
+        }
+      }
+
+      div.col-full {
+        width: 100%;
+
+        div.col-left {
+          max-width: 180px;
+          float: left;
+          text-align: center;
+
+          a,
+          img {
+            width: 180px;
+          }
+
+          img {
+            padding: 10px;
+          }
+
+          div.controls {
+            display: flex;
+            justify-content: center;
+
+            button {
+              margin: 3px;
+              font-size: 10px;
+              opacity: 0;
+            }
+          }
+        }
+
+        div.col-right {
+          width: calc(100% - 180px);
+          padding-top: 10px;
+          padding-left: 10px;
+          float: right;
+
+          h3 {
+            font-weight: 400;
+          }
+
+          p {
+            font-size: 14px !important;
+          }
+
+          h3,
+          p {
+            margin: 0px 0px 10px 0px;
+          }
+
+          h3 div.label.new-item {
+            padding: 4px 5px 4px 4px;
+            background: @s-light-orange;
+            color: @s-dark-orange;
+            font-size: 70%;
+          }
+
+          h3 div.label.archived-item {
+            padding: 4px 5px 4px 4px;
+            background: @s-light-blue;
+            color: @s-dark-blue;
+            font-size: 70%;
+          }
+
+          p {
+            color: @s-dark-gray;
+            font-size: 12.8px;
           }
         }
       }
 
-      div.col-left {
-        width: calc(100% - 180px);
-        padding-top: 10px;
-        padding-left: 10px;
-        float: left;
-
-        div.meta {
-          margin-bottom: 5px;
-          font-size: 12px !important;
-
-          span.score {
-            padding: 0px 5px 0px 5px;
-            border: 1px solid @sf-light-gray2;
-            margin-right: 20px;
-            background: @sf-light-gray;
-            border-radius: 2px;
-          }
-
-          span.date {
-            margin-right: 20px;
-          }
-
-          span.tags {
-            margin-right: 10px;
-          }
-
-          i.icon {
-            margin-left: 3px;
-            background: @sf-light-gray;
-            line-height: 1em;
-          }
-        }
-
-        h3 {
-          font-weight: 400;
-        }
-
-        p {
-          font-size: 14px !important;
-        }
-
-        h3,
-        p {
-          margin: 0px 0px 10px 0px;
-        }
-
-        h3 div.label.new-item {
-          padding: 4px 5px 4px 4px;
-          background: @s-light-orange;
-          color: @s-dark-orange;
-          font-size: 70%;
-        }
-
-        h3 div.label.archived-item {
-          padding: 4px 5px 4px 4px;
-          background: @s-light-blue;
-          color: @s-dark-blue;
-          font-size: 70%;
-        }
-
-        p {
-          color: @s-dark-gray;
-          font-size: 12.8px;
-        }
-      }
     }
   }
 }
