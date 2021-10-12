@@ -762,13 +762,6 @@ div.ui.modal.facet {
     }
   }
 
-  .answers__boxtitle {
-  }
-
-  .search-result {
-    font-size: 80%;
-  }
-
   .ui.segment.loading {
     min-height: 10em;
     margin-bottom: 2em;
@@ -782,10 +775,10 @@ div.ui.modal.facet {
 
   .ui.segment.answers-wrapper {
     margin-bottom: 2em;
-
-    div.search-result {
-      border-bottom: 0px !important;
-    }
+    box-shadow: none;
+    border: none;
+    border-top: 1px solid #ccc;
+    // border-bottom: 1px solid #ccc;
 
     .answers__bottom {
       margin-top: 1em;
@@ -797,6 +790,13 @@ div.ui.modal.facet {
         text-align: right;
         color: #ccc;
         margin: 0em;
+      }
+      .answers__bottom__spacer {
+        border-bottom: 1px solid #ccc;
+        flex-grow: 2;
+        height: 0.5em;
+        margin-left: 1em;
+        margin-right: 1em;
       }
 
       .rating {
