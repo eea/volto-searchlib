@@ -1,6 +1,9 @@
 import download from './download';
 import superagent from 'superagent';
 import config from '@plone/volto/registry';
+import debug from 'debug';
+
+const log = debug('esmiddleware');
 
 const esProxyWhitelist = (name) => ({
   GET: [`/_es/${name}/_search`],
@@ -28,7 +31,8 @@ function handleSearchRequest(req, res, params) {
   if (body?.params?.config) {
     delete body.params.config;
   }
-  // console.log('handle search', url, urlES);
+
+  log('handle search', url, urlES);
 
   superagent
     .post(url)
@@ -50,7 +54,7 @@ function handleNlpRequest(req, res, params) {
   }
 
   const url = `${urlNLP}/${endpoint}`;
-  // console.log('handle nlp', url, urlNLP);
+  log('handle nlp', url, urlNLP);
 
   superagent
     .post(url)
@@ -65,8 +69,12 @@ const handleSearch = (req, res, next, params) => {
   // This handler is used for both the main (search) request, but also for
   // requests coming for questions.
 
-  const body = req.body || {};
+  let body = req.body || {};
+  if (typeof body === 'string') body = JSON.parse(body);
   const { requestType } = body;
+
+  console.log('requestType', requestType, body);
+
   if (requestType) delete body.requestType; // TODO: is this safe?
 
   switch (requestType) {
@@ -106,7 +114,7 @@ export const createHandler = ({ urlNLP, urlES }) => {
       const conf =
         body.params?.config || config.settings.searchlib.searchui[appName];
 
-      // console.log('conf', appName, conf.enableNLP);
+      log('conf', appName, conf.enableNLP);
 
       handleSearch(req, res, next, {
         appName,
