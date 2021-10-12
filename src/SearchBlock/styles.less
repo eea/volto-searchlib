@@ -751,11 +751,62 @@ div.ui.modal.facet {
     }
 
     .answer__date {
-      padding-right: 0.4em;
+      display: inline-block;
+      width: 7em;
+      padding-right: 0.5em;
+      text-align: right;
     }
+
+    .answer__domain {
+      padding-left: 0.3em;
+    }
+  }
+
+  .answers__boxtitle {
   }
 
   .search-result {
     font-size: 80%;
+  }
+
+  .ui.segment.loading {
+    min-height: 10em;
+    margin-bottom: 2em;
+
+    .loading-tip {
+      z-index: 10;
+      color: black;
+      font-size: x-large;
+    }
+  }
+
+  .ui.segment.answers-wrapper {
+    margin-bottom: 2em;
+
+    div.search-result {
+      border-bottom: 0px !important;
+    }
+
+    .answers__bottom {
+      margin-top: 1em;
+      display: flex;
+      justify-content: space-between;
+
+      h5 {
+        font-size: 0.7em;
+        text-align: right;
+        color: #ccc;
+        margin: 0em;
+      }
+
+      .rating {
+        margin-left: 0em;
+      }
+    }
+
+    // .answer__text {
+    //   font-size: normal;
+    //   font-weight: bold;
+    // }
   }
 }
