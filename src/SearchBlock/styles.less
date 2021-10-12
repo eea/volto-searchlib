@@ -628,7 +628,33 @@ div.ui.modal.facet {
         font-size: 14px;
 
         label {
+          padding-left: 3.5rem;
           color: @sf-dark-gray !important;
+
+          &:before {
+            position: absolute;
+            top: 3px;
+            width: 3rem;
+            height: 1rem !important;
+            box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
+          }
+
+          &:after {
+            position: absolute;
+            top: 3px;
+            width: 1rem !important;
+            height: 1rem !important;
+            background: white;
+          }
+        }
+
+        &.checked {
+          label {
+            &:before {
+              background-color: @sf-azure !important;
+              box-shadow: 0px 0px 0px 2px @sf-azure !important;
+            }
+          }
         }
       }
 
