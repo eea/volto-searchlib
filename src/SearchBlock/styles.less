@@ -193,7 +193,7 @@ div#page-document {
     }
 
     div.mlt-card {
-      width: calc(100% - 16px);
+      width: calc(100% - 18px);
       float: left;
 
       div.col-left {
@@ -316,6 +316,12 @@ div#page-document {
         div.filter-list-header {
           padding-right: 0.5rem;
           padding-left: 0.5rem;
+          font-size: 14px;
+
+          i.dropdown.icon {
+            position: relative;
+            top: 2px;
+          }
         }
 
         div.filter-list-content {
@@ -324,15 +330,25 @@ div#page-document {
           padding-right: 0.5rem !important;
           padding-bottom: 0.5rem !important;
           padding-left: 0.5rem !important;
+
+          div.filter-list-item {
+            div.filter-name {
+              position: relative;
+              top: 3px;
+              color: @s-dark-gray;
+              font-size: 14px;
+            }
+
+            div.ui.labels {
+              div.label {
+                padding: 6px;
+                font-size: 14px;
+              }
+            }
+          }
         }
 
         .ui.inverted.accordion .title:not(.ui) {
-          color: @s-dark-gray;
-        }
-
-        div.filter-name {
-          position: relative;
-          top: 5px;
           color: @s-dark-gray;
         }
 
