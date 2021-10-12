@@ -617,34 +617,29 @@ div.ui.modal.facet {
       .facet-title {
         h3 {
           margin: 0 1em 0 0;
+          font-size: 18px;
+          font-weight: 600;
         }
         display: flex;
       }
 
-      // h3 {
-      //   width: 30%;
-      //   float: left;
-      //   font-size: 18px;
-      //   font-weight: 600;
-      // }
-      //
-      // div.search {
-      //   width: 40%;
-      //   float: left;
-      //
-      //   input.multitermlist__search__text-input {
-      //     width: calc(100% - 30px);
-      //   }
-      // }
-      //
-      // div.toggleSort {
-      //   width: 15%;
-      //   float: right;
-      //
-      //   div.toggle-label {
-      //     font-size: 14px;
-      //   }
-      // }
+      div.ui.toggle.checkbox {
+        color: @sf-dark-gray !important;
+        font-size: 14px;
+
+        label {
+          color: @sf-dark-gray !important;
+        }
+      }
+
+      div.toggleSort {
+        div.toggle-label {
+          i.icon {
+            margin-left: 3px;
+          }
+          font-size: 14px;
+        }
+      }
     }
   }
 
