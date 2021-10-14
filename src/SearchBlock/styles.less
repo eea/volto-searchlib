@@ -306,13 +306,13 @@ div#page-document {
     div.inline-filter-list {
       width: 100%;
       min-height: 50px;
-      background: @sf-light-gray;
+      background: white;
 
       button.show-filters {
         position: relative;
         top: 9px;
-        margin-left: 10px;
-        background: white !important;
+        margin-left: 0px;
+        background: @sf-light-gray !important;
         border-radius: 2px;
         color: @sf-azure !important;
         float: left;
@@ -320,14 +320,17 @@ div#page-document {
       }
 
       div.filter-list {
+        padding-right: 0px;
+        padding-left: 0px;
         margin-top: 0px;
         margin-bottom: 10px;
-        background-color: @sf-light-gray;
+        background-color: white;
         border-radius: 0px;
 
         div.filter-list-header {
           padding-right: 0.5rem;
           padding-left: 0.5rem;
+          color: @sf-azure !important;
           font-size: 14px;
 
           i.dropdown.icon {
@@ -342,6 +345,7 @@ div#page-document {
           padding-right: 0.5rem !important;
           padding-bottom: 0.5rem !important;
           padding-left: 0.5rem !important;
+          background-color: @sf-light-gray;
 
           div.filter-list-item {
             div.filter-name {
@@ -365,7 +369,8 @@ div#page-document {
         }
 
         .ui.divider {
-          border-top: 1px solid @sf-light-gray2 !important;
+          border-top: none !important;
+          margin-top: 14px;
         }
 
         div.ui.label {
@@ -374,6 +379,7 @@ div#page-document {
 
         button.reset-filters {
           color: @sf-azure !important;
+          font-size: 14px;
 
           i.icon {
             margin-left: 3px;
