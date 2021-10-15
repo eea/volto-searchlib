@@ -165,8 +165,8 @@ div#page-document {
             padding: 0px;
             margin: 0px;
             color: @sf-dark-gray;
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 12px;
+            font-weight: 600;
           }
 
           div.meta {
@@ -179,15 +179,21 @@ div#page-document {
         div.filter.description {
           div.ui.label {
             background: white;
+            font-size: 12px;
           }
         }
 
         &.active {
-          background: @sf-light-gray;
+          border: 1px solid @sf-azure;
+          background: @sf-azure;
 
           div.content {
             div.header {
-              color: @sf-blue;
+              color: white;
+            }
+
+            div.meta {
+              color: white !important;
             }
           }
         }
