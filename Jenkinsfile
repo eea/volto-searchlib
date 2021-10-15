@@ -4,7 +4,7 @@ pipeline {
   environment {
         GIT_NAME = "volto-searchlib"
         NAMESPACE = "@eeacms"
-        SONARQUBE_TAGS = "volto.eea.europa.eu"
+        SONARQUBE_TAGS = "volto.eea.europa.eu,clms.land.copernicus.eu"
         DEPENDENCIES = ""
     }
 
