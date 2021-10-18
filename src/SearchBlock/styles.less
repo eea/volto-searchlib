@@ -53,14 +53,19 @@ div#page-document {
   div.searchapp {
     background-color: white;
 
+    div > div.ui.container {
+      padding-left: 0px !important;
+    }
+
     div.sui-layout-header {
+      padding-left: 0px !important;
       border-bottom: none;
 
       h2 {
         margin-bottom: 0px !important;
         font-size: 200%;
         font-weight: 700;
-        text-align: center;
+        text-align: left;
       }
 
       h3 {
@@ -68,7 +73,7 @@ div#page-document {
         color: @sf-medium-gray2;
         font-size: 12px;
         font-weight: 400;
-        text-align: center;
+        text-align: left;
       }
     }
 
@@ -251,7 +256,7 @@ div#page-document {
     div.sui-search-box {
       width: 60%;
       padding-top: 10px;
-      margin: 2em auto 1em auto;
+      margin: 2em 0 1em 0;
 
       div.sui-search-box__autocomplete-container {
         position: absolute;
