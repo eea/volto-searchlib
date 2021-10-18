@@ -19,7 +19,15 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
           {
             id: 'nlp',
             title: 'NLP Capabilities Settings',
-            fields: ['use_qa_dp', 'qa_queryTypes', 'cutoffScore'],
+            fields: [
+              'use_qa_dp',
+              'qa_queryTypes',
+              'cutoffScore',
+              'rawIndex',
+              'dprIndex',
+              'topKRetriever',
+              'topKReader',
+            ],
           },
         ]
       : []),
@@ -77,6 +85,26 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
       default: 0.1,
       configPath: 'nlp.qa.cutoffScore',
+    },
+    rawIndex: {
+      title: 'ElasticSearch Index',
+      configPath: 'nlp.qa.raw_index',
+    },
+    dprIndex: {
+      title: 'DPR ElasticSearch Index',
+      configPath: 'nlp.qa.dpr_index',
+    },
+    topKRetriever: {
+      title: 'TopK Retriever',
+      type: 'number',
+      defaultValue: 10,
+      configPath: 'nlp.qa.topk_retriever',
+    },
+    topKReader: {
+      title: 'TopK Reader',
+      type: 'number',
+      defaultValue: 10,
+      configPath: 'nlp.qa.topk_reader',
     },
   },
 
