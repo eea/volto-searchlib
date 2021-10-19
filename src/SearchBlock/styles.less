@@ -98,7 +98,7 @@ div#page-document {
     }
 
     div.content-section-tabs.menu {
-      overflow: hidden; // TODO limit the number of items I guess
+      overflow: hidden;
       width: 100%;
       max-width: 100%;
       border-top: none;
@@ -151,8 +151,8 @@ div#page-document {
       }
     }
 
-    // TODO add custom class for filters (left column)
-    div.stackable.cards {
+    div.col-left {
+      padding: 0px;
       margin-top: 10px;
 
       .card .meta {
@@ -161,8 +161,7 @@ div#page-document {
 
       a.card {
         border: 1px solid @sf-light-gray2;
-        margin-top: 3px;
-        margin-bottom: 3px;
+        margin: 3px 0px 3px 0px;
         border-radius: 3px;
         box-shadow: none;
 
