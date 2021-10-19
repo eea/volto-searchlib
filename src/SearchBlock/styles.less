@@ -167,7 +167,8 @@ div#page-document {
     }
 
     div.col-left {
-      padding: 0px;
+      padding-right: 5px;
+      padding-left: 0px;
       margin-top: 10px;
 
       .card .meta {
@@ -187,8 +188,8 @@ div#page-document {
             padding: 0px;
             margin: 0px;
             color: @sf-dark-gray;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 400;
           }
 
           div.meta {
@@ -200,15 +201,21 @@ div#page-document {
 
         div.filter.description {
           div.ui.label {
-            padding: 4px;
+            padding: 5px;
             background: white;
-            font-size: 10px;
+            font-size: 12px;
           }
         }
 
         &.active {
-          border-bottom: 2px solid @sf-azure;
-          background: @sf-light-gray;
+          border-bottom: 3px solid @sf-azure;
+          background: white;
+
+          div.label {
+            background: @sf-light-gray !important;
+            color: @sf-azure;
+            font-weight: 600;
+          }
         }
       }
     }
