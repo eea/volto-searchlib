@@ -32,7 +32,7 @@ function handleSearchRequest(req, res, params) {
     delete body.params.config;
   }
 
-  log('handle search', url, urlES);
+  console.log('handle search', url, urlES);
 
   superagent
     .post(url)
@@ -73,7 +73,7 @@ const handleSearch = (req, res, next, params) => {
   if (typeof body === 'string') body = JSON.parse(body);
   const { requestType } = body;
 
-  console.log('requestType', requestType, body);
+  // console.log('requestType', requestType, body);
 
   if (requestType) delete body.requestType; // TODO: is this safe?
 

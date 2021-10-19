@@ -1,8 +1,9 @@
 import React from 'react';
 import config from '@plone/volto/registry';
-// import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { SearchApp } from '@eeacms/search';
 import { SearchBlockSchema } from './schema';
+import { BodyClass } from '@plone/volto/helpers';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import './styles.less';
@@ -20,7 +21,7 @@ import './styles.less';
 const applyBlockSettings = (config, appName, data, schema) => {
   // apply mutations inline to the config
 
-  // config = cloneDeep(config);
+  config = cloneDeep(config);
   // TODO: this has the side-effect that it mutates the global config
   // Viewing this block will also "fix" the global config for the middleware
   const settings = config.searchui[appName];
@@ -59,9 +60,17 @@ export default function SearchBlockView(props) {
     data,
     schema,
   );
+  registry.searchui.globalsearch.requestParams = {
+    params: {
+      index: data.rawIndex,
+    },
+  };
+  // console.log('registry', registry);
   return (
-    <div className="searchlib-block">
-      <SearchApp registry={registry} appName={appName} mode={mode} />
-    </div>
+    <BodyClass className="searchlib-page">
+      <div className="searchlib-block">
+        <SearchApp registry={registry} appName={appName} mode={mode} />
+      </div>
+    </BodyClass>
   );
 }
