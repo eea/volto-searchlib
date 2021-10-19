@@ -32,7 +32,7 @@ body.searchlib-page {
   }
 
   .ui.basic.segment.content-area::before {
-    display: none;
+    // display: none; TODO keep or not?
   }
 }
 
@@ -66,6 +66,21 @@ div#page-document {
     div.sui-layout-header {
       padding-left: 0px !important;
       border-bottom: none;
+
+      div.cols-container {
+        overflow: auto;
+
+        div.col-left {
+          width: 16.66666667%;
+          float: left;
+        }
+
+        div.col-right {
+          width: 80%;
+          padding-left: 20px;
+          float: left;
+        }
+      }
 
       h2 {
         margin-bottom: 0px !important;
