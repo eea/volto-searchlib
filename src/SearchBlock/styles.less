@@ -60,25 +60,18 @@ div#page-document {
     }
 
     div > div.ui.container {
+      padding-right: 0px !important;
       padding-left: 0px !important;
     }
 
     div.sui-layout-header {
+      padding-right: 0px !important;
       padding-left: 0px !important;
       border-bottom: none;
 
-      div.cols-container {
-        min-height: 230px;
-
-        div.col-left {
-          width: 16.66666667%;
-          float: left;
-        }
-
-        div.col-right {
-          width: 80%;
+      div.header-columns {
+        div.col-mid {
           padding-left: 40px;
-          float: left;
         }
       }
 
@@ -852,15 +845,12 @@ div.ui.modal.facet {
 
 @media only screen and (max-width: 770px) {
   div.sui-layout-header {
-    div.cols-container {
-      min-height: 250px;
-
+    div.header-columns {
       div.col-left {
-        width: 0px !important;
+        display: none !important;
       }
 
-      div.col-right {
-        width: 100% !important;
+      div.col-mid {
         padding-left: 0px !important;
       }
     }
