@@ -281,6 +281,14 @@ div#page-document {
       }
 
       div.extra-facets {
+        position: absolute;
+        z-index: 10;
+        width: calc(100% - 42px);
+        max-width: 558px;
+        padding: 10px;
+        margin-top: 4px;
+        background: @sf-light-gray2;
+
         div#exact-phrases-facet label {
           padding-left: 3rem !important;
           color: black !important;
@@ -362,7 +370,6 @@ div#page-document {
             }
           }
         }
-
       }
 
       div.boolean-facet {
