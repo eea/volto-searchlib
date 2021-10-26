@@ -307,6 +307,11 @@ div#page-document {
           input {
             width: calc(100% - 55px);
             border: none;
+
+            &:focus-visible {
+              border: none !important;
+              outline: none;
+            }
           }
 
           div.button {
