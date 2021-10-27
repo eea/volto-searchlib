@@ -293,6 +293,29 @@ div#page-document {
         }
       }
 
+      div.search-terms {
+        display: flex;
+        max-width: 600px;
+        flex-wrap: wrap;
+        padding: 10px;
+
+        div.search-phrase {
+          display: flex;
+          width: fit-content;
+          padding: 5px;
+          margin-top: 2px;
+          margin-bottom: 2px;
+          background-color: @s-light-gray;
+
+          i.trash {
+            position: relative;
+            top: 2px;
+            margin-right: 0px;
+            margin-left: 10px;
+          }
+        }
+      }
+
       div.search-input {
         max-width: 600px;
         flex-wrap: wrap;
@@ -321,28 +344,6 @@ div#page-document {
             i.icon {
               padding: 0px;
               margin: 0px;
-            }
-          }
-
-          div.search-terms {
-            display: flex;
-            flex-wrap: wrap;
-            padding-left: 30px;
-
-            div.search-phrase {
-              display: flex;
-              width: fit-content;
-              padding: 5px;
-              margin-top: 2px;
-              margin-bottom: 2px;
-              background-color: @s-light-gray;
-
-              i.trash {
-                position: relative;
-                top: 2px;
-                margin-right: 0px;
-                margin-left: 10px;
-              }
             }
           }
         }
