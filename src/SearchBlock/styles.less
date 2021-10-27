@@ -273,7 +273,8 @@ div#page-document {
 
       div.sui-search-box__autocomplete-container {
         position: absolute;
-        top: calc(4em + 3px);
+        top: calc(3em + 10px);
+        max-width: 600px;
       }
 
       div.extra-facets {
@@ -281,6 +282,7 @@ div#page-document {
         z-index: 10;
         width: calc(100% - 42px);
         max-width: 558px;
+        flex-wrap: wrap;
         padding: 10px;
         border: 1px solid @sf-medium-gray;
         border-top: none;
