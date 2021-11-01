@@ -187,11 +187,11 @@ div#page-document {
       margin-top: 3em;
 
       button.show-filters {
+        margin-top: 0.3em;
         background: @sf-light-gray !important;
         border-radius: 2px;
         color: @sf-azure !important;
         font-size: 12px;
-        margin-top: 0.3em;
       }
 
       div.scrolled {
@@ -813,7 +813,13 @@ div.ui.modal.facet {
 
     div.multitermlist__facet__header {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
+
+      input.multitermlist__search__text-input {
+        width: calc(100% - 35px);
+        margin-bottom: 0.3em;
+      }
 
       .facet-title {
         h3 {
