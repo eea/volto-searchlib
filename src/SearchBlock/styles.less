@@ -843,14 +843,20 @@ div.ui.modal.facet {
       justify-content: space-between;
 
       input.multitermlist__search__text-input {
-        width: calc(100% - 35px);
-        margin-bottom: 0.3em;
+        border: 1px solid @sf-medium-gray;
+        margin-right: 1em;
+        margin-bottom: 0.2em;
+
+        &:focus-visible {
+          outline: none;
+        }
       }
 
       div.order-controls {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        margin-top: 0.2em;
         margin-left: auto;
 
         span.label {
@@ -924,6 +930,7 @@ div.ui.modal.facet {
               background-color: @sf-azure !important;
               box-shadow: 0px 0px 0px 2px @sf-azure !important;
             }
+
             &:after {
               left: 1.3rem !important;
             }
