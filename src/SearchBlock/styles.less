@@ -251,11 +251,20 @@ div#page-document {
         }
 
         div.filter.description {
+          display: flex;
+
           div.ui.label {
             padding: 5px;
             margin-top: 4px;
             margin-bottom: 0px;
             background: white;
+            font-size: 12px;
+          }
+
+          a.clear-filters {
+            margin-left: auto;
+            margin-top: auto;
+            color: @sf-azure;
             font-size: 12px;
           }
         }
@@ -994,6 +1003,7 @@ div.ui.modal.facet {
     a.clear-filters {
       margin-left: auto;
       color: @sf-azure;
+      font-size: 12px;
     }
   }
 }
