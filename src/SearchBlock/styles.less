@@ -846,8 +846,26 @@ div.ui.modal.facet {
         margin-bottom: 0.3em;
       }
 
-      div.toggle-label {
-        cursor: pointer;
+      div.order-controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        div.toggle-label {
+          cursor: pointer;
+        }
+
+        div.toggleSort {
+          padding-right: 0.5em;
+          padding-left: 0.5em;
+
+          div.toggle-label {
+            i.icon {
+              margin-left: 3px;
+            }
+            font-size: 14px;
+          }
+        }
       }
 
       .facet-title {
@@ -892,15 +910,6 @@ div.ui.modal.facet {
               box-shadow: 0px 0px 0px 2px @sf-azure !important;
             }
           }
-        }
-      }
-
-      div.toggleSort {
-        div.toggle-label {
-          i.icon {
-            margin-left: 3px;
-          }
-          font-size: 14px;
         }
       }
     }
