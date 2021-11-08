@@ -851,6 +851,7 @@ div.ui.modal.facet {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        margin-left: auto;
 
         span.label {
           font-size: 14px;
@@ -891,28 +892,28 @@ div.ui.modal.facet {
       }
 
       div.ui.toggle.checkbox {
-        padding-right: 1em;
+        padding-right: 0.5em;
         color: @sf-dark-gray !important;
         font-size: 14px;
 
         label {
-          padding-left: 3.5rem;
+          padding-left: 2.5rem;
           color: @sf-dark-gray !important;
 
           &:before {
             position: absolute;
-            top: 3px;
-            width: 3rem;
-            height: 1rem !important;
+            top: 5px;
+            width: 2rem;
+            height: 0.8rem !important;
             background: @sf-medium-gray2 !important;
             box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
           }
 
           &:after {
             position: absolute;
-            top: 3px;
-            width: 1rem !important;
-            height: 1rem !important;
+            top: 5px;
+            width: 0.8rem !important;
+            height: 0.8rem !important;
             background: white;
           }
         }
@@ -922,6 +923,9 @@ div.ui.modal.facet {
             &:before {
               background-color: @sf-azure !important;
               box-shadow: 0px 0px 0px 2px @sf-azure !important;
+            }
+            &:after {
+              left: 1.3rem !important;
             }
           }
         }
