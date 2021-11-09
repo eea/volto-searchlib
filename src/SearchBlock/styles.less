@@ -282,6 +282,15 @@ div#page-document {
             font-size: 16px;
             font-weight: 400;
 
+            span.text {
+              display: block;
+              overflow: hidden;
+              max-width: calc(100% - 25px);
+              float: left;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
             span.clear-filters {
               color: @sf-azure;
               font-size: 14px;
