@@ -313,6 +313,15 @@ div#page-document {
             background: @sf-light-gray !important;
             color: @sf-azure;
             font-weight: 600;
+
+            span.text {
+              display: block;
+              overflow: hidden;
+              max-width: 55px;
+              float: left;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
         }
       }
