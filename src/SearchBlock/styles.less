@@ -1129,6 +1129,56 @@ div.ui.modal.facet {
       right: 23px !important;
     }
   }
+
+  div.searchapp.landing-page {
+    div.landing-page-container {
+      div.landing-page {
+        padding: 1em;
+
+        div.filters {
+          button {
+            padding: 0.5em 0.7em;
+            margin: 3px 5px 3px 0px;
+            font-size: 14px;
+          }
+        }
+
+        div.ui.cards {
+          div.ui.card {
+            width: 120px;
+
+            div.header {
+              font-size: 12px !important;
+            }
+
+            div.content {
+              padding: 0.7em !important;
+            }
+
+            span.count {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  div.searchapp.landing-page {
+    div.landing-page-container {
+      div.landing-page {
+        padding: 1em;
+
+        div.ui.cards {
+          div.ui.card {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 600px) {
