@@ -18,6 +18,10 @@ const esSettingsWhitelist = (name) => ({
   GET: [`/_es/${name}/_settings`],
 });
 
+const esGetDocWhitelist = (name) => ({
+  GET: [`/_es/${name}/_doc/.*`],
+});
+
 function filterRequests(req, whitelist, retVal) {
   const tomatch = whitelist[req.method] || [];
   const matches = tomatch.filter((m) => req.url.match(m)).length;
@@ -31,8 +35,6 @@ function handleSearchRequest(req, res, params) {
   if (body?.params?.config) {
     delete body.params.config;
   }
-
-  console.log('handle search', url, urlES);
 
   superagent
     .post(url)
@@ -73,8 +75,6 @@ const handleSearch = (req, res, next, params) => {
   if (typeof body === 'string') body = JSON.parse(body);
   const { requestType } = body;
 
-  // console.log('requestType', requestType, body);
-
   if (requestType) delete body.requestType; // TODO: is this safe?
 
   switch (requestType) {
@@ -100,11 +100,30 @@ const handleDownload = (req, res, next, { appName, urlNLP, urlES }) => {
   download(urlES, appConfig, req, res);
 };
 
+const DOC_ID = /.*_doc\/(?<url>.+)/m;
+
+const handleDocRequest = (req, res, next, { urlES, docId }) => {
+  const url = `${urlES}/_doc/${docId}`;
+  superagent.get(url).end((err, resp) => {
+    if (resp && resp.body) res.send(resp.body);
+  });
+};
+
 export const createHandler = ({ urlNLP, urlES }) => {
   return function esProxyHandler(req, res, next) {
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
     let appName;
+    appName = appNames
+      .map((name) => filterRequests(req, esGetDocWhitelist(name), name))
+      .find((b) => b);
+
+    if (appName) {
+      const docId = req.path.match(DOC_ID).groups['url'];
+      handleDocRequest(req, res, next, { urlES, docId });
+      return;
+    }
+
     appName = appNames
       .map((name) => filterRequests(req, esProxyWhitelist(name), name))
       .find((b) => b);
