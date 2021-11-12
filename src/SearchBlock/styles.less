@@ -213,6 +213,10 @@ div#page-document {
         font-size: 12px;
       }
 
+      div.filter-list-item {
+        max-width: 100%;
+      }
+
       div.filter-list-item.more-like-this {
         margin-bottom: 1em;
 
@@ -331,6 +335,7 @@ div#page-document {
           background: white;
 
           div.label {
+            max-width: 100%;
             background: @sf-light-gray !important;
             color: @sf-azure;
             font-weight: 600;
@@ -338,9 +343,10 @@ div#page-document {
             span.text {
               display: block;
               overflow: hidden;
-              max-width: 95px;
+              max-width: calc(100% - 14px);
+              padding-right: 14px;
               float: left;
-              text-overflow: ellipsis;
+              text-overflow: hidden;
               white-space: nowrap;
             }
           }
