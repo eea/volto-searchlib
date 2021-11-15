@@ -29,6 +29,7 @@ body.searchlib-page {
   div#page-document {
     position: relative;
     top: -4em;
+    width: 100vw !important;
     padding-top: 0px !important;
     margin-top: 0px !important;
   }
@@ -612,7 +613,7 @@ div#page-document {
     }
 
     div.above-results {
-      display: initial;
+      display: block;
       margin-bottom: 10px;
 
       div.view-selector {
@@ -729,6 +730,11 @@ div#page-document {
 
     div.search-result {
       overflow: auto;
+      width: 100%;
+      max-width: 1000px;
+      padding-bottom: 5px;
+      margin-top: 5px;
+      clear: both;
 
       &:hover {
         div.controls {
@@ -741,11 +747,6 @@ div#page-document {
           opacity: 1 !important;
         }
       }
-
-      width: 100%;
-      padding-bottom: 5px;
-      margin-top: 5px;
-      clear: both;
 
       button.mlt {
         position: relative;
