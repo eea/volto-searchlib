@@ -75,6 +75,13 @@ div#page-document {
     background-color: white;
 
     &.landing-page {
+      div.landing-page-container {
+        div.landing-page {
+          max-width: 80%;
+          margin: auto !important;
+        }
+      }
+
       div.twelve.wide {
         padding-right: 0px;
         padding-left: 0px;
@@ -1228,6 +1235,16 @@ div.ui.modal.facet {
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  div.searchapp.landing-page {
+    div.landing-page-container {
+      div.landing-page {
+        max-width: 100% !important;
       }
     }
   }
