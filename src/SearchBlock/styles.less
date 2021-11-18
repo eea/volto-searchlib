@@ -644,6 +644,50 @@ div#page-document {
       display: block;
       margin-bottom: 10px;
 
+      div#archived-facet {
+        margin: 0px 15px 0px 10px;
+        float: right;
+
+        label {
+          padding-left: 2.1rem;
+          color: @sf-dark-gray !important;
+          font-size: 12px !important;
+
+          &:before {
+            position: absolute;
+            top: 6px;
+            width: 1.7rem;
+            height: 0.6rem !important;
+            background: @sf-medium-gray2 !important;
+            box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
+          }
+
+          &:after {
+            position: absolute;
+            top: 6px;
+            width: 0.6rem !important;
+            height: 0.6rem !important;
+            background: white;
+          }
+        }
+
+        div.checked {
+          label {
+            color: @sf-azure !important;
+            font-weight: 600;
+
+            &:before {
+              background-color: @sf-azure !important;
+              box-shadow: 0px 0px 0px 2px @sf-azure !important;
+            }
+
+            &:after {
+              left: 1.1rem !important;
+            }
+          }
+        }
+      }
+
       div.view-selector {
         width: auto !important;
         padding-left: 0px !important;
