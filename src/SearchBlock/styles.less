@@ -770,6 +770,10 @@ div#page-document {
       div.card-item {
         border-radius: 0px;
 
+        &.hovered .content {
+          max-height: 13.5em;
+        }
+
         div.header {
           padding: 10px 0px 0px 0px;
 
@@ -781,8 +785,15 @@ div#page-document {
 
         div.controls {
           div.meta {
+            display: flex;
+            align-items: center;
+
             button {
               font-size: 10px;
+            }
+
+            a {
+              margin-left: auto;
             }
           }
 
@@ -792,7 +803,7 @@ div#page-document {
 
             i.icon {
               position: relative;
-              top: 2px;
+              top: 3px;
               font-size: 14px;
             }
           }
