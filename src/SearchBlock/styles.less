@@ -25,6 +25,16 @@
 @sf-dark-gray: #303030;
 @sf-medium-blue: #1c6ca4;
 
+@media screen and (min-width: 750px) {
+  body.searchlib-page {
+    &.has-toolbar {
+      div#page-document {
+        width: calc(100vw - 100px) !important;
+      }
+    }
+  }
+}
+
 body.searchlib-page {
   div#page-document {
     position: relative;
