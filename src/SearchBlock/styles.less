@@ -346,18 +346,20 @@ div#page-document {
             span.text {
               display: block;
               overflow: hidden;
-              max-width: calc(100% - 25px);
+              max-width: calc(100% - 35px);
               float: left;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
 
             span.clear-filters {
-              position: relative;
-              top: 1px;
-              color: @sf-azure;
-              float: left;
-              font-size: 13px;
+              button {
+                padding: 3px;
+                background: @sf-light-gray !important;
+                float: right;
+                color: @sf-azure;
+                font-size: 10px;
+              }
             }
           }
         }
