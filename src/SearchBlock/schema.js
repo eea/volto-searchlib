@@ -12,7 +12,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'general',
       title: 'General settings',
-      fields: ['headline', 'subheadline', 'enableNLP'],
+      fields: ['headline', 'subheadline', 'demoquestion', 'enableNLP'],
     },
     ...(formData?.enableNLP
       ? [
@@ -52,6 +52,10 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     subheadline: {
       title: 'Text below headline',
       configPath: 'subheadline',
+    },
+    demoquestion: {
+      title: 'Demo question',
+      configPath: 'demoquestion',
     },
 
     use_qa_dp: {
