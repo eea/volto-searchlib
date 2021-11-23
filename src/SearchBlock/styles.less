@@ -42,6 +42,10 @@
 }
 
 body.searchlib-page {
+  div#main div.ui.breadcrumbs {
+    display: none;
+  }
+
   div#page-document {
     position: relative;
     top: -4em;
@@ -356,8 +360,8 @@ div#page-document {
               button {
                 padding: 3px;
                 background: @sf-light-gray !important;
-                float: right;
                 color: @sf-azure;
+                float: right;
                 font-size: 10px;
               }
             }
