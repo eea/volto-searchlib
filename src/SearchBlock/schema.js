@@ -12,7 +12,13 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'general',
       title: 'General settings',
-      fields: ['headline', 'subheadline', 'promptQueries', 'enableNLP'],
+      fields: [
+        'headline',
+        'subheadline',
+        'promptQueries',
+        'promptQueryInterval',
+        'enableNLP',
+      ],
     },
     ...(formData?.enableNLP
       ? [
@@ -57,6 +63,13 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       title: 'Prompt questions',
       configPath: 'promptQueries',
       widget: 'textarea',
+    },
+    promptQueryInterval: {
+      title: 'Prompt interval',
+      description: 'Interval when to change the prompt query',
+      configPath: 'promptQueryInterval',
+      type: 'number',
+      default: 10000,
     },
 
     use_qa_dp: {
