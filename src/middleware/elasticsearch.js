@@ -100,7 +100,7 @@ const handleDownload = (req, res, next, { appName, urlNLP, urlES }) => {
   download(urlES, appConfig, req, res);
 };
 
-const DOC_ID = /.*_doc\/(?<url>.+)/m;
+const DOC_ID_RE = /.*_doc\/(?<url>.+)/m;
 
 const handleDocRequest = (req, res, next, { urlES, docId }) => {
   const url = `${urlES}/_doc/${docId}`;
@@ -119,7 +119,7 @@ export const createHandler = ({ urlNLP, urlES }) => {
       .find((b) => b);
 
     if (appName) {
-      const docId = req.path.match(DOC_ID).groups['url'];
+      const docId = req.path.match(DOC_ID_RE).groups['url'];
       handleDocRequest(req, res, next, { urlES, docId });
       return;
     }
