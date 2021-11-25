@@ -31,17 +31,35 @@
       div#page-document {
         width: calc(100vw - 100px) !important;
       }
+
+      div.header-wrapper[role='banner'] {
+        div.ui.container:first-of-type {
+          width: calc(100vw - 100px) !important;
+        }
+      }
     }
 
     &.has-toolbar-collapsed {
       div#page-document {
         width: calc(100vw - 50px) !important;
       }
+
+      div.header-wrapper[role='banner'] {
+        div.ui.container:first-of-type {
+          width: calc(100vw - 50px) !important;
+        }
+      }
     }
   }
 }
 
 body.searchlib-page {
+  div.header-wrapper[role='banner'] {
+    div.ui.container:first-of-type {
+      width: 100vw !important;
+    }
+  }
+
   div#main > div.ui.breadcrumbs {
     display: none;
   }
