@@ -60,7 +60,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       configPath: 'subheadline',
     },
     promptQueries: {
-      title: 'Prompt questions',
+      title: 'Prompt queries',
       configPath: 'promptQueries',
       widget: 'textarea',
     },
