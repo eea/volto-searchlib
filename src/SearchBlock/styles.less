@@ -670,12 +670,15 @@ div#page-document {
     }
 
     div.above-results {
-      display: block;
-      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: baseline;
+      justify-content: right;
+      margin-bottom: 0.5em;
 
       div#archived-facet {
-        margin: 0px 15px 0px 10px;
-        float: right;
+        position: relative;
+        top: -1px;
 
         label {
           padding-left: 2.1rem;
@@ -720,8 +723,7 @@ div#page-document {
       div.view-selector {
         width: auto !important;
         padding-left: 0px !important;
-        margin: 0px 10px 0px 10px;
-        float: right !important;
+        margin-left: 20px;
         font-size: 12px;
 
         div.text {
@@ -766,8 +768,8 @@ div#page-document {
 
       div.sorting {
         width: auto;
-        margin: 0px 10px 0px 10px;
-        float: right;
+        margin-bottom: 0.5em;
+        margin-left: 25px;
         font-size: 12px;
 
         div.inline.dropdown > span {
