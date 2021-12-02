@@ -6,7 +6,7 @@ import { SearchBlockSchema } from './schema';
 import { BodyClass } from '@plone/volto/helpers';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import './styles.less';
+import './less/styles.less';
 
 /**
  * Reuse the schema to allow pinpointing in the config, to allow adjusting the
