@@ -5,25 +5,7 @@
 
 @import (multiple) '~@eeacms/search-less/theme.less';
 
-@s-dark-gray: rgba(0, 0, 0, 0.87);
-@s-medium-gray2: rgba(0, 0, 0, 0.67);
-@s-medium-gray: #e0e1e2;
-@s-light-gray: #edf1f2;
-@s-light-orange: #ffdfbb;
-@s-dark-orange: #9c5a0a;
-@s-light-blue: #cfe8fb;
-@s-dark-blue: #184799;
-
-@sf-light-gray: #f9f9f9;
-@sf-light-gray: #f2f2f2;
-@sf-light-gray2: #e0e1e2;
-@sf-azure: #2d9390;
-@sf-dark-azure: #267f7c;
-@sf-blue: #0f4b87;
-@sf-medium-gray: #cccccc;
-@sf-medium-gray2: #808080;
-@sf-dark-gray: #303030;
-@sf-medium-blue: #1c6ca4;
+@import '~./variables.less';
 
 @media screen and (min-width: 750px) {
   body.searchlib-page {
@@ -788,10 +770,6 @@ div#page-document {
           }
         }
       }
-
-      div.answers-list {
-        clear: both;
-      }
     }
 
     div.cards {
@@ -848,7 +826,7 @@ div#page-document {
     div.search-result {
       overflow: auto;
       width: 100%;
-      max-width: 1000px;
+      max-width: @search-result-max-width;
       padding-bottom: 5px;
       margin-top: 5px;
       clear: both;
