@@ -847,10 +847,15 @@ div#page-document {
       }
     }
 
+    div.results-layout {
+      &.fixed {
+        max-width: @search-result-max-width;
+      }
+    }
+
     div.search-result {
       overflow: auto;
       width: 100%;
-      max-width: @search-result-max-width;
       padding-bottom: 5px;
       margin-top: 5px;
       clear: both;
