@@ -1,14 +1,16 @@
 .answers-list {
-  // background-color: #00888a;
-  background-color: @s-light-gray;
   max-width: @search-result-max-width;
-
   padding: 1em;
   margin-bottom: 3em;
+  background-color: @sf-light-gray;
   clear: both;
   // margin-top: 3em;
 
   .buttons {
+    .button {
+      background-color: @sf-azure !important;
+    }
+
     .button:first-child {
       margin-left: 1em !important;
     }
@@ -20,17 +22,19 @@
     .bullet {
       width: 1.4em;
       height: 1.4em;
+      margin-right: 0.8em;
       background-color: @secondaryColor;
       border-radius: 1.4em;
-      margin-right: 0.8em;
       cursor: pointer;
 
       &.active {
         background-color: @primaryColor;
+
         &:hover {
           background-color: @primaryColor;
         }
       }
+
       &:hover {
         background-color: #ccc;
       }
@@ -47,7 +51,7 @@
         width: 0px;
         height: 10px;
         animation: progres 4s infinite linear;
-        background-color: #2d9390;
+        background-color: @sf-azure;
         border-radius: 1px;
       }
     }
