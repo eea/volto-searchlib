@@ -298,10 +298,14 @@ div#page-document {
       div.filter-list-item {
         max-width: 100%;
 
+        .ui.label {
+          display: flex;
+        }
+
         img.facet-option-icon {
           display: inline;
           width: auto;
-          height: 12px;
+          max-height: 12px !important;
           margin-right: 0.5em;
         }
       }
@@ -1539,18 +1543,6 @@ p.demo-question {
     animation-duration: 0.8s;
     animation-name: demoQuestion;
     font-size: small;
-  }
-}
-
-.filterValue {
-  img {
-    max-width: 16px;
-    max-height: 16px;
-  }
-
-  .filterResultEntry {
-    display: inline-block;
-    margin-left: 0.5em;
   }
 }
 
