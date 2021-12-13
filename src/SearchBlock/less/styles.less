@@ -131,6 +131,17 @@ div#page-document {
         div.landing-page {
           max-width: 80%;
           margin: auto !important;
+
+          div.cards {
+            display: grid;
+            justify-content: space-between;
+            column-gap: 5px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+            div.ui.card {
+              width: auto !important;
+            }
+          }
         }
       }
 
@@ -1418,8 +1429,6 @@ div.ui.modal.facet {
 
         div.ui.cards {
           div.ui.card {
-            width: 120px;
-
             div.header {
               font-size: 12px !important;
             }
@@ -1460,7 +1469,7 @@ div.ui.modal.facet {
 
         div.ui.cards {
           div.ui.card {
-            width: 100% !important;
+            max-width: 60% !important;
           }
         }
       }
