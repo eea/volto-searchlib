@@ -1374,6 +1374,21 @@ div.ui.modal.facet {
 }
 
 @media only screen and (min-width: 770px) {
+  div.searchapp {
+    &.landing-page {
+      div.landing-page-container {
+        div.landing-page {
+          div.cards {
+            grid-template-columns: repeat(
+              auto-fit,
+              minmax(280px, 1fr)
+            ) !important;
+          }
+        }
+      }
+    }
+  }
+
   div.cards {
     div.card-item {
       max-width: 400px !important;
