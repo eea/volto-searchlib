@@ -1262,6 +1262,26 @@ div#page-document {
   }
 }
 
+@media screen and (min-width: 1000px) and (max-width: 1300px) {
+  div.content-section-tabs.menu {
+    a.item {
+      margin-right: 1.5em !important;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  div.content-section-tabs.menu {
+    a.item {
+      margin-right: 0.5em !important;
+
+      span.count {
+        font-size: 10px !important;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 600px) {
   .ui.basic.segment.content-area .ui.container#page-document {
     padding: 0px 5px 0px 5px !important;
