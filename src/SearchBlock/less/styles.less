@@ -1131,9 +1131,9 @@ div#page-document {
 
         div.item {
           padding: 5px !important;
-          font-size: 10px;
           background: @sf-azure;
           color: white;
+          font-size: 10px;
           font-weight: 400;
         }
       }
@@ -1688,6 +1688,13 @@ div.ui.modal.facet {
 }
 
 @media only screen and (min-width: 770px) {
+  div.col-left {
+    div.scrolled {
+      max-width: 280px;
+      margin-left: auto;
+    }
+  }
+
   div.searchapp {
     &.landing-page {
       div.landing-page-container {
