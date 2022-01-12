@@ -1826,11 +1826,17 @@ div.ui.modal.facet {
     div.landing-page-container {
       div.landing-page {
         padding: 1em;
+      }
+    }
+  }
+}
 
+@media only screen and (max-width: 260px) {
+  div.searchapp.landing-page {
+    div.landing-page-container {
+      div.landing-page {
         div.ui.cards {
-          div.ui.card {
-            max-width: 60% !important;
-          }
+          display: block !important;
         }
       }
     }
