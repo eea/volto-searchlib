@@ -444,7 +444,7 @@ div#page-document {
     }
 
     div.content-section-tabs.menu {
-      overflow: auto;
+      // overflow: auto;
       // padding: 0em 20%;
       width: 100%;
       max-width: 100%;
@@ -457,6 +457,39 @@ div#page-document {
       margin-bottom: 3px;
       border-radius: 0px;
       box-shadow: none;
+
+      div.item.dropdown {
+        padding: 0px 10px 0px 10px;
+        border: none;
+        background: white;
+        color: @sf-dark-gray;
+        border-bottom: 4px solid white;
+        font-size: 14px;
+        font-weight: 400 !important;
+
+        &:before {
+          display: none;
+        }
+
+        div.menu {
+          margin-top: 4px;
+        }
+
+        i.icon:first-of-type {
+          display: none;
+        }
+
+        span.title {
+          margin-right: 5px;
+          color: @sf-dark-gray;
+        }
+
+        span.count {
+          color: @sf-medium-gray2;
+          font-size: 10px;
+          font-weight: 400;
+        }
+      }
 
       a.item {
         padding: 0px;
