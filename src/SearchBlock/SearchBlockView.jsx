@@ -62,14 +62,15 @@ export default function SearchBlockView(props) {
   );
 
   // TODO: this is a hack, please solve it properly
-  registry.searchui.globalsearch = {
-    ...registry.searchui.globalsearch,
+  registry.searchui[appName] = {
+    ...registry.searchui[appName],
     requestParams: {
       params: {
         index: data.rawIndex,
       },
     },
   };
+
   // console.log('registry', registry);
   return (
     <BodyClass className="searchlib-page">

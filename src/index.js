@@ -10,6 +10,7 @@ import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
 import SelectWidget from './SearchBlock/SelectWidget';
 
 const applyConfig = (config) => {
+  config.widgets.id.qa_queryTypes = SelectWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {
@@ -56,7 +57,6 @@ export const installGlobalSearch = (config) => {
   // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
   // config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
-  config.widgets.id.qa_queryTypes = SelectWidget;
 
   const { globalsearch } = config.settings.searchlib.searchui;
 
