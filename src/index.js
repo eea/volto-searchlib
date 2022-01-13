@@ -54,14 +54,11 @@ const applyConfig = (config) => {
 };
 
 export const installGlobalSearch = (config) => {
-  // config.settings.devProxyToApiPath = false;
   config.settings.searchlib = installConfig(config.settings.searchlib);
-  // config.settings.searchlib.resolve.LeftColumnLayout.component = LeftColumnLayout;
 
   const { globalsearch } = config.settings.searchlib.searchui;
 
   globalsearch.elastic_index = '_es/globalsearch';
-  // globalsearch.layoutComponent = 'LeftColumnLayout';
 
   return config;
 };
