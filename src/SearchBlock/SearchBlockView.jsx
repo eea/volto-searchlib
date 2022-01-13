@@ -60,9 +60,14 @@ export default function SearchBlockView(props) {
     data,
     schema,
   );
-  registry.searchui.globalsearch.requestParams = {
-    params: {
-      index: data.rawIndex,
+
+  // TODO: this is a hack, please solve it properly
+  registry.searchui.globalsearch = {
+    ...registry.searchui.globalsearch,
+    requestParams: {
+      params: {
+        index: data.rawIndex,
+      },
     },
   };
   // console.log('registry', registry);
