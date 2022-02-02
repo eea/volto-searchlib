@@ -18,7 +18,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'promptQueries',
         'promptQueryInterval',
         'debugQuery',
-        'extraQueryConfig',
+        'customConfig',
         'enableNLP',
       ],
     },
@@ -53,11 +53,11 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       configPath: 'enableNLP',
     },
 
-    extraQueryConfig: {
+    customConfig: {
       widget: 'textarea',
-      title: 'Extra query configuration',
+      title: 'Custom configuration',
       description:
-        'Enter a valid JSON object. It will be added to the query and it can overwrite existing query fields',
+        'Enter a valid JSON object. It will be added to the configuration and it can overwrite existing configuration fields',
       default: '{}',
 
       modifyConfig: (config, data) => {
