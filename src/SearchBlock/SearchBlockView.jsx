@@ -50,6 +50,13 @@ const applyBlockSettings = (config, appName, data, schema) => {
   return config;
 };
 
+const overlayStyle = {
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  zIndex: '100',
+};
+
 export default function SearchBlockView(props) {
   const { data = {}, mode = 'view' } = props;
   const schema = SearchBlockSchema(props);
@@ -75,6 +82,11 @@ export default function SearchBlockView(props) {
   return (
     <BodyClass className="searchlib-page">
       <div className="searchlib-block">
+        {mode !== 'view' ? (
+          <div className="overlay" style={overlayStyle}></div>
+        ) : (
+          ''
+        )}
         <SearchApp registry={registry} appName={appName} mode={mode} />
       </div>
     </BodyClass>

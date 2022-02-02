@@ -17,6 +17,8 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'subheadline',
         'promptQueries',
         'promptQueryInterval',
+        'debugQuery',
+        'extraQueryConfig',
         'enableNLP',
       ],
     },
@@ -49,6 +51,33 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       type: 'boolean',
       title: 'Enable NLP capabilities?',
       configPath: 'enableNLP',
+    },
+
+    extraQueryConfig: {
+      widget: 'textarea',
+      title: 'Extra query configuration',
+      description:
+        'Enter a valid JSON object. It will be added to the query and it can overwrite existing query fields',
+      default: '{}',
+
+      modifyConfig: (config, data) => {
+        let extra = {};
+        try {
+          extra = JSON.parse(data);
+        } catch {
+          // eslint-disable-next-line
+          console.log('Not a valid JSON object', data);
+          return config;
+        } finally {
+          return { ...config, extra };
+        }
+      },
+    },
+
+    debugQuery: {
+      type: 'boolean',
+      title: 'Enable debugging?',
+      configPath: 'debugQuery',
     },
 
     headline: {
