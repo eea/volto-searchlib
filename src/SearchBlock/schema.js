@@ -65,11 +65,8 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         try {
           extra = JSON.parse(data);
         } catch {
-          // eslint-disable-next-line
-          console.log('Not a valid JSON object', data);
-          return config;
         } finally {
-          return { ...config, extra };
+          Object.assign(config, extra);
         }
       },
     },

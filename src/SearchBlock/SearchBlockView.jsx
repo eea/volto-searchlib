@@ -78,6 +78,8 @@ export default function SearchBlockView(props) {
     },
   };
 
+  console.log('config', registry);
+
   // console.log('registry', registry);
   return (
     <BodyClass className="searchlib-page">
