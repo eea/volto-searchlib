@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
 
-import installConfig from '@eeacms/globalsearch';
+import installGlobalsearch from '@eeacms/globalsearch';
+import installDatahub from '@eeacms/datahub';
 import { registry } from '@eeacms/search';
 import codeSVG from '@plone/volto/icons/code.svg';
 import SearchBlockView from './SearchBlock/SearchBlockView';
@@ -53,12 +54,26 @@ const applyConfig = (config) => {
   return config;
 };
 
+// TODO: this should be moved into its own volto addon
 export const installGlobalSearch = (config) => {
-  config.settings.searchlib = installConfig(config.settings.searchlib);
+  config.settings.searchlib = installGlobalsearch(config.settings.searchlib);
 
   const { globalsearch } = config.settings.searchlib.searchui;
 
+  // Tweak the searchlib config to use the middleware instead of the index
   globalsearch.elastic_index = '_es/globalsearch';
+
+  return config;
+};
+
+// TODO: this should be moved into its own volto addon
+export const installDataHub = (config) => {
+  config.settings.searchlib = installDatahub(config.settings.searchlib);
+
+  const { datahub } = config.settings.searchlib.searchui;
+
+  // Tweak the searchlib config to use the middleware instead of the index
+  datahub.elastic_index = '_es/globalsearch';
 
   return config;
 };
