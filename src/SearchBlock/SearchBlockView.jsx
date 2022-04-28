@@ -72,9 +72,13 @@ export default function SearchBlockView(props) {
   registry.searchui[appName] = {
     ...registry.searchui[appName],
     requestParams: {
-      params: {
-        index: data.rawIndex,
-      },
+      ...(data.rawIndex
+        ? {
+            params: {
+              index: data.rawIndex,
+            },
+          }
+        : {}),
     },
   };
 
