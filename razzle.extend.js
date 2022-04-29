@@ -1,7 +1,8 @@
 const path = require('path');
 const makeLoaderFinder = require('razzle-dev-utils/makeLoaderFinder');
 
-const pkgs = ['@eeacms/search', '@eeacms/globalsearch'];
+const pkgs = ['@eeacms/search'];
+// , '@eeacms/globalsearch'
 
 const modify = (config, { target, dev }, webpack) => {
   const projectRootPath = path.resolve('.');

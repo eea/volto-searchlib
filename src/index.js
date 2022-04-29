@@ -1,16 +1,17 @@
 import 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
 
-import installGlobalsearch from '@eeacms/globalsearch';
+// import installGlobalsearch from '@eeacms/globalsearch';
 // import installDatahub from '@eeacms/datahub';
-import { registry } from '@eeacms/search';
-import codeSVG from '@plone/volto/icons/code.svg';
-import SearchBlockView from './SearchBlock/SearchBlockView';
-import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
+// import { registry } from '@eeacms/search';
+// import codeSVG from '@plone/volto/icons/code.svg';
+// import SearchBlockView from './SearchBlock/SearchBlockView';
+// import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
 // import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
 import SelectWidget from './SearchBlock/SelectWidget';
 
 const applyConfig = (config) => {
+  return config;
   config.widgets.id.qa_queryTypes = SelectWidget;
   config.settings.searchlib = registry;
 
@@ -55,16 +56,16 @@ const applyConfig = (config) => {
 };
 
 // TODO: this should be moved into its own volto addon
-export const installGlobalSearch = (config) => {
-  config.settings.searchlib = installGlobalsearch(config.settings.searchlib);
-
-  const { globalsearch } = config.settings.searchlib.searchui;
-
-  // Tweak the searchlib config to use the middleware instead of the index
-  globalsearch.elastic_index = '_es/globalsearch';
-
-  return config;
-};
+// export const installGlobalSearch = (config) => {
+//   config.settings.searchlib = installGlobalsearch(config.settings.searchlib);
+//
+//   const { globalsearch } = config.settings.searchlib.searchui;
+//
+//   // Tweak the searchlib config to use the middleware instead of the index
+//   globalsearch.elastic_index = '_es/globalsearch';
+//
+//   return config;
+// };
 
 // TODO: this should be moved into its own volto addon
 // export const installDataHub = (config) => {
