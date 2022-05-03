@@ -41,8 +41,6 @@ function handleSearchRequest(req, res, params) {
     .send(body)
     .set('accept', 'application/json')
     .end((err, resp) => {
-      if (resp && resp.body) res.send(resp.body);
-
       if (resp && resp.body) {
         res.send(resp.body);
       } else {
