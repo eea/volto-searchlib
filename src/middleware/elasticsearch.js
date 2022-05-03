@@ -42,6 +42,13 @@ function handleSearchRequest(req, res, params) {
     .set('accept', 'application/json')
     .end((err, resp) => {
       if (resp && resp.body) res.send(resp.body);
+
+      if (resp && resp.body) {
+        res.send(resp.body);
+      } else {
+        res.send({ error: 'Error' });
+        log('err', err);
+      }
     });
 }
 
