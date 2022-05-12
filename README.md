@@ -1,5 +1,20 @@
 # volto-searchlib
 
+### Elasticsearch and NLPService middleware
+
+You can configure the proxied Elasticsearch with the env var:
+
+`RAZZLE_PROXY_ES_DSN_${appName}`, so for example `RAZZLE_PROXY_ES_DSN_datahub`.
+
+If you use only one ES server, you can simply set `RAZZLE_PROXY_ES_DSN`.
+
+You can configure the proxied NLPServer with the env var:
+
+`RAZZLE_PROXY_QA_DSN_${appName}`, for example:
+`RAZZLE_PROXY_QA_DSN_globalsearch`. You you use only one NLP service, you can
+simply set `RAZZLE_PROXY_QA_DSN`. Notice, in principle the NLPService can use
+different Elasticsearch indexes.
+
 [![Releases](https://img.shields.io/github/v/release/eea/volto-searchlib)](https://github.com/eea/volto-searchlib/releases)
 
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-searchlib%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-searchlib/job/master/display/redirect)

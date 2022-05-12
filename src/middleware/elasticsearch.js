@@ -113,60 +113,97 @@ const DOC_ID_RE = /.*_doc\/(?<url>.+)/m;
 
 const handleDocRequest = (req, res, next, { urlES, docId }) => {
   const url = `${urlES}/_doc/${docId}`;
+  log(`Get document: ${url}`);
   superagent.get(url).end((err, resp) => {
     if (resp && resp.body) res.send(resp.body);
   });
 };
 
+const getUrlNLP = (appName) => {
+  return (
+    process.env[`RAZZLE_PROXY_QA_DSN_${appName}`] ||
+    process.env.RAZZLE_PROXY_QA_DSN ||
+    'http://localhost:8000/api'
+  );
+};
+
+const getUrlES = (appName) => {
+  return (
+    process.env[`RAZZLE_PROXY_ES_DSN_${appName}`] ||
+    process.env.RAZZLE_PROXY_ES_DSN ||
+    'http://localhost:9200/_all'
+  );
+};
+
 export const createHandler = ({ urlNLP, urlES }) => {
   return function esProxyHandler(req, res, next) {
+    let urlES, urlNLP;
+
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
-    let appName;
-    appName = appNames
+    const docRequestAppName = appNames
       .map((name) => filterRequests(req, esGetDocWhitelist(name), name))
       .find((b) => b);
 
-    if (appName) {
+    if (docRequestAppName) {
       const docId = req.path.match(DOC_ID_RE).groups['url'];
+      urlES = getUrlES(docRequestAppName);
       handleDocRequest(req, res, next, { urlES, docId });
       return;
     }
 
-    appName = appNames
+    const searchRequestAppName = appNames
       .map((name) => filterRequests(req, esProxyWhitelist(name), name))
       .find((b) => b);
 
-    if (appName) {
+    if (searchRequestAppName) {
       const body = req.body || {};
       const conf =
-        body.params?.config || config.settings.searchlib.searchui[appName];
+        body.params?.config ||
+        config.settings.searchlib.searchui[searchRequestAppName];
 
-      log('conf', appName, conf.enableNLP);
+      log('conf', searchRequestAppName, conf.enableNLP);
+
+      urlNLP = getUrlNLP(searchRequestAppName);
+      urlES = getUrlES(searchRequestAppName);
 
       handleSearch(req, res, next, {
-        appName,
+        appName: searchRequestAppName,
         urlNLP,
         urlES: conf.enableNLP ? urlNLP : urlES,
       });
       return;
     }
 
-    appName = appNames
+    const settingsAppName = appNames
       .map((name) => filterRequests(req, esSettingsWhitelist(name), name))
       .find((b) => b);
 
-    if (appName) {
-      handleSettings(req, res, next, { appName, urlNLP, urlES });
+    if (settingsAppName) {
+      urlNLP = getUrlNLP(settingsAppName);
+      urlES = getUrlES(settingsAppName);
+
+      handleSettings(req, res, next, {
+        appName: settingsAppName,
+        urlNLP,
+        urlES,
+      });
       return;
     }
 
-    appName = appNames
+    const downloadAppName = appNames
       .map((name) => filterRequests(req, esDownloadWhitelist(name), name))
       .find((b) => b);
 
-    if (appName) {
-      handleDownload(req, res, next, { appName, urlNLP, urlES });
+    if (downloadAppName) {
+      urlNLP = getUrlNLP(downloadAppName);
+      urlES = getUrlES(downloadAppName);
+
+      handleDownload(req, res, next, {
+        appName: downloadAppName,
+        urlNLP,
+        urlES,
+      });
       return;
     }
 
