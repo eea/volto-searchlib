@@ -33,10 +33,7 @@ const applyConfig = (config) => {
     const express = require('express');
     const { createHandler } = require('./middleware/elasticsearch');
 
-    const handler = createHandler({
-      urlES: process.env.RAZZLE_PROXY_ES_DSN || 'http://localhost:9200/_all',
-      urlNLP: process.env.RAZZLE_PROXY_QA_DSN || 'http://localhost:8000/api',
-    });
+    const handler = createHandler();
 
     const middleware = express.Router();
     middleware.use(express.json({ limit: config.settings.maxResponseSize }));

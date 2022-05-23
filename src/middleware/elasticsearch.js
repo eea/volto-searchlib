@@ -135,7 +135,7 @@ const getUrlES = (appName) => {
   );
 };
 
-export const createHandler = ({ urlNLP, urlES }) => {
+export const createHandler = () => {
   return function esProxyHandler(req, res, next) {
     let urlES, urlNLP;
 
