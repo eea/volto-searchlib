@@ -2,9 +2,6 @@
   max-width: @search-result-max-width;
   margin-bottom: 3em;
   clear: both;
-  // padding: 1em;
-  // margin-top: 3em;
-  // background-color: @sf-light-gray;
 
   .ui.label {
     float: right;
@@ -51,6 +48,7 @@
 
     .three-dots-loader {
       display: inline;
+
       div {
         display: inline !important;
       }
@@ -85,6 +83,7 @@
     .answer__primarylink {
       margin: 1em 0;
       font-size: 1em;
+
       .result__source {
         a {
           font-weight: normal;
@@ -117,7 +116,6 @@
   }
 
   .answers__links {
-    // margin-top: 0.8rem;
     font-size: small;
 
     .primary a {
@@ -126,7 +124,6 @@
 
     .answer__date {
       display: inline-block;
-      // width: 7em;
       padding-right: 0.5em;
       margin-right: 0.3em;
       text-align: right;
@@ -146,16 +143,9 @@
 
   .ui.segment.answers-wrapper {
     padding: 0;
-    // color: white;
-    // padding-right: 0px;
-    // padding-left: 0px;
-
     border: none;
-    // border-top: 1px solid @sf-light-gray2;
-    // margin-bottom: 2em;
     background: unset;
     box-shadow: none;
-    // border-bottom: 1px solid #ccc;
 
     .answers__bottom {
       display: flex;
@@ -194,10 +184,27 @@
         }
       }
     }
+  }
+}
 
-    // .answer__text {
-    //   font-size: normal;
-    //   font-weight: bold;
-    // }
+@keyframes progres {
+  0% {
+    width: 0%;
+  }
+
+  25% {
+    width: 50%;
+  }
+
+  50% {
+    width: 75%;
+  }
+
+  75% {
+    width: 85%;
+  }
+
+  100% {
+    width: 100%;
   }
 }
