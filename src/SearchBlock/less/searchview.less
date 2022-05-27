@@ -4,22 +4,10 @@ div#page-document {
   }
 
   .searchlib-block {
-    position: relative;
-    right: 50%;
-    left: 50%;
-    width: 100vw !important;
-    max-width: none !important;
-    margin-right: -50vw !important;
-    margin-left: -50vw !important;
+    color: @s-dark-gray;
 
     div.searchapp {
       margin: 1em 0;
-      background-color: white;
-
-      div > div.ui.container {
-        padding-right: 0px !important;
-        padding-left: 0px !important;
-      }
 
       i.icon.dropdown:before,
       .ui.accordion .title .dropdown.icon:before,
@@ -282,13 +270,6 @@ body.searchlib-page {
   div#main > div.ui.breadcrumbs {
     display: none;
   }
-
-  div#page-document {
-    width: 100vw !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    margin-top: 0px !important;
-  }
 }
 
 .sui-app-info {
@@ -406,10 +387,6 @@ p.highlight-description\.highlight {
 
   body.searchlib-page {
     &.has-toolbar {
-      div#page-document .searchlib-block {
-        width: calc(100% - 80px) !important;
-      }
-
       div.header-wrapper[role='banner'] {
         div.ui.container:first-of-type {
           width: calc(100vw - 100px) !important;
@@ -418,10 +395,6 @@ p.highlight-description\.highlight {
     }
 
     &.has-toolbar-collapsed {
-      div#page-document .searchlib-block {
-        width: calc(100% - 20px) !important;
-      }
-
       div.header-wrapper[role='banner'] {
         div.ui.container:first-of-type {
           width: calc(100vw - 50px) !important;

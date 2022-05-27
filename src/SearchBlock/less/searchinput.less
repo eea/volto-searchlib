@@ -20,19 +20,11 @@ div.extra-facets {
 
 div.search-input {
   div.terms-box {
-    display: flex;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid @sf-medium-gray;
-
     .terms-box-left {
       flex-grow: 0;
     }
 
     input {
-      // width: calc(100% - 55px);
-      // border: none;
-
       &:focus-visible {
         border: none !important;
         outline: none;
@@ -95,96 +87,52 @@ div.search-input {
 }
 
 .demo-question {
-  margin-top: 0.5em;
-  font-size: 14px;
+  margin-top: 2.5em;
 
-  span {
-    color: @sf-dark-gray;
-  }
+  .ui.list {
+    margin: 0;
+    font-size: 18px;
 
-  a.button {
-    display: inline;
-    background: @sf-light-gray;
-    color: @sf-blue !important;
-    font-size: 16px;
-  }
-
-  .dropdown {
-    .text {
-      padding-left: 0.5em;
-    }
-
-    .menu {
-      .item {
-        min-width: 20em;
-        white-space: normal;
-
-        span.text {
-          padding: initial;
-        }
-      }
-    }
-  }
-}
-
-@keyframes demoQuestion {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-p.demo-question {
-  color: black;
-
-  a.ui.basic.button {
-    padding: 0px !important;
-    animation-duration: 0.8s;
-    animation-name: demoQuestion;
-    font-size: small;
-  }
-}
-
-p.demo-question {
-  margin-top: 0.5em;
-  font-size: 14px;
-
-  span {
-    color: @sf-dark-gray;
-  }
-
-  a {
-    background: @sf-light-gray;
-    color: @sf-blue;
-    font-size: 16px;
-  }
-
-  a.explore-more-queries {
-    font-size: 14px;
-  }
-
-  a.explore-more-queries.ui.button.compact {
-    font-weight: 400;
-  }
-
-  a.ui.button {
-    border: none !important;
-    box-shadow: none !important;
-
-    &:hover {
-      border: none !important;
-      box-shadow: none !important;
+    .item {
+      padding-top: 1.5em !important;
+      color: @s-dark-gray !important;
+      font-weight: 400;
     }
   }
 
-  a.ui.button.compact {
-    border: none !important;
-    background: transparent;
-    box-shadow: none !important;
-    color: @sf-azure !important;
-    font-weight: bold;
+  .ui.accordion.suggestion-accordion {
+    .title {
+      justify-content: flex-end;
+      border: none;
+      color: @s-dark-gray;
+      font-weight: 500;
+    }
+
+    .accordion-title-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .active.title {
+      background-color: transparent;
+    }
+
+    .title i {
+      color: @s-dark-gray;
+    }
+
+    .title i:before {
+      font-size: 2.5rem;
+    }
+
+    .content {
+      padding: 0 !important;
+      background-color: #fff;
+    }
+  }
+
+  h4 {
+    margin-bottom: 0;
+    color: @s-dark-gray;
   }
 }
