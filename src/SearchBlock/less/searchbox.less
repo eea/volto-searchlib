@@ -236,48 +236,47 @@
   }
 }
 
+//TODO: move list with more space to design system
+.ui.list {
+  margin-top: 2em !important;
+
+  > .item {
+    padding-top: 0 !important;
+    color: @deepBlue !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+  }
+
+  > .item:not(:last-child) {
+    padding-bottom: 3.5em !important;
+  }
+}
+
 .demo-question {
   margin-top: 2.5em;
 
-  .ui.list {
-    margin: 0;
-    font-size: 18px;
+  .ui.basic.button.explore-more-queries {
+    display: flex;
+    align-items: center;
+    color: @deepBlue !important;
+    float: right;
+    font-size: 20px;
+    font-weight: 700;
 
-    .item {
-      padding-top: 1.5em !important;
-      color: @deepBlue !important;
-      font-weight: 400;
-    }
-  }
-
-  .ui.accordion.suggestion-accordion {
-    .title {
-      justify-content: flex-end;
-      border: none;
-      color: @deepBlue;
-      font-weight: 500;
-    }
-
-    .accordion-title-wrapper {
+    .icon {
       display: flex;
       align-items: center;
+      margin: 0 5px !important;
+      font-size: 30px;
+      opacity: 1;
     }
 
-    .active.title {
-      background-color: transparent;
-    }
-
-    .title i {
-      color: @deepBlue;
-    }
-
-    .title i:before {
-      font-size: 2.5rem;
-    }
-
-    .content {
-      padding: 0 !important;
-      background-color: #fff;
+    &:hover,
+    &:active,
+    &:focus {
+      border: none;
+      background: transparent;
+      box-shadow: none;
     }
   }
 }
