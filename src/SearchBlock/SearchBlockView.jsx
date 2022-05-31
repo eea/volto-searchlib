@@ -5,7 +5,7 @@ import { SearchApp } from '@eeacms/search';
 import { SearchBlockSchema } from './schema';
 import { BodyClass } from '@plone/volto/helpers';
 
-import '@elastic/react-search-ui-views/lib/styles/styles.css';
+// import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import './less/styles.less';
 
 /**

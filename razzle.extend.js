@@ -6,6 +6,7 @@ const pkgs = ['@eeacms/search'];
 
 const modify = (config, { target, dev }, webpack) => {
   const projectRootPath = path.resolve('.');
+  return config;
   const jsConfig = require(`${projectRootPath}/jsconfig.json`);
   const searchlibConf = jsConfig.compilerOptions.paths.searchlib;
   if (!searchlibConf) return config;
