@@ -1,36 +1,13 @@
 .landing-page-container {
   margin-top: 5em;
 
-  .ui.secondary.pointing.menu {
-    .tab-item {
-      position: relative;
-      display: block;
-      font-size: 20px;
-      font-weight: 500;
-
-      // &::after {
-      //   margin-right: 10px;
-      //   // position: absolute;
-      //   // bottom: 0;
-      //   // width: 80%;
-      //   // height: 1px;
-      //   // background-color: red;
-      //   // content: '';
-      // }
-    }
-
-    .active.tab-item {
-      font-weight: 500;
-    }
-  }
-
   .search-tab-wrapper {
     width: 100%;
     overflow-x: auto;
   }
 
   .search-tab {
-    width: 1120px;
+    width: 1108px;
     margin-top: 4em;
 
     .ui.tab {
@@ -40,64 +17,50 @@
 
     .ui.menu {
       a.item {
-        border: none;
-        border-bottom: 4px solid #fff;
-        color: @s-dark-gray;
-      }
-
-      a.item.active {
-        border-bottom: 4px solid @s-pine-green;
-        color: @s-pine-green;
+        font-size: 20px;
       }
     }
 
     .search-cards {
-      display: flex;
-      flex-wrap: wrap;
+      margin-top: 1em;
     }
 
-    .ui.card {
-      max-width: 210px;
-      flex-direction: column;
-      padding: 1.3em 0.7em;
-      margin: 0;
-      color: @s-dark-gray;
-      cursor: pointer;
-      text-align: center;
+    .ui.cards {
+      .ui.card {
+        margin-top: 2em;
+        color: @deepBlue;
+        cursor: pointer;
 
-      .content {
-        flex-grow: initial;
-        padding: 0;
-        padding-bottom: 0.5em;
-      }
+        .content {
+          flex-grow: initial;
+          padding: 0;
+          padding-bottom: 0.5em;
+        }
 
-      .content > .description {
-        color: @s-dark-gray;
-        font-size: 18px;
-      }
+        .content > .header {
+          color: @deepBlue;
+          font-size: 18px;
+          font-weight: 400;
+        }
 
-      .content.extra {
-        color: @s-dark-gray;
-      }
+        .content.extra {
+          color: @deepBlue;
+        }
 
-      &:hover {
-        border: none;
-        box-shadow: none;
-      }
+        &:hover {
+          border: none;
+          box-shadow: none;
+        }
 
-      img.facet-option-icon {
-        display: block;
-        width: auto;
-        height: 30px !important;
-        margin: 0 auto;
-        margin-bottom: 0.5em;
-        filter: grayscale(100%);
+        img.facet-option-icon {
+          display: block;
+          width: auto;
+          height: 30px !important;
+          margin-bottom: 0.5em;
+          filter: grayscale(100%);
+        }
       }
     }
-  }
-
-  h4.browse-by {
-    color: @s-dark-gray;
   }
 
   div.info {
@@ -105,10 +68,5 @@
     margin-bottom: 1em;
     color: @sf-medium-gray2;
     font-size: 12px;
-  }
-
-  .search-cards {
-    display: flex;
-    flex-wrap: wrap;
   }
 }
