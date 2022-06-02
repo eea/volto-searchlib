@@ -57,18 +57,8 @@ div#page-document .searchlib-block {
   }
 
   .content-section-tabs.menu {
-    overflow: auto;
-    width: 100%;
-    max-width: 100%;
-    border: none;
-    border-top: none;
-    border-right: none;
-    border-bottom: 1px solid @midGray;
-    border-left: none;
-    margin: 0;
-    margin-bottom: 3px;
-    border-radius: 0px;
-    box-shadow: none;
+    margin-bottom: 1em;
+    overflow-x: auto;
 
     .item.dropdown {
       padding: 0px 10px 0px 10px;
@@ -104,10 +94,10 @@ div#page-document .searchlib-block {
     }
 
     a.item {
-      padding: 0px;
-      border-bottom: 3px solid white;
-      margin-right: 1.5em;
-      border-radius: 0px;
+      // padding: 0px;
+      // border-bottom: 3px solid white;
+      // margin-right: 1.5em;
+      // border-radius: 0px;
       color: @deepBlue;
       font-size: 18px;
 
@@ -120,7 +110,7 @@ div#page-document .searchlib-block {
       }
 
       &.active {
-        border-bottom: 3px solid @secondaryColor;
+        // border-bottom: 3px solid @secondaryColor;
         color: @secondaryColor;
 
         // .icon {
@@ -356,69 +346,6 @@ div#page-document .searchlib-block {
       background: white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
-    }
-  }
-
-  .filter-list-item.more-like-this {
-    margin-bottom: 1em;
-
-    div.ui.label {
-      width: 100%;
-    }
-
-    i.icon.delete {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: @secondaryColor;
-    }
-
-    div.meta {
-      line-height: normal;
-
-      i.icon {
-        margin-right: 0.5em;
-      }
-    }
-
-    a.centered {
-      img {
-        width: 100%;
-        height: auto;
-        max-height: 200px;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-        object-fit: cover;
-        object-position: top;
-      }
-    }
-
-    h4 {
-      margin-top: 0.5em;
-      line-height: inherit;
-    }
-  }
-
-  .filter-list-item.more-like-this > .labels > .label {
-    overflow: hidden;
-    max-width: 100%;
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .mlt-filter {
-    img {
-      width: 100%;
-      height: auto;
-    }
-
-    a {
-      font-size: 12px;
-    }
-
-    .meta {
-      font-size: 12px;
-      font-weight: 400;
     }
   }
 
@@ -785,13 +712,13 @@ div.ui.modal.facet {
   margin: 0;
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1300px) {
-  div.content-section-tabs.menu {
-    a.item {
-      margin-right: 1.5em !important;
-    }
-  }
-}
+// @media screen and (min-width: 1000px) and (max-width: 1300px) {
+//   div.content-section-tabs.menu {
+//     a.item {
+//       margin-right: 1.5em !important;
+//     }
+//   }
+// }
 
 @media only screen and (max-width: 1080px) {
   div.facets {
@@ -812,27 +739,27 @@ div.ui.modal.facet {
   }
 }
 
-@media screen and (max-width: 1000px) {
-  div.content-section-tabs.menu {
-    a.item {
-      margin-right: 0.5em !important;
-
-      span.count {
-        font-size: 10px !important;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 600px) {
-  div.content-section-tabs.menu {
-    div.item.dropdown {
-      div.menu {
-        transform: translateX(-90px);
-      }
-    }
-  }
-}
+// @media screen and (max-width: 1000px) {
+//   div.content-section-tabs.menu {
+//     a.item {
+//       margin-right: 0.5em !important;
+//
+//       span.count {
+//         font-size: 10px !important;
+//       }
+//     }
+//   }
+// }
+//
+// @media screen and (max-width: 600px) {
+//   div.content-section-tabs.menu {
+//     div.item.dropdown {
+//       div.menu {
+//         transform: translateX(-90px);
+//       }
+//     }
+//   }
+// }
 
 @media only screen and (max-width: 766px) {
   div.content .searchlib-multiterm-facet.facet-sources button.ui.toggle {

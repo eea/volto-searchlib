@@ -236,24 +236,27 @@
   }
 }
 
-//TODO: move list with more space to design system
 .ui.list {
-  margin-top: 2em !important;
-
   > .item {
     padding-top: 0 !important;
+    padding-bottom: 1em !important;
     color: @deepBlue !important;
     font-size: 18px !important;
     font-weight: 400 !important;
-  }
-
-  > .item:not(:last-child) {
-    padding-bottom: 3.5em !important;
   }
 }
 
 .demo-question {
   margin-top: 2.5em;
+
+  //TODO: move list with more space to design system
+  .ui.list {
+    margin-top: 2em !important;
+
+    > .item:not(:last-child) {
+      padding-bottom: 3.5em !important;
+    }
+  }
 
   .ui.basic.button.explore-more-queries {
     display: flex;
