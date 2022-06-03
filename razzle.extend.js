@@ -23,7 +23,6 @@ const modify = (config, { target, dev }, webpack) => {
     incl = path.dirname(require.resolve(name));
     include.push(incl)
   });
-  console.log(config.module.rules[0])
   return config;
 };
 
