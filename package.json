@@ -12,6 +12,9 @@
     "plone",
     "react"
   ],
+  "addons": [
+    "@eeacms/volto-eea-design-system"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-searchlib.git"
@@ -36,7 +39,8 @@
     "react-masonry-component": "6.3.0",
     "react-motion": "0.5.2",
     "react-speech-recognition": "3.8.2",
-    "@eeacms/search": "0.2.3"
+    "@eeacms/search": "0.2.3",
+    "@eeacms/volto-eea-design-system": "0.3.1"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
