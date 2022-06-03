@@ -6,10 +6,11 @@ const pkgs = ['@eeacms/search'];
 
 const modify = (config, { target, dev }, webpack) => {
   const projectRootPath = path.resolve('.');
-  return config;
-  const jsConfig = require(`${projectRootPath}/jsconfig.json`);
-  const searchlibConf = jsConfig.compilerOptions.paths.searchlib;
-  if (!searchlibConf) return config;
+
+//  return config;
+//  const jsConfig = require(`${projectRootPath}/jsconfig.json`);
+//  const searchlibConf = jsConfig.compilerOptions.paths.searchlib;
+//  if (!searchlibConf) return config;
 
   // because we load @eeacms/search "through the back door" (via webpack
   // aliases and jsconfig.json), we need to instruct babel to include this
@@ -19,9 +20,10 @@ const modify = (config, { target, dev }, webpack) => {
   const { include } = babelLoader;
 
   pkgs.forEach((name) => {
-    include.push(config.resolve.alias[name]);
+    incl = path.dirname(require.resolve(name));
+    include.push(incl)
   });
-
+  console.log(config.module.rules[0])
   return config;
 };
 
