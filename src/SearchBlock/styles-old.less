@@ -1,0 +1,377 @@
+// These styles work with the old version of search, before redesign.
+// We keep them here, for future possible usage.
+// Do not delete.
+
+@import (multiple, reference, optional) '../../theme.config';
+
+@type: extra;
+@element: custom;
+
+@import (multiple) '~@eeacms/search-less/theme.less';
+
+@s-dark-gray: rgba(0, 0, 0, 0.87);
+@s-medium-gray2: rgba(0, 0, 0, 0.67);
+@s-medium-gray: #e0e1e2;
+@s-light-gray: #edf1f2;
+@s-light-orange: #ffdfbb;
+@s-dark-orange: #9c5a0a;
+
+.sui-multi-checkbox-facet__option-input-wrapper {
+  max-width: 15em;
+}
+
+.sui-multi-checkbox-facet__input-text {
+  // overflow: hidden;
+  // white-space: nowrap;
+  // max-width: 15em;
+}
+
+div.landing-page {
+  .tile h2 {
+    font-size: 150%;
+  }
+}
+
+a.centered.fluid.image.img-thumbnail {
+  background: none !important;
+}
+
+.ui.four.cards > .card.card-item .content {
+  font-size: 0.8em;
+}
+
+.ui.cards > .card .meta {
+  color: @s-medium-gray2 !important;
+}
+
+.sui-search-box #exact-phrases-facet label {
+  padding-left: 3rem !important;
+  color: black !important;
+}
+
+div#page-document {
+  h1.documentFirstHeading {
+    display: none;
+  }
+
+  div.searchapp {
+    background-color: @s-medium-gray;
+
+    div.sui-layout-header {
+      border-bottom: none;
+    }
+
+    div.sui-paging-info {
+      color: @s-dark-gray;
+    }
+
+    div.sui-facet-search {
+      margin: 0px;
+
+      i.icon.search {
+        position: relative !important;
+        top: 2px;
+        left: 7px;
+      }
+    }
+
+    div.facets {
+      i.icon.dropdown {
+        margin-right: 0px;
+        float: left;
+      }
+
+      div.content.active {
+        padding-top: 0px;
+      }
+    }
+
+    div.body-content {
+      padding: 0px !important;
+
+      div.three.wide.widescreen.column {
+        padding-left: 0px;
+      }
+
+      div.nine.wide.widescreen.column {
+        padding-right: 0px;
+
+        div.cards {
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    h1 {
+      margin-bottom: 0px;
+    }
+
+    div.mlt-card {
+      div.col-left {
+        width: 100px;
+        float: left;
+
+        img {
+          width: 80px;
+          height: auto;
+        }
+      }
+    }
+
+    div.sui-search-box {
+      padding-top: 10px;
+
+      div.search-input {
+        flex-wrap: wrap;
+        border-radius: 0;
+
+        div.search-phrase {
+          display: flex;
+          padding: 5px;
+          margin-top: 2px;
+          margin-bottom: 2px;
+          background-color: @s-light-gray;
+
+          i.trash {
+            position: relative;
+            top: 2px;
+            margin-right: 0px;
+            margin-left: 10px;
+          }
+        }
+
+        div.button.microphone-input {
+          margin-left: auto;
+        }
+      }
+
+      div#archived-facet {
+        label {
+          color: @s-dark-gray !important;
+        }
+      }
+    }
+
+    div.filter-list {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: @s-medium-gray;
+
+      div.filter-list-header {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+      }
+
+      div.filter-list-content {
+        position: relative;
+        top: -5px;
+        padding-right: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        padding-left: 0.5rem !important;
+      }
+
+      .ui.inverted.accordion .title:not(.ui) {
+        color: @s-dark-gray;
+      }
+
+      div.filter-name {
+        position: relative;
+        top: 5px;
+        color: @s-dark-gray;
+      }
+
+      .ui.divider {
+        border-top: 1px solid #000 !important;
+      }
+
+      div.ui.label {
+        background: white;
+      }
+
+      button {
+        color: @s-dark-gray !important;
+      }
+    }
+
+    div.above-results {
+      margin-bottom: 10px;
+
+      div.view-selector {
+        padding-left: 0px !important;
+        font-size: 80%;
+
+        div.buttons {
+          button {
+            background: @s-light-gray;
+            font-size: 12px;
+          }
+
+          button.active {
+            background: @s-medium-gray;
+          }
+        }
+      }
+
+      button.ui.button i {
+        margin: 0px;
+      }
+
+      .ui.dropdown {
+        border-bottom: 1px solid @s-dark-gray;
+
+        .text {
+          color: @s-dark-gray;
+        }
+      }
+
+      div.sorting i.dropdown.icon {
+        position: absolute;
+        right: 20px;
+      }
+    }
+
+    div.cards {
+      margin-bottom: 0px;
+
+      div.card-item {
+        border-radius: 0px;
+
+        div.header {
+          padding: 10px 0px 0px 0px;
+
+          a {
+            font-size: 0.9em;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    div.search-result {
+      overflow: auto;
+
+      &:hover {
+        div.controls {
+          button {
+            opacity: 1 !important;
+          }
+        }
+      }
+
+      width: 100%;
+      padding-bottom: 5px;
+      border-bottom: 1px solid @s-medium-gray;
+      margin-top: 5px;
+      clear: both;
+
+      div.col-left {
+        max-width: 120px;
+        float: left;
+
+        a,
+        img {
+          width: 120px;
+        }
+
+        img {
+          padding: 10px;
+        }
+
+        div.controls {
+          display: flex;
+          justify-content: center;
+
+          button {
+            margin: 3px;
+            font-size: 10px;
+            opacity: 0;
+          }
+        }
+      }
+
+      div.col-right {
+        width: calc(100% - 120px);
+        padding-top: 10px;
+        padding-left: 10px;
+        float: right;
+
+        h4,
+        p {
+          margin: 0px 0px 10px 0px;
+        }
+
+        h4 div.label.new-item {
+          padding: 5px 6px 4px 5px;
+          background: @s-light-orange;
+          color: @s-dark-orange;
+          font-size: 70%;
+        }
+
+        p {
+          color: @s-dark-gray;
+          font-size: 12.8px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  div.col-left,
+  div.col-left a,
+  div.col-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0px !important;
+  }
+
+  div.col-left {
+    text-align: center;
+
+    img {
+      max-height: 100px;
+    }
+  }
+
+  div.view-selector {
+    div.buttons {
+      position: relative;
+      left: -14px;
+    }
+  }
+}
+
+button.download-btn {
+  font-size: 10px !important;
+}
+
+@media only screen and (max-width: 1279px) {
+  .search {
+    position: initial !important;
+    order: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 1388px) {
+  div.ui.doubling.stackable.four.cards {
+    position: relative;
+    top: 1em;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  div.facets {
+    div.toggleSort {
+      display: initial;
+
+      select.match-select {
+        margin-bottom: 3px;
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+.answers-list .search-result {
+  font-size: 80%;
+}
