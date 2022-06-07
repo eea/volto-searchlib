@@ -40,7 +40,7 @@
     "react-motion": "0.5.2",
     "react-speech-recognition": "3.8.2",
     "@eeacms/volto-eea-design-system": "0.3.1",
-    "@eeacms/search": "0.2.4"
+    "@eeacms/search": "0.2.5"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
