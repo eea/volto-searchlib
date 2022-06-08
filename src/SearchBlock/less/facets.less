@@ -433,8 +433,8 @@ div#page-document .searchlib-block {
   }
 }
 
-div.ui.modal.facet {
-  background: @sf-light-gray;
+.ui.modal.facet {
+  // background: @sf-light-gray;
 
   img.facet-option-icon {
     display: inline;
@@ -444,26 +444,21 @@ div.ui.modal.facet {
     filter: grayscale(100%);
   }
 
-  div.content .searchlib-multiterm-facet.facet-sources {
+  > .header {
+    padding: 1em 1.5em;
+  }
+
+  .content {
+    padding: 2em;
+  }
+
+  .content .searchlib-multiterm-facet.facet-sources {
     img.facet-option-icon {
+      display: block;
       height: 28px;
-      margin-top: -10px;
-      margin-bottom: -10px;
-      margin-left: -5px;
       background: white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
-    }
-  }
-
-  div.content .searchlib-multiterm-facet.facet-content-types {
-    i.icon {
-      position: relative;
-      top: 0.22em;
-      margin-top: -5px;
-      margin-right: 3px;
-      margin-bottom: -5px;
-      font-size: 2em;
     }
   }
 
@@ -497,6 +492,7 @@ div.ui.modal.facet {
       display: flex;
       align-items: center;
       margin-top: 1.5em;
+      margin-bottom: 1em;
       --text-divider-gap: 0.5em;
     }
 
@@ -521,11 +517,11 @@ div.ui.modal.facet {
   }
 
   div.header {
-    border: none;
+    border-bottom: 1px solid @midGray;
     background-color: initial;
 
     .facet-title {
-      margin-bottom: 1em;
+      color: @lightBlack;
 
       h3 {
         font-size: calc(10px + 4 * ((100vw - 320px) / 680));
@@ -541,20 +537,20 @@ div.ui.modal.facet {
     }
 
     div.multitermlist__facet__header {
-      .search-wrapper {
-        display: flex;
-        align-items: center;
-      }
+      // .search-wrapper {
+      //   display: flex;
+      //   align-items: center;
+      // }
 
       div.search {
         display: flex;
         // width: 100%;
         align-items: center;
-        margin-right: 0px;
+        margin-top: 1em;
       }
 
       input.multitermlist__search__text-input {
-        width: 100%;
+        width: 40%;
         padding: 0.2em;
         border: 1px solid @sf-medium-gray;
         margin-right: 1em;
@@ -567,16 +563,18 @@ div.ui.modal.facet {
         }
       }
 
+      span.label {
+        color: @deepBlue;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
       div.order-controls {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         margin-left: auto;
-
-        span.label {
-          font-size: 14px;
-        }
 
         div.toggle-label {
           cursor: pointer;
@@ -586,11 +584,12 @@ div.ui.modal.facet {
           padding-left: 0.3em;
 
           div.toggle-label {
-            padding: 0.3em 0.7em 0.3em 0.7em;
+            margin-left: 10px;
             background: white;
             border-radius: 8px;
-            color: @sf-dark-gray;
-            font-size: 14px;
+            color: @deepBlue;
+            font-size: 16px;
+            font-weight: 400;
 
             i.icon {
               margin-left: 3px;
@@ -598,13 +597,14 @@ div.ui.modal.facet {
 
             &.active {
               color: @secondaryColor;
+              font-weight: 700;
             }
           }
         }
       }
 
       div.ui.toggle.checkbox {
-        padding-right: 0.5em;
+        padding-left: 0.5em;
         color: @sf-dark-gray !important;
         font-size: 14px;
 
@@ -615,10 +615,10 @@ div.ui.modal.facet {
           &:before {
             position: absolute;
             top: 5px;
-            width: 2rem;
+            width: 1.6rem;
             height: 0.8rem !important;
-            background: @sf-medium-gray2 !important;
-            box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
+            background: #bdbdbd !important;
+            box-shadow: 0px 0px 0px 2px #bdbdbd !important;
           }
 
           &:after {
@@ -646,58 +646,72 @@ div.ui.modal.facet {
     }
   }
 
-  button.term {
-    padding: 12px 10px 12px 10px;
-    border: 1px solid @sf-light-gray2;
-    margin: 5px;
-    background: white;
-    border-radius: 2px;
-    color: @sf-dark-gray;
-    font-size: 12px;
-    font-weight: 600;
+  .ui.card.term.active-term {
+    width: auto !important;
+    min-width: auto;
+    margin: 5px 1.5em 5px 0 !important;
 
-    span.title {
-      margin-right: 5px;
+    .header,
+    span.count {
+      color: @secondaryColor;
+      font-weight: 700;
+    }
+  }
+
+  .ui.card.term {
+    min-width: 100px;
+    margin-top: 2em;
+
+    &.disabled {
+      .header,
+      span.count {
+        color: #bfbfbf;
+      }
     }
 
-    span.count {
-      color: @sf-medium-gray2;
-      font-size: 10px;
+    .header {
+      border: none;
+      color: @deepBlue;
+      font-size: 16px;
       font-weight: 400;
     }
 
-    &.active {
-      border-color: @sf-medium-blue;
-      background: @sf-medium-blue !important;
-      box-shadow: none;
+    .content {
+      flex-grow: initial;
+      padding: 0;
+      padding-bottom: 0.5em;
+    }
 
+    &.active {
+      .header,
       span.count {
-        color: white;
+        color: @darkCerulean;
+        font-weight: 700;
       }
 
       &:hover {
-        background: @sf-medium-blue !important;
+        background: transparent !important;
       }
     }
 
     &:hover {
-      background: @sf-light-gray;
+      border: none;
+      background: transparent !important;
+      box-shadow: none;
+    }
+
+    .title {
+      margin-right: 5px;
+    }
+
+    .count {
+      color: @deepBlue;
+      font-size: 16px;
+      font-weight: 400;
     }
   }
 
   div.actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    border: none;
-    text-align: left;
-
-    button {
-      padding: 12px 10px 12px 10px;
-      border-radius: 2px;
-      font-size: 12px;
-    }
-
     a.clear-filters {
       margin-left: auto;
       color: @secondaryColor;
