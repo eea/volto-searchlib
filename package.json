@@ -43,8 +43,8 @@
     "@eeacms/search": "0.2.5"
   },
   "dependencies": {
-    "@eeacms/volto-eea-design-system": "^0.3.1",
-    "@eeacms/search": "^0.2.7"
+    "@eeacms/search": "^0.2.9",
+    "@eeacms/volto-eea-design-system": "*"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
