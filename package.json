@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -43,7 +43,7 @@
     "@eeacms/search": "0.2.5"
   },
   "dependencies": {
-    "@eeacms/search": "^0.2.9",
+    "@eeacms/search": "*",
     "@eeacms/volto-eea-design-system": "*"
   },
   "devDependencies": {
