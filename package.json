@@ -43,7 +43,7 @@
     "@eeacms/search": "0.2.5"
   },
   "dependencies": {
-    "@eeacms/search": "^0.2.10",
+    "@eeacms/search": "*",
     "@eeacms/volto-eea-design-system": "*"
   },
   "devDependencies": {
