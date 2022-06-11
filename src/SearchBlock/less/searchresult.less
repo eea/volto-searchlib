@@ -53,8 +53,8 @@ a.ui.basic.button.suggestions-button {
 }
 
 div#page-document div.cards {
-  margin-bottom: 0px;
-  clear: both;
+  // margin-bottom: 0px;
+  // clear: both;
 
   div.card-item {
     width: unset;
@@ -232,18 +232,18 @@ div#page-document div.searchapp div.cards div.search-result {
   margin-bottom: 1.5em;
   clear: both;
 
-  div.menu.mlt {
-    top: -100%;
-    left: -5px;
-
-    div.item {
-      padding: 5px !important;
-      background: @sf-azure;
-      color: white;
-      font-size: 10px;
-      font-weight: 400;
-    }
-  }
+  // div.menu.mlt {
+  //   top: -100%;
+  //   left: -5px;
+  //
+  //   div.item {
+  //     padding: 5px !important;
+  //     background: @secondaryColor;
+  //     color: white;
+  //     font-size: 10px;
+  //     font-weight: 400;
+  //   }
+  // }
 
   &:hover {
     div.controls {
@@ -261,30 +261,42 @@ div#page-document div.searchapp div.cards div.search-result {
     color: @sf-blue !important;
   }
 
-  button.mlt {
-    position: relative;
-    top: -1px;
-    margin-left: 0.5em;
-    font-size: 10px;
-    opacity: 0;
+  // button.mlt {
+  //   position: relative;
+  //   top: -1px;
+  //   margin-left: 0.5em;
+  //   font-size: 10px;
+  //   opacity: 0;
+  // }
+
+  .result-description {
+    margin-bottom: 0.8em;
   }
 
-  div.col-full {
+  .source {
+    a {
+      color: @mediumPersianBlue;
+      font-size: 16px;
+    }
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0.5em;
+    color: @secondaryColor;
+    font-size: 16px;
+    font-weight: 700;
+    gap: 1.5em;
+  }
+
+  .col-full {
     width: 100%;
 
-    div.meta {
-      margin-bottom: 0px;
-      font-size: 12px !important;
-
-      div.tags-list {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 0.3em;
-        color: @sf-dark-gray;
-        font-size: 16px;
-        font-weight: 200;
-        gap: 1em;
-      }
+    .meta {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
 
       span.score {
         padding: 0px 5px 0px 5px;
@@ -305,6 +317,9 @@ div#page-document div.searchapp div.cards div.search-result {
 
         .tags {
           display: block;
+          margin: 0 1.2em;
+          color: @deepBlue;
+          font-size: 16px;
         }
       }
 
@@ -366,6 +381,11 @@ div#page-document div.searchapp div.cards div.search-result {
     }
   }
 
+  span.date {
+    color: #808285;
+    font-size: 16px;
+  }
+
   div.col-left {
     width: calc(100% - 180px);
     padding-top: 0px;
@@ -378,13 +398,19 @@ div#page-document div.searchapp div.cards div.search-result {
       width: 100% !important;
     }
 
-    span.date {
-      color: @sf-medium-gray2;
+    h3,
+    h3 > a {
+      color: @deepBlue;
+      font-size: 20px;
+      font-weight: 700;
     }
 
-    h3 {
-      margin-bottom: 0px !important;
-      font-weight: 400;
+    .result-description {
+      p {
+        color: @deepBlue;
+        font-size: 20px !important;
+        line-height: 24px;
+      }
     }
 
     div.ui.breadcrumb {
@@ -410,24 +436,13 @@ div#page-document div.searchapp div.cards div.search-result {
       font-size: 14px !important;
     }
 
-    div.source {
-      margin-bottom: 10px;
-      font-size: 10px !important;
-
-      span {
-        overflow: hidden;
-        white-space: nowrap;
-        // color: @sf-blue;
-      }
-    }
-
-    h3,
-    p {
-      margin: 0px 0px 10px 0px;
-    }
+    // h3,
+    // p {
+    //   margin: 0px 0px 10px 0px;
+    // }
 
     p {
-      color: @s-dark-gray;
+      color: @deepBlue;
       font-size: 12.8px;
     }
   }
