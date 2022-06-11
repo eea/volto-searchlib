@@ -4,22 +4,10 @@ div#page-document {
   }
 
   .searchlib-block {
-    position: relative;
-    right: 50%;
-    left: 50%;
-    width: 100vw !important;
-    max-width: none !important;
-    margin-right: -50vw !important;
-    margin-left: -50vw !important;
+    color: @deepBlue;
 
     div.searchapp {
       margin: 1em 0;
-      background-color: white;
-
-      div > div.ui.container {
-        padding-right: 0px !important;
-        padding-left: 0px !important;
-      }
 
       i.icon.dropdown:before,
       .ui.accordion .title .dropdown.icon:before,
@@ -46,7 +34,7 @@ div#page-document {
       margin: 0 !important;
 
       div.col-mid {
-        padding: 0 40px;
+        // padding: 0 40px;
 
         div.cards {
           margin-bottom: 5px;
@@ -142,12 +130,12 @@ div#page-document {
 
         div.checked {
           label {
-            color: @sf-azure !important;
+            color: @secondaryColor !important;
             font-weight: 600;
 
             &:before {
-              background-color: @sf-azure !important;
-              box-shadow: 0px 0px 0px 2px @sf-azure !important;
+              background-color: @secondaryColor !important;
+              box-shadow: 0px 0px 0px 2px @secondaryColor !important;
             }
 
             &:after {
@@ -161,8 +149,8 @@ div#page-document {
         width: auto !important;
         padding-bottom: 1em;
         padding-left: 0px !important;
-        margin-left: 20px;
-        font-size: 12px;
+        margin-left: 10px;
+        font-size: 16px;
 
         div.text {
           margin-right: 2px;
@@ -175,7 +163,7 @@ div#page-document {
           }
 
           > i.icon {
-            color: @sf-azure;
+            color: @secondaryColor;
           }
 
           i.icon {
@@ -190,7 +178,7 @@ div#page-document {
 
         div.buttons {
           button {
-            background: @s-light-gray;
+            background: @midGray;
             font-size: 12px;
           }
 
@@ -200,18 +188,18 @@ div#page-document {
         }
       }
 
-      button.ui.button i {
+      .ui.button i {
         margin: 0px;
       }
 
-      div.sorting {
+      .sorting {
         width: auto;
         margin-bottom: 0.5em;
-        margin-left: 25px;
-        font-size: 12px;
+        // margin-left: 10px;
+        font-size: 16px;
 
-        div.inline.dropdown > span {
-          color: @sf-azure;
+        .inline.dropdown > span {
+          color: @secondaryColor;
           font-weight: 600;
         }
 
@@ -265,6 +253,12 @@ div#page-document {
         }
       }
     }
+
+    .top-filter-layout {
+      .results-layout {
+        max-width: none !important;
+      }
+    }
   }
 }
 
@@ -281,13 +275,6 @@ body.searchlib-page {
 
   div#main > div.ui.breadcrumbs {
     display: none;
-  }
-
-  div#page-document {
-    width: 100vw !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    margin-top: 0px !important;
   }
 }
 
@@ -406,10 +393,6 @@ p.highlight-description\.highlight {
 
   body.searchlib-page {
     &.has-toolbar {
-      div#page-document .searchlib-block {
-        width: calc(100% - 80px) !important;
-      }
-
       div.header-wrapper[role='banner'] {
         div.ui.container:first-of-type {
           width: calc(100vw - 100px) !important;
@@ -418,10 +401,6 @@ p.highlight-description\.highlight {
     }
 
     &.has-toolbar-collapsed {
-      div#page-document .searchlib-block {
-        width: calc(100% - 20px) !important;
-      }
-
       div.header-wrapper[role='banner'] {
         div.ui.container:first-of-type {
           width: calc(100vw - 50px) !important;

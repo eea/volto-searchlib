@@ -18,7 +18,7 @@ div#page-document .searchlib-block {
   div.boolean-facet {
     div.toggle {
       label {
-        color: @s-dark-gray !important;
+        color: @deepBlue !important;
 
         &:before {
           box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
@@ -32,8 +32,8 @@ div#page-document .searchlib-block {
       &.checked {
         label {
           &:before {
-            background-color: @sf-azure !important;
-            box-shadow: 0px 0px 0px 2px @sf-azure !important;
+            background-color: @secondaryColor !important;
+            box-shadow: 0px 0px 0px 2px @secondaryColor !important;
           }
         }
       }
@@ -56,21 +56,11 @@ div#page-document .searchlib-block {
     }
   }
 
-  div.content-section-tabs.menu {
-    overflow: auto;
-    width: 100%;
-    max-width: 100%;
-    border: none;
-    border-top: none;
-    border-right: none;
-    border-bottom: 1px solid @sf-light-gray2;
-    border-left: none;
-    margin: 0;
-    margin-bottom: 3px;
-    border-radius: 0px;
-    box-shadow: none;
+  .content-section-tabs.menu {
+    margin-bottom: 1em;
+    overflow-x: auto;
 
-    div.item.dropdown {
+    .item.dropdown {
       padding: 0px 10px 0px 10px;
       border: none;
       border-bottom: 4px solid white;
@@ -104,12 +94,12 @@ div#page-document .searchlib-block {
     }
 
     a.item {
-      padding: 0px;
-      border-bottom: 4px solid white;
-      margin-right: 3em;
-      border-radius: 0px;
-      color: @sf-dark-gray;
-      font-size: 14px;
+      // padding: 0px;
+      // border-bottom: 3px solid white;
+      // margin-right: 1.5em;
+      // border-radius: 0px;
+      color: @deepBlue;
+      font-size: 18px;
 
       &:hover {
         background: white;
@@ -120,21 +110,22 @@ div#page-document .searchlib-block {
       }
 
       &.active {
-        border-bottom: 4px solid @sf-azure;
+        // border-bottom: 3px solid @secondaryColor;
+        color: @secondaryColor;
 
-        .icon {
-          color: @sf-azure !important;
-        }
+        // .icon {
+        //   color: @secondaryColor !important;
+        // }
       }
 
       span.title {
         margin-right: 5px;
       }
 
-      span.count {
-        color: @sf-medium-gray2;
-        font-weight: 400;
-      }
+      // span.count {
+      //   color: @sf-medium-gray2;
+      //   font-weight: 400;
+      // }
     }
   }
 
@@ -331,7 +322,7 @@ div#page-document .searchlib-block {
     margin-right: 0px;
     background: @sf-light-gray !important;
     border-radius: 2px;
-    color: @sf-azure !important;
+    color: @secondaryColor !important;
     float: right;
     font-size: 12px;
   }
@@ -355,69 +346,6 @@ div#page-document .searchlib-block {
       background: white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
-    }
-  }
-
-  .filter-list-item.more-like-this {
-    margin-bottom: 1em;
-
-    div.ui.label {
-      width: 100%;
-    }
-
-    i.icon.delete {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: @sf-azure;
-    }
-
-    div.meta {
-      line-height: normal;
-
-      i.icon {
-        margin-right: 0.5em;
-      }
-    }
-
-    a.centered {
-      img {
-        width: 100%;
-        height: auto;
-        max-height: 200px;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-        object-fit: cover;
-        object-position: top;
-      }
-    }
-
-    h4 {
-      margin-top: 0.5em;
-      line-height: inherit;
-    }
-  }
-
-  .filter-list-item.more-like-this > .labels > .label {
-    overflow: hidden;
-    max-width: 100%;
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .mlt-filter {
-    img {
-      width: 100%;
-      height: auto;
-    }
-
-    a {
-      font-size: 12px;
-    }
-
-    .meta {
-      font-size: 12px;
-      font-weight: 400;
     }
   }
 
@@ -459,7 +387,7 @@ div#page-document .searchlib-block {
           button {
             padding: 3px;
             background: @sf-light-gray !important;
-            color: @sf-azure;
+            color: @secondaryColor;
             float: right;
             font-size: 10px;
           }
@@ -489,7 +417,7 @@ div#page-document .searchlib-block {
       div.label {
         max-width: 100%;
         background: @sf-light-gray !important;
-        color: @sf-azure;
+        color: @secondaryColor;
         font-weight: 600;
 
         span.text {
@@ -505,8 +433,8 @@ div#page-document .searchlib-block {
   }
 }
 
-div.ui.modal.facet {
-  background: @sf-light-gray;
+.ui.modal.facet {
+  // background: @sf-light-gray;
 
   img.facet-option-icon {
     display: inline;
@@ -516,26 +444,21 @@ div.ui.modal.facet {
     filter: grayscale(100%);
   }
 
-  div.content .searchlib-multiterm-facet.facet-sources {
+  > .header {
+    padding: 1em 1.5em;
+  }
+
+  .content {
+    padding: 2em;
+  }
+
+  .content .searchlib-multiterm-facet.facet-sources {
     img.facet-option-icon {
+      display: block;
       height: 28px;
-      margin-top: -10px;
-      margin-bottom: -10px;
-      margin-left: -5px;
       background: white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
-    }
-  }
-
-  div.content .searchlib-multiterm-facet.facet-content-types {
-    i.icon {
-      position: relative;
-      top: 0.22em;
-      margin-top: -5px;
-      margin-right: 3px;
-      margin-bottom: -5px;
-      font-size: 2em;
     }
   }
 
@@ -569,6 +492,7 @@ div.ui.modal.facet {
       display: flex;
       align-items: center;
       margin-top: 1.5em;
+      margin-bottom: 1em;
       --text-divider-gap: 0.5em;
     }
 
@@ -593,11 +517,11 @@ div.ui.modal.facet {
   }
 
   div.header {
-    border: none;
+    border-bottom: 1px solid @midGray;
     background-color: initial;
 
     .facet-title {
-      margin-bottom: 1em;
+      color: @lightBlack;
 
       h3 {
         font-size: calc(10px + 4 * ((100vw - 320px) / 680));
@@ -613,20 +537,20 @@ div.ui.modal.facet {
     }
 
     div.multitermlist__facet__header {
-      .search-wrapper {
-        display: flex;
-        align-items: center;
-      }
+      // .search-wrapper {
+      //   display: flex;
+      //   align-items: center;
+      // }
 
       div.search {
         display: flex;
         // width: 100%;
         align-items: center;
-        margin-right: 0px;
+        margin-top: 1em;
       }
 
       input.multitermlist__search__text-input {
-        width: 100%;
+        width: 40%;
         padding: 0.2em;
         border: 1px solid @sf-medium-gray;
         margin-right: 1em;
@@ -639,16 +563,18 @@ div.ui.modal.facet {
         }
       }
 
+      span.label {
+        color: @deepBlue;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
       div.order-controls {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         margin-left: auto;
-
-        span.label {
-          font-size: 14px;
-        }
 
         div.toggle-label {
           cursor: pointer;
@@ -658,25 +584,27 @@ div.ui.modal.facet {
           padding-left: 0.3em;
 
           div.toggle-label {
-            padding: 0.3em 0.7em 0.3em 0.7em;
+            margin-left: 10px;
             background: white;
             border-radius: 8px;
-            color: @sf-dark-gray;
-            font-size: 14px;
+            color: @deepBlue;
+            font-size: 16px;
+            font-weight: 400;
 
             i.icon {
               margin-left: 3px;
             }
 
             &.active {
-              color: @sf-azure;
+              color: @secondaryColor;
+              font-weight: 700;
             }
           }
         }
       }
 
       div.ui.toggle.checkbox {
-        padding-right: 0.5em;
+        padding-left: 0.5em;
         color: @sf-dark-gray !important;
         font-size: 14px;
 
@@ -687,10 +615,10 @@ div.ui.modal.facet {
           &:before {
             position: absolute;
             top: 5px;
-            width: 2rem;
+            width: 1.6rem;
             height: 0.8rem !important;
-            background: @sf-medium-gray2 !important;
-            box-shadow: 0px 0px 0px 2px @sf-medium-gray2 !important;
+            background: #bdbdbd !important;
+            box-shadow: 0px 0px 0px 2px #bdbdbd !important;
           }
 
           &:after {
@@ -705,8 +633,8 @@ div.ui.modal.facet {
         &.checked {
           label {
             &:before {
-              background-color: @sf-azure !important;
-              box-shadow: 0px 0px 0px 2px @sf-azure !important;
+              background-color: @secondaryColor !important;
+              box-shadow: 0px 0px 0px 2px @secondaryColor !important;
             }
 
             &:after {
@@ -718,61 +646,75 @@ div.ui.modal.facet {
     }
   }
 
-  button.term {
-    padding: 12px 10px 12px 10px;
-    border: 1px solid @sf-light-gray2;
-    margin: 5px;
-    background: white;
-    border-radius: 2px;
-    color: @sf-dark-gray;
-    font-size: 12px;
-    font-weight: 600;
+  .ui.card.term.active-term {
+    width: auto !important;
+    min-width: auto;
+    margin: 5px 1.5em 5px 0 !important;
 
-    span.title {
-      margin-right: 5px;
+    .header,
+    span.count {
+      color: @secondaryColor;
+      font-weight: 700;
+    }
+  }
+
+  .ui.card.term {
+    min-width: 100px;
+    margin-top: 2em;
+
+    &.disabled {
+      .header,
+      span.count {
+        color: #bfbfbf;
+      }
     }
 
-    span.count {
-      color: @sf-medium-gray2;
-      font-size: 10px;
+    .header {
+      border: none;
+      color: @deepBlue;
+      font-size: 16px;
       font-weight: 400;
     }
 
-    &.active {
-      border-color: @sf-medium-blue;
-      background: @sf-medium-blue !important;
-      box-shadow: none;
+    .content {
+      flex-grow: initial;
+      padding: 0;
+      padding-bottom: 0.5em;
+    }
 
+    &.active {
+      .header,
       span.count {
-        color: white;
+        color: @darkCerulean;
+        font-weight: 700;
       }
 
       &:hover {
-        background: @sf-medium-blue !important;
+        background: transparent !important;
       }
     }
 
     &:hover {
-      background: @sf-light-gray;
+      border: none;
+      background: transparent !important;
+      box-shadow: none;
+    }
+
+    .title {
+      margin-right: 5px;
+    }
+
+    .count {
+      color: @deepBlue;
+      font-size: 16px;
+      font-weight: 400;
     }
   }
 
   div.actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    border: none;
-    text-align: left;
-
-    button {
-      padding: 12px 10px 12px 10px;
-      border-radius: 2px;
-      font-size: 12px;
-    }
-
     a.clear-filters {
       margin-left: auto;
-      color: @sf-azure;
+      color: @secondaryColor;
       font-size: 12px;
     }
   }
@@ -784,13 +726,13 @@ div.ui.modal.facet {
   margin: 0;
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1300px) {
-  div.content-section-tabs.menu {
-    a.item {
-      margin-right: 1.5em !important;
-    }
-  }
-}
+// @media screen and (min-width: 1000px) and (max-width: 1300px) {
+//   div.content-section-tabs.menu {
+//     a.item {
+//       margin-right: 1.5em !important;
+//     }
+//   }
+// }
 
 @media only screen and (max-width: 1080px) {
   div.facets {
@@ -811,27 +753,27 @@ div.ui.modal.facet {
   }
 }
 
-@media screen and (max-width: 1000px) {
-  div.content-section-tabs.menu {
-    a.item {
-      margin-right: 0.5em !important;
-
-      span.count {
-        font-size: 10px !important;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 600px) {
-  div.content-section-tabs.menu {
-    div.item.dropdown {
-      div.menu {
-        transform: translateX(-90px);
-      }
-    }
-  }
-}
+// @media screen and (max-width: 1000px) {
+//   div.content-section-tabs.menu {
+//     a.item {
+//       margin-right: 0.5em !important;
+//
+//       span.count {
+//         font-size: 10px !important;
+//       }
+//     }
+//   }
+// }
+//
+// @media screen and (max-width: 600px) {
+//   div.content-section-tabs.menu {
+//     div.item.dropdown {
+//       div.menu {
+//         transform: translateX(-90px);
+//       }
+//     }
+//   }
+// }
 
 @media only screen and (max-width: 766px) {
   div.content .searchlib-multiterm-facet.facet-sources button.ui.toggle {
