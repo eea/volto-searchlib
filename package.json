@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "0.1.0",
+  "version": "0.3.2",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -12,11 +12,14 @@
     "plone",
     "react"
   ],
+  "addons": [
+    "@eeacms/volto-eea-design-system"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-searchlib.git"
   },
-  "dependencies": {
+  "old_dependencies": {
     "@elastic/react-search-ui": "1.9.0",
     "@elastic/react-search-ui-views": "1.9.0",
     "@elastic/search-ui": "1.9.0",
@@ -35,7 +38,13 @@
     "react-compound-slider": "3.3.1",
     "react-masonry-component": "6.3.0",
     "react-motion": "0.5.2",
-    "react-speech-recognition": "3.8.2"
+    "react-speech-recognition": "3.8.2",
+    "@eeacms/volto-eea-design-system": "0.3.1",
+    "@eeacms/search": "0.2.5"
+  },
+  "dependencies": {
+    "@eeacms/search": "*",
+    "@eeacms/volto-eea-design-system": "*"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
