@@ -1,19 +1,19 @@
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: @lightBlack;
-}
-
 div#page-document {
-  h1.documentFirstHeading {
-    display: none;
-  }
-
   .searchlib-block {
     color: @deepBlue;
+
+    // h1.documentFirstHeading {
+    //   display: none;
+    // }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: @lightBlack;
+    }
 
     div.searchapp {
       margin: 1em 0;
@@ -238,11 +238,6 @@ div#page-document {
     }
 
     .search-body-footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-
       div.results-selector {
         font-size: 12px;
 
@@ -258,6 +253,12 @@ div#page-document {
           }
         }
       }
+    }
+
+    button.download-btn {
+      background: #f2f2f2 !important;
+      color: @secondaryColor !important;
+      font-size: 10px !important;
     }
 
     .results-layout {
