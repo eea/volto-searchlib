@@ -243,13 +243,6 @@ div#page-document .searchlib-block {
   }
 }
 
-.modal-section-title {
-  // margin-bottom: 1em;
-  color: @lightBlack;
-  font-size: 20px;
-  font-weight: 700;
-}
-
 .facet-list-header {
   display: flex;
   align-items: center;
@@ -258,6 +251,16 @@ div#page-document .searchlib-block {
   h4 {
     margin: 0;
   }
+}
+
+.facet-list-header {
+  .modal-section-title {
+    margin-bottom: 0 !important;
+  }
+}
+
+.modal-section-title {
+  color: @lightBlack;
 }
 
 .ui.basic.button.clear-btn {
@@ -294,7 +297,7 @@ div#page-document .searchlib-block {
       padding: 5px;
       margin-top: 4px;
       margin-bottom: 0px;
-      background: @sf-blue;
+      background: @primaryColor;
       color: white;
       font-size: 12px;
 
@@ -343,7 +346,7 @@ div#page-document .searchlib-block {
     height: 16px;
     padding: 3px;
     border: 1px solid @lightBlack !important;
-    margin-left: 20px;
+    margin-left: 10px;
     background: none !important;
     border-radius: 2px;
     box-shadow: none;

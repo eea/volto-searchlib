@@ -6,10 +6,131 @@
   font-size: 12px;
 }
 
-div.prev-next-paging button.next,
-div.prev-next-paging button.prev,
-button.download-btn {
-  background: @sf-light-gray !important;
-  color: @secondaryColor !important;
-  font-size: 10px !important;
+.search-body-footer {
+  .paging-wrapper {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.8em;
+    border-bottom: 2px solid #bcbec0;
+  }
+
+  .prev-next-paging {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui.button.pagination-item {
+    padding: 0.5em 0.7em;
+    border: none;
+    margin: 0;
+    background: none;
+    color: @deepBlue;
+    font-size: 23px;
+    font-weight: 400;
+
+    &.active {
+      position: relative;
+      background: none;
+      color: @secondaryColor;
+
+      &:after {
+        position: absolute;
+        bottom: -16px;
+        left: 0;
+        display: inline-block;
+        width: 100%;
+        border-bottom: 5px solid @secondaryColor;
+        color: #3d5265;
+        content: '';
+      }
+    }
+
+    &.active:hover,
+    &:hover,
+    &:active,
+    &:focus {
+      background: none;
+      color: @secondaryColor;
+    }
+  }
+
+  .ui.button.prev,
+  .ui.button.next {
+    position: relative;
+    background: none;
+
+    &:hover {
+      background: none;
+      color: @secondaryColor;
+    }
+
+    &.single-angle:hover:after,
+    &.double-angle:hover:after,
+    &.double-angle:hover:before {
+      color: @secondaryColor;
+    }
+  }
+
+  .ui.button.next.single-angle:after,
+  .ui.button.prev.single-angle:after {
+    position: absolute;
+    top: -2px;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    color: @deepBlue;
+    content: '';
+  }
+
+  .ui.button.next.single-angle:after {
+    left: 20px;
+    transform: rotate(-45deg);
+  }
+
+  .ui.button.prev.single-angle:after {
+    right: 20px;
+    transform: rotate(-225deg);
+  }
+
+  .ui.button.next,
+  .ui.button.prev {
+    padding: 0.5em 1.2em;
+  }
+
+  .ui.button.next.double-angle:after,
+  .ui.button.prev.double-angle:after,
+  .ui.button.next.double-angle:before,
+  .ui.button.prev.double-angle:before {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    color: @deepBlue;
+    content: '';
+  }
+
+  .ui.button.prev.double-angle:after {
+    left: 8px;
+  }
+
+  .ui.button.next.double-angle:after {
+    left: 8px;
+  }
+
+  .ui.button.next.double-angle:after,
+  .ui.button.next.double-angle:before {
+    transform: rotate(-45deg);
+  }
+
+  .ui.button.prev.double-angle:after,
+  .ui.button.prev.double-angle:before {
+    transform: rotate(-225deg);
+  }
 }
