@@ -140,72 +140,9 @@ div#page-document .searchlib-block {
     }
   }
 
-  // .filter-list-item.more-like-this {
-  //   margin-bottom: 1em;
-  //
-  //   div.ui.label {
-  //     width: 100%;
-  //   }
-  //
-  //   i.icon.delete {
-  //     position: absolute;
-  //     top: 10px;
-  //     right: 10px;
-  //     color: @secondaryColor;
-  //   }
-  //
-  //   div.meta {
-  //     line-height: normal;
-  //
-  //     i.icon {
-  //       margin-right: 0.5em;
-  //     }
-  //   }
-  //
-  //   a.centered {
-  //     img {
-  //       width: 100%;
-  //       height: auto;
-  //       max-height: 200px;
-  //       margin-top: 0.5em;
-  //       margin-bottom: 0.5em;
-  //       object-fit: cover;
-  //       object-position: top;
-  //     }
-  //   }
-  //
-  //   h4 {
-  //     margin-top: 0.5em;
-  //     line-height: inherit;
-  //   }
+  // .card .meta {
+  //   color: @s-medium-gray2 !important;
   // }
-
-  // .filter-list-item.more-like-this > .labels > .label {
-  //   overflow: hidden;
-  //   max-width: 100%;
-  //   padding: 0px;
-  //   margin: 0px;
-  // }
-  //
-  // .mlt-filter {
-  //   img {
-  //     width: 100%;
-  //     height: auto;
-  //   }
-  //
-  //   a {
-  //     font-size: 12px;
-  //   }
-  //
-  //   .meta {
-  //     font-size: 12px;
-  //     font-weight: 400;
-  //   }
-  // }
-
-  .card .meta {
-    color: @s-medium-gray2 !important;
-  }
 }
 
 .facets-wrapper {
@@ -276,23 +213,31 @@ div#page-document .searchlib-block {
 }
 
 .ui.button.add-facet-btn {
-  margin: 5px 10px 5px 0;
+  margin: 0 20px 20px 0 !important;
   background: @midGray !important;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25) !important;
   color: @lightBlack !important;
+
+  &:hover {
+    background: #cfcfcf !important;
+  }
 }
 
 .ui.card.facet {
   width: auto !important;
   border: none !important;
-  margin: 5px 10px 5px 0 !important;
+  margin: 0 20px 20px 0 !important;
   background: @midGray !important;
   border-radius: 0 !important;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25) !important;
   color: @lightBlack !important;
 
+  &:hover {
+    background: #cfcfcf !important;
+  }
+
   .content {
-    padding: 0.5em 1em 0.5em;
+    padding: 10px 25px;
   }
 
   .filter.description {
@@ -351,7 +296,7 @@ div#page-document .searchlib-block {
     height: 16px;
     padding: 3px;
     border: 1px solid @lightBlack !important;
-    margin-left: 10px;
+    margin-left: 1.2em;
     background: none !important;
     border-radius: 2px;
     box-shadow: none;
@@ -419,3 +364,66 @@ div#page-document .searchlib-block {
     }
   }
 }
+
+// .filter-list-item.more-like-this {
+//   margin-bottom: 1em;
+//
+//   div.ui.label {
+//     width: 100%;
+//   }
+//
+//   i.icon.delete {
+//     position: absolute;
+//     top: 10px;
+//     right: 10px;
+//     color: @secondaryColor;
+//   }
+//
+//   div.meta {
+//     line-height: normal;
+//
+//     i.icon {
+//       margin-right: 0.5em;
+//     }
+//   }
+//
+//   a.centered {
+//     img {
+//       width: 100%;
+//       height: auto;
+//       max-height: 200px;
+//       margin-top: 0.5em;
+//       margin-bottom: 0.5em;
+//       object-fit: cover;
+//       object-position: top;
+//     }
+//   }
+//
+//   h4 {
+//     margin-top: 0.5em;
+//     line-height: inherit;
+//   }
+// }
+
+// .filter-list-item.more-like-this > .labels > .label {
+//   overflow: hidden;
+//   max-width: 100%;
+//   padding: 0px;
+//   margin: 0px;
+// }
+//
+// .mlt-filter {
+//   img {
+//     width: 100%;
+//     height: auto;
+//   }
+//
+//   a {
+//     font-size: 12px;
+//   }
+//
+//   .meta {
+//     font-size: 12px;
+//     font-weight: 400;
+//   }
+// }
