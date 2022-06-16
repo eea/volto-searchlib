@@ -229,7 +229,7 @@ div#page-document div.searchapp div.cards div.search-result {
   width: 100%;
   padding-bottom: 0.5em;
   margin-top: 0.5em;
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
   clear: both;
 
   // div.menu.mlt {
@@ -279,7 +279,11 @@ div#page-document div.searchapp div.cards div.search-result {
     color: @secondaryColor;
     font-size: 16px;
     font-weight: 700;
-    gap: 1.5em;
+    // gap: 1.5em;
+
+    span {
+      margin-right: 20px;
+    }
   }
 
   .col-full {
@@ -312,6 +316,7 @@ div#page-document div.searchapp div.cards div.search-result {
           margin: 0 1.2em;
           color: @deepBlue;
           font-size: 16px;
+          line-height: inherit;
         }
       }
 
@@ -431,6 +436,26 @@ div#page-document div.searchapp div.cards div.search-result {
   padding: 0.3em !important;
   margin-left: 0.3em !important;
   font-size: 70% !important;
+}
+
+@media only screen and (max-width: @tabletBreakpoint) {
+  div#page-document {
+    div.searchapp div.cards div.search-result div.col-left h3,
+    div.searchapp div.cards div.search-result div.col-left h3 > a,
+    div.searchapp
+      div.cards
+      div.search-result
+      div.col-left
+      .result-description
+      p {
+      font-size: 16px !important;
+    }
+  }
+
+  div.col-left .source span,
+  div.col-left .source strong {
+    font-size: 14px !important;
+  }
 }
 
 @media only screen and (max-width: 1279px) {
