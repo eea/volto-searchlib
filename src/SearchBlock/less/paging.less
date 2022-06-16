@@ -47,9 +47,31 @@
     }
   }
 
+  .ui.button.prev.single-angle {
+    margin-right: 15px;
+  }
+
+  .ui.button.next.single-angle {
+    margin-left: 15px;
+  }
+
+  .ui.button.prev.single-angle,
+  .ui.button.next.single-angle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ui.button.prev.double-angle,
+  .ui.button.next.double-angle {
+    width: 28px;
+    height: 28px;
+  }
+
   .ui.button.prev,
   .ui.button.next {
     position: relative;
+    padding: 0;
+    margin: 0;
     background: none;
 
     &:hover {
@@ -67,7 +89,7 @@
   .ui.button.next.single-angle:after,
   .ui.button.prev.single-angle:after {
     position: absolute;
-    top: -2px;
+    top: 5px;
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -78,18 +100,13 @@
   }
 
   .ui.button.next.single-angle:after {
-    left: 20px;
+    left: 0;
     transform: rotate(-45deg);
   }
 
   .ui.button.prev.single-angle:after {
-    right: 20px;
+    right: 0;
     transform: rotate(-225deg);
-  }
-
-  .ui.button.next,
-  .ui.button.prev {
-    padding: 0.5em 1.2em;
   }
 
   .ui.button.next.double-angle:after,
@@ -97,8 +114,8 @@
   .ui.button.next.double-angle:before,
   .ui.button.prev.double-angle:before {
     position: absolute;
-    top: 0;
-    left: 15px;
+    top: 7px;
+    left: 10px;
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -109,11 +126,11 @@
   }
 
   .ui.button.prev.double-angle:after {
-    left: 8px;
+    left: 2px;
   }
 
   .ui.button.next.double-angle:after {
-    left: 8px;
+    left: 2px;
   }
 
   .ui.button.next.double-angle:after,
@@ -124,6 +141,33 @@
   .ui.button.prev.double-angle:after,
   .ui.button.prev.double-angle:before {
     transform: rotate(-225deg);
+  }
+}
+
+@media only screen and (max-width: @largestMobileScreen) {
+  .search-body-footer {
+    .ui.button.pagination-item {
+      font-size: 14px;
+    }
+
+    .ui.button.prev.single-angle,
+    .ui.button.next.single-angle,
+    .ui.button.prev.double-angle,
+    .ui.button.next.double-angle {
+      width: 20px;
+      height: 20px;
+    }
+
+    .ui.button.next.single-angle:after,
+    .ui.button.prev.single-angle:after,
+    .ui.button.next.double-angle:after,
+    .ui.button.prev.double-angle:after,
+    .ui.button.next.double-angle:before,
+    .ui.button.prev.double-angle:before {
+      top: 5px;
+      width: 10px;
+      height: 10px;
+    }
   }
 }
 

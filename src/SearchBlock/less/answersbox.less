@@ -1,59 +1,3 @@
-.answer-header {
-  display: flex;
-  align-items: center;
-
-  .answer-header-title {
-    margin-right: 1.3em;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  .ui.basic.button.header-btn {
-    padding: 0 0.75em;
-    margin: 0;
-    color: @deepBlue !important;
-    font-size: 14px;
-    font-weight: 300;
-
-    &:hover,
-    &:focus,
-    &:active {
-      border: none;
-      background: none !important;
-      box-shadow: none;
-    }
-  }
-}
-
-.answers-feedback {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.answers__loading {
-  display: flex;
-  justify-content: space-between;
-
-  .three-dots-loader {
-    display: inline;
-
-    div {
-      display: inline !important;
-    }
-  }
-}
-
-.answer__primarylink,
-.answer__primarylink a {
-  color: @deepBlue;
-  font-size: 20px;
-  font-weight: 700;
-
-  &:hover {
-    color: @deepBlue;
-  }
-}
-
 .answers-list {
   margin-bottom: 3em;
 
@@ -73,6 +17,10 @@
     padding-top: 0;
     margin: 0;
 
+    > .icon {
+      padding-top: 3px;
+    }
+
     .ui.button {
       padding: 5px 10px;
       margin: 0 5px;
@@ -87,44 +35,6 @@
     }
   }
 
-  .answer__primary {
-    span {
-      color: @deepBlue;
-      font-size: 20px !important;
-      line-height: 24px;
-    }
-
-    a {
-      font-weight: bold;
-
-      > span {
-        color: @linkColor;
-      }
-    }
-
-    .result__source {
-      margin-top: 0.5em;
-
-      span {
-        font-size: 16px !important;
-      }
-
-      a {
-        color: @mediumPersianBlue;
-        font-weight: normal;
-
-        span {
-          color: @linkColor;
-          font-size: 16px !important;
-        }
-      }
-
-      .label {
-        margin-right: 0.5em !important;
-      }
-    }
-  }
-
   .ui.segment.loading {
     min-height: 10em;
     margin-bottom: 2em;
@@ -133,6 +43,34 @@
       z-index: 2;
       color: black;
       font-size: x-large;
+    }
+  }
+}
+
+.answer-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+
+  .answer-header-title {
+    margin-right: 1.5em;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .ui.basic.button.header-btn {
+    padding: 5px;
+    margin: 0;
+    color: @deepBlue !important;
+    font-size: 14px;
+    font-weight: 300;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: none;
+      background: none !important;
+      box-shadow: none;
     }
   }
 }
@@ -149,6 +87,72 @@
     padding-right: 0.5em;
     margin-right: 0.3em;
     text-align: right;
+  }
+}
+
+.answer__primary {
+  span {
+    color: @deepBlue;
+    font-size: 20px !important;
+    line-height: 24px;
+  }
+
+  a {
+    font-weight: bold;
+
+    > span {
+      color: @linkColor;
+    }
+  }
+
+  .result__source {
+    margin-top: 0.5em;
+
+    span {
+      font-size: 16px !important;
+    }
+
+    a {
+      color: @mediumPersianBlue;
+      font-weight: normal;
+
+      span {
+        color: @linkColor;
+        font-size: 16px !important;
+      }
+    }
+
+    .label {
+      margin-right: 0.5em !important;
+    }
+  }
+}
+
+.answer__primarylink,
+.answer__primarylink a {
+  color: @deepBlue;
+  font-size: 20px;
+
+  &:hover {
+    color: @deepBlue;
+  }
+}
+
+.answers-feedback {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.answers__loading {
+  display: flex;
+  justify-content: space-between;
+
+  .three-dots-loader {
+    display: inline;
+
+    div {
+      display: inline !important;
+    }
   }
 }
 
@@ -171,6 +175,32 @@
   &:active {
     border: none;
     box-shadow: none;
+  }
+}
+
+@media only screen and (max-width: @tabletBreakpoint) {
+  .answers-list .answer__primarylink,
+  .answers-list .answer__primarylink a {
+    color: @deepBlue;
+    font-size: 16px;
+  }
+
+  .answers-list .answer__primary span {
+    font-size: 16px !important;
+  }
+
+  .results-layout .answers-list .answer__primary {
+    .result__source span,
+    .result__source strong {
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .answer-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

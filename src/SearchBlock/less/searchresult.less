@@ -229,7 +229,7 @@ div#page-document div.searchapp div.cards div.search-result {
   width: 100%;
   padding-bottom: 0.5em;
   margin-top: 0.5em;
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
   clear: both;
 
   // div.menu.mlt {
@@ -279,7 +279,11 @@ div#page-document div.searchapp div.cards div.search-result {
     color: @secondaryColor;
     font-size: 16px;
     font-weight: 700;
-    gap: 1.5em;
+    // gap: 1.5em;
+
+    span {
+      margin-right: 20px;
+    }
   }
 
   .col-full {
@@ -308,10 +312,12 @@ div#page-document div.searchapp div.cards div.search-result {
         flex-direction: row;
 
         .tags {
-          display: block;
-          margin: 0 1.2em;
+          display: flex;
+          align-items: center;
+          margin-right: 0.5em;
           color: @deepBlue;
           font-size: 16px;
+          line-height: inherit;
         }
       }
 
@@ -374,6 +380,7 @@ div#page-document div.searchapp div.cards div.search-result {
   }
 
   span.date {
+    margin-right: 1.2em;
     color: #808285;
     font-size: 16px;
   }
@@ -390,8 +397,13 @@ div#page-document div.searchapp div.cards div.search-result {
       width: 100% !important;
     }
 
-    h3,
-    h3 > a {
+    .details h3 {
+      display: flex;
+      align-items: center;
+    }
+
+    .details h3,
+    .details h3 > a {
       color: @deepBlue;
       font-size: 20px;
       font-weight: 700;
@@ -423,28 +435,34 @@ div#page-document div.searchapp div.cards div.search-result {
         min-height: 1.1em;
       }
     }
-
-    p {
-      font-size: 14px !important;
-    }
-
-    // h3,
-    // p {
-    //   margin: 0px 0px 10px 0px;
-    // }
-
-    p {
-      color: @deepBlue;
-      font-size: 12.8px;
-    }
   }
 }
 
 .label.new-item,
 .label.archived-item {
-  padding: 0.3em !important;
-  margin-left: 0.3em !important;
-  font-size: 70% !important;
+  padding: 0.1em 0.3em !important;
+  margin-left: 0.8em !important;
+  font-size: 12px !important;
+}
+
+@media only screen and (max-width: @tabletBreakpoint) {
+  div#page-document {
+    div.searchapp div.cards div.search-result div.col-left h3,
+    div.searchapp div.cards div.search-result div.col-left h3 > a,
+    div.searchapp
+      div.cards
+      div.search-result
+      div.col-left
+      .result-description
+      p {
+      font-size: 16px !important;
+    }
+  }
+
+  div.col-left .source span,
+  div.col-left .source strong {
+    font-size: 14px !important;
+  }
 }
 
 @media only screen and (max-width: 1279px) {
