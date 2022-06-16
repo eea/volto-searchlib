@@ -1,13 +1,7 @@
 .landing-page-container {
   margin-top: 5em;
 
-  .search-tab-wrapper {
-    width: 100%;
-    overflow-x: auto;
-  }
-
   .search-tab {
-    width: 1108px;
     margin-top: 4em;
 
     .ui.tab {
@@ -19,13 +13,17 @@
       a.item {
         font-size: 20px;
       }
+
+      &::-webkit-scrollbar {
+        height: 0.3rem !important;
+      }
     }
   }
 
   .landing-page-cards {
-    .ui.cards {
-      margin-top: 1em;
+    padding: 0 1.25rem;
 
+    .ui.cards {
       .ui.card {
         margin-top: 2em;
         color: @deepBlue;
@@ -67,5 +65,20 @@
     margin: 1.5em 0;
     color: @grey;
     font-size: 85%;
+  }
+}
+
+@media only screen and (max-width: @tabletBreakpoint) {
+  .landing-page-cards {
+    .ui.cards {
+      display: grid;
+      justify-content: space-between;
+      padding-right: 2px;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+
+      .ui.card {
+        width: unset;
+      }
+    }
   }
 }
