@@ -20,16 +20,21 @@
         font-size: 20px;
       }
     }
+  }
 
-    .search-cards {
-      margin-top: 1em;
-    }
-
+  .landing-page-cards {
     .ui.cards {
+      margin-top: 1em;
+
       .ui.card {
         margin-top: 2em;
         color: @deepBlue;
         cursor: pointer;
+
+        &:hover {
+          border: none;
+          box-shadow: none;
+        }
 
         .content {
           flex-grow: initial;
@@ -47,11 +52,6 @@
           color: @deepBlue;
         }
 
-        &:hover {
-          border: none;
-          box-shadow: none;
-        }
-
         img.facet-option-icon {
           display: block;
           width: auto;
@@ -63,10 +63,9 @@
     }
   }
 
-  div.info {
-    width: 100%;
-    margin-bottom: 1em;
-    color: @sf-medium-gray2;
-    font-size: 12px;
+  .tab-info {
+    margin: 1.5em 0;
+    color: @grey;
+    font-size: 85%;
   }
 }
