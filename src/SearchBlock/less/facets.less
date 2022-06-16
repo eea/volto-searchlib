@@ -94,10 +94,6 @@ div#page-document .searchlib-block {
     }
 
     a.item {
-      // padding: 0px;
-      // border-bottom: 3px solid white;
-      // margin-right: 1.5em;
-      // border-radius: 0px;
       color: @deepBlue;
       font-size: 18px;
 
@@ -110,22 +106,16 @@ div#page-document .searchlib-block {
       }
 
       &.active {
-        // border-bottom: 3px solid @secondaryColor;
         color: @secondaryColor;
-
-        // .icon {
-        //   color: @secondaryColor !important;
-        // }
       }
 
       span.title {
         margin-right: 5px;
       }
+    }
 
-      // span.count {
-      //   color: @sf-medium-gray2;
-      //   font-weight: 400;
-      // }
+    &::-webkit-scrollbar {
+      height: 0.3rem !important;
     }
   }
 
