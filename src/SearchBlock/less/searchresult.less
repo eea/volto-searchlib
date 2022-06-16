@@ -312,7 +312,8 @@ div#page-document div.searchapp div.cards div.search-result {
         flex-direction: row;
 
         .tags {
-          display: block;
+          display: flex;
+          align-items: center;
           margin-right: 0.5em;
           color: @deepBlue;
           font-size: 16px;
@@ -396,8 +397,13 @@ div#page-document div.searchapp div.cards div.search-result {
       width: 100% !important;
     }
 
-    h3,
-    h3 > a {
+    .details h3 {
+      display: flex;
+      align-items: center;
+    }
+
+    .details h3,
+    .details h3 > a {
       color: @deepBlue;
       font-size: 20px;
       font-weight: 700;
@@ -434,9 +440,9 @@ div#page-document div.searchapp div.cards div.search-result {
 
 .label.new-item,
 .label.archived-item {
-  padding: 0.3em !important;
-  margin-left: 0.3em !important;
-  font-size: 70% !important;
+  padding: 0.1em 0.3em !important;
+  margin-left: 0.8em !important;
+  font-size: 12px !important;
 }
 
 @media only screen and (max-width: @tabletBreakpoint) {
