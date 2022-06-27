@@ -29,6 +29,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
             title: 'NLP Capabilities Settings',
             fields: [
               'use_qa_dp',
+              'qa_use_qa_dp',
               'qa_queryTypes',
               'cutoffScore',
               'rawIndex',
@@ -99,7 +100,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     },
 
     use_qa_dp: {
-      title: 'Use DensePassageRetrieval for QA?',
+      title: 'Use DensePassageRetrieval for results?',
       description: (
         <>
           If enabled, it will use{' '}
@@ -110,6 +111,19 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       type: 'boolean',
       configPath: 'nlp.qa.use_dp',
     },
+    qa_use_qa_dp: {
+      title: 'Use DensePassageRetrieval for QA?',
+      description: (
+        <>
+          If enabled, it will use{' '}
+          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
+          query retrieval instead of ES BM25
+        </>
+      ),
+      type: 'boolean',
+      configPath: 'nlp.qa.qa_use_dp',
+    },
+
     qa_queryTypes: {
       title: 'QA Query types',
       description: 'The QA system will be used for these types of queries',
