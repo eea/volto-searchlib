@@ -1,0 +1,60 @@
+.searchlib-block {
+  .searchapp-datahub {
+    /**
+    * Search box
+    */
+    .sui-search-box .search-input .terms-box {
+      border-color: @blue-5;
+    }
+
+    /**
+    * Result item
+    */
+    .search-result {
+      padding-bottom: 1em !important;
+      border-bottom: 1px solid #bcbec0;
+      margin-bottom: 1em !important;
+
+      h3 {
+        margin-top: 1rem;
+      }
+    }
+
+    .result-info {
+      margin-top: 1em;
+      margin-right: 4em;
+      color: #808285;
+      font-size: 14px;
+      font-weight: 400;
+
+      .result-info-title {
+        color: @deepBlue;
+        font-weight: 700;
+      }
+    }
+
+    .result-bottom {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      @media only screen and (max-width: @largestMobileScreen) {
+        flex-direction: column;
+      }
+    }
+
+    /**
+    * Tabs
+    */
+    .ui.secondary.pointing.content-section-tabs.menu {
+      a.item {
+        color: @blue-grey-5;
+
+        &.active {
+          border-color: @blue-5;
+          color: @blue-5;
+        }
+      }
+    }
+  }
+}
