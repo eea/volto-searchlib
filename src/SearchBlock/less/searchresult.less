@@ -6,37 +6,6 @@
   padding-right: 0.6em;
 }
 
-.listing-view-item.header {
-  cursor: pointer;
-}
-
-.listing-view-details {
-  .listing-view-details-section {
-    padding: 1em 0em;
-
-    .details-field {
-      display: flex;
-      border-bottom: 1px solid #ccc;
-      font-size: medium;
-
-      .details-field-label {
-        width: 25%;
-        padding: 0.3em 1em 0.3em 0.3em;
-        border-right: 1px solid #ccc;
-        background: #ddd;
-        font-weight: bold;
-      }
-
-      .details-field-value {
-        width: 75%;
-        padding: 0.3em 0.3em 0.3em 1em;
-        background: #f9f9f9;
-        white-space: pre-wrap;
-      }
-    }
-  }
-}
-
 .searchlib-block {
   .ui.cards {
     .ui.card.card-item {
@@ -220,6 +189,37 @@ div#page-document .horizontal-card-item .content.details .header a {
   border-radius: 50%;
 }
 
+.listing-view-item.header {
+  cursor: pointer;
+}
+
+.listing-view-details {
+  .listing-view-details-section {
+    padding: 1em 0em;
+
+    .details-field {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+      font-size: medium;
+
+      .details-field-label {
+        width: 25%;
+        padding: 0.3em 1em 0.3em 0.3em;
+        border-right: 1px solid #ccc;
+        background: #ddd;
+        font-weight: bold;
+      }
+
+      .details-field-value {
+        width: 75%;
+        padding: 0.3em 0.3em 0.3em 1em;
+        background: #f9f9f9;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
+
 a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
   padding: 3px;
 }
@@ -231,19 +231,6 @@ div#page-document div.searchapp div.cards div.search-result {
   margin-top: 0.5em;
   margin-bottom: 2em;
   clear: both;
-
-  // div.menu.mlt {
-  //   top: -100%;
-  //   left: -5px;
-  //
-  //   div.item {
-  //     padding: 5px !important;
-  //     background: @secondaryColor;
-  //     color: white;
-  //     font-size: 10px;
-  //     font-weight: 400;
-  //   }
-  // }
 
   &:hover {
     div.controls {
@@ -279,7 +266,6 @@ div#page-document div.searchapp div.cards div.search-result {
     color: @secondaryColor;
     font-size: 16px;
     font-weight: 700;
-    // gap: 1.5em;
 
     span {
       margin-right: 20px;
