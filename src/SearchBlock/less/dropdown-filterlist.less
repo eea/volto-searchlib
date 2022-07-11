@@ -1,14 +1,72 @@
-div#page-document .searchlib-block {
+.searchlib-block {
   .dropdown-facets-list {
+    display: flex;
+    margin-bottom: 3em;
+
+    .dropdown-facet {
+      .ui.dropdown .divider {
+        padding: 3px 13px;
+        border: 1px solid #eee;
+        color: #3d5265;
+        font-size: 16px;
+      }
+    }
+
     .horizontal-dropdown-facets {
       display: flex;
-      gap: 1em;
+      gap: 1.5em;
+    }
+
+    .ui.right.sidebar {
+      box-shadow: 0 0 20px rgba(175, 175, 175, 0.8) !important;
     }
 
     .sidebar-content {
       height: 100%;
       padding: 1em;
       background-color: white;
+
+      .ui.card.term .header {
+        border: none;
+        color: #3d5265;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .ui.card.term span.count {
+        color: #3d5265;
+        font-weight: 400;
+      }
+
+      .ui.card.term:hover {
+        background: #fff !important;
+        box-shadow: none;
+      }
+
+      .ui.card.term.active .header,
+      .ui.card.term.active span.count {
+        color: #004b7f;
+        font-weight: 700;
+      }
+
+      .ui.accordion .title i:before {
+        font-size: 2rem;
+      }
+    }
+
+    .ui.button.sui-button {
+      padding: 0;
+      margin-left: 1.5em;
+      color: #007b6c !important;
+      font-weight: 600;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: none;
+        background: none !important;
+        box-shadow: none;
+      }
     }
   }
 }
