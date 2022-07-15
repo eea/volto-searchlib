@@ -114,6 +114,15 @@ div#page-document {
       justify-content: right;
       margin-bottom: 0.5em;
 
+      .ui.dropdown {
+        .icon.chevron {
+          position: relative;
+          top: -1px;
+          margin-left: 0.3em;
+          font-size: 0.6em;
+        }
+      }
+
       #archived-facet {
         position: relative;
         top: -1px;
@@ -160,7 +169,6 @@ div#page-document {
 
       .view-selector {
         width: auto !important;
-        padding-bottom: 1em;
         padding-left: 0px !important;
         margin-left: 10px;
         font-size: 16px;
@@ -207,7 +215,6 @@ div#page-document {
 
       .sorting {
         width: auto;
-        margin-bottom: 0.5em;
         font-size: 16px;
 
         .inline.dropdown > span {
@@ -416,6 +423,30 @@ p.highlight-description\.highlight {
   }
 }
 
+@media screen and (min-width: 750px) {
+  div.body-content div.col-mid div.ui.doubling.stackable.one.cards {
+    max-width: 1000px;
+  }
+
+  body.searchlib-page {
+    &.has-toolbar {
+      div.header-wrapper[role='banner'] {
+        div.ui.container:first-of-type {
+          width: calc(100vw - 100px) !important;
+        }
+      }
+    }
+
+    &.has-toolbar-collapsed {
+      div.header-wrapper[role='banner'] {
+        div.ui.container:first-of-type {
+          width: calc(100vw - 50px) !important;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 600px) {
   .ui.basic.segment.content-area .ui.container#page-document {
     padding: 0px 5px 0px 5px !important;
@@ -442,14 +473,14 @@ p.highlight-description\.highlight {
     }
   }
 
-  div.view-selector {
-    div.buttons {
+  .view-selector {
+    .buttons {
       position: relative;
       left: -14px;
     }
   }
 
-  div.above-results {
+  .above-results {
     display: flex;
     justify-content: left !important;
     margin-top: 1em !important;
@@ -457,36 +488,12 @@ p.highlight-description\.highlight {
     column-gap: 10px;
     row-gap: 10px;
 
-    div.sorting {
+    .sorting {
       margin: 0px !important;
     }
 
-    div.view-selector {
+    .view-selector {
       margin: 0px !important;
-    }
-  }
-}
-
-@media screen and (min-width: 750px) {
-  div.body-content div.col-mid div.ui.doubling.stackable.one.cards {
-    max-width: 1000px;
-  }
-
-  body.searchlib-page {
-    &.has-toolbar {
-      div.header-wrapper[role='banner'] {
-        div.ui.container:first-of-type {
-          width: calc(100vw - 100px) !important;
-        }
-      }
-    }
-
-    &.has-toolbar-collapsed {
-      div.header-wrapper[role='banner'] {
-        div.ui.container:first-of-type {
-          width: calc(100vw - 50px) !important;
-        }
-      }
     }
   }
 }
