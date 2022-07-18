@@ -1,8 +1,5 @@
 .searchlib-block {
   .dropdown-facets-list {
-    display: flex;
-    margin-bottom: 3em;
-
     .dropdown-facet {
       .ui.dropdown {
         .divider {
@@ -20,8 +17,10 @@
     }
 
     .horizontal-dropdown-facets {
-      display: flex;
-      gap: 1.5em;
+      .dropdown-facet {
+        display: inline-block;
+        margin: 0 1.5em 1em 0;
+      }
     }
 
     .ui.right.sidebar {
@@ -63,7 +62,7 @@
 
     .ui.button.sui-button {
       padding: 0;
-      margin-left: 1.5em;
+      margin: 0;
       color: #007b6c !important;
       font-weight: 600;
 

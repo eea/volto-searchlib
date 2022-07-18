@@ -108,11 +108,14 @@ div#page-document {
     }
 
     .above-results {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: baseline;
-      justify-content: right;
-      margin-bottom: 0.5em;
+      display: grid;
+      margin-bottom: 2em;
+      column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+
+      .above-right {
+        display: flex;
+      }
 
       .ui.dropdown {
         .icon.chevron {
@@ -150,7 +153,7 @@ div#page-document {
           }
         }
 
-        div.checked {
+        .checked {
           label {
             color: @secondaryColor !important;
             font-weight: 600;
@@ -169,17 +172,16 @@ div#page-document {
 
       .view-selector {
         width: auto !important;
-        // padding-bottom: 1em;
         padding-left: 0px !important;
         margin-left: 10px;
         font-size: 16px;
 
-        div.text {
+        .text {
           margin-right: 2px;
         }
 
         .ui.dropdown {
-          div.text {
+          .text {
             color: @sf-dark-gray;
             font-weight: 400;
           }
@@ -198,7 +200,7 @@ div#page-document {
           }
         }
 
-        div.buttons {
+        .buttons {
           button {
             background: @midGray;
             font-size: 12px;
@@ -216,7 +218,6 @@ div#page-document {
 
       .sorting {
         width: auto;
-        // margin-bottom: 0.5em;
         font-size: 16px;
 
         .inline.dropdown > span {
