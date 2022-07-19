@@ -58,3 +58,140 @@
     }
   }
 }
+
+.dataset-view {
+  color: @blue-grey-5;
+
+  .dataset-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .eea.callout {
+    border-color: @blue-5;
+    margin-bottom: 3em;
+    color: @blue-grey-5;
+  }
+
+  .dataset-tab-setion {
+    margin: 2em 0;
+
+    .ui.pointing.secondary.menu {
+      .item {
+        color: @blue-grey-6 !important;
+      }
+
+      .active.item {
+        border-color: @blue-5 !important;
+        color: @blue-5 !important;
+      }
+    }
+
+    .ui.segment.tab {
+      border: none;
+      background-color: transparent;
+    }
+  }
+
+  .info-wrapper {
+    padding: 2em;
+    background-color: #f9f9f9;
+    color: #2e3e4c;
+    font-size: 18px;
+
+    .info-content {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .info-title {
+      margin-bottom: 1.3em;
+      font-weight: 700;
+    }
+  }
+
+  .below-content-wrapper {
+    margin: 2em 0;
+  }
+
+  .geotags {
+    margin: 0.5em 0;
+    columns: 5;
+    font-size: 15px;
+    list-style-type: none;
+
+    span {
+      display: block;
+    }
+  }
+
+  .related-wrapper {
+    margin: 2em 0;
+
+    .ui.cards {
+      .ui.card {
+        .content {
+          min-height: 148px;
+          background-color: @deepBlue;
+
+          .description {
+            color: white;
+            font-size: 16px;
+          }
+        }
+
+        &:hover {
+          border: none;
+          box-shadow: none;
+        }
+      }
+    }
+
+    h2 {
+      color: @darkMidnightBlue;
+    }
+  }
+
+  .tag-item {
+    display: inline-block;
+    padding: 2px 5px;
+    margin: 5px;
+    background: #dcdcdc;
+    border-radius: 0.5em;
+    color: black;
+    font-size: 12px;
+    line-height: 2;
+    word-break: keep-all;
+  }
+}
+
+.dataset-header {
+  margin-bottom: 3em;
+
+  h1 {
+    color: @blue-grey-5;
+  }
+
+  .dataset-header-bottom {
+    color: @blue-grey-5;
+    font-size: 14px;
+    font-weight: 700;
+
+    .header-data:not(:last-child) {
+      position: relative;
+      display: inline-block;
+      padding-right: 1.5em;
+
+      &:after {
+        position: absolute;
+        top: 3px;
+        right: 10px;
+        height: 60%;
+        border-left: 2px solid @blue-grey-5;
+        content: ' ';
+      }
+    }
+  }
+}
