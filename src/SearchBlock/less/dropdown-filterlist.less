@@ -24,39 +24,50 @@
     }
 
     .ui.right.sidebar {
+      background-color: white;
       box-shadow: 0 0 20px rgba(175, 175, 175, 0.8) !important;
     }
 
-    .sidebar-content {
+    .sidebar-wrapper {
       height: 100%;
       padding: 1em;
-      background-color: white;
+      display: flex;
+      flex-direction: column;
 
-      .ui.card.term .header {
-        border: none;
-        color: #3d5265;
-        font-size: 16px;
-        font-weight: 400;
+      .sidebar-footer {
+        margin-top: 1em;
       }
 
-      .ui.card.term span.count {
-        color: #3d5265;
-        font-weight: 400;
-      }
+      .sidebar-content {
+        background-color: white;
+        overflow: auto;
 
-      .ui.card.term:hover {
-        background: #fff !important;
-        box-shadow: none;
-      }
+        .ui.card.term .header {
+          border: none;
+          color: #3d5265;
+          font-size: 16px;
+          font-weight: 400;
+        }
 
-      .ui.card.term.active .header,
-      .ui.card.term.active span.count {
-        color: #004b7f;
-        font-weight: 700;
-      }
+        .ui.card.term span.count {
+          color: #3d5265;
+          font-weight: 400;
+        }
 
-      .ui.accordion .title i:before {
-        font-size: 2rem;
+        .ui.card.term:hover {
+          background: #fff !important;
+          box-shadow: none;
+        }
+
+        .ui.card.term.active .header,
+        .ui.card.term.active span.count {
+          color: #004b7f;
+          font-weight: 700;
+        }
+
+        .ui.accordion .title i:before {
+          font-size: 2rem;
+        }
       }
     }
 
