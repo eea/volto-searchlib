@@ -162,7 +162,7 @@ export const createHandler = () => {
         body.params?.config ||
         config.settings.searchlib.searchui[searchRequestAppName];
 
-      log('conf', searchRequestAppName, conf.enableNLP);
+      log('enableNLP:', searchRequestAppName, conf.enableNLP);
 
       urlNLP = getUrlNLP(searchRequestAppName);
       urlES = getUrlES(searchRequestAppName);
