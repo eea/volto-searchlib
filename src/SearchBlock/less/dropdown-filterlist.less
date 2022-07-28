@@ -1,0 +1,105 @@
+.searchlib-block {
+  .dropdown-facets-list {
+    .dropdown-facet {
+      .ui.dropdown {
+        .divider {
+          color: @blue-grey-5;
+          font-size: 16px;
+        }
+
+        .menu {
+          padding: 1em;
+
+          .histogram-facet {
+            width: 350px;
+          }
+
+          .ui.button {
+            margin-top: 1em;
+          }
+        }
+
+        .icon.chevron {
+          position: relative;
+          top: -1px;
+          margin-left: 0.3em;
+          font-size: 0.6em;
+        }
+      }
+    }
+
+    .histogram-facet {
+      padding-bottom: 2em;
+    }
+
+    .horizontal-dropdown-facets {
+      .dropdown-facet {
+        display: inline-block;
+        margin: 0 1.5em 1em 0;
+      }
+    }
+
+    .ui.right.sidebar {
+      background-color: white;
+      box-shadow: 0 0 20px rgba(175, 175, 175, 0.8) !important;
+    }
+
+    .sidebar-wrapper {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      padding: 1em;
+
+      .sidebar-footer {
+        margin-top: 1em;
+      }
+
+      .sidebar-content {
+        overflow: auto;
+        background-color: white;
+
+        .ui.card.term .header {
+          border: none;
+          color: #3d5265;
+          font-size: 16px;
+          font-weight: 400;
+        }
+
+        .ui.card.term span.count {
+          color: #3d5265;
+          font-weight: 400;
+        }
+
+        .ui.card.term:hover {
+          background: #fff !important;
+          box-shadow: none;
+        }
+
+        .ui.card.term.active .header,
+        .ui.card.term.active span.count {
+          color: #004b7f;
+          font-weight: 700;
+        }
+
+        .ui.accordion .title i:before {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .ui.button.sui-button {
+      padding: 0;
+      margin: 0;
+      color: #007b6c !important;
+      font-weight: 600;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: none;
+        background: none !important;
+        box-shadow: none;
+      }
+    }
+  }
+}

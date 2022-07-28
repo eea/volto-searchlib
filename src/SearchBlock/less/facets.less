@@ -1,4 +1,4 @@
-div#page-document .searchlib-block {
+.searchlib-block {
   div.facets {
     i.icon.dropdown {
       margin-right: 0px;
@@ -56,76 +56,14 @@ div#page-document .searchlib-block {
     }
   }
 
-  .content-section-tabs.menu {
-    margin-bottom: 1em;
-    overflow-x: auto;
-
-    .item.dropdown {
-      padding: 0px 10px 0px 10px;
-      border: none;
-      border-bottom: 4px solid white;
-      background: white;
-      color: @sf-dark-gray;
-      font-size: 14px;
-      font-weight: 400 !important;
-
-      &:before {
-        display: none;
-      }
-
-      div.menu {
-        margin-top: 4px;
-      }
-
-      i.icon:first-of-type {
-        display: none;
-      }
-
-      span.title {
-        margin-right: 5px;
-        color: @sf-dark-gray;
-      }
-
-      span.count {
-        color: @sf-medium-gray2;
-        font-size: 10px;
-        font-weight: 400;
-      }
-    }
-
-    a.item {
-      color: @deepBlue;
-      font-size: 18px;
-
-      &:hover {
-        background: white;
-      }
-
-      &:before {
-        display: none;
-      }
-
-      &.active {
-        color: @secondaryColor;
-      }
-
-      span.title {
-        margin-right: 5px;
-      }
-    }
-
-    &::-webkit-scrollbar {
-      height: 0.3rem !important;
-    }
-  }
-
   .secondary-facets {
     display: flex;
     flex-wrap: wrap;
+    gap: 1em;
 
-    & > div {
-      margin-right: 1em;
-    }
+    // & > div {
+    //   margin-right: 1em;
+    // }
   }
 
   .ui.segment.facetslist-wrapper {
@@ -161,7 +99,6 @@ div#page-document .searchlib-block {
   }
 
   .sui-multi-checkbox-facet {
-    // max-height: 200px;
     overflow: auto;
     max-height: 100%;
     padding: 0 0.6em;
@@ -230,6 +167,7 @@ div#page-document .searchlib-block {
 }
 
 .sui-multi-checkbox-facet__option-input-wrapper {
+  display: flex;
   max-width: 15em;
   flex: 1;
 }
@@ -279,9 +217,9 @@ div#page-document .searchlib-block {
   outline: none;
 }
 
-.sui-facet-search__text-input:focus {
-  border: 1px solid #3a56e4;
-}
+// .sui-facet-search__text-input:focus {
+//   border: 1px solid #3a56e4;
+// }
 
 .sui-facet-search {
   margin: 0px;
