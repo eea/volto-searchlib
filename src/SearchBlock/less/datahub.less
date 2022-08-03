@@ -56,9 +56,36 @@
         }
       }
     }
+
+    /**
+    * Filters
+    */
+    .above-results .sorting .inline.dropdown > span,
+    .dropdown-facets-list .ui.button.sui-button {
+      color: @blue-5 !important;
+    }
+
+    /**
+    * Pagination
+    */
+    .search-body-footer {
+      .ui.button.pagination-item {
+        &.active,
+        &:hover {
+          color: @blue-5 !important;
+        }
+
+        &:after {
+          border-color: @blue-5;
+        }
+      }
+    }
   }
 }
 
+/**
+* Datahub item view
+*/
 .dataset-view {
   color: @blue-grey-5;
 
@@ -250,7 +277,7 @@
         position: absolute;
         top: 3px;
         right: 10px;
-        height: 60%;
+        height: 70%;
         border-left: 2px solid @blue-grey-5;
         content: ' ';
       }
