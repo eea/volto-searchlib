@@ -209,12 +209,27 @@ a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
   padding: 3px;
 }
 
+.source {
+  font-size: 14px;
+
+  a {
+    color: @mediumPersianBlue;
+  }
+}
+
+.result-info-title {
+  margin-right: 3px;
+  color: @deepBlue;
+  font-size: 14px;
+  font-weight: 700;
+}
+
 div#page-document div.searchapp div.cards div.search-result {
   overflow: auto;
   width: 100%;
-  padding-bottom: 0.5em;
-  margin-top: 0.5em;
-  margin-bottom: 2em;
+  padding-bottom: 1.5em;
+  border-bottom: 1px solid #bcbec0;
+  margin-bottom: 1.5em;
   clear: both;
 
   &:hover {
@@ -231,17 +246,6 @@ div#page-document div.searchapp div.cards div.search-result {
 
   span.breadcrumb span {
     color: @primaryColor !important;
-  }
-
-  .result-description {
-    margin-bottom: 0.8em;
-  }
-
-  .source {
-    a {
-      color: @mediumPersianBlue;
-      font-size: 16px;
-    }
   }
 
   .tags-list {
@@ -263,7 +267,10 @@ div#page-document div.searchapp div.cards div.search-result {
     .meta {
       display: flex;
       align-items: center;
-      margin-bottom: 0.5em;
+
+      .result-info {
+        margin-bottom: 0;
+      }
 
       span.score {
         padding: 0px 5px 0px 5px;
@@ -350,6 +357,21 @@ div#page-document div.searchapp div.cards div.search-result {
     }
   }
 
+  .result-info {
+    display: flex;
+    align-items: center;
+    margin-right: 4em;
+    margin-bottom: 0.5em;
+    color: #808285;
+    font-size: 14px;
+    font-weight: 400;
+
+    .tags {
+      color: inherit !important;
+      font-size: inherit !important;
+    }
+  }
+
   span.date {
     margin-right: 1.2em;
     color: #808285;
@@ -364,6 +386,16 @@ div#page-document div.searchapp div.cards div.search-result {
     margin-top: 0px;
     float: left;
 
+    .result-bottom {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      @media only screen and (max-width: @largestMobileScreen) {
+        flex-direction: column;
+      }
+    }
+
     &.no-image {
       width: 100% !important;
     }
@@ -373,18 +405,14 @@ div#page-document div.searchapp div.cards div.search-result {
       align-items: center;
     }
 
-    .details h3,
-    .details h3 > a {
+    .details h3 {
+      margin-top: 1rem;
       color: @deepBlue;
       font-size: 20px;
       font-weight: 700;
-    }
 
-    .result-description {
-      p {
+      > a {
         color: @deepBlue;
-        font-size: 20px !important;
-        line-height: 24px;
       }
     }
 
@@ -420,12 +448,7 @@ div#page-document div.searchapp div.cards div.search-result {
   div#page-document {
     div.searchapp div.cards div.search-result div.col-left h3,
     div.searchapp div.cards div.search-result div.col-left h3 > a,
-    div.searchapp
-      div.cards
-      div.search-result
-      div.col-left
-      .result-description
-      p {
+    div.searchapp div.cards div.search-result div.col-left p {
       font-size: 16px !important;
     }
   }

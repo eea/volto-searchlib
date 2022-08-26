@@ -25,42 +25,6 @@
     }
 
     /**
-    * Result item
-    */
-    .search-result {
-      padding-bottom: 1em !important;
-      border-bottom: 1px solid #bcbec0;
-      margin-bottom: 1em !important;
-
-      h3 {
-        margin-top: 1rem;
-      }
-    }
-
-    .result-info {
-      margin-top: 1em;
-      margin-right: 4em;
-      color: #808285;
-      font-size: 14px;
-      font-weight: 400;
-
-      .result-info-title {
-        color: @deepBlue;
-        font-weight: 700;
-      }
-    }
-
-    .result-bottom {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-
-      @media only screen and (max-width: @largestMobileScreen) {
-        flex-direction: column;
-      }
-    }
-
-    /**
     * Tabs
     */
     .ui.secondary.pointing.content-section-tabs.menu {
@@ -78,7 +42,8 @@
     * Filters
     */
     .above-results .sorting .inline.dropdown > span,
-    .dropdown-facets-list .ui.button.sui-button {
+    .dropdown-facets-list .ui.button.sui-button:hover,
+    .ui.basic.button.clear-btn {
       color: @blue-5 !important;
     }
 
@@ -118,23 +83,30 @@
     color: @blue-grey-5;
   }
 
-  .dataset-tab-setion {
-    margin: 2em 0;
+  .ui.accordion .list .item {
+    > .content {
+      display: flex;
+      align-items: center;
 
-    .ui.pointing.secondary.menu {
-      .item {
-        color: @blue-grey-6 !important;
+      .item-protocol {
+        margin-left: 0.5em;
       }
 
-      .active.item {
-        border-color: @blue-5 !important;
-        color: @blue-5 !important;
+      .icon {
+        margin-right: 0.5em;
+      }
+
+      .item-link {
+        margin: 0 0.5em;
       }
     }
 
-    .ui.segment.tab {
-      border: none;
-      background-color: transparent;
+    .item-description {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      font-size: 80%;
+      -webkit-line-clamp: 3;
     }
   }
 
@@ -152,6 +124,7 @@
 
   .info-wrapper {
     padding: 2em;
+    margin: 3em 0;
     background-color: #f9f9f9;
     color: #2e3e4c;
     font-size: 18px;
@@ -166,10 +139,6 @@
       margin-bottom: 1.3em;
       font-weight: 700;
     }
-  }
-
-  .below-content-wrapper {
-    margin: 2em 0;
   }
 
   .geotags {
@@ -232,7 +201,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0.2em 1em;
+    padding: 0.5em 1em;
     background-color: @darkCerulean;
     color: white;
     font-size: 23px;
@@ -262,7 +231,7 @@
     }
   }
 
-  .side-temp {
+  .side-year {
     display: flex;
     align-items: center;
     padding: 0.2em 1.3em;
@@ -299,5 +268,28 @@
         content: ' ';
       }
     }
+  }
+}
+
+.format-label {
+  display: inline;
+  padding: 0.2em 0.6em 0.3em;
+  margin-right: 5px;
+  background-color: @blue-5;
+  border-radius: 0.25em;
+  color: #fff;
+  font-size: 65%;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.dataset-item {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-weight: 500;
   }
 }
