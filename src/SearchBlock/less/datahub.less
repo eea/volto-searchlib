@@ -195,7 +195,8 @@
     margin-top: 3.5em;
   }
 
-  .metadata-section {
+  .metadata-section,
+  .section-wrapper {
     margin-top: 2em;
   }
 
@@ -328,5 +329,18 @@
 
   span {
     font-weight: 500;
+  }
+}
+
+.more-like-this {
+  margin-top: 3.5em;
+
+  .card-description {
+    display: -webkit-box;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    text-overflow: ellipsis;
   }
 }
