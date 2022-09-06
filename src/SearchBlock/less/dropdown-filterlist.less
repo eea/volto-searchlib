@@ -1,14 +1,64 @@
 .searchlib-block {
+  .ui.dimmer.facet-dimmer {
+    position: fixed;
+    background-color: rgba(249, 249, 249, 0.4) !important;
+  }
+
+  .horizontal-dropdown-facets {
+    display: flex;
+    align-items: center;
+  }
+
   .dropdown-facets-list {
     .dropdown-facet {
+      margin-bottom: 0 !important;
+
       .ui.dropdown {
+        position: relative;
+
+        > span {
+          position: relative !important;
+          display: inline-block;
+          overflow: hidden;
+          padding: 0.5em;
+          margin-bottom: 0;
+          background-color: white;
+
+          &::after {
+            position: absolute;
+            bottom: -7px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: white;
+            content: '';
+          }
+        }
+
+        &.active {
+          > span {
+            z-index: 99999 !important;
+            box-shadow: 0 5px 0 #fff, 0 0 4px rgba(0, 0, 0, 0.25);
+          }
+
+          .menu {
+            z-index: 9999 !important;
+          }
+        }
+
         .divider {
           color: @blue-grey-5;
           font-size: 16px;
         }
 
         .menu {
+          bottom: auto !important;
+          min-width: 368px;
           padding: 1em;
+          border: none;
+          border-bottom: 0.5px solid #4c677f;
+          margin-top: -6px;
+          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 
           .histogram-facet {
             width: 350px;
@@ -26,6 +76,156 @@
           font-size: 0.6em;
         }
       }
+
+      .sui-facet-search {
+        border: 0.5px solid #c4c4c4;
+        margin: 0.7em 0;
+        border-radius: 0;
+        font-size: 14px;
+      }
+
+      .facet-label {
+        color: @green-5;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .clear-filters {
+        padding: 0.5em;
+        margin: 0 !important;
+        background-color: transparent;
+        color: @blue-5;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .sui-facet-search__text-input {
+        font-size: 14px;
+      }
+
+      .sui-multi-checkbox-facet__option-label {
+        justify-content: initial;
+        margin: 0.5em 0;
+      }
+
+      .sui-multi-checkbox-facet__option-count {
+        margin: 0;
+        margin-left: 0.5em;
+        color: @blue-grey-5;
+        font-size: 16px;
+        font-weight: 300;
+      }
+
+      .sui-multi-checkbox-facet__option-input-wrapper {
+        position: relative;
+        max-width: none;
+        flex: none;
+
+        input {
+          position: absolute;
+          width: 0;
+          height: 0;
+          cursor: pointer;
+          opacity: 0;
+        }
+
+        .sui-multi-checkbox-facet__checkbox {
+          position: absolute;
+          width: 0;
+          height: 0;
+          cursor: pointer;
+          opacity: 0;
+        }
+
+        .sui-multi-checkbox-facet__input-text {
+          padding-left: 30px;
+          font-size: 16px;
+        }
+
+        .checkmark {
+          position: absolute;
+          top: 2px;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          border: 1px solid @blue-5;
+          background-color: #fff;
+        }
+
+        input:checked ~ .checkmark {
+          background-color: @blue-5;
+        }
+
+        .checkmark:after {
+          position: absolute;
+          display: none;
+          content: '';
+        }
+
+        input:checked ~ .checkmark:after {
+          display: block;
+        }
+
+        .checkmark:after {
+          top: 3px;
+          left: 7px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+        }
+      }
+
+      .sui-facet.searchlib-multiterm-facet {
+        // custom facet scrollbar
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background-color: #d9d9d9;
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: @blue-5;
+          border-radius: 10px;
+        }
+      }
+
+      .sui-multi-checkbox-facet {
+        padding: 0;
+      }
+
+      .facet-term-controls {
+        padding: 0;
+        border: none;
+
+        .sui-multi-checkbox-facet__input-text {
+          padding: 0;
+        }
+
+        .sui-multi-checkbox-facet__option-label {
+          justify-content: space-between;
+        }
+
+        .match-select {
+          padding: 5px;
+          border: 0.5px solid #c4c4c4;
+          margin: 0;
+          background-color: transparent;
+          border-radius: 3px;
+        }
+      }
+
+      .sui-facet.searchlib-multiterm-facet {
+        > div:last-child {
+          // TODO: find a better way to define the multiterm facet height
+          height: 350px !important;
+        }
+      }
     }
 
     .histogram-facet {
@@ -35,7 +235,7 @@
     .horizontal-dropdown-facets {
       .dropdown-facet {
         display: inline-block;
-        margin: 0 1.5em 1em 0;
+        margin: 0 0.8em 1em 0;
       }
     }
 
@@ -90,8 +290,9 @@
     .ui.button.sui-button {
       padding: 0;
       margin: 0;
-      margin: 0 1.5em 1em 0;
-      color: @deepBlue !important;
+      margin-right: 1.5em;
+      color: @secondaryColor !important;
+      font-weight: 600;
 
       &:hover,
       &:active,
