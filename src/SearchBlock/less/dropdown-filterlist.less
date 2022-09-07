@@ -20,19 +20,19 @@
           position: relative !important;
           display: inline-block;
           overflow: hidden;
-          padding: 0.5em;
+          padding: 0.5em 1em;
           margin-bottom: 0;
           background-color: white;
 
-          &::after {
-            position: absolute;
-            bottom: -7px;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background-color: white;
-            content: '';
-          }
+          // &::after {
+          //   position: absolute;
+          //   bottom: -7px;
+          //   left: 0;
+          //   width: 100%;
+          //   height: 10px;
+          //   background-color: white;
+          //   content: '';
+          // }
         }
 
         &.active {
@@ -220,12 +220,12 @@
         }
       }
 
-      .sui-facet.searchlib-multiterm-facet {
-        > div:last-child {
-          // TODO: find a better way to define the multiterm facet height
-          height: 350px !important;
-        }
-      }
+      // .sui-facet.searchlib-multiterm-facet {
+      //   > div:last-child {
+      //     // TODO: find a better way to define the multiterm facet height
+      //     height: 350px !important;
+      //   }
+      // }
     }
 
     .histogram-facet {
@@ -284,6 +284,79 @@
         .ui.accordion .title i:before {
           font-size: 2rem;
         }
+      }
+    }
+
+    .ui.card.term.active-term {
+      width: auto !important;
+      min-width: auto;
+      margin: 5px 1.5em 5px 0 !important;
+
+      .header,
+      span.count {
+        color: @secondaryColor;
+        font-weight: 700;
+      }
+    }
+
+    .facets-wrapper {
+      margin: 1.5em 0 0 0;
+    }
+
+    .ui.card.term {
+      min-width: 100px;
+      margin-top: 2em;
+
+      &.disabled {
+        .header,
+        span.count {
+          color: #bfbfbf;
+        }
+      }
+
+      .clear-filters {
+        margin-left: 10px !important;
+      }
+
+      .header {
+        border: none;
+        color: @deepBlue;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .content {
+        flex-grow: initial;
+        padding: 0;
+        padding-bottom: 0.5em;
+      }
+
+      &.active {
+        .header,
+        span.count {
+          color: @darkCerulean;
+          font-weight: 700;
+        }
+
+        &:hover {
+          background: transparent !important;
+        }
+      }
+
+      &:hover {
+        border: none;
+        background: transparent !important;
+        box-shadow: none;
+      }
+
+      .title {
+        margin-right: 5px;
+      }
+
+      .count {
+        color: @deepBlue;
+        font-size: 16px;
+        font-weight: 400;
       }
     }
 
