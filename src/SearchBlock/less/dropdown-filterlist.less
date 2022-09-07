@@ -39,6 +39,8 @@
           > span {
             z-index: 99999 !important;
             box-shadow: 0 5px 0 #fff, 0 0 4px rgba(0, 0, 0, 0.25);
+            color: @green-5;
+            font-weight: 700;
           }
 
           .menu {
@@ -91,12 +93,19 @@
       }
 
       .clear-filters {
-        padding: 0.5em;
+        padding: 0;
         margin: 0 !important;
         background-color: transparent;
         color: @blue-5;
+        float: right;
         font-size: 14px;
         font-weight: 500;
+      }
+
+      .clear-btn {
+        padding-bottom: 0.5em;
+        margin: 0 !important;
+        color: @blue-5 !important;
       }
 
       .sui-facet-search__text-input {
@@ -109,6 +118,8 @@
       }
 
       .sui-multi-checkbox-facet__option-count {
+        display: flex;
+        align-items: center;
         margin: 0;
         margin-left: 0.5em;
         color: @blue-grey-5;
@@ -315,13 +326,13 @@
       }
 
       .clear-filters {
-        margin-left: 10px !important;
+        margin-left: 5px !important;
       }
 
       .header {
         border: none;
         color: @deepBlue;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
       }
 
