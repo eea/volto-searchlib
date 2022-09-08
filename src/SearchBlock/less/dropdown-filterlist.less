@@ -4,36 +4,37 @@
     background-color: rgba(249, 249, 249, 0.4) !important;
   }
 
-  .horizontal-dropdown-facets {
-    display: flex;
-    align-items: center;
-  }
-
   .dropdown-facets-list {
     .dropdown-facet {
-      margin-bottom: 0 !important;
+      display: inline-block;
+      margin: 0 0 1em 0;
+
+      .facet-title {
+        position: relative !important;
+        display: inline-block;
+        overflow: hidden;
+        padding: 0.5em 1em;
+        margin-bottom: 0;
+        background-color: white;
+
+        i.icon {
+          position: relative;
+          top: 3px;
+        }
+
+        // &::after {
+        //   position: absolute;
+        //   bottom: -7px;
+        //   left: 0;
+        //   width: 100%;
+        //   height: 10px;
+        //   background-color: white;
+        //   content: '';
+        // }
+      }
 
       .ui.dropdown {
         position: relative;
-
-        > span {
-          position: relative !important;
-          display: inline-block;
-          overflow: hidden;
-          padding: 0.5em 1em;
-          margin-bottom: 0;
-          background-color: white;
-
-          // &::after {
-          //   position: absolute;
-          //   bottom: -7px;
-          //   left: 0;
-          //   width: 100%;
-          //   height: 10px;
-          //   background-color: white;
-          //   content: '';
-          // }
-        }
 
         &.active {
           > span {
@@ -107,13 +108,6 @@
       padding-bottom: 2em;
     }
 
-    .horizontal-dropdown-facets {
-      .dropdown-facet {
-        display: inline-block;
-        // margin: 0 0.8em 1em 0;
-      }
-    }
-
     .ui.right.sidebar {
       background-color: white;
 
@@ -127,7 +121,6 @@
       padding: 1em;
 
       .clear-btn {
-        // padding-bottom: 0.5em;
         margin: 0 !important;
         color: @blue-5 !important;
       }
@@ -259,7 +252,7 @@
 
     .ui.button.sui-button {
       padding: 0;
-      margin: 0 1em;
+      // margin-bottom: 1em;
       color: @secondaryColor !important;
       font-weight: 600;
 
