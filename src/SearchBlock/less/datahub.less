@@ -43,7 +43,8 @@
     */
     .above-results .sorting .inline.dropdown > span,
     .dropdown-facets-list .ui.button.sui-button:hover,
-    .ui.basic.button.clear-btn {
+    .ui.basic.button.sui-button,
+    .ui.basic.button.sui-button:active {
       color: @blue-5 !important;
     }
 
@@ -68,7 +69,7 @@
 /**
 * Datahub item view
 */
-.dataset-view {
+.view-datahub-item {
   color: @blue-grey-5;
 
   .dataset-container {
@@ -104,6 +105,7 @@
     .item-description {
       display: -webkit-box;
       overflow: hidden;
+      margin-top: 0.7em;
       -webkit-box-orient: vertical;
       font-size: 80%;
       -webkit-line-clamp: 3;
@@ -190,57 +192,95 @@
     line-height: 2;
     word-break: keep-all;
   }
-}
 
-.temporal-coverage {
-  display: flex;
-  align-items: center;
-  margin: 2em 0;
+  .metadata-wrapper {
+    margin-top: 3.5em;
+  }
 
-  .time-range {
-    position: relative;
+  .metadata-section,
+  .section-wrapper {
+    margin-top: 2em;
+  }
+
+  .formats {
+    margin-left: 1em;
+  }
+
+  .dataset-content {
     display: flex;
-    align-items: center;
-    padding: 0.5em 1em;
-    background-color: @darkCerulean;
-    color: white;
-    font-size: 23px;
-    font-weight: 700;
+    justify-content: space-between;
 
-    span {
-      margin: 0 10px;
-      line-height: 19px;
-    }
-
-    &:before,
-    &:after {
-      position: absolute;
-      top: -6px;
-      width: 6px;
-      height: 125%;
-      background-color: @darkCerulean;
-      content: ' ';
-    }
-
-    &:before {
-      left: 0;
-    }
-
-    &:after {
-      right: 0;
+    > div {
+      margin-bottom: 1em;
     }
   }
 
-  .side-year {
-    display: flex;
-    align-items: center;
-    padding: 0.2em 1.3em;
-    background-color: #d2d9de;
-    color: white;
-    font-size: 19px;
+  .dataset-pdf {
+    .pdf-btn {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  .pdf-btn {
+    margin-top: 2em;
     font-weight: 500;
+
+    a {
+      color: inherit;
+    }
   }
 }
+
+// .temporal-coverage {
+//   display: flex;
+//   align-items: center;
+//   margin: 2em 0;
+
+//   .time-range {
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     padding: 0.5em 1em;
+//     background-color: @darkCerulean;
+//     color: white;
+//     font-size: 23px;
+//     font-weight: 700;
+
+//     span {
+//       margin: 0 10px;
+//       line-height: 19px;
+//     }
+
+//     &:before,
+//     &:after {
+//       position: absolute;
+//       top: -6px;
+//       width: 6px;
+//       height: 125%;
+//       background-color: @darkCerulean;
+//       content: ' ';
+//     }
+
+//     &:before {
+//       left: 0;
+//     }
+
+//     &:after {
+//       right: 0;
+//     }
+//   }
+
+//   .side-year {
+//     display: flex;
+//     align-items: center;
+//     padding: 0.2em 1.3em;
+//     background-color: #d2d9de;
+//     color: white;
+//     font-size: 19px;
+//     font-weight: 500;
+//   }
+// }
 
 .dataset-header {
   margin-bottom: 3em;
@@ -275,9 +315,9 @@
   display: inline;
   padding: 0.2em 0.6em 0.3em;
   margin-right: 5px;
-  background-color: @blue-5;
+  background-color: #d3d3d3;
   border-radius: 0.25em;
-  color: #fff;
+  color: #434343;
   font-size: 65%;
   line-height: 1;
   text-align: center;
@@ -291,5 +331,18 @@
 
   span {
     font-weight: 500;
+  }
+}
+
+.more-like-this {
+  margin-top: 3.5em;
+
+  .card-description {
+    display: -webkit-box;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    text-overflow: ellipsis;
   }
 }

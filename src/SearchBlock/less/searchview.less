@@ -108,14 +108,12 @@ div#page-document {
     }
 
     .above-results {
-      display: grid;
       margin-bottom: 2.5em;
-      column-gap: 20px;
-      grid-template-columns: auto auto;
 
       .above-right {
         display: flex;
         justify-content: flex-end;
+        padding: 0.6em 0;
         gap: 1em;
       }
 
@@ -246,6 +244,18 @@ div#page-document {
             font-size: 12px;
           }
         }
+      }
+
+      @media only screen and (min-width: @largestTabletScreen) {
+        display: grid;
+        margin-bottom: 2.5em;
+        column-gap: 20px;
+        grid-template-columns: auto auto;
+      }
+
+      @media only screen and (max-width: @largestTabletScreen) {
+        display: flex;
+        flex-direction: column-reverse;
       }
     }
 
