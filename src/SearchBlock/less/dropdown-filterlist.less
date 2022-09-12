@@ -7,7 +7,7 @@
   .dropdown-facets-list {
     .dropdown-facet {
       display: inline-block;
-      margin: 0 0 1em 0;
+      cursor: pointer;
 
       .facet-title {
         position: relative !important;
@@ -66,10 +66,6 @@
           .histogram-facet {
             width: 350px;
           }
-
-          .ui.button {
-            margin-top: 1em;
-          }
         }
 
         .icon.chevron {
@@ -78,19 +74,6 @@
           margin-left: 0.3em;
           font-size: 0.6em;
         }
-      }
-
-      .sui-facet-search {
-        border: 0.5px solid #c4c4c4;
-        margin: 0.7em 0;
-        border-radius: 0;
-        font-size: 14px;
-      }
-
-      .facet-label {
-        color: @green-5;
-        font-size: 18px;
-        font-weight: 700;
       }
 
       .clear-filters {
@@ -177,79 +160,6 @@
       }
     }
 
-    .ui.card.term.active-term {
-      width: auto !important;
-      min-width: auto;
-      margin: 5px 1.5em 5px 0 !important;
-
-      .header,
-      span.count {
-        color: @secondaryColor;
-        font-weight: 700;
-      }
-    }
-
-    .facets-wrapper {
-      margin: 1.5em 0 0 0;
-    }
-
-    .ui.card.term {
-      min-width: 100px;
-      margin-top: 2em;
-
-      &.disabled {
-        .header,
-        span.count {
-          color: #bfbfbf;
-        }
-      }
-
-      .clear-filters {
-        margin-left: 5px !important;
-      }
-
-      .header {
-        border: none;
-        color: @deepBlue;
-        font-size: 14px;
-        font-weight: 400;
-      }
-
-      .content {
-        flex-grow: initial;
-        padding: 0;
-        // padding-bottom: 0.5em;
-      }
-
-      &.active {
-        .header,
-        span.count {
-          color: @darkCerulean;
-          font-weight: 700;
-        }
-
-        &:hover {
-          background: transparent !important;
-        }
-      }
-
-      &:hover {
-        border: none;
-        background: transparent !important;
-        box-shadow: none;
-      }
-
-      .title {
-        margin-right: 5px;
-      }
-
-      .count {
-        color: @deepBlue;
-        font-size: 16px;
-        font-weight: 400;
-      }
-    }
-
     .ui.button.sui-button {
       padding: 0;
       // margin-bottom: 1em;
@@ -268,15 +178,115 @@
   }
 }
 
+.active-filters {
+  margin-top: 1.5em;
+
+  .ui.card.term.active-term {
+    width: auto !important;
+    min-width: auto;
+    margin: 5px 1.5em 5px 0 !important;
+
+    .header,
+    span.count {
+      color: @secondaryColor;
+      font-weight: 700;
+    }
+
+    .card-header {
+      flex-direction: row;
+    }
+  }
+
+  .ui.card.term {
+    min-width: 100px;
+    margin-top: 2em;
+
+    &.disabled {
+      .header,
+      span.count {
+        color: #bfbfbf;
+      }
+    }
+
+    .clear-filters {
+      margin-left: 5px !important;
+    }
+
+    .header {
+      border: none;
+      font-size: 14px !important;
+    }
+
+    .content {
+      flex-grow: initial;
+      padding: 0;
+    }
+
+    &.active {
+      .header,
+      span.count {
+        color: @darkCerulean;
+        font-weight: 700;
+      }
+
+      &:hover {
+        background: transparent !important;
+      }
+    }
+
+    &:hover {
+      border: none;
+      background: transparent !important;
+      box-shadow: none;
+    }
+
+    .title {
+      margin-right: 5px;
+    }
+
+    .count {
+      color: @deepBlue;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .ui.button.clear-btn {
+    margin-top: 1em;
+  }
+}
+
 .dropdown-facet {
   .sui-multi-checkbox-facet__option-input-wrapper {
     max-width: none;
   }
 }
 
+.dropdown-facet-modal {
+  .sui-multi-checkbox-facet__option-input-wrapper {
+    max-width: none;
+  }
+}
+
 .dropdown-facet,
-.sidebar-content {
+.sidebar-content,
+.dropdown-facet-modal {
+  color: @deepBlue;
+
+  .facet-label {
+    color: @green-5;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
   .sui-facet-search__text-input {
+    font-size: 14px;
+  }
+
+  .sui-facet-search {
+    border: 0.5px solid #c4c4c4;
+    margin: 0.7em 0;
+    border-radius: 0;
     font-size: 14px;
   }
 
@@ -297,7 +307,6 @@
 
   .sui-multi-checkbox-facet__option-input-wrapper {
     position: relative;
-    // max-width: none;
     flex: none;
 
     input.sui-multi-checkbox-facet__checkbox {

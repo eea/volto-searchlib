@@ -218,7 +218,7 @@ a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
 }
 
 .result-info-title {
-  margin-right: 3px;
+  margin-right: 5px;
   color: @deepBlue;
   font-size: 14px;
   font-weight: 700;
@@ -393,6 +393,10 @@ div#page-document div.searchapp div.cards div.search-result {
 
       @media only screen and (max-width: @largestMobileScreen) {
         flex-direction: column;
+
+        .result-info {
+          align-items: flex-start;
+        }
       }
     }
 
