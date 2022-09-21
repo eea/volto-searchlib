@@ -13,22 +13,6 @@
     }
   }
 
-  .ui.warning.message {
-    padding-top: 0;
-    margin: 0;
-
-    > .icon {
-      padding-top: 3px;
-    }
-
-    .ui.button {
-      padding: 5px 10px;
-      margin: 0 5px;
-      font-size: 14px;
-      font-weight: 400;
-    }
-  }
-
   .buttons {
     .button {
       background-color: @secondaryColor !important;
@@ -50,11 +34,9 @@
 .answer-header {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5em;
+  gap: 1.5em;
 
   .answer-header-title {
-    margin-right: 1.5em;
-    font-size: 16px;
     font-weight: 700;
   }
 
@@ -90,38 +72,9 @@
   }
 }
 
-.answer__primary {
-  .source {
-    margin-top: 0.5em;
-
-    a {
-      color: @mediumPersianBlue;
-      font-weight: normal;
-
-      span {
-        color: @linkColor;
-      }
-    }
-
-    .label {
-      margin-right: 0.5em !important;
-    }
-  }
-}
-
 .answer__highlighted {
   background-color: #e8d2fd;
   color: black;
-}
-
-.answer__primarylink,
-.answer__primarylink a {
-  color: @deepBlue;
-  font-size: 20px;
-
-  &:hover {
-    color: @deepBlue;
-  }
 }
 
 .answers-feedback {
@@ -164,22 +117,10 @@
   }
 }
 
-@media only screen and (max-width: @tabletBreakpoint) {
-  .answers-list .answer__primarylink,
-  .answers-list .answer__primarylink a {
-    color: @deepBlue;
-    font-size: 16px;
-  }
-
-  .answers-list .answer__primary span {
-    font-size: 16px !important;
-  }
-
-  .results-layout .answers-list .answer__primary {
-    .result__source span,
-    .result__source strong {
-      font-size: 14px !important;
-    }
+.answerCard {
+  .listing-item a {
+    display: inline-flex;
+    width: auto;
   }
 }
 
