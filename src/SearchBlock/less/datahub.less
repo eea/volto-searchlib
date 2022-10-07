@@ -80,6 +80,18 @@
 .view-datahub-item {
   color: @blue-grey-5;
 
+  .eea.banner {
+    background: @blue-4;
+
+    .gradient {
+      background: none;
+    }
+
+    .subtitle > a {
+      color: inherit;
+    }
+  }
+
   .search-action {
     background-color: @blue-4;
   }
@@ -125,18 +137,6 @@
       -webkit-box-orient: vertical;
       font-size: 80%;
       -webkit-line-clamp: 3;
-    }
-  }
-
-  .search-link {
-    display: inline-flex;
-    margin-bottom: 0.5em;
-    color: @blue-grey-5;
-    font-size: 14px;
-    font-weight: 500;
-
-    i {
-      margin-right: 0.3em;
     }
   }
 
@@ -298,34 +298,34 @@
 //   }
 // }
 
-.dataset-header {
-  margin-bottom: 3em;
+// .dataset-header {
+//   margin-bottom: 3em;
 
-  h1 {
-    color: @blue-grey-5;
-  }
+//   h1 {
+//     color: @blue-grey-5;
+//   }
 
-  .dataset-header-bottom {
-    color: @blue-grey-5;
-    font-size: 14px;
-    font-weight: 700;
+//   .dataset-header-bottom {
+//     color: @blue-grey-5;
+//     font-size: 14px;
+//     font-weight: 700;
 
-    .header-data:not(:last-child) {
-      position: relative;
-      display: inline-block;
-      padding-right: 1.5em;
+//     .header-data:not(:last-child) {
+//       position: relative;
+//       display: inline-block;
+//       padding-right: 1.5em;
 
-      &:after {
-        position: absolute;
-        top: 3px;
-        right: 10px;
-        height: 70%;
-        border-left: 2px solid @blue-grey-5;
-        content: ' ';
-      }
-    }
-  }
-}
+//       &:after {
+//         position: absolute;
+//         top: 3px;
+//         right: 10px;
+//         height: 70%;
+//         border-left: 2px solid @blue-grey-5;
+//         content: ' ';
+//       }
+//     }
+//   }
+// }
 
 .format-label {
   display: inline;
