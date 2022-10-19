@@ -68,6 +68,8 @@ export default function SearchBlockView(props) {
     schema,
   );
 
+  console.log('appname', appName);
+
   // TODO: this is a hack, please solve it properly
   registry.searchui[appName] = {
     ...registry.searchui[appName],
@@ -83,7 +85,7 @@ export default function SearchBlockView(props) {
   };
 
   return (
-    <BodyClass className="searchlib-page">
+    <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
         {mode !== 'view' ? (
           <div className="overlay" style={overlayStyle}></div>
