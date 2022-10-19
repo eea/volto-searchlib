@@ -83,7 +83,7 @@ export default function SearchBlockView(props) {
   };
 
   return (
-    <BodyClass className="searchlib-page">
+    <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
         {mode !== 'view' ? (
           <div className="overlay" style={overlayStyle}></div>
