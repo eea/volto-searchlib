@@ -68,8 +68,6 @@ export default function SearchBlockView(props) {
     schema,
   );
 
-  console.log('appname', appName);
-
   // TODO: this is a hack, please solve it properly
   registry.searchui[appName] = {
     ...registry.searchui[appName],
