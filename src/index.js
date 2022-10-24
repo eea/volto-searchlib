@@ -42,8 +42,8 @@ const applyConfig = (config) => {
     middleware.id = 'esProxyMiddleware';
 
     config.settings.expressMiddleware = [
-      middleware,
       ...config.settings.expressMiddleware,
+      middleware,
     ];
   }
   return config;
