@@ -1,14 +1,17 @@
-import { setupBeforeEach, tearDownAfterEach } from '../support/e2e';
+import { slateBeforeEach, slateAfterEach } from '../support/e2e';
 
 describe('Blocks Tests', () => {
-  beforeEach(setupBeforeEach);
-  afterEach(tearDownAfterEach);
+  beforeEach(slateBeforeEach);
+  afterEach(slateAfterEach);
 
   it('Add Block: Empty', () => {
     // Change page title
-    cy.get('[contenteditable=true]').first().clear().type('My Add-on Page');
+    cy.clearSlateTitle();
+    cy.getSlateTitle().type('My Add-on Page');
+
     cy.get('.documentFirstHeading').contains('My Add-on Page');
-    cy.get('[contenteditable=true]').first().type('{enter}');
+
+    cy.getSlate().click();
 
     // Add block
     cy.get('.ui.basic.icon.button.block-add-button').first().click();
