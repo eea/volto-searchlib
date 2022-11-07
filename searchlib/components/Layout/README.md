@@ -1,0 +1,3 @@
+- LeftColumnLayout: classic layout, filters always visible
+- RightColumnLayout: classic layout, filters always visible
+- FilterAsideLayout: a layout where the filter column can be toggled on/off
