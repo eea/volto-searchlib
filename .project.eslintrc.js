@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const projectRootPath = fs.realpathSync('./project'); // __dirname
+const projectRootPath = fs.realpathSync('./../../../');
 const packageJson = require(path.join(projectRootPath, 'package.json'));
 const jsConfig = require(path.join(projectRootPath, 'jsconfig.json'))
   .compilerOptions;
