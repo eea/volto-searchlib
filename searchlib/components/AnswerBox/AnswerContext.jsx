@@ -67,6 +67,7 @@ const AnswerContext = ({ item, answerItem }) => {
   const itemModel = {
     // hasImage: result.hasImage,
     hasDescription: true,
+    imageOnRightSide: true,
     '@type': 'searchItem',
   };
 

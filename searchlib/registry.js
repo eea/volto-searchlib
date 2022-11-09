@@ -154,9 +154,7 @@ const config = {
       component: (props) => <Menu vertical {...props} />,
     },
     'HorizontalCard.Group': {
-      component: (props) => (
-        <Card.Group {...props} stackable itemsPerRow={1} doubling />
-      ),
+      component: (props) => <div {...props} className="listing" />,
     },
     ListingViewItem: {
       component: ListingViewItem,

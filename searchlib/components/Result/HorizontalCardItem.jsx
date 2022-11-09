@@ -79,6 +79,7 @@ const HorizontalCardItem = (props) => {
   const itemModel = {
     hasImage: result.hasImage,
     hasDescription: true,
+    imageOnRightSide: true,
     '@type': 'searchItem',
   };
 
