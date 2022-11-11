@@ -128,7 +128,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           <DateTime format="DATE_MED" value={result.issued} />
         </Card.Meta>
       </Card.Content>
-      <Card.Content extra className="controls">
+      {/* <Card.Content extra className="controls">
         <Card.Meta>
           <Button
             compact
@@ -144,18 +144,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           >
             more like this
           </Button>
-          {/* <Button */}
-          {/*   compact */}
-          {/*   floated="right" */}
-          {/*   color="red" */}
-          {/*   size="mini" */}
-          {/*   onClick={() => { */}
-          {/*     removeFilter('moreLikeThis'); */}
-          {/*     setFilter('lessLikeThis', result._original._id, 'none'); */}
-          {/*   }} */}
-          {/* > */}
-          {/*   less like this */}
-          {/* </Button> */}
+
           <div className="card-icons">
             {Object.keys(clusters).map((cluster, index) => (
               <Button
@@ -177,7 +166,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             ))}
           </div>
         </Card.Meta>
-      </Card.Content>
+      </Card.Content> */}
     </Card>
   );
 });
@@ -185,3 +174,16 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 const CardItem = (props) => <CardItemComponent {...props} />;
 
 export default CardItem;
+
+// {/* <Button */}
+// {/*   compact */}
+// {/*   floated="right" */}
+// {/*   color="red" */}
+// {/*   size="mini" */}
+// {/*   onClick={() => { */}
+// {/*     removeFilter('moreLikeThis'); */}
+// {/*     setFilter('lessLikeThis', result._original._id, 'none'); */}
+// {/*   }} */}
+// {/* > */}
+// {/*   less like this */}
+// {/* </Button> */}
