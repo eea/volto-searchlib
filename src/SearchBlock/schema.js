@@ -7,14 +7,12 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['appName'],
+      fields: ['appName', 'headline', 'subheadline', 'searchInputPlaceholder'],
     },
     {
       id: 'general',
       title: 'General settings',
       fields: [
-        'headline',
-        'subheadline',
         'promptQueries',
         'promptQueryInterval',
         'debugQuery',
@@ -80,11 +78,16 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
 
     headline: {
       title: 'Main headline',
-      configPath: 'title',
+      configPath: 'headline',
     },
     subheadline: {
       title: 'Text below headline',
       configPath: 'subheadline',
+    },
+    searchInputPlaceholder: {
+      title: 'Search input placeholder',
+      default: 'Search with a question or keyword...',
+      configPath: 'searchInputPlaceholder',
     },
     promptQueries: {
       title: 'Prompt queries',
