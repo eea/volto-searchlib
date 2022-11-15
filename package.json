@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -44,7 +44,6 @@
     "lodash.uniq": "^4.5.0",
     "luxon": "^1.22.0",
     "node-fetch": "^2.6.1",
-    "prop-types": "15.7.2",
     "re-resizable": "^6.9.0",
     "react-compound-slider": "^3.4.0",
     "react-masonry-component": "6.3.0",

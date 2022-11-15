@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
 import { Result } from '@elastic/react-search-ui-views';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 import Autocomplete from './Autocomplete';
-
-// import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 import SearchInput from '../SearchInput/SearchInput';
 
 function SearchBoxView(props) {
-  // const { appConfig } = useAppConfig();
+  const { appConfig } = useAppConfig();
   const {
     className,
     allAutocompletedItemsCount,
@@ -65,30 +64,22 @@ function SearchBoxView(props) {
         let autocompleteClass = isOpen === true ? ' autocomplete' : '';
         return (
           <div className="header-content">
+            {appConfig.headline ? (
+              <h2 className="searchApp-headline">{appConfig.headline}</h2>
+            ) : (
+              ''
+            )}
+            {appConfig.subheadline ? (
+              <p className="searchApp-subheadline">{appConfig.subheadline}</p>
+            ) : (
+              ''
+            )}
             <form
               onSubmit={(e) => {
                 closeMenu();
                 onSubmit(e);
               }}
             >
-              {/*{appConfig.title ? (
-                  <h2 className="searchApp-headline">
-                    {appConfig.titleIsLink ? (
-                      <a href={homeURL}>{appConfig.title}</a>
-                    ) : (
-                      <>{appConfig.title}</>
-                    )}
-                  </h2>
-                ) : (
-                  ''
-                )}
-                {appConfig.subheadline ? (
-                  <h3 className="searchApp-subheadline">
-                    {appConfig.subheadline}
-                  </h3>
-                ) : (
-                  ''
-                )}*/}
               <div
                 className={cx('sui-search-box', className, autocompleteClass)}
               >
@@ -104,7 +95,9 @@ function SearchBoxView(props) {
                   getInputProps={(additionalProps) => {
                     const { className, ...rest } = additionalProps || {};
                     return getInputProps({
-                      placeholder: 'Search with a question or keyword...',
+                      placeholder:
+                        appConfig.searchInputPlaceholder ||
+                        'Search with a question or keyword...',
                       ...inputProps,
                       className: cx(
                         'sui-search-box__text-input',

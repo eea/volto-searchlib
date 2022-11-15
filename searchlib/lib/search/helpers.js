@@ -3,7 +3,7 @@
  * to facilitate debugging
  */
 
-import deepEqual from 'deep-equal';
+import equal from 'fast-deep-equal/es6/react';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
 
 /**
@@ -112,7 +112,7 @@ export function doFilterValuesMatch(filterValue1, filterValue2) {
       getFilterValueDisplay(filterValue2)
     );
   // We use 'strict = true' to do a '===' of leaves, rather than '=='
-  return deepEqual(filterValue1, filterValue2, { strict: true });
+  return equal(filterValue1, filterValue2, { strict: true });
 }
 
 // Mix unique filter type from one array into the other
@@ -173,7 +173,7 @@ export function hasNonDefaultFilters(filters, appConfig) {
     ...defaultFiltersList.map((f) => ({ [f.field]: f })),
   );
 
-  return !deepEqual(activeFilters, defaultFilters);
+  return !equal(activeFilters, defaultFilters);
 }
 
 /**
@@ -191,7 +191,7 @@ export function isFilterValueDefaultValue(filter, appConfig) {
     }));
   const defaultFilterValue = defaultFiltersList[0];
 
-  return deepEqual(filter, defaultFilterValue);
+  return equal(filter, defaultFilterValue);
 }
 
 /**

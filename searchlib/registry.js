@@ -243,7 +243,9 @@ const config = {
       host: 'http://localhost:9200',
       elastic_index: '_all',
       title: 'Search catalogue', // the main search app headline
+      headline: '', // main headline
       subheadline: '', // text under the headline
+      searchInputPlaceholder: '', // search input placeholder
       demoquestion: '', // Question used as example under the search input
       // debug: true,
       hasA11yNotifications: true,
