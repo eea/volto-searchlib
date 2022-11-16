@@ -5,13 +5,14 @@ const projectRootPath = fs.existsSync('./project')
   ? fs.realpathSync('./project')
   : fs.realpathSync('./../../../');
 const packageJson = require(path.join(projectRootPath, 'package.json'));
-const jsConfig = require(path.join(projectRootPath, 'jsconfig.json')).compilerOptions;
+const jsConfig = require(path.join(projectRootPath, 'jsconfig.json'))
+  .compilerOptions;
 
 const pathsConfig = jsConfig.paths;
 
 let voltoPath = path.join(projectRootPath, 'node_modules/@plone/volto');
 
-Object.keys(pathsConfig).forEach(pkg => {
+Object.keys(pathsConfig).forEach((pkg) => {
   if (pkg === '@plone/volto') {
     voltoPath = `./${jsConfig.baseUrl}/${pathsConfig[pkg][0]}`;
   }
@@ -20,11 +21,15 @@ const AddonConfigurationRegistry = require(`${voltoPath}/addon-registry.js`);
 const reg = new AddonConfigurationRegistry(projectRootPath);
 
 // Extends ESlint configuration for adding the aliases to `src` directories in Volto addons
-const addonAliases = Object.keys(reg.packages).map(o => [
+const addonAliases = Object.keys(reg.packages).map((o) => [
   o,
   reg.packages[o].modulePath,
 ]);
 
+const voltoSearchlibPath = path.dirname(
+  reg.packages['@eeacms/volto-searchlib'].modulePath,
+);
+const searchlibPath = path.resolve(`${voltoSearchlibPath}/searchlib`);
 
 module.exports = {
   extends: `${projectRootPath}/node_modules/@plone/volto/.eslintrc`,
@@ -34,6 +39,7 @@ module.exports = {
         map: [
           ['@plone/volto', '@plone/volto/src'],
           ...addonAliases,
+          ['@eeacms/search', searchlibPath],
           ['@package', `${__dirname}/src`],
           ['~', `${__dirname}/src`],
         ],
@@ -45,4 +51,3 @@ module.exports = {
     },
   },
 };
-
