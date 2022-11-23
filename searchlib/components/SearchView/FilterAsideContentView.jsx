@@ -5,6 +5,7 @@ import ResultsPerPageSelector from './../ResultsPerPageSelector/ResultsPerPageSe
 import Paging from './../Paging/Paging';
 import {
   // ViewSelectorWithLabel,
+  ActiveFilterList,
   SortingDropdownWithLabel,
   DownloadButton,
   DropdownFacetsList,
@@ -66,8 +67,8 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
+      <ActiveFilterList />
       <SectionTabs />
-
       <div className={`results-layout ${layoutMode}`}>
         <div className="above-results">
           <div className="above-left">

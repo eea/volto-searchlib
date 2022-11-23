@@ -7,10 +7,11 @@ import {
   useWindowDimensions,
   SearchContext,
 } from '@eeacms/search/lib/hocs';
-import { Facet as SUIFacet, ActiveFilters } from '@eeacms/search/components';
+import { Facet as SUIFacet } from '@eeacms/search/components';
 import { Dropdown, Dimmer, Modal, Button } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
+import ActiveFilters from '../ActiveFilters';
 
 const SMALL_SCREEN_SIZE = 766;
 
