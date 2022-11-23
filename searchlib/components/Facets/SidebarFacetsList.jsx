@@ -33,7 +33,7 @@ export default function SidebarFacetsList(props) {
               <Button
                 basic
                 className="clear-btn"
-                content="Clear all"
+                content="clear all"
                 onClick={() => {
                   searchContext.resetFilters();
                 }}

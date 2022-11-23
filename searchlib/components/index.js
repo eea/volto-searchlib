@@ -9,7 +9,7 @@ import ResultSource from './Result/ResultSource';
 import TableView from './Result/TableView';
 import FacetsList from './Facets/FacetsList';
 import FilterList from './FilterList/FilterList';
-import ActiveFilters from './FilterList/ActiveFilters';
+import ActiveFilterList from './FilterList/ActiveFilterList';
 import InlineFilterList from './FilterList/InlineFilterList';
 import FilterAsideLayout from './Layout/FilterAsideLayout';
 import TopFilterLayout from './Layout/TopFilterLayout';
@@ -60,7 +60,7 @@ export {
   DateTime,
   FacetsList,
   FilterList,
-  ActiveFilters,
+  ActiveFilterList,
   InlineFilterList,
   LeftColumnLayout,
   RightColumnLayout,

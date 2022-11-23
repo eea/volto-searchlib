@@ -15,8 +15,8 @@
     font-size: 70%;
   }
 
-  div.boolean-facet {
-    div.toggle {
+  .boolean-facet {
+    .toggle {
       label {
         color: @deepBlue !important;
 
@@ -40,71 +40,79 @@
     }
   }
 
-  .histogram-facet {
-    .text-input {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-
-      .ui.input {
-        input {
-          max-width: 6em;
-          border: 1px solid #ccc;
-          outline: none;
-        }
-      }
-    }
-
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      border-bottom: 1px dotted #444;
-      margin-left: 22px;
-    }
-
-    .tooltip .tooltiptext {
-      position: absolute;
-      z-index: 1;
-      bottom: 150%;
-      left: 50%;
-      width: 100px;
-      padding: 5px 0;
-      margin-left: -60px;
-      background-color: #444;
-      border-radius: 6px;
-      color: #f0f0f0;
-      opacity: 0.8;
-      text-align: center;
-
-      &:after {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #444 transparent transparent transparent;
-        margin-left: -5px;
-        content: '';
-      }
-    }
-  }
-
   .secondary-facets {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+  }
+}
 
-    // & > div {
-    //   margin-right: 1em;
-    // }
+.ui.segment.facetslist-wrapper {
+  padding: 0em;
+  border: 0px;
+  margin: 0em;
+  box-shadow: none;
+}
+
+.histogram-facet {
+  padding: 20px;
+  background: white;
+
+  .text-input {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .ui.input {
+      input {
+        max-width: 6em;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        outline: none;
+      }
+    }
   }
 
-  .ui.segment.facetslist-wrapper {
-    padding: 0em;
-    border: 0px;
-    margin: 0em;
-    box-shadow: none;
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #444;
+    margin-left: 22px;
   }
+
+  .tooltip .tooltiptext {
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    width: 100px;
+    padding: 5px 0;
+    margin-left: -60px;
+    background-color: #444;
+    border-radius: 6px;
+    color: #f0f0f0;
+    opacity: 0.8;
+    text-align: center;
+
+    &:after {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #444 transparent transparent transparent;
+      margin-left: -5px;
+      content: '';
+    }
+  }
+}
+
+.facets-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1em 0;
 }
 
 .searchlib-multiterm-facet,
@@ -250,10 +258,6 @@
   outline: none;
 }
 
-// .sui-facet-search__text-input:focus {
-//   border: 1px solid #3a56e4;
-// }
-
 .sui-facet-search {
   margin: 0px;
 
@@ -301,17 +305,12 @@
 
     .facet-option-icon {
       display: inline;
-      // width: auto;
       max-height: 12px !important;
       margin-right: 0.5em;
       background: white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
     }
-  }
-
-  .card .meta {
-    color: @s-medium-gray2 !important;
   }
 
   .card {
@@ -395,8 +394,6 @@
 }
 
 .ui.modal.facet {
-  // background: @sf-light-gray;
-
   img.facet-option-icon {
     display: inline;
     margin-right: 0.5em;
@@ -466,17 +463,6 @@
     }
   }
 
-  div.histogram-facet {
-    padding: 20px;
-    background: white;
-
-    input {
-      color: @sf-dark-gray;
-      font-size: 14px;
-      text-align: center;
-    }
-  }
-
   div.header {
     border-bottom: 1px solid @midGray;
     background-color: initial;
@@ -497,15 +483,9 @@
       justify-content: space-between;
     }
 
-    div.multitermlist__facet__header {
-      // .search-wrapper {
-      //   display: flex;
-      //   align-items: center;
-      // }
-
-      div.search {
+    .multitermlist__facet__header {
+      .search {
         display: flex;
-        // width: 100%;
         align-items: center;
         margin-top: 1em;
       }
@@ -687,14 +667,6 @@
   margin: 0;
 }
 
-// @media screen and (min-width: 1000px) and (max-width: 1300px) {
-//   div.content-section-tabs.menu {
-//     a.item {
-//       margin-right: 1.5em !important;
-//     }
-//   }
-// }
-
 @media only screen and (max-width: 1080px) {
   div.facets {
     div.toggleSort {
@@ -711,40 +683,5 @@
 @media screen and (max-width: 850px) and (min-width: 750px) {
   button.show-filters {
     padding: 0.5em !important;
-  }
-}
-
-// @media screen and (max-width: 1000px) {
-//   div.content-section-tabs.menu {
-//     a.item {
-//       margin-right: 0.5em !important;
-//
-//       span.count {
-//         font-size: 10px !important;
-//       }
-//     }
-//   }
-// }
-//
-// @media screen and (max-width: 600px) {
-//   div.content-section-tabs.menu {
-//     div.item.dropdown {
-//       div.menu {
-//         transform: translateX(-90px);
-//       }
-//     }
-//   }
-// }
-
-@media only screen and (max-width: 766px) {
-  div.content .searchlib-multiterm-facet.facet-sources button.ui.toggle {
-    display: flex;
-    align-items: center;
-    text-align: left;
-
-    img {
-      max-width: 50px;
-      height: auto !important;
-    }
   }
 }
