@@ -19,6 +19,14 @@ function buildResult(hit, config, registry, ...extras) {
   return new Model(hit, config, ...extras);
 }
 
+export async function fetchResult(id, appConfig, registry) {
+  const dest = new URL(appConfig.host);
+  dest.pathname = `${appConfig.elastic_index}/_doc/${encodeURIComponent(id)}`;
+  const resp = await runRequest({}, appConfig, dest, 'get');
+  const result = buildResult(resp.body, appConfig, registry);
+  return result;
+}
+
 export const useResult = (initial, id) => {
   const { appConfig, registry } = useAppConfig();
 
@@ -29,12 +37,7 @@ export const useResult = (initial, id) => {
     let ignore = false;
 
     const doIt = async () => {
-      const dest = new URL(appConfig.host);
-      dest.pathname = `${appConfig.elastic_index}/_doc/${encodeURIComponent(
-        id,
-      )}`;
-      const resp = await runRequest({}, appConfig, dest, 'get');
-      const result = buildResult(resp.body, appConfig, registry);
+      const result = await fetchResult(id, appConfig, registry);
       setDocData(result);
     };
 
