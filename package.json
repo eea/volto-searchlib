@@ -20,6 +20,7 @@
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
+    "@eeacms/volto-eea-design-system": "*",
     "@elastic/react-search-ui": "^1.9.0",
     "@elastic/react-search-ui-views": "^1.9.0",
     "@elastic/search-ui": "^1.9.0",
@@ -54,17 +55,13 @@
     "semantic-ui-react": "2.0.3",
     "superagent": "3.8.2",
     "svg-loader": "0.0.2",
-    "use-deep-compare-effect": "1.8.1",
-    "@eeacms/volto-eea-design-system": "*"
+    "use-deep-compare-effect": "1.8.1"
   },
   "devDependencies": {
-    "@plone/scripts": "2.0.0",
     "@cypress/code-coverage": "^3.10.0",
+    "@plone/scripts": "2.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "md5": "^2.3.0"
-  },
-  "resolutions": {
-    "**/@plone/scripts": "^2.0.0"
   },
   "scripts": {
     "release": "release-it",
