@@ -3,6 +3,14 @@
     background-color: @blue-4;
   }
 
+  .eea.banner {
+    background: @blue-4;
+
+    .gradient {
+      background: none;
+    }
+  }
+
   #search-box {
     background: @blue-4 !important;
   }
@@ -35,7 +43,7 @@
     /**
         * Tabs
         */
-    .ui.secondary.pointing.content-section-tabs.menu {
+    .ui.secondary.pointing.menu {
       a.item {
         color: @blue-grey-5;
 
@@ -215,7 +223,7 @@
 
   .metadata-section,
   .section-wrapper {
-    margin-top: 2em;
+    margin: 2em 0;
   }
 
   .formats {
@@ -225,6 +233,7 @@
   .dataset-content {
     display: flex;
     justify-content: space-between;
+    font-size: 14px;
 
     > div {
       margin-bottom: 1em;
@@ -232,15 +241,20 @@
   }
 
   .dataset-pdf {
-    .pdf-btn {
+    .d-link {
       margin: 0;
-      font-weight: 500;
     }
   }
 
-  .pdf-btn {
-    margin-top: 2em;
+  .d-link {
+    margin: 0.5em 0;
     font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+
+    i {
+      margin-right: 5px;
+    }
 
     a {
       color: inherit;
