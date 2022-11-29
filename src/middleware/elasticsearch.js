@@ -18,6 +18,10 @@ const esSettingsWhitelist = (name) => ({
   GET: [`/_es/${name}/_settings`],
 });
 
+const esAliasWhitelist = (name) => ({
+  GET: [`/_es/${name}/_alias`],
+});
+
 const esGetDocWhitelist = (name) => ({
   GET: [`/_es/${name}/_doc/.*`],
 });
@@ -97,6 +101,13 @@ const handleSearch = (req, res, next, params) => {
 
 const handleSettings = (req, res, next, { appName, urlNLP, urlES }) => {
   const url = `${urlES}/_settings`;
+  superagent.get(url).end((err, resp) => {
+    if (resp && resp.body) res.send(resp.body);
+  });
+};
+
+const handleAlias = (req, res, next, { appName, urlNLP, urlES }) => {
+  const url = `${urlES}/_alias`;
   superagent.get(url).end((err, resp) => {
     if (resp && resp.body) res.send(resp.body);
   });
@@ -185,6 +196,22 @@ export const createHandler = () => {
 
       handleSettings(req, res, next, {
         appName: settingsAppName,
+        urlNLP,
+        urlES,
+      });
+      return;
+    }
+
+    const aliasAppName = appNames
+      .map((name) => filterRequests(req, esAliasWhitelist(name), name))
+      .find((b) => b);
+
+    if (aliasAppName) {
+      urlNLP = getUrlNLP(aliasAppName);
+      urlES = getUrlES(aliasAppName);
+
+      handleAlias(req, res, next, {
+        appName: aliasAppName,
         urlNLP,
         urlES,
       });
