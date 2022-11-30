@@ -64,8 +64,8 @@ function AppInfo({ appConfig, ...rest }) {
       info{' '}
       <strong>
         {app_name}:{app_version}
-      </strong>{' '}
-      on <strong>{hostname}</strong>.
+      </strong>
+      .
     </div>
   );
 }
