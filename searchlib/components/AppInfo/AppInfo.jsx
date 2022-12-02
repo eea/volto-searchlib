@@ -18,11 +18,19 @@ const getInfo = async (appConfig) => {
   }
 
   try {
-    const indexes = Object.keys(info);
+    const indexes = Object.keys(info['settings']);
     if (indexes.length < 1) return '';
+    let aliases = Object.keys(info.alias[indexes[0]]['aliases']);
+    aliases = aliases
+      .filter((alias) => alias.startsWith('updated_at_'))
+      .sort()
+      .reverse();
+    let update_ts = info.settings[indexes[0]].settings.index.creation_date;
+    if (aliases.length > 0) {
+      update_ts = aliases[0].substring(11);
+    }
 
-    const creation_ts = info[indexes[0]].settings.index.creation_date;
-    const dt = DateTime.fromMillis(parseInt(creation_ts));
+    const dt = DateTime.fromMillis(parseInt(update_ts));
     return dt.toLocaleString(DateTime.DATETIME_FULL);
   } catch {
     console.log('info', info);
@@ -56,8 +64,8 @@ function AppInfo({ appConfig, ...rest }) {
       info{' '}
       <strong>
         {app_name}:{app_version}
-      </strong>{' '}
-      on <strong>{hostname}</strong>.
+      </strong>
+      .
     </div>
   );
 }

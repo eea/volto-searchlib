@@ -3,11 +3,16 @@ import superagent from 'superagent';
 export default async function getIndexInfo(config) {
   const { host, elastic_index } = config;
 
-  const url = `${host}/${elastic_index}/_settings`;
-
+  const settings_url = `${host}/${elastic_index}/_settings`;
+  const alias_url = `${host}/${elastic_index}/_alias`;
   try {
-    const resp = await superagent.get(url).set('accept', 'application/json');
-    return resp.body || {};
+    const settings_resp = await superagent
+      .get(settings_url)
+      .set('accept', 'application/json');
+    const alias_resp = await superagent
+      .get(alias_url)
+      .set('accept', 'application/json');
+    return { settings: settings_resp.body || {}, alias: alias_resp.body || {} };
   } catch (e) {
     return { error: true, statusCode: 500, body: `An error occurred: ${e}` };
   }
