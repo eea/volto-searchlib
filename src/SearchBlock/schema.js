@@ -7,7 +7,14 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['appName', 'headline', 'subheadline', 'searchInputPlaceholder'],
+      fields: [
+        'appName',
+        'headline',
+        'subheadline',
+        'searchInputPlaceholder',
+        'showLandingPage',
+        ...(formData?.showLandingPage ? ['onlyLandingPage'] : []),
+      ],
     },
     {
       id: 'general',
@@ -44,6 +51,19 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     appName: {
       title: 'Searchlib app',
       choices: [],
+    },
+
+    showLandingPage: {
+      title: 'Show landing page',
+      type: 'boolean',
+      configPath: 'showLandingPage',
+      default: true,
+    },
+    onlyLandingPage: {
+      title: 'Only landing page?',
+      type: 'boolean',
+      configPath: 'onlyLandingPage',
+      default: false,
     },
 
     enableNLP: {

@@ -1,11 +1,20 @@
 import React from 'react';
-import { Grid, Dimmer, Loader } from 'semantic-ui-react';
-import { isLandingPageAtom } from '@eeacms/search/state';
 import { useAtom } from 'jotai';
+import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+
+import { isLandingPageAtom } from '@eeacms/search/state';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const TopFilterLayout = (props) => {
-  const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
+  const {
+    bodyContent,
+    bodyFooter,
+    bodyHeader,
+    header,
+    sideContent,
+    appConfig,
+  } = props;
+  const { onlyLandingPage = false } = appConfig;
   const [isLandingPage] = useAtom(isLandingPageAtom);
   const searchContext = useSearchContext();
 
@@ -17,11 +26,13 @@ const TopFilterLayout = (props) => {
         </Dimmer>
       )}
 
-      <div className="search-header-container">
-        <div className="sui-layout-header">
-          <div className="sui-layout-header__inner">{header}</div>
+      {!onlyLandingPage && (
+        <div className="search-header-container">
+          <div className="sui-layout-header">
+            <div className="sui-layout-header__inner">{header}</div>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="body-content">
         {!isLandingPage && <>{sideContent}</>}

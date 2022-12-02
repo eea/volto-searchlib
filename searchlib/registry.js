@@ -245,7 +245,6 @@ const config = {
       title: 'Search catalogue', // the main search app headline
       headline: '', // main headline
       subheadline: '', // text under the headline
-      searchInputPlaceholder: '', // search input placeholder
       demoquestion: '', // Question used as example under the search input
       // debug: true,
       hasA11yNotifications: true,
@@ -263,6 +262,9 @@ const config = {
 
       // when entering in search view, this will be the default search text
       defaultSearchText: '',
+
+      showLandingPage: true,
+      onlyLandingPage: false,
 
       // Custom placeholder text for search input
       searchInputPlaceholder: '',
