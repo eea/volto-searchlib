@@ -1,6 +1,17 @@
-.datahub-view {
+/**
+  * Datahub subsite
+  */
+
+.subsite-datahub {
+  --border-color-secondary: @darkCerulean;
+  --text-color-secondary: @blue-4;
+
   .search-action {
     background-color: @blue-4;
+  }
+
+  #search-box {
+    background: @blue-4 !important;
   }
 
   .eea.banner {
@@ -11,45 +22,62 @@
     }
   }
 
-  #search-box {
-    background: @blue-4 !important;
-  }
+  .main-menu {
+    .item.active {
+      a {
+        border-bottom: 4px solid @darkCerulean;
+        color: @darkCerulean;
+      }
+    }
 
+    .item {
+      a {
+        color: @darkCerulean;
+
+        &:hover {
+          border-bottom: 4px solid @darkCerulean;
+        }
+      }
+    }
+  }
+}
+
+/**
+  * Datahub search
+  */
+
+.datahub-view {
   .searchapp-datahub {
-    /**
-      * Search box
-      */
+    /* Search box */
     .sui-search-box .search-input .terms-box {
-      border-color: @blue-5;
+      border-color: @darkCerulean;
 
       .terms-box-left .search-icon svg {
-        fill: @blue-5 !important;
+        fill: @darkCerulean !important;
       }
 
       .input-controls .clear-button {
-        border-color: @blue-5 !important;
+        border-color: @darkCerulean !important;
       }
 
       .input-controls i.close.icon {
-        color: @blue-5 !important;
+        color: @darkCerulean !important;
 
         &:before,
         &:after {
-          background-color: @blue-5 !important;
+          background-color: @darkCerulean !important;
         }
       }
     }
 
-    /**
-      * Landing page
-      */
+    /* Landing page */
     .landing-page-cards {
       .ui.list {
         .item {
-          cursor: pointer;
-          font-weight: normal;
-
           .content {
+            cursor: pointer;
+            font-weight: normal;
+
             .count {
               margin: 0 7px;
             }
@@ -58,42 +86,36 @@
       }
     }
 
-    /**
-      * Tabs
-      */
+    /* Tabs */
     .ui.secondary.pointing.menu {
       a.item {
         color: @blue-grey-5;
 
         &.active {
-          border-color: @blue-5;
-          color: @blue-5;
+          border-color: @darkCerulean;
+          color: @darkCerulean;
         }
       }
     }
 
-    /**
-      * Filters
-      */
+    /* Filters */
     .above-results .sorting .inline.dropdown > span,
     .dropdown-facets-list .ui.button.sui-button:hover,
     .ui.basic.button.sui-button,
     .ui.basic.button.sui-button:active {
-      color: @blue-5 !important;
+      color: @darkCerulean !important;
     }
 
-    /**
-      * Pagination
-      */
+    /* Pagination */
     .search-body-footer {
       .ui.button.pagination-item {
         &.active,
         &:hover {
-          color: @blue-5 !important;
+          color: @darkCerulean !important;
         }
 
         &:after {
-          border-color: @blue-5;
+          border-color: @darkCerulean;
         }
       }
     }
@@ -133,7 +155,7 @@
   }
 
   .eea.callout {
-    border-color: @blue-5;
+    border-color: @darkCerulean;
     margin-bottom: 3em;
     color: @blue-grey-5;
   }
@@ -280,6 +302,41 @@
   }
 }
 
+.format-label {
+  display: inline;
+  padding: 0.2em 0.6em 0.3em;
+  margin-right: 5px;
+  background-color: #d3d3d3;
+  border-radius: 0.25em;
+  color: #434343;
+  font-size: 65%;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.more-like-this {
+  margin-top: 3.5em;
+
+  .header span {
+    .elipsisOverflow(2);
+  }
+
+  .card-description {
+    .elipsisOverflow(7);
+  }
+}
+
+.dataset-item {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-weight: 500;
+  }
+}
+
 // .temporal-coverage {
 //   display: flex;
 //   align-items: center;
@@ -358,39 +415,3 @@
 //     }
 //   }
 // }
-
-.format-label {
-  display: inline;
-  padding: 0.2em 0.6em 0.3em;
-  margin-right: 5px;
-  background-color: #d3d3d3;
-  border-radius: 0.25em;
-  color: #434343;
-  font-size: 65%;
-  line-height: 1;
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-.dataset-item {
-  display: flex;
-  justify-content: space-between;
-
-  span {
-    font-weight: 500;
-  }
-}
-
-.more-like-this {
-  margin-top: 3.5em;
-
-  .card-description {
-    display: -webkit-box;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
-    text-overflow: ellipsis;
-  }
-}
