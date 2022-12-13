@@ -8,7 +8,6 @@ Colors
 // Blue Colors
 @mediumPersianBlue: #0065a4;
 @darkCerulean: #004b7f;
-@blue-5: #004b7f;
 @deepBlue: #3d5265;
 @blue-grey-5: #3d5265;
 @blue-4: #006bb8;
@@ -36,3 +35,11 @@ Base Sizes
 --------------------*/
 
 @search-result-max-width: 1000px;
+
+.elipsisOverflow(@lines) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @lines;
+  text-overflow: ellipsis;
+}
