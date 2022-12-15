@@ -8,6 +8,5 @@ export default function SearchApp(props) {
     console.log('mount searchapp');
     return () => console.log('unmount searchapp');
   }, []);
-  console.log('redraw searchapp');
   return <BasicSearchApp {...props} searchViewComponent={SearchView} />;
 }
