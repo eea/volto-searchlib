@@ -4,6 +4,7 @@ import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
+  const { showLandingPage = true } = appConfig;
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;
   const { resultViews } = appConfig;
@@ -23,6 +24,7 @@ export const BodyContent = (props) => {
       .component;
 
   const InitialViewComponent =
+    showLandingPage &&
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 

@@ -4,6 +4,7 @@ import { registry } from '@eeacms/search';
 import codeSVG from '@plone/volto/icons/code.svg';
 import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
+import { SearchBlockSchema } from './SearchBlock/schema';
 // import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
 import SelectWidget from './SearchBlock/SelectWidget';
@@ -14,7 +15,7 @@ const applyConfig = (config) => {
 
   config.blocks.blocksConfig.searchlib = {
     id: 'searchlib',
-    title: 'Searchlib',
+    title: 'EEA Semantic Search',
     icon: codeSVG,
     group: 'common',
     view: SearchBlockView,
@@ -23,6 +24,7 @@ const applyConfig = (config) => {
     mostUsed: false,
     blockHasOwnFocusManagement: false,
     sidebarTab: 1,
+    schema: SearchBlockSchema,
     security: {
       addPermission: [],
       view: [],

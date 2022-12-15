@@ -18,13 +18,17 @@ import { isLandingPageAtom } from './state';
 export const SearchView = (props) => {
   const { appConfig, appName, mode = 'view' } = props;
 
+  const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
   const [, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
 
-  const Layout = registry.resolve[appConfig.layoutComponent].component;
+  const layoutComponent =
+    appConfig.layoutVariation === 'full'
+      ? appConfig.layoutComponent
+      : appConfig.layoutComponent; // layoutVariation
+  const Layout = registry.resolve[layoutComponent].component;
 
   const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
-  const searchContext = useSearchContext();
 
   const wasInteracted = !!(
     searchedTerm ||
@@ -35,15 +39,19 @@ export const SearchView = (props) => {
   );
 
   React.useEffect(() => {
-    // console.log('rewrite');
     window.searchContext = searchContext;
   }, [searchContext]);
 
   React.useEffect(() => {
     setIsLandingPageAtom(!wasInteracted);
-  });
+  }, [setIsLandingPageAtom, wasInteracted]);
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
+
+  React.useEffect(() => {
+    console.log('mount searchview');
+    return () => console.log('unmount searchview');
+  }, []);
 
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
@@ -74,7 +82,7 @@ export const SearchView = (props) => {
         sideContent={null}
         bodyHeader={<SampleQueryPrompt />}
         bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
-        bodyFooter={wasInteracted ? <AppInfo appConfig={appConfig} /> : <></>}
+        bodyFooter={wasInteracted ? <AppInfo appConfig={appConfig} /> : null}
       />
     </div>
   );
