@@ -38,9 +38,9 @@ function useSearchApp({
   const onSearch = React.useCallback(
     async (state) => {
       setIsLoading(true);
-      console.log('searching', state);
+      // console.log('searching', state);
       const res = await paramOnSearch(appConfig)(state);
-      console.log('search done', res);
+      // console.log('search done', res);
       setIsLoading(false);
       return res;
     },
@@ -73,16 +73,19 @@ function useSearchApp({
           ? { filters: getDefaultFilters(appConfig) }
           : {}),
       },
-      // debug: true,
+      // trackUrlState: false,
+      debug: true,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
-  const [driverInstance] = React.useState(
-    __CLIENT__ ? new SearchDriver(elasticConfig) : null,
+  const driver = React.useMemo(
+    () => (__CLIENT__ ? new SearchDriver(elasticConfig) : null),
+    [elasticConfig],
   );
+  const [driverInstance] = React.useState(driver);
 
   const mapContextToProps = React.useCallback(
     (params) => {

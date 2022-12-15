@@ -48,10 +48,10 @@ export const SearchView = (props) => {
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
 
-  React.useEffect(() => {
-    console.log('mount searchview');
-    return () => console.log('unmount searchview');
-  }, []);
+  // React.useEffect(() => {
+  //   console.log('mount searchview');
+  //   return () => console.log('unmount searchview');
+  // }, []);
 
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>

@@ -2,12 +2,7 @@ import React from 'react';
 import { SearchProvider, withSearch } from '@elastic/react-search-ui'; // ErrorBoundary,    WithSearch,
 
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
-import {
-  onResultClick,
-  onAutocompleteResultClick,
-  bindOnAutocomplete,
-  bindOnSearch,
-} from '@eeacms/search/lib/request';
+import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
 import useSearchApp from './useSearchApp';
 
 function SearchWrappers(SearchViewComponent) {
@@ -69,13 +64,6 @@ export default function BasicSearchApp(props) {
   const WrappedSearchView = React.useMemo(() => {
     return withSearch(mapContextToProps)(SearchWrappers(searchViewComponent));
   }, [mapContextToProps, searchViewComponent]);
-
-  React.useEffect(() => {
-    console.log('mount basicsearchapp');
-    return () => console.log('unmount basicsearchapp');
-  }, []);
-
-  // console.log('redraw basicsearchapp', isLoading);
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>
