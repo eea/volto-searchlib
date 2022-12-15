@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { useAtom } from 'jotai';
-import { SearchDriver } from '@elastic/search-ui';
+import { useAtom, useAtomValue } from 'jotai';
 
 import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import {
@@ -16,7 +15,13 @@ import {
 
 import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
-import { loadingFamily } from './state';
+import { loadingFamily, driverFamily } from './state';
+
+function useSearchDriver({ elasticConfig, appName }) {
+  const driverAtom = driverFamily({ elasticConfig, appName });
+  const driver = useAtomValue(driverAtom);
+  return driver;
+}
 
 function useSearchApp({
   appName,
@@ -74,18 +79,14 @@ function useSearchApp({
           : {}),
       },
       // trackUrlState: false,
-      debug: true,
+      // debug: true,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
-  const driver = React.useMemo(
-    () => (__CLIENT__ ? new SearchDriver(elasticConfig) : null),
-    [elasticConfig],
-  );
-  const [driverInstance] = React.useState(driver);
+  const driverInstance = useSearchDriver({ elasticConfig, appName });
 
   const mapContextToProps = React.useCallback(
     (params) => {

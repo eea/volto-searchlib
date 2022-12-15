@@ -4,9 +4,5 @@ import { SearchView } from '@eeacms/search/components/SearchView/SearchView';
 import BasicSearchApp from './BasicSearchApp';
 
 export default function SearchApp(props) {
-  // React.useEffect(() => {
-  //   console.log('mount searchapp');
-  //   return () => console.log('unmount searchapp');
-  // }, []);
   return <BasicSearchApp {...props} searchViewComponent={SearchView} />;
 }
