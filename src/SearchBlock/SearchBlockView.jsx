@@ -4,7 +4,6 @@ import { SearchApp } from '@eeacms/search';
 import { SearchBlockSchema } from './schema';
 import { BodyClass } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import './less/styles.less';
@@ -44,8 +43,6 @@ export default function SearchBlockView(props) {
     };
     return reg;
   }, [appName, stableData, schema]);
-
-  useWhyDidYouUpdate('BlockView', { stableData });
 
   // TODO: this is a hack, please solve it properly
 

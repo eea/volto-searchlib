@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useAtom, useAtomValue } from 'jotai';
 
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import {
   getDefaultFilters,
   rebind,
@@ -17,7 +16,7 @@ import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { loadingFamily, driverFamily } from './state';
 
-function useSearchDriver({ elasticConfig, appName }) {
+export function useSearchDriver({ elasticConfig, appName }) {
   const driverAtom = driverFamily({ elasticConfig, appName });
   const driver = useAtomValue(driverAtom);
 
@@ -28,7 +27,7 @@ function useSearchDriver({ elasticConfig, appName }) {
   return driver;
 }
 
-function useSearchApp({
+export default function useSearchApp({
   appName,
   registry,
   paramOnSearch,
@@ -113,17 +112,6 @@ function useSearchApp({
     [appConfig, driverInstance, facetOptions],
   );
 
-  useWhyDidYouUpdate('BasicSearchApp', {
-    appName,
-    registry,
-    appConfig,
-    driverInstance,
-    facetOptions,
-    onAutocomplete,
-    onSearch,
-    locationSearchTerm,
-  });
-
   return {
     facetOptions,
     mapContextToProps,
@@ -132,5 +120,3 @@ function useSearchApp({
     elasticConfig,
   };
 }
-
-export default useSearchApp;
