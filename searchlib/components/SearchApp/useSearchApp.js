@@ -20,6 +20,11 @@ import { loadingFamily, driverFamily } from './state';
 function useSearchDriver({ elasticConfig, appName }) {
   const driverAtom = driverFamily({ elasticConfig, appName });
   const driver = useAtomValue(driverAtom);
+
+  React.useEffect(() => {
+    return () => driver.tearDown();
+  }, [driver]);
+
   return driver;
 }
 
@@ -78,8 +83,6 @@ function useSearchApp({
           ? { filters: getDefaultFilters(appConfig) }
           : {}),
       },
-      // trackUrlState: false,
-      // debug: true,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm],
   );

@@ -22,11 +22,7 @@ export const SearchView = (props) => {
   const { driver } = React.useContext(SUISearchContext);
   const [, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
 
-  const layoutComponent =
-    appConfig.layoutVariation === 'full'
-      ? appConfig.layoutComponent
-      : appConfig.layoutComponent; // layoutVariation
-  const Layout = registry.resolve[layoutComponent].component;
+  const Layout = registry.resolve[appConfig.layoutComponent].component;
 
   const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
 

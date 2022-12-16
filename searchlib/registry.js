@@ -246,7 +246,11 @@ const config = {
       headline: '', // main headline
       subheadline: '', // text under the headline
       demoquestion: '', // Question used as example under the search input
+
+      // These are ElasticSearch driver options:
       // debug: true,
+      // trackUrlState: false,
+
       hasA11yNotifications: true,
 
       // broad global layout (header, side, etc)
