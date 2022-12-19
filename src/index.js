@@ -5,6 +5,11 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
 import { SearchBlockSchema } from './SearchBlock/schema';
+import {
+  FullView,
+  SearchInputView,
+  LandingPageView,
+} from './SearchBlock/templates';
 // import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
 import SelectWidget from './SearchBlock/SelectWidget';
@@ -29,6 +34,24 @@ const applyConfig = (config) => {
       addPermission: [],
       view: [],
     },
+    variations: [
+      {
+        id: 'fullView',
+        isDefault: true,
+        title: 'Full (default)',
+        view: FullView,
+      },
+      {
+        id: 'searchInputOnly',
+        title: 'Only Search input',
+        view: SearchInputView,
+      },
+      {
+        id: 'landingPageOnly',
+        title: 'Only statistics',
+        view: LandingPageView,
+      },
+    ],
   };
 
   if (__SERVER__) {

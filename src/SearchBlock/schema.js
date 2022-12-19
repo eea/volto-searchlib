@@ -7,13 +7,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'default',
       title: 'Default',
-      fields: [
-        'appName',
-        'layoutVariation',
-        'headline',
-        'subheadline',
-        'searchInputPlaceholder',
-      ],
+      fields: ['appName', 'headline', 'subheadline', 'searchInputPlaceholder'],
     },
     {
       id: 'general',
@@ -50,16 +44,6 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     appName: {
       title: 'Searchlib app',
       choices: [],
-    },
-
-    layoutVariation: {
-      title: 'Layout variation',
-      choices: [
-        ['full', 'Full (default)'],
-        ['searchInputOnly', 'Only Search input'],
-        ['landingPageOnly', 'Only statistics'],
-      ],
-      default: 'full',
     },
 
     searchEnginePath: {

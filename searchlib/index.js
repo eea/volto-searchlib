@@ -11,6 +11,8 @@ export * from './state';
 
 export { default as runRequest } from './lib/runRequest';
 export { default as SearchApp } from './components/SearchApp/SearchApp';
+export { default as SearchInputApp } from './components/SearchApp/SearchInputApp';
+export { default as LandingPageApp } from './components/SearchApp/LandingPageApp';
 export { default as SearchView } from './components/SearchView/SearchView';
 export { default as registry } from './registry';
 

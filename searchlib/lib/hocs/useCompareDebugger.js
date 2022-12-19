@@ -1,6 +1,6 @@
 // A fork of https://github.com/IPWright83/react-use-compare-debugger
 // Solves transpilation problems
-//
+
 import { useEffect, useRef } from 'react';
 
 const styles = {

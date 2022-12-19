@@ -1,3 +1,9 @@
+/**
+ * Bootstraps a search view component
+ *
+ * Provides the search context and the driver
+ */
+
 import React from 'react';
 import { SearchProvider, withSearch } from '@elastic/react-search-ui'; // ErrorBoundary,    WithSearch,
 

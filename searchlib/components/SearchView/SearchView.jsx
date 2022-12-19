@@ -1,3 +1,7 @@
+/**
+ * Full search engine view, with landing page, search input and results
+ */
+
 import React from 'react';
 
 import { withAppConfig } from '@eeacms/search/lib/hocs';

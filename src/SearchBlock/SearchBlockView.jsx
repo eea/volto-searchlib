@@ -1,27 +1,41 @@
 import React from 'react';
 import config from '@plone/volto/registry';
-import { SearchApp } from '@eeacms/search';
 import { SearchBlockSchema } from './schema';
-import { BodyClass } from '@plone/volto/helpers';
+import { withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
+import { isEqual } from 'lodash';
 
-// import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import './less/styles.less';
 
-const overlayStyle = {
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  zIndex: '100',
+const useDebouncedStableData = (data, timeout = 100) => {
+  const [stableData, setStableData] = React.useState(data);
+  const timer = React.useRef();
+
+  const isSameData = isEqual(stableData, data);
+
+  React.useEffect(() => {
+    if (timer.current) clearInterval(timer.current);
+
+    timer.current = setTimeout(() => {
+      if (!isSameData) setStableData(data);
+    }, timeout);
+    return () => timer.current && clearTimeout(timer.current);
+  }, [data, isSameData, timeout]);
+
+  return stableData;
 };
 
-export default function SearchBlockView(props) {
-  const { data = {}, mode = 'view' } = props;
+function SearchBlockView(props) {
+  const { data = {}, mode = 'view', variation } = props;
   const schema = React.useMemo(() => SearchBlockSchema({ formData: data }), [
     data,
   ]);
   const { appName = 'default' } = data;
-  const [stableData] = React.useState(data);
+  const stableData = useDebouncedStableData(data);
+  // const [stableData] = React.useState(data);
+
+  // TODO: update stableData if in edit mode
+
   const registry = React.useMemo(() => {
     const reg = applyBlockSettings(
       config.settings.searchlib,
@@ -44,18 +58,9 @@ export default function SearchBlockView(props) {
     return reg;
   }, [appName, stableData, schema]);
 
-  // TODO: this is a hack, please solve it properly
+  const Variation = variation.view;
 
-  return (
-    <BodyClass className={`${appName}-view searchlib-page`}>
-      <div className="searchlib-block">
-        {mode !== 'view' ? (
-          <div className="overlay" style={overlayStyle}></div>
-        ) : (
-          ''
-        )}
-        <SearchApp registry={registry} appName={appName} mode={mode} />
-      </div>
-    </BodyClass>
-  );
+  return <Variation registry={registry} appName={appName} mode={mode} />;
 }
+
+export default withBlockExtensions(SearchBlockView);
