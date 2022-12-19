@@ -276,6 +276,8 @@ const config = {
       showPromptQueries: true,
       defaultPromptQueries: [], // offered as possible queries, in a prompt below text input. One per line
       promptQueryInterval: 20000,
+      alwaysSearchOnInitialLoad: false, // used in elastic search driver
+      showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
 
       // highlight: {
       //   queryParams: {

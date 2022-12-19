@@ -27,12 +27,19 @@ SearchResultsView.schemaEnhancer = ({ schema }) => {
   schema.fieldsets[0].fields.unshift(
     'defaultResultView',
     'alwaysSearchOnInitialLoad',
+    'showFilters',
   );
   schema.properties.alwaysSearchOnInitialLoad = {
     title: 'Autoload results',
     type: 'boolean',
     default: true,
     configPath: 'alwaysSearchOnInitialLoad',
+  };
+  schema.properties.showFilters = {
+    title: 'Show filters?',
+    type: 'boolean',
+    default: true,
+    configPath: 'showFilters',
   };
 
   return schema;

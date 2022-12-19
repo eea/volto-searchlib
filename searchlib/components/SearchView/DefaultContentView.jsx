@@ -33,7 +33,7 @@ export const DefaultContentView = (props) => {
 
   return (
     <>
-      <FilterList />
+      {appConfig.showFilters && <FilterList />}
       {appConfig.enableNLP ? <AnswerBox /> : ''}
       <div className="above-results">
         <ViewSelectorWithLabel
