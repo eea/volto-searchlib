@@ -16,6 +16,10 @@ const modify = (config, { target, dev }, webpack) => {
   config.resolve.alias['@eeacms/search'] = searchlibPath;
   include.push(searchlibPath);
 
+  if (config.devServer) {
+    config.devServer.watchOptions.ignored = /node_modules\/(?!(@plone\/volto|@elastic))/g;
+  }
+
   return config;
 };
 

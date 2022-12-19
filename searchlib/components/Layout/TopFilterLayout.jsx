@@ -2,8 +2,8 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
-import { isLandingPageAtom } from '@eeacms/search/state';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { isLandingPageAtom, loadingFamily } from '@eeacms/search/state';
+import { useAtomValue } from 'jotai';
 
 const TopFilterLayout = (props) => {
   const {
@@ -16,11 +16,12 @@ const TopFilterLayout = (props) => {
   } = props;
   const { onlyLandingPage = false } = appConfig;
   const [isLandingPage] = useAtom(isLandingPageAtom);
-  const searchContext = useSearchContext();
+  const loadingAtom = loadingFamily(appConfig.appName);
+  const isLoading = useAtomValue(loadingAtom);
 
   return (
     <div className="top-filter-layout">
-      {searchContext.isLoading && (
+      {isLoading && (
         <Dimmer active inverted>
           <Loader active size="big" />
         </Dimmer>

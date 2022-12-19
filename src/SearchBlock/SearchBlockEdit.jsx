@@ -5,6 +5,7 @@ import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 
 const SearchBlockEdit = (props) => {
+  const { onChangeBlock, block } = props;
   const schema = SearchBlockSchema({ formData: props.data || {} });
   const conf = config.settings.searchlib.searchui;
   schema.properties.appName.choices = Object.keys(conf).map((k) => [
@@ -20,8 +21,10 @@ const SearchBlockEdit = (props) => {
         <BlockDataForm
           schema={schema}
           title={schema.title}
+          block={block}
+          onChangeBlock={onChangeBlock}
           onChangeField={(id, value) => {
-            props.onChangeBlock(props.block, {
+            onChangeBlock(props.block, {
               ...props.data,
               [id]: value,
             });

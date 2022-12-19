@@ -45,5 +45,5 @@ export const bindOnSearch = (config) =>
       config,
     );
 
-    return { filters: state.filters, ...newState }; //{ ...state, ...newState };
+    return { filters: state.filters, ...newState };
   };

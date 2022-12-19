@@ -74,6 +74,7 @@ export default function useProxiedSearchContext(
       driver[name] = wrapper[func_name];
     });
     setDriver(driver);
+    return () => driver.tearDown();
   }, [searchContext, setDriver, searchContextId]); // dirtyFilters, setDirtyFilters
 
   const applySearch = React.useCallback(() => {

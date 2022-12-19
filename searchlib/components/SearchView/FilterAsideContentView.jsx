@@ -17,6 +17,8 @@ import registry from '@eeacms/search/registry';
 import { AnswerBox, Component } from '@eeacms/search/components';
 import { NoResults } from '@eeacms/search/components/Result/NoResults';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { loadingFamily } from '@eeacms/search/state';
+import { useAtomValue } from 'jotai';
 
 export const FilterAsideContentView = (props) => {
   // console.log('redraw FilterAsideContentView');
@@ -63,7 +65,10 @@ export const FilterAsideContentView = (props) => {
   const layoutMode =
     views.activeViewId === 'horizontalCard' ? 'fixed' : 'fullwidth';
 
-  const { isLoading, wasSearched } = useSearchContext();
+  const { wasSearched } = useSearchContext();
+
+  const loadingAtom = loadingFamily(appConfig.appName);
+  const isLoading = useAtomValue(loadingAtom);
 
   return (
     <>

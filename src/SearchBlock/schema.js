@@ -9,11 +9,10 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       title: 'Default',
       fields: [
         'appName',
+        'layoutVariation',
         'headline',
         'subheadline',
         'searchInputPlaceholder',
-        'showLandingPage',
-        ...(formData?.showLandingPage ? ['onlyLandingPage'] : []),
       ],
     },
     {
@@ -53,17 +52,19 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       choices: [],
     },
 
-    showLandingPage: {
-      title: 'Show landing page',
-      type: 'boolean',
-      configPath: 'showLandingPage',
-      default: true,
+    layoutVariation: {
+      title: 'Layout variation',
+      choices: [
+        ['full', 'Full (default)'],
+        ['searchInputOnly', 'Only Search input'],
+        ['landingPageOnly', 'Only statistics'],
+      ],
+      default: 'full',
     },
-    onlyLandingPage: {
-      title: 'Only landing page?',
-      type: 'boolean',
-      configPath: 'onlyLandingPage',
-      default: false,
+
+    searchEnginePath: {
+      title: 'Search Engine path',
+      configPath: 'searchEnginePath',
     },
 
     enableNLP: {
