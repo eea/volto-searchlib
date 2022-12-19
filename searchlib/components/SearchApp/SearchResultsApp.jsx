@@ -2,7 +2,7 @@ import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
 import BasicSearchApp from './BasicSearchApp';
 
-function SearchResultsView(props) {
+function BootstrapSearchResultsView(props) {
   const { appConfig, registry } = props;
 
   const searchContext = useSearchContext();
@@ -44,6 +44,12 @@ function SearchResultsView(props) {
   );
 }
 
-export default function LandingPageApp(props) {
-  return <BasicSearchApp {...props} searchViewComponent={SearchResultsView} />;
+export default function SearchResultsApp(props) {
+  return (
+    <BasicSearchApp
+      {...props}
+      wasInteracted={true}
+      searchViewComponent={BootstrapSearchResultsView}
+    />
+  );
 }

@@ -115,7 +115,7 @@ export const FilterAsideContentView = (props) => {
             <Grid centered>
               <Grid.Column textAlign="center">
                 <div className="prev-next-paging">
-                  {(!!wasInteracted || !appConfig.showFilters) && <Paging />}
+                  {!!wasInteracted && <Paging />}
                 </div>
               </Grid.Column>
             </Grid>
