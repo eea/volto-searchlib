@@ -19,6 +19,7 @@ export const DefaultContentView = (props) => {
   const { sortOptions, resultViews } = appConfig;
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
+  if (!listingViewDef) return null;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
 
