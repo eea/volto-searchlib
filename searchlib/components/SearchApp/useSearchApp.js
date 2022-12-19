@@ -85,6 +85,7 @@ export default function useSearchApp({
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm],
   );
+  console.log('elastiConfig', elasticConfig);
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 

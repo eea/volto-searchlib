@@ -24,7 +24,16 @@ export default function SearchResultsView(props) {
 }
 
 SearchResultsView.schemaEnhancer = ({ schema }) => {
-  schema.fieldsets[0].fields.unshift('defaultResultView');
+  schema.fieldsets[0].fields.unshift(
+    'defaultResultView',
+    'alwaysSearchOnInitialLoad',
+  );
+  schema.properties.alwaysSearchOnInitialLoad = {
+    title: 'Autoload results',
+    type: 'boolean',
+    default: true,
+    configPath: 'alwaysSearchOnInitialLoad',
+  };
 
   return schema;
 };
