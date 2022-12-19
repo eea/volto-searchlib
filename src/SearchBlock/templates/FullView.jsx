@@ -26,4 +26,10 @@ function FullView(props) {
   );
 }
 
+FullView.schemaEnhancer = ({ schema }) => {
+  schema.fieldsets[0].fields.unshift('defaultResultView');
+
+  return schema;
+};
+
 export default FullView;

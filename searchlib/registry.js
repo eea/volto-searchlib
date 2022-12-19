@@ -301,8 +301,8 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
-      requestBodyModifiers: [addQAParams],
-      stateModifiers: [extractAnswers],
+      requestBodyModifiers: [addQAParams], // todo: use factory names
+      stateModifiers: [extractAnswers], // todo: use factory names
 
       enableNLP: false, // enables NLP capabilities
       nlp: {

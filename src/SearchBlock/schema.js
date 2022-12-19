@@ -7,7 +7,13 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['appName', 'headline', 'subheadline', 'searchInputPlaceholder'],
+      fields: [
+        'appName',
+        // 'defaultResultView',
+        'headline',
+        'subheadline',
+        'searchInputPlaceholder',
+      ],
     },
     {
       id: 'general',
@@ -43,6 +49,11 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
   properties: {
     appName: {
       title: 'Searchlib app',
+      choices: [],
+    },
+
+    defaultResultView: {
+      title: 'Default view',
       choices: [],
     },
 
@@ -147,8 +158,12 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     },
     cutoffScore: {
       title: 'Cutoff score',
+      type: 'number',
       description:
         'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
+      maximum: 0.99,
+      minimum: 0.01,
+      step: 0.1,
       default: 0.1,
       configPath: 'nlp.qa.cutoffScore',
     },

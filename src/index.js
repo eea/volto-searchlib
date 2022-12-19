@@ -40,6 +40,7 @@ const applyConfig = (config) => {
         isDefault: true,
         title: 'Full (default)',
         view: FullView,
+        schemaEnhancer: FullView.schemaEnhancer,
       },
       {
         id: 'searchInputOnly',
@@ -57,6 +58,7 @@ const applyConfig = (config) => {
         id: 'searchResultsOnly',
         title: 'Search results',
         view: SearchResultsView,
+        schemaEnhancer: SearchResultsView.schemaEnhancer,
       },
     ],
   };

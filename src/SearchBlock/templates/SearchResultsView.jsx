@@ -22,3 +22,9 @@ export default function SearchResultsView(props) {
     </BodyClass>
   );
 }
+
+SearchResultsView.schemaEnhancer = ({ schema }) => {
+  schema.fieldsets[0].fields.unshift('defaultResultView');
+
+  return schema;
+};

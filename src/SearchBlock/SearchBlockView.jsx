@@ -3,27 +3,9 @@ import config from '@plone/volto/registry';
 import { SearchBlockSchema } from './schema';
 import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
-import { isEqual } from 'lodash';
+import { useDebouncedStableData } from './hocs';
 
 import './less/styles.less';
-
-const useDebouncedStableData = (data, timeout = 100) => {
-  const [stableData, setStableData] = React.useState(data);
-  const timer = React.useRef();
-
-  const isSameData = isEqual(stableData, data);
-
-  React.useEffect(() => {
-    if (timer.current) clearInterval(timer.current);
-
-    timer.current = setTimeout(() => {
-      if (!isSameData) setStableData(data);
-    }, timeout);
-    return () => timer.current && clearTimeout(timer.current);
-  }, [data, isSameData, timeout]);
-
-  return stableData;
-};
 
 function SearchBlockView(props) {
   const { data = {}, mode = 'view', variation } = props;
@@ -60,7 +42,12 @@ function SearchBlockView(props) {
 
   const Variation = variation.view;
 
-  return <Variation registry={registry} appName={appName} mode={mode} />;
+  return (
+    <div>
+      {mode !== 'view' && 'EEA Semantic Search block'}
+      <Variation registry={registry} appName={appName} mode={mode} />
+    </div>
+  );
 }
 
 export default withBlockExtensions(SearchBlockView);
