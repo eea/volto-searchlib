@@ -43,17 +43,19 @@ const applyConfig = (config) => {
       },
       {
         id: 'searchInputOnly',
-        title: 'Only Search input',
+        title: 'Search input',
         view: SearchInputView,
+        schemaEnhancer: SearchInputView.schemaEnhancer,
       },
       {
         id: 'landingPageOnly',
-        title: 'Only statistics',
+        title: 'Statistics',
         view: LandingPageView,
+        schemaEnhancer: LandingPageView.schemaEnhancer,
       },
       {
         id: 'searchResultsOnly',
-        title: 'Only search results',
+        title: 'Search results',
         view: SearchResultsView,
       },
     ],

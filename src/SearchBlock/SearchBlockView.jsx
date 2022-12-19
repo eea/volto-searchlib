@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '@plone/volto/registry';
 import { SearchBlockSchema } from './schema';
-import { withBlockExtensions } from '@plone/volto/helpers';
+import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
 import { isEqual } from 'lodash';
 
@@ -27,11 +27,14 @@ const useDebouncedStableData = (data, timeout = 100) => {
 
 function SearchBlockView(props) {
   const { data = {}, mode = 'view', variation } = props;
-  const schema = React.useMemo(() => SearchBlockSchema({ formData: data }), [
-    data,
-  ]);
   const { appName = 'default' } = data;
   const stableData = useDebouncedStableData(data);
+
+  const schema = React.useMemo(() => {
+    let schema = SearchBlockSchema({ formData: stableData });
+    schema = applySchemaEnhancer({ schema, formData: stableData });
+    return schema;
+  }, [stableData]);
 
   const registry = React.useMemo(() => {
     const reg = applyBlockSettings(

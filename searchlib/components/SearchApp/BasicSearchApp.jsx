@@ -23,8 +23,10 @@ function SearchWrappers(SearchViewComponent) {
       ...searchContext
     } = props;
 
+    const [payload, update] = React.useState(appConfigContext);
+
     return (
-      <AppConfigContext.Provider value={appConfigContext}>
+      <AppConfigContext.Provider value={{ payload, update }}>
         <SearchContext.Provider value={searchContext}>
           <SearchViewComponent
             {...searchContext}
@@ -63,10 +65,9 @@ export default function BasicSearchApp(props) {
     paramOnAutocomplete,
   });
 
-  const appConfigContext = React.useMemo(() => ({ appConfig, registry }), [
-    appConfig,
-    registry,
-  ]);
+  const appConfigContext = React.useMemo(() => {
+    return { appConfig, registry };
+  }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
     return withSearch(mapContextToProps)(SearchWrappers(searchViewComponent));

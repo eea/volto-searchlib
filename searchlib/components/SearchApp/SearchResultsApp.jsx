@@ -33,12 +33,14 @@ function SearchResultsView(props) {
     ) : (
       <NoResultsComponent {...props} />
     )
-  ) : (
+  ) : results.length ? (
     <ContentBodyView {...props}>
       {results.map((result, i) => (
         <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
       ))}
     </ContentBodyView>
+  ) : (
+    <div className="noResults"></div>
   );
 }
 
