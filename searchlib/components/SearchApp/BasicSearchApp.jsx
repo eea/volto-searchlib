@@ -50,6 +50,7 @@ export default function BasicSearchApp(props) {
     paramOnSearch = bindOnSearch,
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
+    ...rest
   } = props;
 
   const {
@@ -76,6 +77,7 @@ export default function BasicSearchApp(props) {
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>
       <WrappedSearchView
+        {...rest}
         appConfig={appConfig}
         appConfigContext={appConfigContext}
         appName={appName}

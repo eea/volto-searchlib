@@ -11,18 +11,18 @@ const SearchInputView = (props) => {
     mode = 'view',
     appConfigContext,
     appConfig,
+    onSubmitSearch,
     ...searchContext
   } = props;
 
   const onSubmit = appConfig.url
     ? (searchTerm) => {
-        console.log('submit', searchTerm);
+        onSubmitSearch(searchTerm);
       }
     : undefined;
 
   const onSelectAutocomplete = appConfig.url
     ? (selection, options) => {
-        console.log('onselect', selection, options, searchContext);
         searchContext.setSearchTerm(selection.suggestion);
       }
     : undefined;
@@ -61,7 +61,7 @@ const SearchInputViewWrapper = (props) => {
   );
 };
 
-export default function SearchApp(props) {
+export default function SearchInputApp(props) {
   return (
     <BasicSearchApp {...props} searchViewComponent={SearchInputViewWrapper} />
   );

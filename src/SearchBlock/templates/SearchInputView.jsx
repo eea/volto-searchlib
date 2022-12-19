@@ -1,8 +1,23 @@
-import { SearchInputApp } from '@eeacms/search';
 import React from 'react';
 
+import { SearchInputApp } from '@eeacms/search';
+import { useHistory } from 'react-router-dom';
+import { flattenToAppURL } from '@plone/volto/helpers';
+
 function SearchInputView(props) {
-  return <SearchInputApp {...props} />;
+  const { registry, appName } = props;
+  const history = useHistory();
+  const appConfig = registry.searchui[appName];
+  const url = flattenToAppURL(appConfig.url || '');
+
+  return (
+    <SearchInputApp
+      {...props}
+      onSubmitSearch={(searchTerm) => {
+        history.push(`${url}?q=${searchTerm}`);
+      }}
+    />
+  );
 }
 
 SearchInputView.schemaEnhancer = ({ schema }) => {

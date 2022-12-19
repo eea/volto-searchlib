@@ -46,10 +46,10 @@ export default function useSearchApp({
 
   const onSearch = React.useCallback(
     async (state) => {
+      if (appConfig.url) return {}; // we don't do onSearch if we rely on another page to do the search
+
       setIsLoading(true);
-      // console.log('searching', state);
       const res = await paramOnSearch(appConfig)(state);
-      // console.log('search done', res);
       setIsLoading(false);
       return res;
     },
