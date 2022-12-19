@@ -9,8 +9,8 @@ import {
   FullView,
   SearchInputView,
   LandingPageView,
+  SearchResultsView,
 } from './SearchBlock/templates';
-// import LeftColumnLayout from './components/Layout/LeftColumnLayout';
 
 import SelectWidget from './SearchBlock/SelectWidget';
 
@@ -50,6 +50,11 @@ const applyConfig = (config) => {
         id: 'landingPageOnly',
         title: 'Only statistics',
         view: LandingPageView,
+      },
+      {
+        id: 'searchResultsOnly',
+        title: 'Only search results',
+        view: SearchResultsView,
       },
     ],
   };

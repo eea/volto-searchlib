@@ -8,8 +8,6 @@ import {
   SortingDropdownWithLabel,
   AnswerBox,
   DownloadButton,
-  // ViewSelector,
-  // SortingDropdown,
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useViews } from '@eeacms/search/lib/hocs';

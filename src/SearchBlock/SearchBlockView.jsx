@@ -32,9 +32,6 @@ function SearchBlockView(props) {
   ]);
   const { appName = 'default' } = data;
   const stableData = useDebouncedStableData(data);
-  // const [stableData] = React.useState(data);
-
-  // TODO: update stableData if in edit mode
 
   const registry = React.useMemo(() => {
     const reg = applyBlockSettings(

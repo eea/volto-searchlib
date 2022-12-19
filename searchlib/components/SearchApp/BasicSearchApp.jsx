@@ -29,6 +29,7 @@ function SearchWrappers(SearchViewComponent) {
           <SearchViewComponent
             {...searchContext}
             appName={appName}
+            registry={appConfigContext.registry}
             appConfig={appConfig}
             mode={mode}
           />
