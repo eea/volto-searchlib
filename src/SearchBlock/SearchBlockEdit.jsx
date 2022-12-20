@@ -12,20 +12,17 @@ const SearchBlockEdit = (props) => {
 
   const schema = React.useMemo(() => {
     const schema = SearchBlockSchema({ formData: stableData || {} });
-    const conf = config.settings.searchlib.searchui;
-    schema.properties.appName.choices = Object.keys(conf).map((k) => [
+
+    const { searchui } = config.settings.searchlib;
+
+    schema.properties.appName.choices = Object.keys(searchui).map((k) => [
       k,
       k,
       // conf[k].title || k,
     ]);
 
-    const resultViews = conf[stableData.appName || 'default'].resultViews;
-
-    schema.properties.defaultResultView = {
-      ...schema.properties.defaultResultView,
-      choices: resultViews.map(({ id, title }) => [id, title]),
-      default: resultViews.find(({ isDefault }) => isDefault).id,
-    };
+    schema.appName = stableData.appName || 'default';
+    schema.appConfig = searchui[schema.appName];
 
     return schema;
   }, [stableData]);
