@@ -1,6 +1,10 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useSearchContext, SearchContext } from '@eeacms/search/lib/hocs';
+import {
+  useSearchContext,
+  SearchContext,
+  useProxiedSearchContext,
+} from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
@@ -12,9 +16,13 @@ const filterFamily = atomFamily(
 );
 
 function BoostrapFacetView(props) {
-  const { field, onChange } = props;
+  const { field, onChange, value } = props;
+  console.log('value', value);
   const { appConfig, registry } = props;
-  const facetSearchContext = useSearchContext();
+  const {
+    searchContext: facetSearchContext,
+    applySearch,
+  } = useProxiedSearchContext(useSearchContext());
   const { filters } = facetSearchContext;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
@@ -36,10 +44,22 @@ function BoostrapFacetView(props) {
 
   React.useEffect(() => {
     if (!isEqual(filters, savedFilters)) {
+      facetSearchContext.clearFilters();
+      console.log('value', value);
+      if (value)
+        facetSearchContext.setFilter(value.field, value.type, value.values);
       setSavedFilters(filters);
       onChange(filters);
     }
-  }, [filters, onChange, savedFilters, setSavedFilters]);
+  }, [
+    field,
+    filters,
+    onChange,
+    savedFilters,
+    setSavedFilters,
+    value,
+    facetSearchContext,
+  ]);
 
   return (
     <SearchContext.Provider value={facetSearchContext}>

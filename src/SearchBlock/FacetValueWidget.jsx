@@ -6,9 +6,12 @@ export default function FacetValueWidget(props) {
   const onChangeHandler = React.useCallback(
     (filters) => {
       console.log('onchange', filters);
-      onChange(id, filters);
+      onChange(
+        id,
+        filters.find(({ field }) => field === facetName),
+      );
     },
-    [id, onChange],
+    [id, onChange, facetName],
   );
   return facetName ? (
     <FacetApp {...props} field={facetName} onChange={onChangeHandler} />
