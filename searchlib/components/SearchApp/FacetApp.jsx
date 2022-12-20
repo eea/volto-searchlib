@@ -1,22 +1,20 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import {
-  useSearchContext,
-  SearchContext,
-  useProxiedSearchContext,
-} from '@eeacms/search/lib/hocs';
+import { useSearchContext, SearchContext } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
+import { atom, useAtom } from 'jotai';
+import { atomFamily } from 'jotai/utils';
+import { isEqual } from 'lodash';
 
-const timeoutRef = {};
+const filterFamily = atomFamily(
+  ({ field }) => atom(),
+  (a, b) => a.field === b.field,
+);
 
 function BoostrapFacetView(props) {
   const { field, onChange } = props;
   const { appConfig, registry } = props;
-  const searchContext = useSearchContext();
-  const {
-    searchContext: facetSearchContext,
-    // applySearch,
-  } = useProxiedSearchContext(searchContext);
+  const facetSearchContext = useSearchContext();
   const { filters } = facetSearchContext;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
@@ -33,18 +31,15 @@ function BoostrapFacetView(props) {
   );
   const FacetComponent = registry.resolve[facet.factory].component;
 
-  React.useEffect(() => {
-    const { current } = timeoutRef;
-    if (current) {
-      clearTimeout(current);
-    } else {
-      timeoutRef.current = setTimeout(() => onChange(filters), 400);
-    }
+  const filterAtom = filterFamily(field);
+  const [savedFilters, setSavedFilters] = useAtom(filterAtom);
 
-    return () => {
-      if (current) clearTimeout(current);
-    };
-  }, [filters, onChange]);
+  React.useEffect(() => {
+    if (!isEqual(filters, savedFilters)) {
+      setSavedFilters(filters);
+      onChange(filters);
+    }
+  }, [filters, onChange, savedFilters, setSavedFilters]);
 
   return (
     <SearchContext.Provider value={facetSearchContext}>
@@ -62,24 +57,3 @@ function BoostrapFacetView(props) {
 export default function FacetApp(props) {
   return <BasicSearchApp {...props} searchViewComponent={BoostrapFacetView} />;
 }
-
-// console.log('props', props);
-// const rawSearchContext = useSearchContext();
-// const {
-//   searchContext: facetSearchContext,
-//   applySearch,
-// } = useProxiedSearchContext(rawSearchContext);
-// const { appConfig } = useAppConfig();
-// console.log('facet', facet);
-// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
-// import useDeepCompareEffect from 'use-deep-compare-effect';
-// console.log('outside');
-// console.log('triggered change on filters');
-
-// useWhyDidYouUpdate('Bootstrap', { filters, onChange });
-// React.useEffect(
-//   () => () => {
-//     console.log('unmount BootstrapFacetView');
-//   },
-//   [],
-// );

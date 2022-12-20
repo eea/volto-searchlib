@@ -4,7 +4,10 @@ import { FacetApp } from '@eeacms/search';
 export default function FacetValueWidget(props) {
   const { facetName, onChange, id } = props;
   const onChangeHandler = React.useCallback(
-    (filters) => onChange(id, filters),
+    (filters) => {
+      console.log('onchange', filters);
+      onChange(id, filters);
+    },
     [id, onChange],
   );
   return facetName ? (

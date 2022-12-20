@@ -30,7 +30,7 @@ const FacetContainer = (props) => {
 
   const facetsForField = facets[field];
 
-  console.log('view', facets, field, props);
+  // console.log('view', facets, field, props);
 
   if (!facetsForField) return null;
 
