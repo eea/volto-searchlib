@@ -20,7 +20,7 @@ function BoostrapFacetView(props) {
   const { appConfig, registry } = props;
   const {
     searchContext: facetSearchContext,
-    // applySearch,
+    applySearch,
   } = useProxiedSearchContext(useSearchContext(), `${field}`);
   const { filters } = facetSearchContext;
   console.log('value', value, filters);
@@ -52,6 +52,7 @@ function BoostrapFacetView(props) {
       if (value) {
         onChange(value);
         facetSearchContext.setFilter(value.field, value.type, value.values);
+        applySearch();
       }
     }
   }, [
@@ -62,6 +63,7 @@ function BoostrapFacetView(props) {
     setSavedFilters,
     value,
     facetSearchContext,
+    applySearch,
   ]);
 
   return (
