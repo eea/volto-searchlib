@@ -17,13 +17,13 @@ const filterFamily = atomFamily(
 
 function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
-  console.log('value', value);
   const { appConfig, registry } = props;
   const {
     searchContext: facetSearchContext,
-    applySearch,
-  } = useProxiedSearchContext(useSearchContext());
+    // applySearch,
+  } = useProxiedSearchContext(useSearchContext(), `${field}`);
   const { filters } = facetSearchContext;
+  console.log('value', value, filters);
 
   const facet = appConfig.facets?.find((f) => f.field === field);
 
@@ -44,12 +44,15 @@ function BoostrapFacetView(props) {
 
   React.useEffect(() => {
     if (!isEqual(filters, savedFilters)) {
-      facetSearchContext.clearFilters();
-      console.log('value', value);
-      if (value)
-        facetSearchContext.setFilter(value.field, value.type, value.values);
+      // facetSearchContext.clearFilters();
+      // console.log('value', value);
+      // if (value)
+      const value = filters?.find((filter) => filter.field === field);
       setSavedFilters(filters);
-      onChange(filters);
+      if (value) {
+        onChange(value);
+        facetSearchContext.setFilter(value.field, value.type, value.values);
+      }
     }
   }, [
     field,

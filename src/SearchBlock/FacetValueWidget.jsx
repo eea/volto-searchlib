@@ -4,14 +4,11 @@ import { FacetApp } from '@eeacms/search';
 export default function FacetValueWidget(props) {
   const { facetName, onChange, id } = props;
   const onChangeHandler = React.useCallback(
-    (filters) => {
-      console.log('onchange', filters);
-      onChange(
-        id,
-        filters.find(({ field }) => field === facetName),
-      );
+    (value) => {
+      console.log('onchange', value);
+      onChange(id, value);
     },
-    [id, onChange, facetName],
+    [id, onChange],
   );
   return facetName ? (
     <FacetApp {...props} field={facetName} onChange={onChangeHandler} />
