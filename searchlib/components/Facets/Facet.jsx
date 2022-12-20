@@ -30,6 +30,8 @@ const FacetContainer = (props) => {
 
   const facetsForField = facets[field];
 
+  console.log('view', facets, field, props);
+
   if (!facetsForField) return null;
 
   // By using `[0]`, we are currently assuming only 1 facet per field. This

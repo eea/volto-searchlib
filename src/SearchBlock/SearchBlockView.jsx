@@ -4,6 +4,7 @@ import { SearchBlockSchema } from './schema';
 import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
 import { useDebouncedStableData } from './hocs';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 import './less/styles.less';
 
@@ -19,6 +20,8 @@ function SearchBlockView(props) {
   }, [stableData]);
 
   const registry = React.useMemo(() => {
+    // TODO: this has the effect that the appConfig is never stable if the
+    // schema changes.
     const reg = applyBlockSettings(
       config.settings.searchlib,
       appName,
@@ -41,6 +44,8 @@ function SearchBlockView(props) {
   }, [appName, stableData, schema]);
 
   const Variation = variation.view;
+
+  useWhyDidYouUpdate('Variation', { Variation });
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import { useAtom, useAtomValue } from 'jotai';
 
 import {
@@ -111,6 +112,21 @@ export default function useSearchApp({
     },
     [appConfig, driverInstance, facetOptions],
   );
+
+  // useWhyDidYouUpdate('useSearchApp', {
+  //   driverInstance,
+  //   facetOptions,
+  //   mapContextToProps,
+  //   appConfig,
+  //   registry,
+  // });
+  //
+  // React.useEffect(
+  //   () => () => {
+  //     console.log('unmount useSearchApp');
+  //   },
+  //   [],
+  // );
 
   return {
     facetOptions,

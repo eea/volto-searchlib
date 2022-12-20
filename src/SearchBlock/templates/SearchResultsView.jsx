@@ -1,3 +1,4 @@
+import React from 'react';
 import { BodyClass } from '@plone/volto/helpers';
 import { SearchResultsApp } from '@eeacms/search';
 
@@ -10,6 +11,13 @@ const overlayStyle = {
 
 export default function SearchResultsView(props) {
   const { appName, mode } = props;
+
+  React.useEffect(
+    () => () => {
+      console.log('unmount SRV');
+    },
+    [],
+  );
 
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>
@@ -47,7 +55,7 @@ function FilterSchema({ formData }) {
   };
 }
 
-const setFacetWidgetProps = (appConfig, data) => {
+const setFacetWidgetProps = (appConfig, registry, appName) => {
   return (schema, data, intl) => {
     // Note: this is a hack, it's needed to be able to pass the computed
     // appConfig from the edit block. Hackish because the block schemaEnhancers
@@ -58,13 +66,18 @@ const setFacetWidgetProps = (appConfig, data) => {
       facet.label || facet.field,
     ]);
 
-    console.log('setfacet', { schema, appConfig, data });
+    schema.properties.value.facetName = data.name;
+    schema.properties.value.appConfig = appConfig;
+    schema.properties.value.appName = appName;
+    schema.properties.value.registry = registry;
+
+    // console.log('setfacet', { schema, appConfig, data });
     return schema;
   };
 };
 
 SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
-  const { appConfig } = schema;
+  const { appConfig, registry, appName } = schema;
 
   schema.fieldsets[0].fields.unshift(
     'defaultResultView',
@@ -104,7 +117,7 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
     const { schemaExtender } = schema.properties.defaultFilters;
 
     if (!schemaExtender.applied) {
-      const extender = setFacetWidgetProps(appConfig);
+      const extender = setFacetWidgetProps(appConfig, registry, appName);
       extender.applied = true;
       schema.properties.defaultFilters.schemaExtender = extender;
     }

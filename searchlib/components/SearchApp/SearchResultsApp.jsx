@@ -1,9 +1,17 @@
+import React from 'react';
 import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
 import BasicSearchApp from './BasicSearchApp';
 
 function BootstrapSearchResultsView(props) {
   const { appConfig, registry } = props;
+
+  React.useEffect(
+    () => () => {
+      console.log('unmount BootstrapSearchResultsView');
+    },
+    [],
+  );
 
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;

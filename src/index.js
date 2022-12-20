@@ -11,11 +11,13 @@ import {
   LandingPageView,
   SearchResultsView,
 } from './SearchBlock/templates';
+import FacetValueWidget from './SearchBlock/FacetValueWidget';
 
 import SelectWidget from './SearchBlock/SelectWidget';
 
 const applyConfig = (config) => {
   config.widgets.id.qa_queryTypes = SelectWidget;
+  config.widgets.widget.facet_value = FacetValueWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {
@@ -80,6 +82,7 @@ const applyConfig = (config) => {
       middleware,
     ];
   }
+
   return config;
 };
 

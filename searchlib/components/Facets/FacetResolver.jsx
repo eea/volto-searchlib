@@ -1,5 +1,5 @@
 import React from 'react';
-import { Component } from '@eeacms/search/components';
+import { Component as WrapperComponent } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 export default function FacetResolver(props) {
@@ -11,11 +11,11 @@ export default function FacetResolver(props) {
   const FacetComponent = facetConfig.component;
 
   return (
-    <Component
+    <WrapperComponent
       {...rest}
       factoryName={wrapper}
-      view={FacetComponent}
       field={field}
+      view={FacetComponent}
     />
   );
 }

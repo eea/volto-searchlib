@@ -23,6 +23,7 @@ const SearchBlockEdit = (props) => {
 
     schema.appName = stableData.appName || 'default';
     schema.appConfig = searchui[schema.appName];
+    schema.registry = config.settings.searchlib;
 
     return schema;
   }, [stableData]);
