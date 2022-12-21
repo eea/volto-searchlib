@@ -1,14 +1,11 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import {
-  useSearchContext,
-  SearchContext,
-  // useProxiedSearchContext,
-} from '@eeacms/search/lib/hocs';
+import { useSearchContext, SearchContext } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
 import { isEqual } from 'lodash';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const filterFamily = atomFamily(
   ({ field }) => atom(),
@@ -19,14 +16,8 @@ function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
   const { appConfig, registry } = props;
   const facetSearchContext = useSearchContext();
-  console.log(facetSearchContext);
 
-  // const {
-  //   searchContext: facetSearchContext,
-  //   applySearch,
-  // } = useProxiedSearchContext(useSearchContext(), `${field}`);
   const { filters } = facetSearchContext;
-  // console.log('current applied filters', value, filters);
 
   const facet = appConfig.facets?.find((f) => f.field === field);
 
@@ -44,6 +35,14 @@ function BoostrapFacetView(props) {
 
   const filterAtom = filterFamily(field);
   const [savedFilters, setSavedFilters] = useAtom(filterAtom);
+
+  useDeepCompareEffect(() => {
+    const activeFilter = filters?.find((filter) => filter.field === field);
+    if (value && !activeFilter) {
+      console.log('setting filter', value);
+      facetSearchContext.setFilter(value.field, value.values, value.type);
+    }
+  }, [value, filters, field, facetSearchContext]);
 
   React.useEffect(() => {
     if (!isEqual(filters, savedFilters)) {
@@ -91,3 +90,10 @@ function BoostrapFacetView(props) {
 export default function FacetApp(props) {
   return <BasicSearchApp {...props} searchViewComponent={BoostrapFacetView} />;
 }
+
+// const {
+//   searchContext: facetSearchContext,
+//   applySearch,
+// } = useProxiedSearchContext(useSearchContext(), `${field}`);
+// console.log('current applied filters', value, filters);
+// useProxiedSearchContext,
