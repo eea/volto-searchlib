@@ -99,7 +99,7 @@ export default function useProxiedSearchContext(
     // this is updated async. The state update with Date is used to force refresh
     sc.facets = searchContext.facets;
   }
-  console.log('filters', sc.filters);
+  // console.log('filters', sc.filters);
 
   const res = {
     searchContext: sc,

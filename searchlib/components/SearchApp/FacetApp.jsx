@@ -23,7 +23,7 @@ function BoostrapFacetView(props) {
     applySearch,
   } = useProxiedSearchContext(useSearchContext(), `${field}`);
   const { filters } = facetSearchContext;
-  console.log('value', value, filters);
+  // console.log('current applied filters', value, filters);
 
   const facet = appConfig.facets?.find((f) => f.field === field);
 
@@ -44,15 +44,21 @@ function BoostrapFacetView(props) {
 
   React.useEffect(() => {
     if (!isEqual(filters, savedFilters)) {
-      // facetSearchContext.clearFilters();
-      // console.log('value', value);
-      // if (value)
-      const value = filters?.find((filter) => filter.field === field);
       setSavedFilters(filters);
-      if (value) {
-        onChange(value);
-        facetSearchContext.setFilter(value.field, value.type, value.values);
+      const newValue = filters?.find((filter) => filter.field === field);
+
+      if (newValue && !isEqual(value, newValue)) {
+        console.log('onchange useeffect', {
+          value,
+          newValue,
+          filters,
+          savedFilters,
+        });
+        onChange(newValue);
+        // facetSearchContext.setFilter(value.field, value.values, value.type);
         applySearch();
+      } else {
+        facetSearchContext.removeFilter(field);
       }
     }
   }, [
