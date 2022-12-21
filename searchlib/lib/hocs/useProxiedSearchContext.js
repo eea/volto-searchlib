@@ -84,14 +84,16 @@ export default function useProxiedSearchContext(
     // searchContext.setResultsPerPage(driver.state.resultsPerPage);
     // searchContext.setSearchTerm(driver.state.searchTerm);
     // console.log(driver.state.filters, driver.filters);
-    const dirtyFilters = dirtyFiltersMap[searchContextId] || [];
-    dirtyFilters.forEach(({ field, type }) => {
-      searchContext.removeFilter(field, null, type);
-    });
-    driver.state.filters.forEach((f) => {
-      searchContext.removeFilter(f.field, null, f.type);
-      searchContext.addFilter(f.field, f.values, f.type);
-    });
+    if (driver) {
+      const dirtyFilters = dirtyFiltersMap[searchContextId] || [];
+      dirtyFilters.forEach(({ field, type }) => {
+        searchContext.removeFilter(field, null, type);
+      });
+      driver.state.filters.forEach((f) => {
+        searchContext.removeFilter(f.field, null, f.type);
+        searchContext.addFilter(f.field, f.values, f.type);
+      });
+    }
   }, [searchContext, driver, searchContextId]);
 
   const sc = driver ? getSearchContext(driver) : searchContext;

@@ -3,7 +3,7 @@ import { Facet as SUIFacet } from '@eeacms/search/components';
 import {
   useSearchContext,
   SearchContext,
-  useProxiedSearchContext,
+  // useProxiedSearchContext,
 } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
@@ -18,10 +18,13 @@ const filterFamily = atomFamily(
 function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
   const { appConfig, registry } = props;
-  const {
-    searchContext: facetSearchContext,
-    applySearch,
-  } = useProxiedSearchContext(useSearchContext(), `${field}`);
+  const facetSearchContext = useSearchContext();
+  console.log(facetSearchContext);
+
+  // const {
+  //   searchContext: facetSearchContext,
+  //   applySearch,
+  // } = useProxiedSearchContext(useSearchContext(), `${field}`);
   const { filters } = facetSearchContext;
   // console.log('current applied filters', value, filters);
 
@@ -56,7 +59,7 @@ function BoostrapFacetView(props) {
         });
         onChange(newValue);
         // facetSearchContext.setFilter(value.field, value.values, value.type);
-        applySearch();
+        // facetSearchContext.applySearch();
       } else {
         facetSearchContext.removeFilter(field);
       }
@@ -69,7 +72,7 @@ function BoostrapFacetView(props) {
     setSavedFilters,
     value,
     facetSearchContext,
-    applySearch,
+    // applySearch,
   ]);
 
   return (

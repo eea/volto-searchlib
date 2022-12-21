@@ -7,7 +7,6 @@ export default function FacetValueWidget(props) {
   const onChangeHandler = React.useCallback(
     (newValue) => {
       if (!isEqual(newValue, value)) {
-        console.log('onchange', value, newValue);
         onChange(id, newValue);
       }
     },
