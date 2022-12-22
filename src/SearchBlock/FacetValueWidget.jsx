@@ -3,7 +3,7 @@ import { FacetApp } from '@eeacms/search';
 import { isEqual } from 'lodash';
 
 export default function FacetValueWidget(props) {
-  const { facetName, onChange, id, value } = props;
+  const { facetName, value, onChange, id } = props;
   const onChangeHandler = React.useCallback(
     (newValue) => {
       if (!isEqual(newValue, value)) {

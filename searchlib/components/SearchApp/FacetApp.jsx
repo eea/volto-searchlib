@@ -1,6 +1,10 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useSearchContext, SearchContext } from '@eeacms/search/lib/hocs';
+import {
+  useSearchContext,
+  SearchContext,
+  useAppConfig,
+} from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
@@ -14,10 +18,11 @@ const filterFamily = atomFamily(
 
 function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
-  const { appConfig, registry } = props;
-  const facetSearchContext = useSearchContext();
+  // const { appConfig, registry } = props;
+  const { appConfig, registry } = useAppConfig();
+  const searchContext = useSearchContext();
 
-  const { filters } = facetSearchContext;
+  const { filters } = searchContext;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
 
@@ -40,9 +45,9 @@ function BoostrapFacetView(props) {
     const activeFilter = filters?.find((filter) => filter.field === field);
     if (value && !activeFilter) {
       console.log('setting filter', value);
-      facetSearchContext.setFilter(value.field, value.values, value.type);
+      searchContext.setFilter(value.field, value.values, value.type);
     }
-  }, [value, filters, field, facetSearchContext]);
+  }, [value, filters, field, searchContext]);
 
   React.useEffect(() => {
     if (!isEqual(filters, savedFilters)) {
@@ -60,7 +65,7 @@ function BoostrapFacetView(props) {
         // facetSearchContext.setFilter(value.field, value.values, value.type);
         // facetSearchContext.applySearch();
       } else {
-        facetSearchContext.removeFilter(field);
+        searchContext.removeFilter(field);
       }
     }
   }, [
@@ -70,12 +75,12 @@ function BoostrapFacetView(props) {
     savedFilters,
     setSavedFilters,
     value,
-    facetSearchContext,
+    searchContext,
     // applySearch,
   ]);
 
   return (
-    <SearchContext.Provider value={facetSearchContext}>
+    <SearchContext.Provider value={searchContext}>
       <SUIFacet
         {...props}
         active={true}

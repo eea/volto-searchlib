@@ -9,7 +9,7 @@ import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import './less/styles.less';
 
 function SearchBlockView(props) {
-  const { data = {}, mode = 'view', variation } = props;
+  const { data = {}, mode = 'view', variation, children } = props;
   const { appName = 'default' } = data;
   const stableData = useDebouncedStableData(data);
 
@@ -50,7 +50,9 @@ function SearchBlockView(props) {
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
-      <Variation registry={registry} appName={appName} mode={mode} />
+      <Variation registry={registry} appName={appName} mode={mode}>
+        {children}
+      </Variation>
     </div>
   );
 }

@@ -30,22 +30,23 @@ const SearchBlockEdit = (props) => {
 
   return (
     <div>
-      <SearchBlockView {...props} mode="edit" />
-      <SidebarPortal selected={props.selected}>
-        <BlockDataForm
-          schema={schema}
-          title={schema.title}
-          block={block}
-          onChangeBlock={onChangeBlock}
-          onChangeField={(id, value) => {
-            onChangeBlock(props.block, {
-              ...props.data,
-              [id]: value,
-            });
-          }}
-          formData={props.data}
-        />
-      </SidebarPortal>
+      <SearchBlockView {...props} mode="edit">
+        <SidebarPortal selected={props.selected}>
+          <BlockDataForm
+            schema={schema}
+            title={schema.title}
+            block={block}
+            onChangeBlock={onChangeBlock}
+            onChangeField={(id, value) => {
+              onChangeBlock(props.block, {
+                ...props.data,
+                [id]: value,
+              });
+            }}
+            formData={props.data}
+          />
+        </SidebarPortal>
+      </SearchBlockView>
     </div>
   );
 };

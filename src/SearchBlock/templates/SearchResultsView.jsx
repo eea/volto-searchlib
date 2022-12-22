@@ -26,6 +26,7 @@ export default function SearchResultsView(props) {
           <div className="overlay" style={overlayStyle}></div>
         )}
         <SearchResultsApp {...props} />
+        {props.children}
       </div>
     </BodyClass>
   );
