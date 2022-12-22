@@ -11,6 +11,7 @@ const overlayStyle = {
 
 function FullView(props) {
   const { appName, mode } = props;
+  console.log('children', props.children);
 
   // TODO: (about bodyclass) this is a hack, please solve it properly
 
@@ -21,6 +22,7 @@ function FullView(props) {
           <div className="overlay" style={overlayStyle}></div>
         )}
         <SearchApp {...props} />
+        {props.children}
       </div>
     </BodyClass>
   );

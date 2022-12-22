@@ -1,10 +1,6 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import {
-  useSearchContext,
-  SearchContext,
-  useAppConfig,
-} from '@eeacms/search/lib/hocs';
+import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
@@ -21,6 +17,7 @@ function BoostrapFacetView(props) {
   // const { appConfig, registry } = props;
   const { appConfig, registry } = useAppConfig();
   const searchContext = useSearchContext();
+  console.log('searchContext', searchContext);
 
   const { filters } = searchContext;
 
@@ -76,19 +73,16 @@ function BoostrapFacetView(props) {
     setSavedFilters,
     value,
     searchContext,
-    // applySearch,
   ]);
 
   return (
-    <SearchContext.Provider value={searchContext}>
-      <SUIFacet
-        {...props}
-        active={true}
-        filterType={localFilterType}
-        onChangeFilterType={setLocalFilterType}
-        view={FacetComponent}
-      />
-    </SearchContext.Provider>
+    <SUIFacet
+      {...props}
+      active={true}
+      view={FacetComponent}
+      filterType={localFilterType}
+      onChangeFilterType={setLocalFilterType}
+    />
   );
 }
 

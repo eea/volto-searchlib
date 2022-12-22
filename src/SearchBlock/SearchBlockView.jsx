@@ -51,7 +51,7 @@ function SearchBlockView(props) {
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
       <Variation registry={registry} appName={appName} mode={mode}>
-        {children}
+        {mode !== 'view' ? children : null}
       </Variation>
     </div>
   );
