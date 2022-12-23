@@ -101,7 +101,7 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
   };
   schema.properties.defaultFilters = {
     title: 'Default filters',
-    widget: 'object_list',
+    widget: 'searchlib_facets',
     schema: FilterSchema({ formData }),
     schemaExtender: (schema) => schema,
   };

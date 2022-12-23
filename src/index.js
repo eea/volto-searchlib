@@ -11,13 +11,15 @@ import {
   LandingPageView,
   SearchResultsView,
 } from './SearchBlock/templates';
-import FacetValueWidget from './SearchBlock/FacetValueWidget';
 
-import SelectWidget from './SearchBlock/SelectWidget';
+import FacetValueWidget from './SearchBlock/widgets/FacetValueWidget';
+import FacetsWidget from './SearchBlock/widgets/FacetsWidget';
+import SelectWidget from './SearchBlock/widgets/SelectWidget';
 
 const applyConfig = (config) => {
   config.widgets.id.qa_queryTypes = SelectWidget;
   config.widgets.widget.facet_value = FacetValueWidget;
+  config.widgets.widget.searchlib_facets = FacetsWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {

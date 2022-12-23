@@ -47,6 +47,8 @@ function SearchBlockView(props) {
 
   useWhyDidYouUpdate('Variation', { Variation });
 
+  // TODO: why the double rendering?
+
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}

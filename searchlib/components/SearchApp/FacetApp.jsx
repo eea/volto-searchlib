@@ -1,6 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import {
+  useSearchContext,
+  useAppConfig,
+  useSearchDriver,
+} from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
@@ -17,7 +22,7 @@ function BoostrapFacetView(props) {
   // const { appConfig, registry } = props;
   const { appConfig, registry } = useAppConfig();
   const searchContext = useSearchContext();
-  console.log('searchContext', searchContext);
+  // console.log('searchContext', searchContext);
 
   const { filters } = searchContext;
 
@@ -37,43 +42,56 @@ function BoostrapFacetView(props) {
 
   const filterAtom = filterFamily(field);
   const [savedFilters, setSavedFilters] = useAtom(filterAtom);
+  // const driver = useSearchDriver();
+  // console.log('driver', driver);
 
-  useDeepCompareEffect(() => {
-    const activeFilter = filters?.find((filter) => filter.field === field);
-    if (value && !activeFilter) {
-      console.log('setting filter', value);
-      searchContext.setFilter(value.field, value.values, value.type);
-    }
-  }, [value, filters, field, searchContext]);
+  // useDeepCompareEffect(() => {
+  //   const activeFilter = filters?.find((filter) => filter.field === field);
+  //   if (value && !activeFilter) {
+  //     console.log('setting filter', {
+  //       value,
+  //       filters,
+  //       activeFilter,
+  //       field,
+  //       searchContext,
+  //     });
+  //
+  //     ReactDOM.unstable_batchedUpdates(() =>
+  //       value.values.forEach((v) =>
+  //         searchContext.setFilter(value.field, v, value.type),
+  //       ),
+  //     );
+  //   }
+  // }, [value, filters, field, searchContext]);
 
-  React.useEffect(() => {
-    if (!isEqual(filters, savedFilters)) {
-      setSavedFilters(filters);
-      const newValue = filters?.find((filter) => filter.field === field);
-
-      if (newValue && !isEqual(value, newValue)) {
-        console.log('onchange useeffect', {
-          value,
-          newValue,
-          filters,
-          savedFilters,
-        });
-        onChange(newValue);
-        // facetSearchContext.setFilter(value.field, value.values, value.type);
-        // facetSearchContext.applySearch();
-      } else {
-        searchContext.removeFilter(field);
-      }
-    }
-  }, [
-    field,
-    filters,
-    onChange,
-    savedFilters,
-    setSavedFilters,
-    value,
-    searchContext,
-  ]);
+  // React.useEffect(() => {
+  //   if (!isEqual(filters, savedFilters)) {
+  //     setSavedFilters(filters);
+  //     const newValue = filters?.find((filter) => filter.field === field);
+  //
+  //     if (newValue && !isEqual(value, newValue)) {
+  //       // console.log('onchange useeffect', {
+  //       //   value,
+  //       //   newValue,
+  //       //   filters,
+  //       //   savedFilters,
+  //       // });
+  //       onChange(newValue);
+  //       // facetSearchContext.setFilter(value.field, value.values, value.type);
+  //       // facetSearchContext.applySearch();
+  //     } else {
+  //       searchContext.removeFilter(field);
+  //     }
+  //   }
+  // }, [
+  //   field,
+  //   filters,
+  //   onChange,
+  //   savedFilters,
+  //   setSavedFilters,
+  //   value,
+  //   searchContext,
+  // ]);
 
   return (
     <SUIFacet
