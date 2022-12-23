@@ -56,6 +56,7 @@ export default function BasicSearchApp(props) {
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
     children,
+    initialState,
     ...rest
   } = props;
 
@@ -70,6 +71,7 @@ export default function BasicSearchApp(props) {
     registry,
     paramOnSearch,
     paramOnAutocomplete,
+    initialState,
   });
 
   const [stableContext, setStableContext] = React.useState({

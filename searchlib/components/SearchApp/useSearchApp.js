@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import { useAtom, useAtomValue } from 'jotai';
 
 import {
@@ -33,6 +33,7 @@ export default function useSearchApp({
   registry,
   paramOnSearch,
   paramOnAutocomplete,
+  initialState,
 }) {
   const appConfig = React.useMemo(
     () => ({
@@ -82,9 +83,10 @@ export default function useSearchApp({
         ...(locationSearchTerm
           ? { filters: getDefaultFilters(appConfig) }
           : {}),
+        ...(initialState || {}),
       },
     }),
-    [appConfig, onAutocomplete, onSearch, locationSearchTerm],
+    [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));

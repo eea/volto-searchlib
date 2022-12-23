@@ -53,11 +53,17 @@ function BootstrapSearchResultsView(props) {
 }
 
 export default function SearchResultsApp(props) {
+  const { defaultFilters } = props;
+  const [initialState] = React.useState({
+    ...(defaultFilters?.length ? { filters: defaultFilters } : {}),
+  }); // this makes the prop stable
+
   return (
     <BasicSearchApp
       {...props}
       wasInteracted={true}
       searchViewComponent={BootstrapSearchResultsView}
+      initialState={initialState}
     />
   );
 }

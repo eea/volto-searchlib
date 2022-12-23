@@ -52,7 +52,14 @@ function SearchBlockView(props) {
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
-      <Variation registry={registry} appName={appName} mode={mode}>
+      <Variation
+        registry={registry}
+        appName={appName}
+        mode={mode}
+        defaultFilters={data.defaultFilters
+          ?.map((f) => (f.value ? f.value : undefined))
+          .filter((f) => !!f)}
+      >
         {mode !== 'view' ? children : null}
       </Variation>
     </div>
