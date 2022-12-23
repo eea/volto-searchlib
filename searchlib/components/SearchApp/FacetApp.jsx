@@ -24,7 +24,6 @@ function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
   const { appConfig, registry } = useAppConfig();
   const driver = useSearchDriver();
-  // console.log(driver);
   const { filters, setFilter } = driver.state;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
@@ -59,14 +58,32 @@ function BoostrapFacetView(props) {
   React.useEffect(() => {
     if (!driver.events.plugins.find((plug) => plug.id === 'trackFilters')) {
       function subscribe(payload) {
-        console.log('track', payload);
+        // console.log('track', {
+        //   payload,
+        //   filters: JSON.stringify(driver.state.filters),
+        // });
+        const { filters } = driver.state;
+        const activeValue = filters.find((f) => f.field === field);
+        if (!activeValue) {
+          console.log('changing to ', null);
+          onChange(null);
+        }
+        if (!isEqual(activeValue, value)) {
+          console.log('changing to ', activeValue);
+          onChange(activeValue);
+        }
       }
       driver.events.plugins.push({
         id: 'trackFilters',
         subscribe,
       });
     }
-  }, [driver]);
+    return () => {
+      driver.events.plugins = driver.events.plugins.filter(
+        (plug) => plug.id !== 'trackFilters',
+      );
+    };
+  }, [driver, field, onChange, value]);
 
   // useDeepCompareEffect()
 
