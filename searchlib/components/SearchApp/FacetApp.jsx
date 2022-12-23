@@ -42,27 +42,27 @@ function BoostrapFacetView(props) {
 
   const filterAtom = filterFamily(field);
   const [savedFilters, setSavedFilters] = useAtom(filterAtom);
-  // const driver = useSearchDriver();
-  // console.log('driver', driver);
+  const driver = useSearchDriver();
+  console.log('driver', driver);
 
-  // useDeepCompareEffect(() => {
-  //   const activeFilter = filters?.find((filter) => filter.field === field);
-  //   if (value && !activeFilter) {
-  //     console.log('setting filter', {
-  //       value,
-  //       filters,
-  //       activeFilter,
-  //       field,
-  //       searchContext,
-  //     });
-  //
-  //     ReactDOM.unstable_batchedUpdates(() =>
-  //       value.values.forEach((v) =>
-  //         searchContext.setFilter(value.field, v, value.type),
-  //       ),
-  //     );
-  //   }
-  // }, [value, filters, field, searchContext]);
+  useDeepCompareEffect(() => {
+    const activeFilter = filters?.find((filter) => filter.field === field);
+    if (value && !activeFilter) {
+      console.log('setting filter', {
+        value,
+        filters,
+        activeFilter,
+        field,
+        searchContext,
+      });
+
+      ReactDOM.unstable_batchedUpdates(() =>
+        value.values.forEach((v) =>
+          searchContext.setFilter(value.field, v, value.type),
+        ),
+      );
+    }
+  }, [value, filters, field, searchContext]);
 
   // React.useEffect(() => {
   //   if (!isEqual(filters, savedFilters)) {
