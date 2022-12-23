@@ -17,14 +17,15 @@ const filterFamily = atomFamily(
   (a, b) => a.field === b.field,
 );
 
+const sorter = (fa, fb) =>
+  fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
+
 function BoostrapFacetView(props) {
   const { field, onChange, value } = props;
-  // const { appConfig, registry } = props;
   const { appConfig, registry } = useAppConfig();
-  const searchContext = useSearchContext();
-  // console.log('searchContext', searchContext);
-
-  const { filters } = searchContext;
+  const driver = useSearchDriver();
+  // console.log(driver);
+  const { filters, setFilter } = driver.state;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
 
@@ -40,12 +41,8 @@ function BoostrapFacetView(props) {
   );
   const FacetComponent = registry.resolve[facet.factory].component;
 
-  const filterAtom = filterFamily(field);
-  const [savedFilters, setSavedFilters] = useAtom(filterAtom);
-  const driver = useSearchDriver();
-  console.log('driver', driver);
-
   useDeepCompareEffect(() => {
+    // on initializing the form, set the active value as filters
     const activeFilter = filters?.find((filter) => filter.field === field);
     if (value && !activeFilter) {
       console.log('setting filter', {
@@ -53,16 +50,25 @@ function BoostrapFacetView(props) {
         filters,
         activeFilter,
         field,
-        searchContext,
       });
 
-      ReactDOM.unstable_batchedUpdates(() =>
-        value.values.forEach((v) =>
-          searchContext.setFilter(value.field, v, value.type),
-        ),
-      );
+      driver._setState({ filters: [...filters, value].sort(sorter) });
     }
-  }, [value, filters, field, searchContext]);
+  }, [value, filters, field, setFilter, driver]); // searchContext
+
+  React.useEffect(() => {
+    if (!driver.events.plugins.find((plug) => plug.id === 'trackFilters')) {
+      function subscribe(payload) {
+        console.log('track', payload);
+      }
+      driver.events.plugins.push({
+        id: 'trackFilters',
+        subscribe,
+      });
+    }
+  }, [driver]);
+
+  // useDeepCompareEffect()
 
   // React.useEffect(() => {
   //   if (!isEqual(filters, savedFilters)) {
@@ -114,3 +120,11 @@ export default function FacetApp(props) {
 // } = useProxiedSearchContext(useSearchContext(), `${field}`);
 // console.log('current applied filters', value, filters);
 // useProxiedSearchContext,
+
+// console.log('driver', driver);
+// const searchContext = useSearchContext();
+// console.log('searchContext', searchContext);
+// const { filters } = searchContext;
+// const filterAtom = filterFamily(field);
+// const [savedFilters, setSavedFilters] = useAtom(filterAtom);
+// const { appConfig, registry } = props;
