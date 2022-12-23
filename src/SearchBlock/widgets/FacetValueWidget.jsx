@@ -12,6 +12,7 @@ export default function FacetValueWidget(props) {
     },
     [id, onChange, value],
   );
+
   return facetName ? (
     <FacetApp {...props} field={facetName} onChange={onChangeHandler} />
   ) : null;
