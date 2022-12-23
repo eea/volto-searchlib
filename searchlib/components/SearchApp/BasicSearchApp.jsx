@@ -22,6 +22,7 @@ function SearchWrappers(SearchViewComponent) {
       driver,
       facetOptions,
       mode,
+      children,
       ...searchContext
     } = props;
 
@@ -36,7 +37,9 @@ function SearchWrappers(SearchViewComponent) {
             registry={appConfigContext.registry}
             appConfig={appConfig}
             mode={mode}
-          />
+          >
+            {children}
+          </SearchViewComponent>
         </SearchContext.Provider>
       </AppConfigContext.Provider>
     );
@@ -52,6 +55,7 @@ export default function BasicSearchApp(props) {
     paramOnSearch = bindOnSearch,
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
+    children,
     ...rest
   } = props;
 
@@ -79,8 +83,10 @@ export default function BasicSearchApp(props) {
   }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
-    return withSearch(mapContextToProps)(SearchWrappers(searchViewComponent));
-  }, [mapContextToProps, searchViewComponent]);
+    return withSearch(mapContextToProps)(
+      SearchWrappers(searchViewComponent, children),
+    );
+  }, [mapContextToProps, searchViewComponent, children]);
 
   // useWhyDidYouUpdate('BasicSearchapp', {
   //   mapContextToProps,

@@ -21,6 +21,7 @@ function FullView(props) {
           <div className="overlay" style={overlayStyle}></div>
         )}
         <SearchApp {...props} />
+        {props.children}
       </div>
     </BodyClass>
   );

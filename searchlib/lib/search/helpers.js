@@ -70,6 +70,7 @@ export function markSelectedFacetValuesFromFilters(
   const facetValues = facet.data;
   const filterValuesForField =
     findFilterValues(filters, fieldName, filterType) || [];
+  // console.log({ facetValues, filterValuesForField });
   return {
     ...facet,
     data: facetValues.map((facetValue) => {
@@ -98,6 +99,7 @@ function getFilterValueDisplay(filterValue) {
  * @param {FilterValue} filterValue2
  */
 export function doFilterValuesMatch(filterValue1, filterValue2) {
+  // console.log({ filterValue1, filterValue2 });
   if (filterValue1?.name || filterValue2?.name)
     // If two filters have matching names, then they are the same filter, there
     // is no need to do a more expensive deep equal comparison.

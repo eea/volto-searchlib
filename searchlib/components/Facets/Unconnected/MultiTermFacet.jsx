@@ -74,7 +74,7 @@ const Select = ({ options, value, onChange, className }) => {
   );
 };
 
-const ViewComponent = (props) => {
+const MultiTermFacetViewComponent = (props) => {
   const {
     className,
     label,
@@ -90,6 +90,8 @@ const ViewComponent = (props) => {
     field,
     filterType = 'any',
   } = props;
+
+  // console.log('optiosn', options);
 
   const filterTypes = [
     { key: 2, text: 'Match any', value: 'any' },
@@ -195,4 +197,4 @@ const ViewComponent = (props) => {
   );
 };
 
-export default ViewComponent;
+export default MultiTermFacetViewComponent;

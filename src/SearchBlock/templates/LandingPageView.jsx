@@ -2,7 +2,12 @@ import React from 'react';
 import { LandingPageApp } from '@eeacms/search';
 
 function LandingPageView(props) {
-  return <LandingPageApp {...props} />;
+  return (
+    <>
+      <LandingPageApp {...props} />
+      {props.children}
+    </>
+  );
 }
 
 LandingPageView.schemaEnhancer = ({ schema }) => {
