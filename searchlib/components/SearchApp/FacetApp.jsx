@@ -15,24 +15,37 @@ function BoostrapFacetView(props) {
   const { filters, setFilter } = driver.state;
 
   const facet = appConfig.facets?.find((f) => f.field === field);
+  const FacetComponent = registry.resolve[facet.factory].component;
 
-  const fallback = props.filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
+  const fallback = props.filterType || facet.filterType;
+  const _defaultValue = field
     ? filters?.find((f) => f.field === field)?.type || fallback
     : fallback;
-
-  const [defaultTypeValue] = (defaultValue || '').split(':');
-
+  const [defaultTypeValue] = (_defaultValue || '').split(':');
   const [localFilterType, setLocalFilterType] = React.useState(
     defaultTypeValue,
   );
-  const FacetComponent = registry.resolve[facet.factory].component;
+
+  const onChangeFilterType = React.useCallback(
+    (_type) => {
+      driver.removeFilter(field);
+      const { values = [] } = value || {};
+      values.forEach((v) => {
+        driver.addFilter(field, v, _type);
+      });
+
+      setLocalFilterType(_type);
+    },
+    [driver, field, value],
+  );
 
   useDeepCompareEffect(() => {
     // on initializing the form, set the active value as filters
     const activeFilter = filters?.find((filter) => filter.field === field);
     if (value && !activeFilter) {
-      driver._setState({ filters: [...filters, value].sort(sorter) });
+      const sortedFilters = [...filters, value].sort(sorter);
+      // console.log('initializing', sortedFilters);
+      driver._setState({ filters: sortedFilters });
     }
   }, [value, filters, field, setFilter, driver]); // searchContext
 
@@ -45,7 +58,9 @@ function BoostrapFacetView(props) {
         const { filters } = driver.state;
         const activeValue = filters.find((f) => f.field === field);
         if (!activeValue) {
+          // console.log('onChange null', field);
           onChange(null);
+          return;
         }
         if (!isEqual(activeValue, value)) {
           // console.log('onChange', {
@@ -63,8 +78,9 @@ function BoostrapFacetView(props) {
     }
 
     return () => {
+      // console.log('unsubscribe', field);
       driver.events.plugins = driver.events.plugins.filter(
-        (plug) => plug.id !== 'trackFilters',
+        (plug) => plug.id !== plugId,
       );
 
       // handles deleting the facet
@@ -82,7 +98,7 @@ function BoostrapFacetView(props) {
       active={true}
       view={FacetComponent}
       filterType={localFilterType}
-      onChangeFilterType={setLocalFilterType}
+      onChangeFilterType={onChangeFilterType}
     />
   );
 }
