@@ -37,7 +37,10 @@ function BoostrapFacetView(props) {
   }, [value, filters, field, setFilter, driver]); // searchContext
 
   React.useEffect(() => {
-    if (!driver.events.plugins.find((plug) => plug.id === 'trackFilters')) {
+    const { plugins } = driver.events;
+    const plugId = `trackFilters-${field}`;
+
+    if (!plugins.find((plug) => plug.id === plugId)) {
       function subscribe(payload) {
         const { filters } = driver.state;
         const activeValue = filters.find((f) => f.field === field);
@@ -45,20 +48,26 @@ function BoostrapFacetView(props) {
           onChange(null);
         }
         if (!isEqual(activeValue, value)) {
+          // console.log('onChange', {
+          //   activeValue,
+          //   value,
+          //   filters: driver.state.filters,
+          // });
           onChange(activeValue);
         }
       }
-      driver.events.plugins.push({
-        id: 'trackFilters',
+      plugins.push({
+        id: plugId,
         subscribe,
       });
     }
+
     return () => {
       driver.events.plugins = driver.events.plugins.filter(
         (plug) => plug.id !== 'trackFilters',
       );
 
-      // handle deleting the facet
+      // handles deleting the facet
       driver._setState({
         filters: [
           ...driver.state.filters.filter((f) => f.field !== field),
