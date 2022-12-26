@@ -72,27 +72,34 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
-      <ActiveFilterList />
-      <SectionTabs />
+      {appConfig.mode === 'edit' && (
+        <div>Active filters are always shown in edit mode</div>
+      )}
+      {(appConfig.showFilters || appConfig.mode === 'edit') && (
+        <ActiveFilterList />
+      )}
+      {appConfig.showFilters && <SectionTabs />}
       <div className={`results-layout ${layoutMode}`}>
-        <div className="above-results">
-          <div className="above-left">
-            <DropdownFacetsList />
+        {appConfig.showFilters && (
+          <div className="above-results">
+            <div className="above-left">
+              <DropdownFacetsList />
+            </div>
+            <div className="above-right">
+              <Component factoryName="SecondaryFacetsList" {...props} />
+              <Sorting
+                label={''}
+                sortOptions={sortOptions}
+                view={SortingDropdownWithLabel}
+              />
+              {/* <ViewSelectorWithLabel */}
+              {/*   views={availableResultViews} */}
+              {/*   active={activeViewId} */}
+              {/*   onSetView={setActiveViewId} */}
+              {/* /> */}
+            </div>
           </div>
-          <div className="above-right">
-            <Component factoryName="SecondaryFacetsList" {...props} />
-            <Sorting
-              label={''}
-              sortOptions={sortOptions}
-              view={SortingDropdownWithLabel}
-            />
-            {/* <ViewSelectorWithLabel */}
-            {/*   views={availableResultViews} */}
-            {/*   active={activeViewId} */}
-            {/*   onSetView={setActiveViewId} */}
-            {/* /> */}
-          </div>
-        </div>
+        )}
 
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 

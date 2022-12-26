@@ -12,10 +12,14 @@ import {
   SearchResultsView,
 } from './SearchBlock/templates';
 
-import SelectWidget from './SearchBlock/SelectWidget';
+import FacetValueWidget from './SearchBlock/widgets/FacetValueWidget';
+import SelectWidget from './SearchBlock/widgets/SelectWidget';
+import SortWidget from './SearchBlock/widgets/SortWidget';
 
 const applyConfig = (config) => {
   config.widgets.id.qa_queryTypes = SelectWidget;
+  config.widgets.widget.facet_value = FacetValueWidget;
+  config.widgets.widget.sort_widget = SortWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {
@@ -40,6 +44,7 @@ const applyConfig = (config) => {
         isDefault: true,
         title: 'Full (default)',
         view: FullView,
+        schemaEnhancer: FullView.schemaEnhancer,
       },
       {
         id: 'searchInputOnly',
@@ -57,6 +62,7 @@ const applyConfig = (config) => {
         id: 'searchResultsOnly',
         title: 'Search results',
         view: SearchResultsView,
+        schemaEnhancer: SearchResultsView.schemaEnhancer,
       },
     ],
   };
@@ -78,6 +84,7 @@ const applyConfig = (config) => {
       middleware,
     ];
   }
+
   return config;
 };
 

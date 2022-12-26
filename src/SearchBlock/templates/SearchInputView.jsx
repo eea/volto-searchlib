@@ -11,12 +11,15 @@ function SearchInputView(props) {
   const url = flattenToAppURL(appConfig.url || '');
 
   return (
-    <SearchInputApp
-      {...props}
-      onSubmitSearch={(searchTerm) => {
-        history.push(`${url}?q=${searchTerm}`);
-      }}
-    />
+    <>
+      <SearchInputApp
+        {...props}
+        onSubmitSearch={(searchTerm) => {
+          history.push(`${url}?q=${searchTerm}`);
+        }}
+      />
+      {props.children}
+    </>
   );
 }
 

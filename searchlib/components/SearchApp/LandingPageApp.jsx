@@ -1,6 +1,6 @@
 import BasicSearchApp from './BasicSearchApp';
 
-function LandingPageView(props) {
+function BoostrapLandingPageView(props) {
   const { appConfig, registry } = props;
 
   const InitialViewComponent =
@@ -11,5 +11,7 @@ function LandingPageView(props) {
 }
 
 export default function LandingPageApp(props) {
-  return <BasicSearchApp {...props} searchViewComponent={LandingPageView} />;
+  return (
+    <BasicSearchApp {...props} searchViewComponent={BoostrapLandingPageView} />
+  );
 }

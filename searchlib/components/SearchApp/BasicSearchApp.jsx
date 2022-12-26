@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { SearchProvider, withSearch } from '@elastic/react-search-ui'; // ErrorBoundary,    WithSearch,
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
@@ -20,6 +21,7 @@ function SearchWrappers(SearchViewComponent) {
       driver,
       facetOptions,
       mode,
+      children,
       ...searchContext
     } = props;
 
@@ -34,7 +36,9 @@ function SearchWrappers(SearchViewComponent) {
             registry={appConfigContext.registry}
             appConfig={appConfig}
             mode={mode}
-          />
+          >
+            {children}
+          </SearchViewComponent>
         </SearchContext.Provider>
       </AppConfigContext.Provider>
     );
@@ -50,6 +54,8 @@ export default function BasicSearchApp(props) {
     paramOnSearch = bindOnSearch,
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
+    children,
+    initialState,
     ...rest
   } = props;
 
@@ -64,22 +70,30 @@ export default function BasicSearchApp(props) {
     registry,
     paramOnSearch,
     paramOnAutocomplete,
+    initialState,
   });
 
-  const appConfigContext = React.useMemo(() => {
-    return { appConfig, registry };
+  const [stableContext, setStableContext] = React.useState({
+    appConfig,
+    registry,
+  });
+
+  useDeepCompareEffect(() => {
+    setStableContext({ appConfig, registry });
   }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
-    return withSearch(mapContextToProps)(SearchWrappers(searchViewComponent));
-  }, [mapContextToProps, searchViewComponent]);
+    return withSearch(mapContextToProps)(
+      SearchWrappers(searchViewComponent, children),
+    );
+  }, [mapContextToProps, searchViewComponent, children]);
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>
       <WrappedSearchView
         {...rest}
         appConfig={appConfig}
-        appConfigContext={appConfigContext}
+        appConfigContext={stableContext}
         appName={appName}
         driver={driverInstance}
         facetOptions={facetOptions}

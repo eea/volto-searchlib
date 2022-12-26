@@ -32,6 +32,7 @@ export default function useSearchApp({
   registry,
   paramOnSearch,
   paramOnAutocomplete,
+  initialState,
 }) {
   const appConfig = React.useMemo(
     () => ({
@@ -81,9 +82,10 @@ export default function useSearchApp({
         ...(locationSearchTerm
           ? { filters: getDefaultFilters(appConfig) }
           : {}),
+        ...(initialState || {}),
       },
     }),
-    [appConfig, onAutocomplete, onSearch, locationSearchTerm],
+    [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));

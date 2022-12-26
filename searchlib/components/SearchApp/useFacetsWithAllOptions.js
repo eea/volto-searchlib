@@ -48,7 +48,6 @@ function useFacetsWithAllOptions(appConfig) {
         .map((f) => f.field);
       const facetOptions = await getFacetOptions(appConfig, facetNames);
       if (isMountedRef.current) {
-        console.log('setFacetOptions');
         setFacetOptions(facetOptions);
       }
     },

@@ -6,7 +6,7 @@ import { AppConfigContext } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 import { SearchBox } from '@eeacms/search/components';
 
-const SearchInputView = (props) => {
+const BootstrapSearchInputView = (props) => {
   const {
     mode = 'view',
     appConfigContext,
@@ -56,7 +56,9 @@ const SearchInputView = (props) => {
 const SearchInputViewWrapper = (props) => {
   return (
     <AppConfigContext.Consumer>
-      {(context) => <SearchInputView appConfigContext={context} {...props} />}
+      {(context) => (
+        <BootstrapSearchInputView appConfigContext={context} {...props} />
+      )}
     </AppConfigContext.Consumer>
   );
 };

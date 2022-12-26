@@ -39,5 +39,11 @@ export const applyBlockSettings = (config, appName, data, schema) => {
       branch[key] = data[fieldName];
     }
   });
+
+  if (data.defaultResultView) {
+    settings.resultViews.forEach((view) => {
+      view.isDefault = view.id === data.defaultResultView;
+    });
+  }
   return config;
 };
