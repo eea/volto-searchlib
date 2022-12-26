@@ -72,7 +72,12 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
-      <ActiveFilterList />
+      {appConfig.mode === 'edit' && (
+        <div>Active filters are always shown in edit mode</div>
+      )}
+      {(appConfig.showFilters || appConfig.mode === 'edit') && (
+        <ActiveFilterList />
+      )}
       {appConfig.showFilters && <SectionTabs />}
       <div className={`results-layout ${layoutMode}`}>
         {appConfig.showFilters && (

@@ -39,9 +39,10 @@ function SearchBlockView(props) {
             }
           : {}),
       },
+      mode,
     };
     return reg;
-  }, [appName, stableData, schema]);
+  }, [appName, stableData, schema, mode]);
 
   const Variation = variation.view;
 
