@@ -20,7 +20,6 @@ const applyConfig = (config) => {
   config.widgets.id.qa_queryTypes = SelectWidget;
   config.widgets.widget.facet_value = FacetValueWidget;
   config.widgets.widget.sort_widget = SortWidget;
-  // config.widgets.widget.searchlib_facets = FacetsWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {

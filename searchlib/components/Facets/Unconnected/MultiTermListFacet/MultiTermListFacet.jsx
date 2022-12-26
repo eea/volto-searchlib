@@ -31,7 +31,6 @@ const MultiTermListFacet = (props) => {
     enableExact = false,
     availableOptions,
   } = props;
-  console.log('MTLF', props);
 
   const { appConfig } = useAppConfig();
   const facetConfig = appConfig.facets.find((f) => f.field === field);

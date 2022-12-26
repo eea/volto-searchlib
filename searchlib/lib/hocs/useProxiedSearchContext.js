@@ -67,7 +67,6 @@ export default function useProxiedSearchContext(
             new Set([...(dirtyFiltersMap[searchContextId] || []), filter]),
           );
           dirtyFiltersMap[searchContextId] = dirtyFilters;
-          // console.log('call', func_name, arguments);
           return action.apply(driver, arguments);
         },
       };
@@ -83,7 +82,6 @@ export default function useProxiedSearchContext(
     // searchContext.setSort(driver.state.sortField, driver.state.sortDirection);
     // searchContext.setResultsPerPage(driver.state.resultsPerPage);
     // searchContext.setSearchTerm(driver.state.searchTerm);
-    // console.log(driver.state.filters, driver.filters);
     if (driver) {
       const dirtyFilters = dirtyFiltersMap[searchContextId] || [];
       dirtyFilters.forEach(({ field, type }) => {
@@ -101,7 +99,6 @@ export default function useProxiedSearchContext(
     // this is updated async. The state update with Date is used to force refresh
     sc.facets = searchContext.facets;
   }
-  // console.log('filters', sc.filters);
 
   const res = {
     searchContext: sc,

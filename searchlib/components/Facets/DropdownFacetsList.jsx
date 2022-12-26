@@ -14,8 +14,6 @@ import { sidebarState, liveSearchState } from './state';
 import { useAtom } from 'jotai';
 
 const DropdownFacetsList = ({ defaultWrapper }) => {
-  // console.log('redraw dropdownfacetslist');
-
   const { appConfig } = useAppConfig();
   const rawSearchContext = useSearchContext();
   const { filters } = rawSearchContext; // clearFilters

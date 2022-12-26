@@ -91,8 +91,6 @@ const MultiTermFacetViewComponent = (props) => {
     filterType = 'any',
   } = props;
 
-  // console.log('optiosn', options);
-
   const filterTypes = [
     { key: 2, text: 'Match any', value: 'any' },
     { key: 1, text: 'Match all', value: 'all' },
