@@ -111,6 +111,7 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
     },
     defaultSort: {
       title: 'Default sort',
+      widget: 'sort_widget',
       choices: [],
     },
   };
@@ -132,10 +133,16 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       schema.properties.defaultFilters.schemaExtender = extender;
     }
 
-    schema.properties.defaultSort.choices = appConfig.sortOptions.map((opt) => [
-      `${opt.value}|${opt.direction}`,
-      opt.name,
-    ]);
+    schema.properties.defaultSort = {
+      ...schema.properties.defaultSort,
+      appConfig,
+      registry,
+      appName,
+      choices: appConfig.sortOptions.map((opt) => [
+        `${opt.value}|${opt.direction}`,
+        opt.name,
+      ]),
+    };
   }
 
   return schema;

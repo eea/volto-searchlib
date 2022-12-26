@@ -1,3 +1,6 @@
+/**
+ * A Search app that wraps and provides access to a single facet
+ */
 import React from 'react';
 import { Facet as SUIFacet } from '@eeacms/search/components';
 import { useAppConfig, useSearchDriver } from '@eeacms/search/lib/hocs';
