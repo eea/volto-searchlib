@@ -6,13 +6,6 @@ import BasicSearchApp from './BasicSearchApp';
 function BootstrapSearchResultsView(props) {
   const { appConfig, registry } = props;
 
-  React.useEffect(
-    () => () => {
-      console.log('unmount BootstrapSearchResultsView');
-    },
-    [],
-  );
-
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;
   const { resultViews } = appConfig;

@@ -11,7 +11,6 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
 import useSearchApp from './useSearchApp';
-// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 function SearchWrappers(SearchViewComponent) {
   function Wrapper(props) {
@@ -80,7 +79,6 @@ export default function BasicSearchApp(props) {
   });
 
   useDeepCompareEffect(() => {
-    console.log('reset stable context');
     setStableContext({ appConfig, registry });
   }, [appConfig, registry]);
 
@@ -89,17 +87,6 @@ export default function BasicSearchApp(props) {
       SearchWrappers(searchViewComponent, children),
     );
   }, [mapContextToProps, searchViewComponent, children]);
-
-  // useWhyDidYouUpdate('BasicSearchapp', {
-  //   mapContextToProps,
-  //   searchViewComponent,
-  //   appConfig,
-  //   registry,
-  //   driverInstance,
-  //   elasticConfig,
-  //   facetOptions,
-  //   stableContext,
-  // });
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>

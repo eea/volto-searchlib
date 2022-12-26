@@ -12,13 +12,6 @@ const overlayStyle = {
 export default function SearchResultsView(props) {
   const { appName, mode } = props;
 
-  React.useEffect(
-    () => () => {
-      console.log('unmount SRV');
-    },
-    [],
-  );
-
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
@@ -72,7 +65,6 @@ const setFacetWidgetProps = (appConfig, registry, appName) => {
     schema.properties.value.appName = appName;
     schema.properties.value.registry = registry;
 
-    // console.log('setfacet', { schema, appConfig, data });
     return schema;
   };
 };

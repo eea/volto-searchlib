@@ -47,7 +47,6 @@ function BoostrapFacetView(props) {
     const activeFilter = filters?.find((filter) => filter.field === field);
     if (value && !activeFilter) {
       const sortedFilters = [...filters, value].sort(sorter);
-      // console.log('initializing', sortedFilters);
       driver._setState({ filters: sortedFilters });
     }
   }, [value, filters, field, setFilter, driver]); // searchContext
@@ -61,16 +60,10 @@ function BoostrapFacetView(props) {
         const { filters } = driver.state;
         const activeValue = filters.find((f) => f.field === field);
         if (!activeValue) {
-          // console.log('onChange null', field);
           onChange(null);
           return;
         }
         if (!isEqual(activeValue, value)) {
-          // console.log('onChange', {
-          //   activeValue,
-          //   value,
-          //   filters: driver.state.filters,
-          // });
           onChange(activeValue);
         }
       }
@@ -81,7 +74,6 @@ function BoostrapFacetView(props) {
     }
 
     return () => {
-      // console.log('unsubscribe', field);
       driver.events.plugins = driver.events.plugins.filter(
         (plug) => plug.id !== plugId,
       );

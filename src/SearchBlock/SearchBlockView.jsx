@@ -4,7 +4,6 @@ import { SearchBlockSchema } from './schema';
 import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
 import { useDebouncedStableData } from './hocs';
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 import './less/styles.less';
 
@@ -46,14 +45,9 @@ function SearchBlockView(props) {
 
   const Variation = variation.view;
 
-  useWhyDidYouUpdate('Variation', { Variation });
-
-  // TODO: why the double rendering?
-
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
-      {JSON.stringify(data)}
       <Variation
         registry={registry}
         appName={appName}
