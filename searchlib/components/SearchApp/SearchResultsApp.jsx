@@ -53,9 +53,11 @@ function BootstrapSearchResultsView(props) {
 }
 
 export default function SearchResultsApp(props) {
-  const { defaultFilters } = props;
+  const { defaultFilters, defaultSort = '' } = props;
+  const [sortField, sortDirection] = defaultSort.split('|');
   const [initialState] = React.useState({
     ...(defaultFilters?.length ? { filters: defaultFilters } : {}),
+    ...(defaultSort ? { sortField, sortDirection } : {}),
   }); // this makes the prop stable
 
   return (

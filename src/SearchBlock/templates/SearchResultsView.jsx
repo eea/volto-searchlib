@@ -85,25 +85,34 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
     'alwaysSearchOnInitialLoad',
     'showFilters',
     'defaultFilters',
+    'defaultSort',
   );
 
-  schema.properties.alwaysSearchOnInitialLoad = {
-    title: 'Autoload results',
-    type: 'boolean',
-    default: true,
-    configPath: 'alwaysSearchOnInitialLoad',
-  };
-  schema.properties.showFilters = {
-    title: 'Show filters?',
-    type: 'boolean',
-    default: true,
-    configPath: 'showFilters',
-  };
-  schema.properties.defaultFilters = {
-    title: 'Default filters',
-    widget: 'object_list',
-    schema: FilterSchema({ formData }),
-    schemaExtender: (schema) => schema,
+  schema.properties = {
+    ...schema.properties,
+
+    alwaysSearchOnInitialLoad: {
+      title: 'Autoload results',
+      type: 'boolean',
+      default: true,
+      configPath: 'alwaysSearchOnInitialLoad',
+    },
+    showFilters: {
+      title: 'Show filters?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showFilters',
+    },
+    defaultFilters: {
+      title: 'Default filters',
+      widget: 'object_list',
+      schema: FilterSchema({ formData }),
+      schemaExtender: (schema) => schema,
+    },
+    defaultSort: {
+      title: 'Default sort',
+      choices: [],
+    },
   };
 
   if (appConfig) {
@@ -122,6 +131,11 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       extender.applied = true;
       schema.properties.defaultFilters.schemaExtender = extender;
     }
+
+    schema.properties.defaultSort.choices = appConfig.sortOptions.map((opt) => [
+      `${opt.value}|${opt.direction}`,
+      opt.name,
+    ]);
   }
 
   return schema;
