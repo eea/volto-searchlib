@@ -72,13 +72,17 @@ const setFacetWidgetProps = (appConfig, registry, appName) => {
 SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
   const { appConfig, registry, appName } = schema;
 
-  schema.fieldsets[0].fields.unshift(
-    'defaultResultView',
-    'alwaysSearchOnInitialLoad',
-    'showFilters',
-    'defaultFilters',
-    'defaultSort',
-  );
+  schema.fieldsets.splice(1, 0, {
+    id: 'searchResultsSettings',
+    title: 'Configure Search results',
+    fields: [
+      'defaultResultView',
+      'alwaysSearchOnInitialLoad',
+      'showFilters',
+      'defaultFilters',
+      'defaultSort',
+    ],
+  });
 
   schema.properties = {
     ...schema.properties,
