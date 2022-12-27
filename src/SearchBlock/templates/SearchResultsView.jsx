@@ -74,7 +74,7 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
 
   schema.fieldsets.splice(1, 0, {
     id: 'searchResultsSettings',
-    title: 'Configure Search results',
+    title: 'Search results settings',
     fields: [
       'defaultResultView',
       'alwaysSearchOnInitialLoad',

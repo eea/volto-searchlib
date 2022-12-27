@@ -10,15 +10,15 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       fields: [
         'appName',
         // 'defaultResultView',
-        'headline',
-        'subheadline',
-        'searchInputPlaceholder',
       ],
     },
     {
       id: 'general',
       title: 'General settings',
       fields: [
+        'headline',
+        'subheadline',
+        'searchInputPlaceholder',
         'promptQueries',
         'promptQueryInterval',
         'debugQuery',
