@@ -28,7 +28,7 @@ function FullView(props) {
 }
 
 FullView.schemaEnhancer = ({ schema }) => {
-  schema.fieldsets[0].fields.unshift('defaultResultView');
+  // schema.fieldsets[0].fields.unshift('defaultResultView');
 
   return schema;
 };
