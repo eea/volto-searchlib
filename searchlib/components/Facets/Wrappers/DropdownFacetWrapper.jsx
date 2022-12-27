@@ -29,7 +29,6 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
   } = props;
-  // console.log('redraw dropdown facet', field);
   const rawSearchContext = useSearchContext();
   const {
     searchContext: facetSearchContext,
