@@ -8,8 +8,6 @@ import {
   SortingDropdownWithLabel,
   AnswerBox,
   DownloadButton,
-  // ViewSelector,
-  // SortingDropdown,
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useViews } from '@eeacms/search/lib/hocs';
@@ -21,6 +19,7 @@ export const DefaultContentView = (props) => {
   const { sortOptions, resultViews } = appConfig;
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
+  if (!listingViewDef) return null;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
 
@@ -35,7 +34,7 @@ export const DefaultContentView = (props) => {
 
   return (
     <>
-      <FilterList />
+      {appConfig.showFilters && <FilterList />}
       {appConfig.enableNLP ? <AnswerBox /> : ''}
       <div className="above-results">
         <ViewSelectorWithLabel

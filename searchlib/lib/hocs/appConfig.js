@@ -1,6 +1,9 @@
 import React from 'react';
 
-export const AppConfigContext = React.createContext(null);
+export const AppConfigContext = React.createContext({
+  payload: {},
+  update: () => {},
+});
 
 export const useAppConfig = () => {
   const context = React.useContext(AppConfigContext);
@@ -12,7 +15,7 @@ export const useAppConfig = () => {
     );
   }
 
-  return context;
+  return context.payload;
 };
 
 export const withAppConfig = (WrappedComponent) => {

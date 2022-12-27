@@ -9,17 +9,16 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       title: 'Default',
       fields: [
         'appName',
-        'headline',
-        'subheadline',
-        'searchInputPlaceholder',
-        'showLandingPage',
-        ...(formData?.showLandingPage ? ['onlyLandingPage'] : []),
+        // 'defaultResultView',
       ],
     },
     {
       id: 'general',
       title: 'General settings',
       fields: [
+        'headline',
+        'subheadline',
+        'searchInputPlaceholder',
         'promptQueries',
         'promptQueryInterval',
         'debugQuery',
@@ -53,17 +52,14 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       choices: [],
     },
 
-    showLandingPage: {
-      title: 'Show landing page',
-      type: 'boolean',
-      configPath: 'showLandingPage',
-      default: true,
+    defaultResultView: {
+      title: 'Default view',
+      choices: [],
     },
-    onlyLandingPage: {
-      title: 'Only landing page?',
-      type: 'boolean',
-      configPath: 'onlyLandingPage',
-      default: false,
+
+    searchEnginePath: {
+      title: 'Search Engine path',
+      configPath: 'searchEnginePath',
     },
 
     enableNLP: {
@@ -162,8 +158,12 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
     },
     cutoffScore: {
       title: 'Cutoff score',
+      type: 'number',
       description:
         'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
+      maximum: 0.99,
+      minimum: 0.01,
+      step: 0.1,
       default: 0.1,
       configPath: 'nlp.qa.cutoffScore',
     },

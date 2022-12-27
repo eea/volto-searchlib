@@ -21,8 +21,14 @@ const dropdownOpenFamily = atomFamily(
 );
 
 const DropdownFacetWrapper = (props) => {
-  const { field, label, title, removeFilter, sortedOptions } = props;
-  // console.log('redraw dropdown facet', field);
+  const {
+    field,
+    label,
+    title,
+    removeFilter,
+    sortedOptions,
+    filterType,
+  } = props;
   const rawSearchContext = useSearchContext();
   const {
     searchContext: facetSearchContext,
@@ -32,7 +38,7 @@ const DropdownFacetWrapper = (props) => {
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
-  const fallback = props.filterType ? props.filterType : facet.filterType;
+  const fallback = filterType ? props.filterType : facet.filterType;
   const defaultValue = field
     ? filters?.find((f) => f.field === field)?.type || fallback
     : fallback;

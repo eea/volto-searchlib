@@ -47,7 +47,9 @@ function useFacetsWithAllOptions(appConfig) {
         .filter((f) => f.showAllOptions)
         .map((f) => f.field);
       const facetOptions = await getFacetOptions(appConfig, facetNames);
-      isMountedRef.current && setFacetOptions(facetOptions);
+      if (isMountedRef.current) {
+        setFacetOptions(facetOptions);
+      }
     },
     [appConfig, isMountedRef],
   );

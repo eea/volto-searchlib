@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
-import { Label, Card, Button, Icon } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 
 const ActiveFilterValue = (props) => {
   const { field, values, removeFilter } = props;
@@ -21,6 +21,7 @@ const ActiveFilterValue = (props) => {
       {values?.map((value, index) => {
         return (
           <Label
+            key={index}
             className="filter-value"
             basic
             removeIcon="close"

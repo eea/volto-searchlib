@@ -1,3 +1,7 @@
+/**
+ * Full search engine view, with landing page, search input and results
+ */
+
 import React from 'react';
 
 import { withAppConfig } from '@eeacms/search/lib/hocs';
@@ -18,13 +22,13 @@ import { isLandingPageAtom } from './state';
 export const SearchView = (props) => {
   const { appConfig, appName, mode = 'view' } = props;
 
+  const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
   const [, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
 
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
   const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
-  const searchContext = useSearchContext();
 
   const wasInteracted = !!(
     searchedTerm ||
@@ -35,13 +39,12 @@ export const SearchView = (props) => {
   );
 
   React.useEffect(() => {
-    // console.log('rewrite');
     window.searchContext = searchContext;
   }, [searchContext]);
 
   React.useEffect(() => {
     setIsLandingPageAtom(!wasInteracted);
-  });
+  }, [setIsLandingPageAtom, wasInteracted]);
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
 
@@ -74,7 +77,7 @@ export const SearchView = (props) => {
         sideContent={null}
         bodyHeader={<SampleQueryPrompt />}
         bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
-        bodyFooter={wasInteracted ? <AppInfo appConfig={appConfig} /> : <></>}
+        bodyFooter={wasInteracted ? <AppInfo appConfig={appConfig} /> : null}
       />
     </div>
   );

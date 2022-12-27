@@ -246,7 +246,11 @@ const config = {
       headline: '', // main headline
       subheadline: '', // text under the headline
       demoquestion: '', // Question used as example under the search input
+
+      // These are ElasticSearch driver options:
       // debug: true,
+      // trackUrlState: false,
+
       hasA11yNotifications: true,
 
       // broad global layout (header, side, etc)
@@ -272,6 +276,8 @@ const config = {
       showPromptQueries: true,
       defaultPromptQueries: [], // offered as possible queries, in a prompt below text input. One per line
       promptQueryInterval: 20000,
+      alwaysSearchOnInitialLoad: false, // used in elastic search driver
+      showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
 
       // highlight: {
       //   queryParams: {
@@ -297,8 +303,8 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
-      requestBodyModifiers: [addQAParams],
-      stateModifiers: [extractAnswers],
+      requestBodyModifiers: [addQAParams], // todo: use factory names
+      stateModifiers: [extractAnswers], // todo: use factory names
 
       enableNLP: false, // enables NLP capabilities
       nlp: {
@@ -456,7 +462,5 @@ const config = {
 if (typeof window !== 'undefined') {
   window.searchUiConfig = config;
 }
-
-console.log('whole config', config);
 
 export default config;

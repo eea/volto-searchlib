@@ -1,10 +1,11 @@
 import React from 'react';
-import registry from '@eeacms/search/registry';
 import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
-export const BodyContent = (props) => {
-  const { appConfig, wasInteracted } = props;
-  const { showLandingPage = true } = appConfig;
+import BasicSearchApp from './BasicSearchApp';
+
+function BootstrapSearchResultsView(props) {
+  const { appConfig, registry } = props;
+
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;
   const { resultViews } = appConfig;
@@ -23,42 +24,41 @@ export const BodyContent = (props) => {
     registry.resolve[appConfig['contentBodyComponent'] || 'DefaultContentView']
       .component;
 
-  const InitialViewComponent =
-    showLandingPage &&
-    appConfig.initialView?.factory &&
-    registry.resolve[appConfig.initialView.factory].component;
-
-  return wasInteracted ? (
-    NoResultsComponent ? (
-      results.length ? (
-        <ContentBodyView {...props}>
-          {results.map((result, i) => (
-            <Item
-              key={`${i}-${result.id}`}
-              result={result}
-              {...itemViewProps}
-            />
-          ))}
-        </ContentBodyView>
-      ) : (
-        <NoResultsComponent {...props} />
-      )
-    ) : (
+  return NoResultsComponent ? (
+    results.length ? (
       <ContentBodyView {...props}>
         {results.map((result, i) => (
           <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
         ))}
       </ContentBodyView>
+    ) : (
+      <NoResultsComponent {...props} />
     )
-  ) : InitialViewComponent ? (
-    <InitialViewComponent {...props} />
-  ) : (
+  ) : results.length ? (
     <ContentBodyView {...props}>
-      {results.map((result, i) => {
-        return (
-          <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
-        );
-      })}
+      {results.map((result, i) => (
+        <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
+      ))}
     </ContentBodyView>
+  ) : (
+    <div className="noResults"></div>
   );
-};
+}
+
+export default function SearchResultsApp(props) {
+  const { defaultFilters, defaultSort = '' } = props;
+  const [sortField, sortDirection] = defaultSort.split('|');
+  const [initialState] = React.useState({
+    ...(defaultFilters?.length ? { filters: defaultFilters } : {}),
+    ...(defaultSort ? { sortField, sortDirection } : {}),
+  }); // this makes the prop stable
+
+  return (
+    <BasicSearchApp
+      {...props}
+      wasInteracted={true}
+      searchViewComponent={BootstrapSearchResultsView}
+      initialState={initialState}
+    />
+  );
+}

@@ -4,17 +4,27 @@ import { registry } from '@eeacms/search';
 import codeSVG from '@plone/volto/icons/code.svg';
 import SearchBlockView from './SearchBlock/SearchBlockView';
 import SearchBlockEdit from './SearchBlock/SearchBlockEdit';
-// import LeftColumnLayout from './components/Layout/LeftColumnLayout';
+import { SearchBlockSchema } from './SearchBlock/schema';
+import {
+  FullView,
+  SearchInputView,
+  LandingPageView,
+  SearchResultsView,
+} from './SearchBlock/templates';
 
-import SelectWidget from './SearchBlock/SelectWidget';
+import FacetValueWidget from './SearchBlock/widgets/FacetValueWidget';
+import SelectWidget from './SearchBlock/widgets/SelectWidget';
+import SortWidget from './SearchBlock/widgets/SortWidget';
 
 const applyConfig = (config) => {
   config.widgets.id.qa_queryTypes = SelectWidget;
+  config.widgets.widget.facet_value = FacetValueWidget;
+  config.widgets.widget.sort_widget = SortWidget;
   config.settings.searchlib = registry;
 
   config.blocks.blocksConfig.searchlib = {
     id: 'searchlib',
-    title: 'Searchlib',
+    title: 'EEA Semantic Search',
     icon: codeSVG,
     group: 'common',
     view: SearchBlockView,
@@ -23,10 +33,38 @@ const applyConfig = (config) => {
     mostUsed: false,
     blockHasOwnFocusManagement: false,
     sidebarTab: 1,
+    schema: SearchBlockSchema,
     security: {
       addPermission: [],
       view: [],
     },
+    variations: [
+      {
+        id: 'fullView',
+        isDefault: true,
+        title: 'Full (default)',
+        view: FullView,
+        schemaEnhancer: FullView.schemaEnhancer,
+      },
+      {
+        id: 'searchInputOnly',
+        title: 'Search input',
+        view: SearchInputView,
+        schemaEnhancer: SearchInputView.schemaEnhancer,
+      },
+      {
+        id: 'landingPageOnly',
+        title: 'Statistics',
+        view: LandingPageView,
+        schemaEnhancer: LandingPageView.schemaEnhancer,
+      },
+      {
+        id: 'searchResultsOnly',
+        title: 'Search results',
+        view: SearchResultsView,
+        schemaEnhancer: SearchResultsView.schemaEnhancer,
+      },
+    ],
   };
 
   if (__SERVER__) {
@@ -46,6 +84,7 @@ const applyConfig = (config) => {
       middleware,
     ];
   }
+
   return config;
 };
 

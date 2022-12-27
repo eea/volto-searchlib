@@ -17,6 +17,8 @@ import registry from '@eeacms/search/registry';
 import { AnswerBox, Component } from '@eeacms/search/components';
 import { NoResults } from '@eeacms/search/components/Result/NoResults';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { loadingFamily } from '@eeacms/search/state';
+import { useAtomValue } from 'jotai';
 
 export const FilterAsideContentView = (props) => {
   // console.log('redraw FilterAsideContentView');
@@ -63,31 +65,41 @@ export const FilterAsideContentView = (props) => {
   const layoutMode =
     views.activeViewId === 'horizontalCard' ? 'fixed' : 'fullwidth';
 
-  const { isLoading, wasSearched } = useSearchContext();
+  const { wasSearched } = useSearchContext();
+
+  const loadingAtom = loadingFamily(appConfig.appName);
+  const isLoading = useAtomValue(loadingAtom);
 
   return (
     <>
-      <ActiveFilterList />
-      <SectionTabs />
+      {appConfig.mode === 'edit' && (
+        <div>Active filters are always shown in edit mode</div>
+      )}
+      {(appConfig.showFilters || appConfig.mode === 'edit') && (
+        <ActiveFilterList />
+      )}
+      {appConfig.showFilters && <SectionTabs />}
       <div className={`results-layout ${layoutMode}`}>
-        <div className="above-results">
-          <div className="above-left">
-            <DropdownFacetsList />
+        {appConfig.showFilters && (
+          <div className="above-results">
+            <div className="above-left">
+              <DropdownFacetsList />
+            </div>
+            <div className="above-right">
+              <Component factoryName="SecondaryFacetsList" {...props} />
+              <Sorting
+                label={''}
+                sortOptions={sortOptions}
+                view={SortingDropdownWithLabel}
+              />
+              {/* <ViewSelectorWithLabel */}
+              {/*   views={availableResultViews} */}
+              {/*   active={activeViewId} */}
+              {/*   onSetView={setActiveViewId} */}
+              {/* /> */}
+            </div>
           </div>
-          <div className="above-right">
-            <Component factoryName="SecondaryFacetsList" {...props} />
-            <Sorting
-              label={''}
-              sortOptions={sortOptions}
-              view={SortingDropdownWithLabel}
-            />
-            {/* <ViewSelectorWithLabel */}
-            {/*   views={availableResultViews} */}
-            {/*   active={activeViewId} */}
-            {/*   onSetView={setActiveViewId} */}
-            {/* /> */}
-          </div>
-        </div>
+        )}
 
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 

@@ -23,7 +23,7 @@ import { useAtom } from 'jotai';
 
 import { AccordionFacetWrapper } from '@eeacms/search/components';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useSearchContext, useIsMounted } from '@eeacms/search/lib/hocs';
 
 import FacetsList from './FacetsList';
 
@@ -32,9 +32,11 @@ export default (props) => {
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
 
+  const { mountedRef } = useIsMounted();
+
   React.useEffect(() => {
-    if (hasFilters) setShowFacets(true);
-  }, [hasFilters, setShowFacets]);
+    if (mountedRef.current && hasFilters) setShowFacets(true);
+  }, [hasFilters, setShowFacets, mountedRef]);
 
   return (
     <div className="facets-list">
