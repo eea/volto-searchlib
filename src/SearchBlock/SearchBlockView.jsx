@@ -19,7 +19,15 @@ function SearchBlockView(props) {
     metadata,
   } = props;
   const { appName = 'default' } = data;
-  const stableData = useDebouncedStableData(data);
+
+  const stableData = useDebouncedStableData(
+    Object.assign(
+      {},
+      ...Object.keys(data)
+        .filter((k) => k !== 'slotFills')
+        .map((k) => ({ [k]: data[k] })),
+    ),
+  );
 
   const schema = React.useMemo(() => {
     let schema = SearchBlockSchema({ formData: stableData });
@@ -53,6 +61,7 @@ function SearchBlockView(props) {
   }, [appName, stableData, schema, mode]);
 
   const Variation = variation.view;
+  React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
 
   return (
     <div>

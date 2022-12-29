@@ -48,6 +48,7 @@ export const SearchView = (props) => {
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
 
+  React.useEffect(() => () => console.log('unmount SearchView'), []);
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       <Layout

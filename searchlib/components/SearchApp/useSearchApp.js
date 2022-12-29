@@ -15,6 +15,7 @@ import {
 import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { loadingFamily, driverFamily } from './state';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 export function useSearchDriver({ elasticConfig, appName }) {
   const driverAtom = driverFamily({ elasticConfig, appName });
@@ -113,6 +114,12 @@ export default function useSearchApp({
     },
     [appConfig, driverInstance, facetOptions],
   );
+
+  useWhyDidYouUpdate('useSearchApp', {
+    appConfig,
+    driverInstance,
+    facetOptions,
+  });
 
   return {
     facetOptions,

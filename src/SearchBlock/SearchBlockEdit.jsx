@@ -4,14 +4,22 @@ import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
 import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 import { useDebouncedStableData } from './hocs';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 const SearchBlockEdit = (props) => {
   const { onChangeBlock, block, data } = props;
 
-  const stableData = useDebouncedStableData(data);
+  const stableData = useDebouncedStableData(
+    Object.assign(
+      {},
+      ...Object.keys(data)
+        .filter((k) => k !== 'slotFills')
+        .map((k) => ({ [k]: data[k] })),
+    ),
+  );
 
   const schema = React.useMemo(() => {
-    const schema = SearchBlockSchema({ formData: stableData || {} });
+    const schema = SearchBlockSchema({ formData: stableData });
 
     const { searchui } = config.settings.searchlib;
 
@@ -31,32 +39,36 @@ const SearchBlockEdit = (props) => {
   const onChangeSlotfill = React.useCallback(
     (slotId, value) => {
       const newValue = {
-        ...stableData,
+        ...data,
         slotFills: {
-          ...(stableData.slotFills || {}),
+          ...(data.slotFills || {}),
           [slotId]: {
-            ...(stableData?.slotFills?.[slotId] || {}),
+            ...(data?.slotFills?.[slotId] || {}),
             ...value,
           },
         },
       };
       onChangeBlock(block, newValue);
     },
-    [block, stableData, onChangeBlock],
+    [block, data, onChangeBlock],
   );
+
+  React.useEffect(() => () => console.log('unmount SearchBlockEdit'), []);
 
   const onDeleteSlotfill = React.useCallback(
     (slotId) => {
       onChangeBlock(block, {
-        ...stableData,
+        ...data,
         slotFills: {
-          ...(stableData.slotFills || {}),
+          ...(data.slotFills || {}),
           [slotId]: undefined,
         },
       });
     },
-    [block, onChangeBlock, stableData],
+    [block, onChangeBlock, data],
   );
+
+  useWhyDidYouUpdate('SearchBlockEdit', { schema });
 
   return (
     <div>

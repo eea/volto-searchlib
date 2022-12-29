@@ -11,9 +11,10 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
 import useSearchApp from './useSearchApp';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
-function SearchWrappers(SearchViewComponent) {
-  function Wrapper(props) {
+function applySearchWrappers(SearchViewComponent) {
+  function SearchWrapper(props) {
     const {
       appConfig,
       appConfigContext,
@@ -26,6 +27,7 @@ function SearchWrappers(SearchViewComponent) {
     } = props;
 
     const [payload, update] = React.useState(appConfigContext);
+    React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
 
     return (
       <AppConfigContext.Provider value={{ payload, update }}>
@@ -43,7 +45,7 @@ function SearchWrappers(SearchViewComponent) {
       </AppConfigContext.Provider>
     );
   }
-  return Wrapper;
+  return SearchWrapper;
 }
 
 export default function BasicSearchApp(props) {
@@ -54,7 +56,6 @@ export default function BasicSearchApp(props) {
     paramOnSearch = bindOnSearch,
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
-    children,
     initialState,
     ...rest
   } = props;
@@ -73,6 +74,10 @@ export default function BasicSearchApp(props) {
     initialState,
   });
 
+  const mappedWithSearch = React.useMemo(() => withSearch(mapContextToProps), [
+    mapContextToProps,
+  ]);
+
   const [stableContext, setStableContext] = React.useState({
     appConfig,
     registry,
@@ -83,10 +88,15 @@ export default function BasicSearchApp(props) {
   }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
-    return withSearch(mapContextToProps)(
-      SearchWrappers(searchViewComponent, children),
-    );
-  }, [mapContextToProps, searchViewComponent, children]);
+    return mappedWithSearch(applySearchWrappers(searchViewComponent));
+  }, [mappedWithSearch, searchViewComponent]);
+
+  useWhyDidYouUpdate('BasicSearchApp', {
+    mapContextToProps,
+    searchViewComponent,
+    WrappedSearchView,
+    registry,
+  });
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>
