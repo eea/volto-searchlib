@@ -10,29 +10,6 @@ const overlayStyle = {
   zIndex: '100',
 };
 
-const slots = [
-  'aboveSearchInput',
-  'belowSearchInput',
-  'aboveResults',
-  'belowResults',
-];
-
-const getBlocks = (slotFills = {}, mode = 'view', props) => {
-  return Object.assign(
-    {},
-    ...slots.map((name) => ({
-      [name]: (
-        <BlockContainer
-          block={name}
-          data={slotFills[name]}
-          mode={mode}
-          {...props}
-        />
-      ),
-    })),
-  );
-};
-
 function FullView(props) {
   const {
     appName,
@@ -52,10 +29,42 @@ function FullView(props) {
         )}
         <SearchApp
           {...props}
-          slotFills={getBlocks(slotFills, mode, {
-            onChangeSlotfill,
-            onDeleteSlotfill,
-          })}
+          aboveSearchInput={
+            <BlockContainer
+              block="aboveSearchInput"
+              data={slotFills?.['aboveSearchInput']}
+              mode={mode}
+              onChangeSlotfill={onChangeSlotfill}
+              onDeleteSlotfill={onDeleteSlotfill}
+            />
+          }
+          belowSearchInput={
+            <BlockContainer
+              block="belowSearchInput"
+              data={slotFills?.['belowSearchInput']}
+              mode={mode}
+              onChangeSlotfill={onChangeSlotfill}
+              onDeleteSlotfill={onDeleteSlotfill}
+            />
+          }
+          aboveResults={
+            <BlockContainer
+              block="aboveResults"
+              data={slotFills?.['aboveResults']}
+              mode={mode}
+              onChangeSlotfill={onChangeSlotfill}
+              onDeleteSlotfill={onDeleteSlotfill}
+            />
+          }
+          belowResults={
+            <BlockContainer
+              block="belowResults"
+              data={slotFills?.['belowResults']}
+              mode={mode}
+              onChangeSlotfill={onChangeSlotfill}
+              onDeleteSlotfill={onDeleteSlotfill}
+            />
+          }
         />
         {props.children}
       </div>

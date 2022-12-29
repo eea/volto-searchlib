@@ -20,7 +20,7 @@ import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
-  const { appConfig, appName, mode = 'view', slotFills = {} } = props;
+  const { appConfig, appName, mode = 'view', aboveSearchInput } = props;
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
@@ -54,7 +54,7 @@ export const SearchView = (props) => {
         appConfig={appConfig}
         header={
           <>
-            {slotFills.aboveSearchInput}
+            {aboveSearchInput}
             <SearchBox
               searchContext={searchContext}
               isLandingPage={!wasInteracted}

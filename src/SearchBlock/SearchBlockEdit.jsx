@@ -40,7 +40,6 @@ const SearchBlockEdit = (props) => {
           },
         },
       };
-      console.log('onChange', { block, value, stableData, newValue });
       onChangeBlock(block, newValue);
     },
     [block, stableData, onChangeBlock],

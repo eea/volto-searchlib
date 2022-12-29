@@ -15,6 +15,8 @@ function SearchBlockView(props) {
     children,
     onChangeSlotfill,
     onDeleteSlotfill,
+    properties,
+    metadata,
   } = props;
   const { appName = 'default' } = data;
   const stableData = useDebouncedStableData(data);
@@ -66,6 +68,8 @@ function SearchBlockView(props) {
           .filter((f) => !!f)}
         onChangeSlotfill={onChangeSlotfill}
         onDeleteSlotfill={onDeleteSlotfill}
+        properties={properties}
+        metadata={metadata}
       >
         {mode !== 'view' ? children : null}
       </Variation>

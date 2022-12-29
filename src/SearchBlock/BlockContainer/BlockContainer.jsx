@@ -1,6 +1,10 @@
 import React from 'react';
-import { RenderBlocks } from '@plone/volto/components';
+import { Button } from 'semantic-ui-react';
 import { useLocation } from 'react-router-dom';
+import { Icon, RenderBlocks } from '@plone/volto/components';
+
+import clearSVG from '@plone/volto/icons/clear.svg';
+
 import BlockEdit from '@plone/volto/components/manage/Blocks/Block/Edit';
 import NewBlockAddButton from './NewBlockAddButton';
 
@@ -19,28 +23,36 @@ export default function BlockContainer(props) {
   };
   const metadata = {};
   const index = 0;
-  return (
+  return mode === 'view' ? (
+    <RenderBlocks content={content} metadata={metadata} location={location} />
+  ) : (
     <div className="aboveSearchblockOverlay" style={style}>
-      {mode === 'view' ? (
-        <RenderBlocks
-          content={content}
-          metadata={metadata}
-          location={location}
-        />
-      ) : data ? (
-        <BlockEdit
-          id={block}
-          block={block}
-          data={data}
-          type={data['@type']}
-          properties={metadata}
-          selected={false}
-          multiSelected={false}
-          onMoveBlock={() => {}}
-          onDeleteBlock={() => {}}
-          onChangeBlock={onChangeSlotfill}
-          index={index}
-        />
+      {data ? (
+        <>
+          <Button
+            icon
+            basic
+            aria-label="Delete block"
+            onClick={() => onDeleteSlotfill(block)}
+          >
+            <Icon name={clearSVG} size="24px" />
+          </Button>
+
+          <BlockEdit
+            id={block}
+            block={block}
+            data={data}
+            type={data['@type']}
+            properties={metadata}
+            selected={false}
+            multiSelected={false}
+            onMoveBlock={() => {}}
+            onDeleteBlock={() => {}}
+            onChangeBlock={onChangeSlotfill}
+            onSelectBlock={() => {}}
+            index={index}
+          />
+        </>
       ) : (
         <div>
           <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
