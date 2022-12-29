@@ -4,14 +4,23 @@ import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
 import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 import { useDebouncedStableData } from './hocs';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 const SearchBlockEdit = (props) => {
   const { onChangeBlock, block, data } = props;
+  const [selectedSlotFill, onSelectSlotfill] = React.useState();
 
-  const stableData = useDebouncedStableData(data);
+  const stableData = useDebouncedStableData(
+    Object.assign(
+      {},
+      ...Object.keys(data)
+        .filter((k) => k !== 'slotFills')
+        .map((k) => ({ [k]: data[k] })),
+    ),
+  );
 
   const schema = React.useMemo(() => {
-    const schema = SearchBlockSchema({ formData: stableData || {} });
+    const schema = SearchBlockSchema({ formData: stableData });
 
     const { searchui } = config.settings.searchlib;
 
@@ -28,9 +37,49 @@ const SearchBlockEdit = (props) => {
     return schema;
   }, [stableData]);
 
+  const onChangeSlotfill = React.useCallback(
+    (slotId, value) => {
+      const newValue = {
+        ...data,
+        slotFills: {
+          ...(data.slotFills || {}),
+          [slotId]: {
+            ...(data?.slotFills?.[slotId] || {}),
+            ...value,
+          },
+        },
+      };
+      onChangeBlock(block, newValue);
+    },
+    [block, data, onChangeBlock],
+  );
+
+  const onDeleteSlotfill = React.useCallback(
+    (slotId) => {
+      onChangeBlock(block, {
+        ...data,
+        slotFills: {
+          ...(data.slotFills || {}),
+          [slotId]: undefined,
+        },
+      });
+    },
+    [block, onChangeBlock, data],
+  );
+
+  // React.useEffect(() => () => console.log('unmount SearchBlockEdit'), []);
+  // useWhyDidYouUpdate('SearchBlockEdit', { schema });
+
   return (
     <div>
-      <SearchBlockView {...props} mode="edit">
+      <SearchBlockView
+        {...props}
+        mode="edit"
+        onChangeSlotfill={onChangeSlotfill}
+        onDeleteSlotfill={onDeleteSlotfill}
+        onSelectSlotfill={onSelectSlotfill}
+        selectedSlotFill={selectedSlotFill}
+      >
         <SidebarPortal selected={props.selected}>
           <BlockDataForm
             schema={schema}

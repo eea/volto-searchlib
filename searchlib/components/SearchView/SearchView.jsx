@@ -20,7 +20,13 @@ import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
-  const { appConfig, appName, mode = 'view' } = props;
+  const {
+    appConfig,
+    appName,
+    mode = 'view',
+    aboveSearchInput,
+    belowSearchInput,
+  } = props;
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
@@ -48,31 +54,37 @@ export const SearchView = (props) => {
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
 
+  // React.useEffect(() => () => console.log('unmount SearchView'), []);
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       <Layout
         appConfig={appConfig}
         header={
-          <SearchBox
-            searchContext={searchContext}
-            isLandingPage={!wasInteracted}
-            autocompleteMinimumCharacters={3}
-            autocompleteResults={appConfig.autocomplete.results}
-            autocompleteSuggestions={appConfig.autocomplete.suggestions}
-            shouldClearFilters={false}
-            useSearchPhrases={appConfig.useSearchPhrases}
-            inputView={
-              appConfig.searchBoxInputComponent
-                ? registry.resolve[appConfig.searchBoxInputComponent].component
-                : undefined
-            }
-            view={
-              appConfig.searchBoxComponent
-                ? registry.resolve[appConfig.searchBoxComponent].component
-                : undefined
-            }
-            mode={mode}
-          />
+          <>
+            {aboveSearchInput}
+            <SearchBox
+              searchContext={searchContext}
+              isLandingPage={!wasInteracted}
+              autocompleteMinimumCharacters={3}
+              autocompleteResults={appConfig.autocomplete.results}
+              autocompleteSuggestions={appConfig.autocomplete.suggestions}
+              shouldClearFilters={false}
+              useSearchPhrases={appConfig.useSearchPhrases}
+              inputView={
+                appConfig.searchBoxInputComponent
+                  ? registry.resolve[appConfig.searchBoxInputComponent]
+                      .component
+                  : undefined
+              }
+              view={
+                appConfig.searchBoxComponent
+                  ? registry.resolve[appConfig.searchBoxComponent].component
+                  : undefined
+              }
+              mode={mode}
+            />
+            {belowSearchInput}
+          </>
         }
         sideContent={null}
         bodyHeader={<SampleQueryPrompt />}
