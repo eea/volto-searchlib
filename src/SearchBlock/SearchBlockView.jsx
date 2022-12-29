@@ -15,6 +15,8 @@ function SearchBlockView(props) {
     children,
     onChangeSlotfill,
     onDeleteSlotfill,
+    onSelectSlotfill,
+    selectedSlotFill,
     properties,
     metadata,
   } = props;
@@ -77,6 +79,8 @@ function SearchBlockView(props) {
           .filter((f) => !!f)}
         onChangeSlotfill={onChangeSlotfill}
         onDeleteSlotfill={onDeleteSlotfill}
+        onSelectSlotfill={onSelectSlotfill}
+        selectedSlotFill={selectedSlotFill}
         properties={properties}
         metadata={metadata}
       >

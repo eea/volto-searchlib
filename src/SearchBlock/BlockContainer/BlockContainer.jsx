@@ -15,7 +15,15 @@ const style = {
 
 export default function BlockContainer(props) {
   // console.log('block container', props);
-  const { mode, block, data, onChangeSlotfill, onDeleteSlotfill } = props;
+  const {
+    mode,
+    block,
+    data,
+    selected = false,
+    onChangeSlotfill,
+    onDeleteSlotfill,
+    onSelectSlotfill,
+  } = props;
   const location = useLocation();
   const content = {
     blocks: { [block]: data },
@@ -44,12 +52,12 @@ export default function BlockContainer(props) {
             data={data}
             type={data['@type']}
             properties={metadata}
-            selected={false}
+            selected={selected}
             multiSelected={false}
             onMoveBlock={() => {}}
             onDeleteBlock={() => {}}
             onChangeBlock={onChangeSlotfill}
-            onSelectBlock={() => {}}
+            onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
             index={index}
             disableNewBlocks={true}
           />
