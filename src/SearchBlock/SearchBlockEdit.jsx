@@ -28,9 +28,45 @@ const SearchBlockEdit = (props) => {
     return schema;
   }, [stableData]);
 
+  const onChangeSlotfill = React.useCallback(
+    (slotId, value) => {
+      const newValue = {
+        ...stableData,
+        slotFills: {
+          ...(stableData.slotFills || {}),
+          [slotId]: {
+            ...(stableData?.slotFills?.[slotId] || {}),
+            ...value,
+          },
+        },
+      };
+      console.log('onChange', { block, value, stableData, newValue });
+      onChangeBlock(block, newValue);
+    },
+    [block, stableData, onChangeBlock],
+  );
+
+  const onDeleteSlotfill = React.useCallback(
+    (slotId) => {
+      onChangeBlock(block, {
+        ...stableData,
+        slotFills: {
+          ...(stableData.slotFills || {}),
+          [slotId]: undefined,
+        },
+      });
+    },
+    [block, onChangeBlock, stableData],
+  );
+
   return (
     <div>
-      <SearchBlockView {...props} mode="edit">
+      <SearchBlockView
+        {...props}
+        mode="edit"
+        onChangeSlotfill={onChangeSlotfill}
+        onDeleteSlotfill={onDeleteSlotfill}
+      >
         <SidebarPortal selected={props.selected}>
           <BlockDataForm
             schema={schema}

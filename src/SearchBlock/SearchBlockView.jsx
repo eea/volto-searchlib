@@ -8,7 +8,14 @@ import { useDebouncedStableData } from './hocs';
 import './less/styles.less';
 
 function SearchBlockView(props) {
-  const { data = {}, mode = 'view', variation, children } = props;
+  const {
+    data = {},
+    mode = 'view',
+    variation,
+    children,
+    onChangeSlotfill,
+    onDeleteSlotfill,
+  } = props;
   const { appName = 'default' } = data;
   const stableData = useDebouncedStableData(data);
 
@@ -57,6 +64,8 @@ function SearchBlockView(props) {
         defaultFilters={data.defaultFilters
           ?.map((f) => (f.value ? f.value : undefined))
           .filter((f) => !!f)}
+        onChangeSlotfill={onChangeSlotfill}
+        onDeleteSlotfill={onDeleteSlotfill}
       >
         {mode !== 'view' ? children : null}
       </Variation>

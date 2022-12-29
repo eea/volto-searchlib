@@ -5,7 +5,7 @@ import useOutsideClick from '@eeacms/search/lib/hocs/useOutsideClick';
 import addSVG from '@plone/volto/icons/add.svg';
 
 const NewBlockAddButton = (props) => {
-  const { allowedBlocks, block, index, onChangeGridItem } = props;
+  const { allowedBlocks, block, onMutateBlock } = props;
   const ref = React.useRef();
   const [isOpenMenu, setOpenMenu] = React.useState(false);
 
@@ -16,7 +16,7 @@ const NewBlockAddButton = (props) => {
       {isOpenMenu ? (
         <div ref={ref}>
           <BlockChooser
-            onMutateBlock={(block, value) => onChangeGridItem(index, value)}
+            onMutateBlock={onMutateBlock}
             currentBlock={block}
             showRestricted
             allowedBlocks={allowedBlocks}
@@ -28,7 +28,7 @@ const NewBlockAddButton = (props) => {
           icon
           onClick={() => setOpenMenu(true)}
           className="add-block-button"
-          aria-label={`Add grid block in position ${index}`}
+          aria-label={`Add block in position ${block}`}
         >
           <Icon name={addSVG} className="circled" size="24px" />
         </Button>

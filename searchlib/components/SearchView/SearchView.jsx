@@ -20,7 +20,7 @@ import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
-  const { appConfig, appName, mode = 'view' } = props;
+  const { appConfig, appName, mode = 'view', slotFills = {} } = props;
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
@@ -53,26 +53,30 @@ export const SearchView = (props) => {
       <Layout
         appConfig={appConfig}
         header={
-          <SearchBox
-            searchContext={searchContext}
-            isLandingPage={!wasInteracted}
-            autocompleteMinimumCharacters={3}
-            autocompleteResults={appConfig.autocomplete.results}
-            autocompleteSuggestions={appConfig.autocomplete.suggestions}
-            shouldClearFilters={false}
-            useSearchPhrases={appConfig.useSearchPhrases}
-            inputView={
-              appConfig.searchBoxInputComponent
-                ? registry.resolve[appConfig.searchBoxInputComponent].component
-                : undefined
-            }
-            view={
-              appConfig.searchBoxComponent
-                ? registry.resolve[appConfig.searchBoxComponent].component
-                : undefined
-            }
-            mode={mode}
-          />
+          <>
+            {slotFills.aboveSearchInput}
+            <SearchBox
+              searchContext={searchContext}
+              isLandingPage={!wasInteracted}
+              autocompleteMinimumCharacters={3}
+              autocompleteResults={appConfig.autocomplete.results}
+              autocompleteSuggestions={appConfig.autocomplete.suggestions}
+              shouldClearFilters={false}
+              useSearchPhrases={appConfig.useSearchPhrases}
+              inputView={
+                appConfig.searchBoxInputComponent
+                  ? registry.resolve[appConfig.searchBoxInputComponent]
+                      .component
+                  : undefined
+              }
+              view={
+                appConfig.searchBoxComponent
+                  ? registry.resolve[appConfig.searchBoxComponent].component
+                  : undefined
+              }
+              mode={mode}
+            />
+          </>
         }
         sideContent={null}
         bodyHeader={<SampleQueryPrompt />}

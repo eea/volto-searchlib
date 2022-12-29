@@ -17,17 +17,30 @@ const slots = [
   'belowResults',
 ];
 
-const getBlocks = (slotFills = {}, mode = 'view') => {
+const getBlocks = (slotFills = {}, mode = 'view', props) => {
   return Object.assign(
     {},
-    slots.map((name) => ({
-      [name]: <BlockContainer block={name} data={slotFills[name]} />,
+    ...slots.map((name) => ({
+      [name]: (
+        <BlockContainer
+          block={name}
+          data={slotFills[name]}
+          mode={mode}
+          {...props}
+        />
+      ),
     })),
   );
 };
 
 function FullView(props) {
-  const { appName, mode } = props;
+  const {
+    appName,
+    mode,
+    slotFills,
+    onChangeSlotfill,
+    onDeleteSlotfill,
+  } = props;
 
   // TODO: (about bodyclass) this is a hack, please solve it properly
 
@@ -39,7 +52,10 @@ function FullView(props) {
         )}
         <SearchApp
           {...props}
-          slotFills={getBlocks(props.data?.slotFills, mode)}
+          slotFills={getBlocks(slotFills, mode, {
+            onChangeSlotfill,
+            onDeleteSlotfill,
+          })}
         />
         {props.children}
       </div>
