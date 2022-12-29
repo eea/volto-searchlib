@@ -61,7 +61,7 @@ function SearchBlockView(props) {
   }, [appName, stableData, schema, mode]);
 
   const Variation = variation.view;
-  React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
+  // React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
 
   return (
     <div>

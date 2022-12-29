@@ -4,10 +4,11 @@ import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
 import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 import { useDebouncedStableData } from './hocs';
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 const SearchBlockEdit = (props) => {
   const { onChangeBlock, block, data } = props;
+  const [selectedSlotFill, onSelectSlotfill] = React.useState();
 
   const stableData = useDebouncedStableData(
     Object.assign(
@@ -53,8 +54,6 @@ const SearchBlockEdit = (props) => {
     [block, data, onChangeBlock],
   );
 
-  React.useEffect(() => () => console.log('unmount SearchBlockEdit'), []);
-
   const onDeleteSlotfill = React.useCallback(
     (slotId) => {
       onChangeBlock(block, {
@@ -68,7 +67,8 @@ const SearchBlockEdit = (props) => {
     [block, onChangeBlock, data],
   );
 
-  useWhyDidYouUpdate('SearchBlockEdit', { schema });
+  // React.useEffect(() => () => console.log('unmount SearchBlockEdit'), []);
+  // useWhyDidYouUpdate('SearchBlockEdit', { schema });
 
   return (
     <div>
@@ -77,6 +77,8 @@ const SearchBlockEdit = (props) => {
         mode="edit"
         onChangeSlotfill={onChangeSlotfill}
         onDeleteSlotfill={onDeleteSlotfill}
+        onSelectSlotfill={onSelectSlotfill}
+        selectedSlotFill={selectedSlotFill}
       >
         <SidebarPortal selected={props.selected}>
           <BlockDataForm

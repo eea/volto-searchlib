@@ -51,6 +51,7 @@ export default function BlockContainer(props) {
             onChangeBlock={onChangeSlotfill}
             onSelectBlock={() => {}}
             index={index}
+            disableNewBlocks={true}
           />
         </>
       ) : (

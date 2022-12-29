@@ -51,10 +51,13 @@ const _applyBlockSettings = (config, appName, data, schema) => {
 let _params, _cachedResult;
 
 const cacheOnce = (func) => (config, appName, data, schema) => {
+  // Because React uses object identity to recreate components, we try to
+  // create a stable version of the "registry" by only producing it again if
+  // the data has changed
   if (!_params || !isEqual(_params, { appName, data })) {
     _cachedResult = _applyBlockSettings(config, appName, data, schema);
     _params = { appName, data };
-    console.log('recomputed');
+    // console.log('recomputed');
   }
   return _cachedResult;
 };
