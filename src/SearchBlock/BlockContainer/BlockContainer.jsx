@@ -24,13 +24,14 @@ export default function BlockContainer(props) {
     onChangeSlotfill,
     onDeleteSlotfill,
     onSelectSlotfill,
+    properties,
+    metadata,
   } = props;
   const location = useLocation();
   const content = {
     blocks: { [block]: data },
     blocks_layout: { items: [block] },
   };
-  const metadata = {};
   const index = 0;
 
   const blocksConfig = React.useMemo(
@@ -66,7 +67,8 @@ export default function BlockContainer(props) {
             block={block}
             data={data}
             type={data['@type']}
-            properties={metadata}
+            properties={properties}
+            metadata={metadata}
             selected={selected}
             multiSelected={false}
             onMoveBlock={() => {}}
