@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import { useLocation } from 'react-router-dom';
 import { Icon, RenderBlocks } from '@plone/volto/components';
+import config from '@plone/volto/registry';
 
 import clearSVG from '@plone/volto/icons/clear.svg';
 
@@ -31,6 +32,20 @@ export default function BlockContainer(props) {
   };
   const metadata = {};
   const index = 0;
+
+  const blocksConfig = React.useMemo(
+    () =>
+      Object.assign(
+        {},
+        ...Object.entries(config.blocks.blocksConfig).map(
+          ([blockId, blockConfig]) => ({
+            [blockId]: { ...blockConfig, blockHasOwnFocusManagement: true },
+          }),
+        ),
+      ),
+    [],
+  );
+
   return mode === 'view' ? (
     <RenderBlocks content={content} metadata={metadata} location={location} />
   ) : (
@@ -60,6 +75,7 @@ export default function BlockContainer(props) {
             onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
             index={index}
             disableNewBlocks={true}
+            blocksConfig={blocksConfig}
           />
         </>
       ) : (

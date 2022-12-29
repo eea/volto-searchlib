@@ -71,7 +71,13 @@ function FullView(props) {
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
         {mode !== 'view' && (
-          <div className="overlay" style={overlayStyle}></div>
+          <div
+            role="presentation"
+            onKeyDown={() => onSelectSlotfill(null)}
+            className="overlay"
+            style={overlayStyle}
+            onClick={() => onSelectSlotfill(null)}
+          ></div>
         )}
         <SearchApp
           {...props}
