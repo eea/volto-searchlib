@@ -20,7 +20,7 @@ function SearchBlockView(props) {
 
   const registry = React.useMemo(() => {
     // TODO: this has the effect that the appConfig is never stable if the
-    // schema changes.
+    // schema changes, even if it's unrelated.
     const reg = applyBlockSettings(
       config.settings.searchlib,
       appName,
@@ -49,6 +49,7 @@ function SearchBlockView(props) {
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
       <Variation
+        slotFills={data.slotFills}
         registry={registry}
         appName={appName}
         mode={mode}

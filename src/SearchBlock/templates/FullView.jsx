@@ -1,12 +1,29 @@
 import React from 'react';
 import { BodyClass } from '@plone/volto/helpers';
 import { SearchApp } from '@eeacms/search';
+import { BlockContainer } from './../BlockContainer';
 
 const overlayStyle = {
   position: 'absolute',
   width: '100%',
   height: '100%',
   zIndex: '100',
+};
+
+const slots = [
+  'aboveSearchInput',
+  'belowSearchInput',
+  'aboveResults',
+  'belowResults',
+];
+
+const getBlocks = (slotFills = {}, mode = 'view') => {
+  return Object.assign(
+    {},
+    slots.map((name) => ({
+      [name]: <BlockContainer block={name} data={slotFills[name]} />,
+    })),
+  );
 };
 
 function FullView(props) {
@@ -20,7 +37,10 @@ function FullView(props) {
         {mode !== 'view' && (
           <div className="overlay" style={overlayStyle}></div>
         )}
-        <SearchApp {...props} />
+        <SearchApp
+          {...props}
+          slotFills={getBlocks(props.data?.slotFills, mode)}
+        />
         {props.children}
       </div>
     </BodyClass>
