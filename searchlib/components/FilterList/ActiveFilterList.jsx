@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Accordion, Button, Icon } from 'semantic-ui-react';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+import { isFilterValueDefaultValue } from '@eeacms/search/lib/search/helpers';
 import { isLandingPageAtom } from '@eeacms/search/state';
 import { useAtom } from 'jotai';
 
@@ -13,8 +13,11 @@ const ActiveFilterList = (props) => {
   const [isLandingPage] = useAtom(isLandingPageAtom);
   const { appConfig } = useAppConfig();
   const { facets = [] } = appConfig;
+
   const filterableFacets = facets.filter(
-    (f) => !f.isFilter && f.showInFacetsList,
+    (f) =>
+      f.isFilter ||
+      (typeof f.showInFacetsList !== 'undefined' ? f.showInFacetsList : true),
   );
   const facetNames = filterableFacets.map((f) => f.field);
 
@@ -22,7 +25,9 @@ const ActiveFilterList = (props) => {
     .filter((f) => facetNames.includes(f.field))
     .map((f) => f.field);
 
-  const activeFilters = filters.filter((f) => filterNames.includes(f.field));
+  const activeFilters = filters
+    .filter((f) => filterNames.includes(f.field))
+    .filter((f) => !isFilterValueDefaultValue(f, appConfig));
 
   return !isLandingPage && activeFilters.length ? (
     <Segment className="active-filter-list">

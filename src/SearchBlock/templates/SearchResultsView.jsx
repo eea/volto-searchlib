@@ -57,7 +57,7 @@ const setFacetWidgetProps = (appConfig, registry, appName) => {
 
     schema.properties.name.choices = appConfig.facets.map((facet) => [
       facet.id || facet.field,
-      facet.label || facet.field,
+      facet.activeFilterLabel || facet.label || facet.field,
     ]);
 
     schema.properties.value.facetName = data.name;

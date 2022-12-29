@@ -11,13 +11,13 @@ const ActiveFilterValue = (props) => {
     (f) => (f.id || f.field) === field,
   );
   const facetField = field;
-  const { label } = appConfig.facets.find(
+  const { label, activeFilterLabel } = appConfig.facets.find(
     ({ field }) => field === facetField,
   ) || { label: field?.trim() };
 
   return (
     <div className="filter-wrapper">
-      <div className="filter-label">{label}:</div>
+      <div className="filter-label">{activeFilterLabel || label}:</div>
       {values?.map((value, index) => {
         return (
           <Label
