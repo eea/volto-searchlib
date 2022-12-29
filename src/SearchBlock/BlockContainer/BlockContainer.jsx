@@ -75,6 +75,7 @@ export default function BlockContainer(props) {
             onDeleteBlock={() => {}}
             onChangeBlock={onChangeSlotfill}
             onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
+            pathname={location.pathname}
             index={index}
             disableNewBlocks={true}
             blocksConfig={blocksConfig}
