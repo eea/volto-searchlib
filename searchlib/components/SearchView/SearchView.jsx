@@ -9,6 +9,7 @@ import {
   SearchBox,
   AppInfo,
   SampleQueryPrompt,
+  RenderSlot,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
@@ -16,17 +17,12 @@ import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
 import { checkInteracted } from '@eeacms/search/lib/search/helpers';
 import { BodyContent } from './BodyContent';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { SEARCH_STATE_IDS } from '@eeacms/search/constants';
 import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
-  const {
-    appConfig,
-    appName,
-    mode = 'view',
-    aboveSearchInput,
-    belowSearchInput,
-  } = props;
+  const { appConfig, appName, mode = 'view' } = props;
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
@@ -53,6 +49,13 @@ export const SearchView = (props) => {
   }, [setIsLandingPageAtom, wasInteracted]);
 
   const customClassName = !wasInteracted ? 'landing-page' : 'simple-page';
+  const { wasSearched, results = [] } = searchContext;
+
+  const searchState = !wasInteracted
+    ? SEARCH_STATE_IDS.isLandingPage
+    : wasSearched && results?.length > 0
+    ? SEARCH_STATE_IDS.hasResults
+    : SEARCH_STATE_IDS.hasNoResults;
 
   // React.useEffect(() => () => console.log('unmount SearchView'), []);
   return (
@@ -61,7 +64,11 @@ export const SearchView = (props) => {
         appConfig={appConfig}
         header={
           <>
-            {aboveSearchInput}
+            <RenderSlot
+              {...props}
+              searchState={searchState}
+              slotName="aboveSearchInput"
+            />
             <SearchBox
               searchContext={searchContext}
               isLandingPage={!wasInteracted}
@@ -83,7 +90,11 @@ export const SearchView = (props) => {
               }
               mode={mode}
             />
-            {belowSearchInput}
+            <RenderSlot
+              {...props}
+              searchState={searchState}
+              slotName="belowSearchInput"
+            />
           </>
         }
         sideContent={null}
