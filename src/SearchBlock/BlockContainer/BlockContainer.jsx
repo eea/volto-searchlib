@@ -9,11 +9,6 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import BlockEdit from '@plone/volto/components/manage/Blocks/Block/Edit';
 import NewBlockAddButton from './NewBlockAddButton';
 
-const style = {
-  zIndex: '101',
-  position: 'relative',
-};
-
 export default function BlockContainer(props) {
   // console.log('block container', props);
   const {
@@ -49,43 +44,39 @@ export default function BlockContainer(props) {
 
   return mode === 'view' ? (
     <RenderBlocks content={content} metadata={metadata} location={location} />
-  ) : (
-    <div className="aboveSearchblockOverlay" style={style}>
-      {data ? (
-        <>
-          <Button
-            icon
-            basic
-            aria-label="Delete block"
-            onClick={() => onDeleteSlotfill(block)}
-          >
-            <Icon name={clearSVG} size="24px" />
-          </Button>
+  ) : data ? (
+    <div>
+      <Button
+        icon
+        basic
+        aria-label="Delete block"
+        onClick={() => onDeleteSlotfill(block)}
+      >
+        <Icon name={clearSVG} size="24px" />
+      </Button>
 
-          <BlockEdit
-            id={block}
-            block={block}
-            data={data}
-            type={data['@type']}
-            properties={properties}
-            metadata={metadata}
-            selected={selected}
-            multiSelected={false}
-            onMoveBlock={() => {}}
-            onDeleteBlock={() => {}}
-            onChangeBlock={onChangeSlotfill}
-            onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
-            pathname={location.pathname}
-            index={index}
-            disableNewBlocks={true}
-            blocksConfig={blocksConfig}
-          />
-        </>
-      ) : (
-        <div>
-          <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
-        </div>
-      )}
+      <BlockEdit
+        id={block}
+        block={block}
+        data={data}
+        type={data['@type']}
+        properties={properties}
+        metadata={metadata}
+        selected={selected}
+        multiSelected={false}
+        onMoveBlock={() => {}}
+        onDeleteBlock={() => {}}
+        onChangeBlock={onChangeSlotfill}
+        onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
+        pathname={location.pathname}
+        index={index}
+        disableNewBlocks={true}
+        blocksConfig={blocksConfig}
+      />
+    </div>
+  ) : (
+    <div>
+      <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default function SlotEditor(props) {
 
   return (
     <Tab
+      className="aboveSearchblockOverlay"
       panes={SEARCH_STATES.map(([state, label]) => {
         const blockId = `${name}-${state}`;
         return {
@@ -30,7 +31,7 @@ export default function SlotEditor(props) {
             <Tab.Pane>
               <BlockContainer
                 key={blockId}
-                selected={selectedSlotFill === name}
+                selected={selectedSlotFill === blockId}
                 block={blockId}
                 mode={mode}
                 data={data?.[blockId]}

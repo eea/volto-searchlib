@@ -5,6 +5,7 @@ import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 import { useDebouncedStableData } from './hocs';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+import './edit.less';
 
 const SearchBlockEdit = (props) => {
   const { onChangeBlock, block, data } = props;

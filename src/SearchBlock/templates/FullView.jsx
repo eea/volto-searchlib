@@ -3,13 +3,6 @@ import { BodyClass } from '@plone/volto/helpers';
 import { SEARCH_STATES, SLOTS, SearchApp } from '@eeacms/search';
 import { SlotEditor, BlockContainer } from './../BlockContainer';
 
-const overlayStyle = {
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  zIndex: '100',
-};
-
 const slotCombinations = SLOTS.reduce(
   (acc, slot) => [...acc, ...SEARCH_STATES.map((state) => `${slot}-${state}`)],
   [],
@@ -37,8 +30,7 @@ function FullView(props) {
           <div
             role="presentation"
             onKeyDown={() => onSelectSlotfill(null)}
-            className="overlay"
-            style={overlayStyle}
+            className="searchlib-edit-overlay"
             onClick={() => onSelectSlotfill(null)}
           ></div>
         )}
