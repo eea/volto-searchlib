@@ -12,7 +12,7 @@ import cx from 'classnames';
 
 export default function SlotEditor(props) {
   const {
-    name,
+    slot,
     data,
     selectedSlotFill,
     onChangeSlotfill,
@@ -30,7 +30,7 @@ export default function SlotEditor(props) {
       className="aboveSearchblockOverlay"
       activeIndex={activeIndex}
       panes={SEARCH_STATES.map(([state, label]) => {
-        const blockId = `${name}-${state}`;
+        const blockId = `${slot}-${state}`;
         const hasData = !!data?.[blockId];
         return {
           menuItem: (el, { active, index }) => {
