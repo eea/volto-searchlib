@@ -8,9 +8,16 @@ export const SLOTS = [
   'belowResults',
 ];
 
+export const SEARCH_STATE_IDS = {
+  any: 'any',
+  isLandingPage: 'isLandingPage',
+  hasResults: 'hasResults',
+  hasNoResults: 'hasNoResults',
+};
+
 export const SEARCH_STATES = [
-  ['any', 'Always'],
-  ['isLandingPage', 'Landing page'],
-  ['hasResults', 'Has results'],
-  ['hasNoResults', 'Has no results'],
+  [SEARCH_STATE_IDS.any, 'Always'],
+  [SEARCH_STATE_IDS.isLandingPage, 'Landing page'],
+  [SEARCH_STATE_IDS.hasResults, 'Has results'],
+  [SEARCH_STATE_IDS.hasNoResults, 'Has no results'],
 ];
