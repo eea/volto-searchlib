@@ -8,6 +8,7 @@ export * from './lib/hocs';
 export * from './lib/search';
 export * from './lib/models';
 export * from './state';
+export * from './constants';
 
 export { default as runRequest } from './lib/runRequest';
 export { default as SearchApp } from './components/SearchApp/SearchApp';
