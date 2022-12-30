@@ -3,9 +3,12 @@
  */
 
 import React from 'react';
-import { Tab } from 'semantic-ui-react';
+import { Tab, Button } from 'semantic-ui-react';
 import { SEARCH_STATES } from '@eeacms/search';
+import { Icon } from '@plone/volto/components';
 import BlockContainer from './BlockContainer';
+import clearSVG from '@plone/volto/icons/delete.svg';
+import cx from 'classnames';
 
 export default function SlotEditor(props) {
   const {
@@ -20,13 +23,40 @@ export default function SlotEditor(props) {
     mode,
   } = props;
 
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
   return (
     <Tab
       className="aboveSearchblockOverlay"
+      activeIndex={activeIndex}
       panes={SEARCH_STATES.map(([state, label]) => {
         const blockId = `${name}-${state}`;
+        const hasData = !!data?.[blockId];
         return {
-          menuItem: label,
+          menuItem: (el, { active, index }) => {
+            return (
+              <div className={cx('menu item', { active })}>
+                <Button
+                  icon
+                  compact
+                  basic
+                  onClick={() => setActiveIndex(index)}
+                >
+                  {label}
+                </Button>
+                {active && hasData && (
+                  <Button
+                    icon
+                    basic
+                    aria-label="Delete block"
+                    onClick={() => onDeleteSlotfill(blockId)}
+                  >
+                    <Icon name={clearSVG} size="24px" />
+                  </Button>
+                )}
+              </div>
+            );
+          },
           render: () => (
             <Tab.Pane>
               <BlockContainer
