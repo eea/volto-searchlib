@@ -3,6 +3,20 @@
 .aboveSearchblockOverlay {
   z-index: @overlayZIndex + 1;
   position: relative;
+
+  .ui.tabular.menu {
+    .ui.basic.button {
+      border: 0px;
+
+      &.red {
+        box-shadow: none !important;
+      }
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .searchlib-edit-overlay {

@@ -37,15 +37,18 @@ export default function SlotEditor(props) {
             return (
               <div className={cx('menu item', { active })}>
                 <Button
+                  as="a"
                   icon
                   compact
                   basic
+                  color={hasData ? 'red' : null}
                   onClick={() => setActiveIndex(index)}
                 >
                   {label}
                 </Button>
                 {active && hasData && (
                   <Button
+                    as="a"
                     icon
                     basic
                     aria-label="Delete block"
