@@ -39,7 +39,9 @@ export default function BlockContainer(props) {
   );
 
   return mode === 'view' ? (
-    <RenderBlocks content={content} metadata={metadata} location={location} />
+    data ? (
+      <RenderBlocks content={content} metadata={metadata} location={location} />
+    ) : null
   ) : data ? (
     <BlockEdit
       id={block}

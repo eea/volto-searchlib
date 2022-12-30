@@ -4,7 +4,10 @@ import { SEARCH_STATES, SLOTS, SearchApp } from '@eeacms/search';
 import { SlotEditor, BlockContainer } from './../BlockContainer';
 
 const slotCombinations = SLOTS.reduce(
-  (acc, slot) => [...acc, ...SEARCH_STATES.map((state) => `${slot}-${state}`)],
+  (acc, slot) => [
+    ...acc,
+    ...SEARCH_STATES.map((state) => `${slot}-${state[0]}`),
+  ],
   [],
 );
 
