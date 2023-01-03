@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { BodyClass } from '@plone/volto/helpers';
 import { BlockChooser, Icon } from '@plone/volto/components';
 import useOutsideClick from '@eeacms/search/lib/hocs/useOutsideClick';
 import addSVG from '@plone/volto/icons/add.svg';
@@ -14,14 +15,16 @@ const NewBlockAddButton = (props) => {
   return (
     <>
       {isOpenMenu ? (
-        <div ref={ref}>
-          <BlockChooser
-            onMutateBlock={onMutateBlock}
-            currentBlock={block}
-            showRestricted
-            allowedBlocks={allowedBlocks}
-          />
-        </div>
+        <BodyClass className="has-block-chooser">
+          <div ref={ref}>
+            <BlockChooser
+              onMutateBlock={onMutateBlock}
+              currentBlock={block}
+              showRestricted
+              allowedBlocks={allowedBlocks}
+            />
+          </div>
+        </BodyClass>
       ) : (
         <Button
           basic
