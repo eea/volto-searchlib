@@ -12,6 +12,12 @@
   position: relative;
 
   .ui.tabular.menu {
+    border: none;
+
+    .item {
+      border: none;
+    }
+
     .ui.basic.button {
       border: 0px;
 
@@ -21,7 +27,20 @@
 
       &:hover {
         box-shadow: none;
+        background-color: transparent !important;
       }
+    }
+  }
+
+  .block-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui.basic.button.add-block-button {
+    &:hover {
+      box-shadow: none !important;
     }
   }
 }

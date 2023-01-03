@@ -29,6 +29,7 @@ const NewBlockAddButton = (props) => {
         <Button
           basic
           icon
+          title="Add block"
           onClick={() => setOpenMenu(true)}
           className="add-block-button"
           aria-label={`Add block in position ${block}`}
