@@ -50,7 +50,11 @@ function FullView(props) {
                         selected={false}
                         block={blockId}
                         mode={mode}
-                        data={slotFills?.[blockId]}
+                        data={
+                          slotFills?.[blockId] || mode === 'view'
+                            ? slotFills?.[`${blockId.split('-')[0]}-any`]
+                            : null
+                        }
                         onChangeSlotfill={onChangeSlotfill}
                         onDeleteSlotfill={onDeleteSlotfill}
                         onSelectSlotfill={onSelectSlotfill}

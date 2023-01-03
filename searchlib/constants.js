@@ -16,7 +16,7 @@ export const SEARCH_STATE_IDS = {
 };
 
 export const SEARCH_STATES = [
-  [SEARCH_STATE_IDS.any, 'Always'],
+  [SEARCH_STATE_IDS.any, 'Any state'],
   [SEARCH_STATE_IDS.isLandingPage, 'Landing page'],
   [SEARCH_STATE_IDS.hasResults, 'Has results'],
   [SEARCH_STATE_IDS.hasNoResults, 'Has no results'],
