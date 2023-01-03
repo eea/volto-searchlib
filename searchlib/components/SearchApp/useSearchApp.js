@@ -17,8 +17,8 @@ import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { loadingFamily, driverFamily } from './state';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
-export function useSearchDriver({ elasticConfig, appName }) {
-  const driverAtom = driverFamily({ elasticConfig, appName });
+export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
+  const driverAtom = driverFamily({ elasticConfig, appName, uniqueId });
   const driver = useAtomValue(driverAtom);
 
   React.useEffect(() => {
@@ -34,6 +34,7 @@ export default function useSearchApp({
   paramOnSearch,
   paramOnAutocomplete,
   initialState,
+  uniqueId,
 }) {
   const appConfig = React.useMemo(
     () => ({
@@ -95,7 +96,11 @@ export default function useSearchApp({
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
-  const driverInstance = useSearchDriver({ elasticConfig, appName });
+  const driverInstance = useStoredSearchDriver({
+    elasticConfig,
+    appName,
+    uniqueId,
+  });
 
   const mapContextToProps = React.useCallback(
     (params) => {

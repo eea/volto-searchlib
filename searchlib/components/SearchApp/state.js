@@ -8,9 +8,10 @@ export const loadingFamily = atomFamily(
 );
 
 export const driverFamily = atomFamily(
-  ({ elasticConfig, appName }) => {
+  ({ elasticConfig, appName, uniqueId }) => {
     const driver = __CLIENT__ ? new SearchDriver(elasticConfig) : null;
+    // console.log('new driver', elasticConfig, appName, uniqueId);
     return atom(driver);
   },
-  (a, b) => a.appName === b.appName,
+  (a, b) => `${a.appName}-${a.uniqueId}` === `${b.appName}-${b.uniqueId}`,
 );

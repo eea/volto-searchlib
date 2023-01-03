@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
 function LandingPageView(props) {
-  const history = useHistory();
   const { registry, appName } = props;
   const appConfig = registry.searchui[appName];
   const url = flattenToAppURL(appConfig.url || '');
+  const history = useHistory();
 
   return (
     <>
@@ -16,6 +16,7 @@ function LandingPageView(props) {
         onSubmitSearch={
           url
             ? (qs) => {
+                // window.location = `${url}?${qs}`;
                 history.push(`${url}?${qs}`);
               }
             : null

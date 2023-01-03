@@ -33,6 +33,10 @@ function BoostrapLandingPageView(props) {
 
 export default function LandingPageApp(props) {
   return (
-    <BasicSearchApp {...props} searchViewComponent={BoostrapLandingPageView} />
+    <BasicSearchApp
+      {...props}
+      uniqueId="landingPage"
+      searchViewComponent={BoostrapLandingPageView}
+    />
   );
 }

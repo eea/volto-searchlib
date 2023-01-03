@@ -30,7 +30,9 @@ export const SearchView = (props) => {
 
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
-  const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
+  const searchedTerm = driver.URLManager // URLManager doesn't exist if not trackStateURL
+    ? driver.URLManager.getStateFromURL().searchTerm
+    : null;
 
   const wasInteracted = !!(
     searchedTerm ||
