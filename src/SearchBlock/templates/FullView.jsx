@@ -43,6 +43,7 @@ function FullView(props) {
             {},
             ...(mode === 'view'
               ? slotCombinations.map((blockId) => {
+                  const fallbackId = `${blockId.split('-')[0]}-any`;
                   return {
                     [blockId]: (
                       <BlockContainer
@@ -51,8 +52,10 @@ function FullView(props) {
                         block={blockId}
                         mode={mode}
                         data={
-                          slotFills?.[blockId] || mode === 'view'
-                            ? slotFills?.[`${blockId.split('-')[0]}-any`]
+                          slotFills?.[blockId]
+                            ? slotFills?.[blockId]
+                            : mode === 'view'
+                            ? slotFills?.[fallbackId]
                             : null
                         }
                         onChangeSlotfill={onChangeSlotfill}
