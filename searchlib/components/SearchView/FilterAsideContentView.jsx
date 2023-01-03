@@ -103,7 +103,7 @@ export const FilterAsideContentView = (props) => {
 
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 
-        {current === 1 ? <AnswerBox /> : ''}
+        {/* {current === 1 ? <AnswerBox /> : ''} */}
 
         {<ResultViewComponent>{children}</ResultViewComponent>}
 

@@ -57,6 +57,7 @@ export default function BasicSearchApp(props) {
     paramOnAutocomplete = bindOnAutocomplete,
     searchViewComponent,
     initialState,
+    uniqueId,
     ...rest
   } = props;
 
@@ -72,6 +73,7 @@ export default function BasicSearchApp(props) {
     paramOnSearch,
     paramOnAutocomplete,
     initialState,
+    uniqueId,
   });
 
   const mappedWithSearch = React.useMemo(() => withSearch(mapContextToProps), [

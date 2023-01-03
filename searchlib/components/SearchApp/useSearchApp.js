@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   getDefaultFilters,
@@ -14,15 +15,19 @@ import {
 
 import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
-import { loadingFamily, driverFamily } from './state';
+import { loadingFamily } from './state';
+import { SearchDriver } from '@elastic/search-ui';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
-export function useSearchDriver({ elasticConfig, appName }) {
-  const driverAtom = driverFamily({ elasticConfig, appName });
-  const driver = useAtomValue(driverAtom);
+export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
+  const [driver, setDriver] = React.useState(null);
+
+  useDeepCompareEffect(() => {
+    setDriver(new SearchDriver(elasticConfig));
+  }, [elasticConfig, appName]);
 
   React.useEffect(() => {
-    return () => driver.tearDown();
+    return () => driver && driver.tearDown();
   }, [driver]);
 
   return driver;
@@ -34,6 +39,7 @@ export default function useSearchApp({
   paramOnSearch,
   paramOnAutocomplete,
   initialState,
+  uniqueId,
 }) {
   const appConfig = React.useMemo(
     () => ({
@@ -85,13 +91,21 @@ export default function useSearchApp({
           : {}),
         ...(initialState || {}),
       },
+      // we don't want to track the URL if our search app is configured as
+      // a simple separate app (for ex. search input or landing page that
+      // trampolines to another instance)
+      trackUrlState: appConfig.url ? false : appConfig.trackUrlState,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
-  const driverInstance = useSearchDriver({ elasticConfig, appName });
+  const driverInstance = useStoredSearchDriver({
+    elasticConfig,
+    appName,
+    uniqueId,
+  });
 
   const mapContextToProps = React.useCallback(
     (params) => {
@@ -120,6 +134,10 @@ export default function useSearchApp({
   //   driverInstance,
   //   facetOptions,
   // });
+
+  // React.useEffect(() => () => console.log('unmount useSearchApp', appName), [
+  //   appName,
+  // ]);
 
   return {
     facetOptions,
