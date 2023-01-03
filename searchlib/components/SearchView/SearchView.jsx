@@ -99,7 +99,17 @@ export const SearchView = (props) => {
         }
         sideContent={null}
         bodyHeader={<SampleQueryPrompt />}
-        bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
+        bodyContent={
+          <>
+            <BodyContent {...props} wasInteracted={wasInteracted} />
+
+            <RenderSlot
+              {...props}
+              searchState={searchState}
+              slotName="belowResults"
+            />
+          </>
+        }
         bodyFooter={wasInteracted ? <AppInfo appConfig={appConfig} /> : null}
       />
     </div>
