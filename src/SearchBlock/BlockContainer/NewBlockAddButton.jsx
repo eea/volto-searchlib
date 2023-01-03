@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 import { BodyClass } from '@plone/volto/helpers';
 import { BlockChooser, Icon } from '@plone/volto/components';
 import useOutsideClick from '@eeacms/search/lib/hocs/useOutsideClick';
-import addSVG from '@plone/volto/icons/add.svg';
+import addSVG from '@plone/volto/icons/circle-plus.svg';
 
 const NewBlockAddButton = (props) => {
   const { allowedBlocks, block, onMutateBlock } = props;
@@ -34,7 +34,8 @@ const NewBlockAddButton = (props) => {
           className="add-block-button"
           aria-label={`Add block in position ${block}`}
         >
-          <Icon name={addSVG} className="circled" size="24px" />
+          <Icon name={addSVG} size="24px" />
+          Add block
         </Button>
       )}
     </>
