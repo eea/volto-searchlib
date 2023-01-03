@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-// import { useResetAtom } from 'jotai/utils';
 
 import {
   getDefaultFilters,
@@ -16,18 +15,14 @@ import {
 
 import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
-import { loadingFamily, driverFamily } from './state';
+import { loadingFamily } from './state';
 import { SearchDriver } from '@elastic/search-ui';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
-  // const driverAtom = driverFamily({ elasticConfig, appName, uniqueId });
-  // const driver = useAtomValue(driverAtom);
-
   const [driver, setDriver] = React.useState(null);
 
   useDeepCompareEffect(() => {
-    console.log('new searchdriver', appName);
     setDriver(new SearchDriver(elasticConfig));
   }, [elasticConfig, appName]);
 
@@ -140,16 +135,9 @@ export default function useSearchApp({
   //   facetOptions,
   // });
 
-  const { url } = appConfig;
-  React.useEffect(
-    () => () => {
-      if (!url) {
-        console.log('unmount useSearchApp', appName, driverInstance);
-        // driverInstance.reset();
-      }
-    },
-    [appName, driverInstance, url],
-  );
+  // React.useEffect(() => () => console.log('unmount useSearchApp', appName), [
+  //   appName,
+  // ]);
 
   return {
     facetOptions,

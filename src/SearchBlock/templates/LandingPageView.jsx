@@ -16,7 +16,6 @@ function LandingPageView(props) {
         onSubmitSearch={
           url
             ? (qs) => {
-                // window.location = `${url}?${qs}`;
                 history.push(`${url}?${qs}`);
               }
             : null
