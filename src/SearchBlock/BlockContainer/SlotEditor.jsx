@@ -51,6 +51,7 @@ export default function SlotEditor(props) {
                     as="a"
                     icon
                     basic
+                    title="Delete block"
                     aria-label="Delete block"
                     onClick={() => onDeleteSlotfill(blockId)}
                   >

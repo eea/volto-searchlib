@@ -62,7 +62,7 @@ export default function BlockContainer(props) {
       blocksConfig={blocksConfig}
     />
   ) : (
-    <div>
+    <div className="block-wrapper">
       <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
     </div>
   );

@@ -3,7 +3,7 @@
 .cms-ui {
   .aboveSearchblockOverlay {
     padding: 0.4rem;
-    background: pink;
+    background: #ffe5ea;
   }
 }
 
@@ -12,16 +12,44 @@
   z-index: @overlayZIndex + 1;
 
   .ui.tabular.menu {
+    border: none;
+
+    .item {
+      border: none;
+    }
+
     .ui.basic.button {
       border: 0px;
 
       &.red {
         box-shadow: none !important;
+        font-weight: bold;
       }
 
       &:hover {
+        background-color: transparent !important;
         box-shadow: none;
       }
+    }
+  }
+
+  .ui.active.tab {
+    min-height: 60px;
+  }
+
+  .block-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui.basic.button.add-block-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    &:hover {
+      box-shadow: none !important;
     }
   }
 }
