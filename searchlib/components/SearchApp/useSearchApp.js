@@ -85,6 +85,10 @@ export default function useSearchApp({
           : {}),
         ...(initialState || {}),
       },
+      // we don't want to track the URL if our search app is configured as
+      // a simple separate app (for ex. search input or landing page that
+      // trampolines to another instance)
+      trackUrlState: appConfig.url ? false : appConfig.trackUrlState,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
   );
