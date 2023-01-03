@@ -2,14 +2,14 @@
 
 .cms-ui {
   .aboveSearchblockOverlay {
-    background: pink;
     padding: 0.4rem;
+    background: pink;
   }
 }
 
 .aboveSearchblockOverlay {
-  z-index: @overlayZIndex + 1;
   position: relative;
+  z-index: @overlayZIndex + 1;
 
   .ui.tabular.menu {
     .ui.basic.button {
@@ -28,9 +28,9 @@
 
 .searchlib-edit-overlay {
   position: absolute;
+  z-index: @overlayZIndex;
   width: 100%;
   height: 100%;
-  z-index: @overlayZIndex;
 }
 
 body.has-block-chooser {
