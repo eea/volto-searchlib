@@ -11,7 +11,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
 import useSearchApp from './useSearchApp';
-// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 function applySearchWrappers(SearchViewComponent) {
   function SearchWrapper(props) {
@@ -27,7 +27,7 @@ function applySearchWrappers(SearchViewComponent) {
     } = props;
 
     const [payload, update] = React.useState(appConfigContext);
-    // React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
+    React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
 
     return (
       <AppConfigContext.Provider value={{ payload, update }}>
@@ -93,12 +93,12 @@ export default function BasicSearchApp(props) {
     return mappedWithSearch(applySearchWrappers(searchViewComponent));
   }, [mappedWithSearch, searchViewComponent]);
 
-  // useWhyDidYouUpdate('BasicSearchApp', {
-  //   mapContextToProps,
-  //   searchViewComponent,
-  //   WrappedSearchView,
-  //   registry,
-  // });
+  useWhyDidYouUpdate('BasicSearchApp', {
+    mapContextToProps,
+    searchViewComponent,
+    WrappedSearchView,
+    registry,
+  });
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>

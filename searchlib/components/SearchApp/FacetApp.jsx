@@ -2,20 +2,22 @@
  * A Search app that wraps and provides access to a single facet
  */
 import React from 'react';
-import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useAppConfig, useSearchDriver } from '@eeacms/search/lib/hocs';
-import BasicSearchApp from './BasicSearchApp';
 import { isEqual } from 'lodash';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+
+import { Facet as SUIFacet } from '@eeacms/search/components';
+import { useSearchContext, useSearchDriver } from '@eeacms/search/lib/hocs';
 
 const sorter = (fa, fb) =>
   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
 
-function BoostrapFacetView(props) {
-  const { field, onChange, value } = props;
-  const { appConfig, registry } = useAppConfig();
+export default function FacetApp(props) {
+  const searchContext = useSearchContext();
+  const { appConfig, registry, field, onChange, value } = props;
+  // const { field, onChange, value } = props;
   const driver = useSearchDriver();
-  const { filters, setFilter } = driver.state;
+  // console.log({ searchContext, props, driver });
+  const { filters, setFilter, removeFilter, addFilter } = searchContext; // driver.state
 
   const facet = appConfig.facets?.find((f) => f.field === field);
   const FacetComponent = registry.resolve[facet.factory].component;
@@ -31,61 +33,92 @@ function BoostrapFacetView(props) {
 
   const onChangeFilterType = React.useCallback(
     (_type) => {
-      driver.removeFilter(field);
+      removeFilter(field);
       const { values = [] } = value || {};
       values.forEach((v) => {
-        driver.addFilter(field, v, _type);
+        addFilter(field, v, _type);
       });
 
       setLocalFilterType(_type);
     },
-    [driver, field, value],
+    [field, value, addFilter, removeFilter],
   );
 
+  // useDeepCompareEffect(() => {
+  //   // on initializing the form, set the active value as filters
+  //   const activeFilter = filters?.find((filter) => filter.field === field);
+  //   console.log('useDeep', activeFilter);
+  //   if (value && !activeFilter) {
+  //     const sortedFilters = [...filters, value].sort(sorter);
+  //     driver._setState({ filters: sortedFilters });
+  //   }
+  // }, [value, filters, field, setFilter, driver]); // searchContext
+
+  const activeValue = filters.find((f) => f.field === field);
+
+  const dirty = !isEqual(activeValue, value);
+  // console.log('redraw facet', { value, activeValue, dirty });
+
+  const timerRef = React.useRef();
+
+  // const sortedFilters = [...filters].sort(sorter);
+
   useDeepCompareEffect(() => {
-    // on initializing the form, set the active value as filters
-    const activeFilter = filters?.find((filter) => filter.field === field);
-    if (value && !activeFilter) {
-      const sortedFilters = [...filters, value].sort(sorter);
-      driver._setState({ filters: sortedFilters });
-    }
-  }, [value, filters, field, setFilter, driver]); // searchContext
-
-  React.useEffect(() => {
-    const { plugins } = driver.events;
-    const plugId = `trackFilters-${field}`;
-
-    if (!plugins.find((plug) => plug.id === plugId)) {
-      function subscribe(payload) {
-        const { filters } = driver.state;
-        const activeValue = filters.find((f) => f.field === field);
-        if (!activeValue) {
-          onChange(null);
-          return;
-        }
-        if (!isEqual(activeValue, value)) {
-          onChange(activeValue);
-        }
+    timerRef.current && clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      if (!isEqual(activeValue, value)) {
+        console.log('onchange', { activeValue, value });
+        onChange(activeValue);
       }
-      plugins.push({
-        id: plugId,
-        subscribe,
-      });
-    }
+    }, 200);
 
     return () => {
-      driver.events.plugins = driver.events.plugins.filter(
-        (plug) => plug.id !== plugId,
-      );
-
-      // handles deleting the facet
-      driver._setState({
-        filters: [
-          ...driver.state.filters.filter((f) => f.field !== field),
-        ].sort(sorter),
-      });
+      timerRef.current && clearTimeout(timerRef.current);
     };
-  }, [driver, field, onChange, value]);
+
+    // return () => {
+    //   console.log('removing filter', field);
+    //   // removeFilter(field); // when the Facet is removed, we remove the filter
+    // };
+  }, [removeFilter, field, activeValue, value, onChange]);
+
+  React.useEffect(() => () => console.log('unmount', field), [field]);
+
+  // React.useEffect(() => {
+  //   const { plugins } = driver.events;
+  //   const plugId = `trackFilters-${field}`;
+  //
+  //   if (!plugins.find((plug) => plug.id === plugId)) {
+  //     function subscribe(payload) {
+  //       const { filters } = driver.state;
+  //       const activeValue = filters.find((f) => f.field === field);
+  //       if (!activeValue) {
+  //         onChange(null);
+  //         return;
+  //       }
+  //       if (!isEqual(activeValue, value)) {
+  //         onChange(activeValue);
+  //       }
+  //     }
+  //     plugins.push({
+  //       id: plugId,
+  //       subscribe,
+  //     });
+  //   }
+  //
+  //   return () => {
+  //     driver.events.plugins = driver.events.plugins.filter(
+  //       (plug) => plug.id !== plugId,
+  //     );
+  //
+  //     // handles deleting the facet
+  //     driver._setState({
+  //       filters: [
+  //         ...driver.state.filters.filter((f) => f.field !== field),
+  //       ].sort(sorter),
+  //     });
+  //   };
+  // }, [driver, field, onChange, value]);
 
   return (
     <SUIFacet
@@ -96,8 +129,4 @@ function BoostrapFacetView(props) {
       onChangeFilterType={onChangeFilterType}
     />
   );
-}
-
-export default function FacetApp(props) {
-  return <BasicSearchApp {...props} searchViewComponent={BoostrapFacetView} />;
 }

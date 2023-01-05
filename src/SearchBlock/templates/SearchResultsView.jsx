@@ -10,7 +10,6 @@ export default function SearchResultsView(props) {
       <div className="searchlib-block">
         {mode !== 'view' && <div className="searchlib-edit-overlay"></div>}
         <SearchResultsApp {...props} />
-        {props.children}
       </div>
     </BodyClass>
   );

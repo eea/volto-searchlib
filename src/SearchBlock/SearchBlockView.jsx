@@ -21,12 +21,13 @@ function SearchBlockView(props) {
     metadata,
   } = props;
   const { appName = 'default' } = data;
+  const blacklist = ['slotFills', 'defaultFilters', 'defaultSort'];
 
   const stableData = useDebouncedStableData(
     Object.assign(
       {},
       ...Object.keys(data)
-        .filter((k) => k !== 'slotFills')
+        .filter((k) => blacklist.indexOf(k) === -1)
         .map((k) => ({ [k]: data[k] })),
     ),
   );
@@ -68,6 +69,7 @@ function SearchBlockView(props) {
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
+      {JSON.stringify(data.defaultFilters)}
       <Variation
         slotFills={data.slotFills}
         registry={registry}

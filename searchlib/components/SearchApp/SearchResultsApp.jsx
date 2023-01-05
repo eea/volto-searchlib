@@ -4,7 +4,7 @@ import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 import BasicSearchApp from './BasicSearchApp';
 
 function BootstrapSearchResultsView(props) {
-  const { appConfig, registry } = props;
+  const { appConfig, registry, children } = props;
 
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;
@@ -24,24 +24,42 @@ function BootstrapSearchResultsView(props) {
     registry.resolve[appConfig['contentBodyComponent'] || 'DefaultContentView']
       .component;
 
-  return NoResultsComponent ? (
-    results.length ? (
-      <ContentBodyView {...props}>
-        {results.map((result, i) => (
-          <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
-        ))}
-      </ContentBodyView>
-    ) : (
-      <NoResultsComponent {...props} />
-    )
-  ) : results.length ? (
-    <ContentBodyView {...props}>
-      {results.map((result, i) => (
-        <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
-      ))}
-    </ContentBodyView>
-  ) : (
-    <div className="noResults"></div>
+  React.useEffect(
+    () => () => console.log('unmount BootstrapSearchResultsView'),
+    [],
+  );
+
+  return (
+    <>
+      {children}
+      {NoResultsComponent ? (
+        results.length ? (
+          <ContentBodyView {...props}>
+            {results.map((result, i) => (
+              <Item
+                key={`${i}-${result.id}`}
+                result={result}
+                {...itemViewProps}
+              />
+            ))}
+          </ContentBodyView>
+        ) : (
+          <NoResultsComponent {...props} />
+        )
+      ) : results.length ? (
+        <ContentBodyView {...props}>
+          {results.map((result, i) => (
+            <Item
+              key={`${i}-${result.id}`}
+              result={result}
+              {...itemViewProps}
+            />
+          ))}
+        </ContentBodyView>
+      ) : (
+        <div className="noResults"></div>
+      )}
+    </>
   );
 }
 
@@ -52,6 +70,8 @@ export default function SearchResultsApp(props) {
     ...(defaultFilters?.length ? { filters: defaultFilters } : {}),
     ...(defaultSort ? { sortField, sortDirection } : {}),
   }); // this makes the prop stable
+
+  React.useEffect(() => () => console.log('unmount SearchResultsApp'), []);
 
   return (
     <BasicSearchApp
