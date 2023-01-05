@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
 /**
  * Reuse the schema to allow pinpointing in the config, to allow adjusting the
@@ -10,7 +10,7 @@ import { cloneDeep } from 'lodash';
  * - with `modifyConfig` you can write a function that can change the settings
  *
  */
-export const applyBlockSettings = (config, appName, data, schema) => {
+const _applyBlockSettings = (config, appName, data, schema) => {
   // apply mutations inline to the config
 
   config = cloneDeep(config);
@@ -47,3 +47,19 @@ export const applyBlockSettings = (config, appName, data, schema) => {
   }
   return config;
 };
+
+let _params, _cachedResult;
+
+const cacheOnce = (func) => (config, appName, data, schema) => {
+  // Because React uses object identity to recreate components, we try to
+  // create a stable version of the "registry" by only producing it again if
+  // the data has changed
+  if (!_params || !isEqual(_params, { appName, data })) {
+    _cachedResult = _applyBlockSettings(config, appName, data, schema);
+    _params = { appName, data };
+    // console.log('recomputed');
+  }
+  return _cachedResult;
+};
+
+export const applyBlockSettings = cacheOnce(_applyBlockSettings);

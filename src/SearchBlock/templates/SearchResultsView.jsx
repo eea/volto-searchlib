@@ -2,24 +2,23 @@ import React from 'react';
 import { BodyClass } from '@plone/volto/helpers';
 import { SearchResultsApp } from '@eeacms/search';
 
-const overlayStyle = {
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  zIndex: '100',
-};
-
 export default function SearchResultsView(props) {
   const { appName, mode } = props;
+
+  // const ref = React.useRef();
+  // const { registry } = props;
+  // React.useEffect(() => {
+  //   ref.current = registry;
+  // });
+  // if (!(registry === ref.current))
+  //   console.log('SearchResultsView not isSame', ref.current, registry);
+  // React.useEffect(() => () => console.log('unmount SearchResultsView'), []);
 
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
-        {mode !== 'view' && (
-          <div className="overlay" style={overlayStyle}></div>
-        )}
+        {mode !== 'view' && <div className="searchlib-edit-overlay"></div>}
         <SearchResultsApp {...props} />
-        {props.children}
       </div>
     </BodyClass>
   );
@@ -57,7 +56,7 @@ const setFacetWidgetProps = (appConfig, registry, appName) => {
 
     schema.properties.name.choices = appConfig.facets.map((facet) => [
       facet.id || facet.field,
-      facet.label || facet.field,
+      facet.activeFilterLabel || facet.label || facet.field,
     ]);
 
     schema.properties.value.facetName = data.name;

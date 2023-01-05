@@ -45,6 +45,7 @@ import DefaultContentView from './SearchView/DefaultContentView';
 import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 import DropdownFacetsList from './Facets/DropdownFacetsList';
 import DropdownFacetWrapper from './Facets/Wrappers/DropdownFacetWrapper';
+import RenderSlot from './RenderSlot/RenderSlot';
 
 export {
   Component,
@@ -64,6 +65,7 @@ export {
   InlineFilterList,
   LeftColumnLayout,
   RightColumnLayout,
+  RenderSlot,
   StringList,
   TagsList,
   TableRowItem,

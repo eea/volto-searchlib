@@ -1,16 +1,28 @@
 import React from 'react';
 import { BodyClass } from '@plone/volto/helpers';
-import { SearchApp } from '@eeacms/search';
+import { SEARCH_STATES, SLOTS, SearchApp } from '@eeacms/search';
+import { SlotEditor, BlockContainer } from './../BlockContainer';
 
-const overlayStyle = {
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  zIndex: '100',
-};
+const slotCombinations = SLOTS.reduce(
+  (acc, slot) => [
+    ...acc,
+    ...SEARCH_STATES.map((state) => `${slot}-${state[0]}`),
+  ],
+  [],
+);
 
 function FullView(props) {
-  const { appName, mode } = props;
+  const {
+    appName,
+    mode,
+    slotFills,
+    onChangeSlotfill,
+    onDeleteSlotfill,
+    onSelectSlotfill,
+    selectedSlotFill,
+    properties,
+    metadata,
+  } = props;
 
   // TODO: (about bodyclass) this is a hack, please solve it properly
 
@@ -18,9 +30,61 @@ function FullView(props) {
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
         {mode !== 'view' && (
-          <div className="overlay" style={overlayStyle}></div>
+          <div
+            role="presentation"
+            onKeyDown={() => onSelectSlotfill(null)}
+            className="searchlib-edit-overlay"
+            onClick={() => onSelectSlotfill(null)}
+          ></div>
         )}
-        <SearchApp {...props} />
+        <SearchApp
+          {...props}
+          {...Object.assign(
+            {},
+            ...(mode === 'view'
+              ? slotCombinations.map((blockId) => {
+                  const fallbackId = `${blockId.split('-')[0]}-any`;
+                  return {
+                    [blockId]: (
+                      <BlockContainer
+                        key={blockId}
+                        selected={false}
+                        block={blockId}
+                        mode={mode}
+                        data={
+                          slotFills?.[blockId]
+                            ? slotFills?.[blockId]
+                            : mode === 'view'
+                            ? slotFills?.[fallbackId]
+                            : null
+                        }
+                        onChangeSlotfill={onChangeSlotfill}
+                        onDeleteSlotfill={onDeleteSlotfill}
+                        onSelectSlotfill={onSelectSlotfill}
+                        properties={properties}
+                        metadata={metadata}
+                      />
+                    ),
+                  };
+                })
+              : SLOTS.map((name) => ({
+                  [name]: (
+                    <SlotEditor
+                      key={name}
+                      slot={name}
+                      data={slotFills}
+                      mode={mode}
+                      onChangeSlotfill={onChangeSlotfill}
+                      onDeleteSlotfill={onDeleteSlotfill}
+                      onSelectSlotfill={onSelectSlotfill}
+                      selectedSlotFill={selectedSlotFill}
+                      properties={properties}
+                      metadata={metadata}
+                    />
+                  ),
+                }))),
+          )}
+        />
         {props.children}
       </div>
     </BodyClass>
@@ -28,7 +92,7 @@ function FullView(props) {
 }
 
 FullView.schemaEnhancer = ({ schema }) => {
-  schema.fieldsets[0].fields.unshift('defaultResultView');
+  // schema.fieldsets[0].fields.unshift('defaultResultView');
 
   return schema;
 };

@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
+import useDeepCompareEffect, {
+  useDeepCompareEffectNoCheck,
+} from 'use-deep-compare-effect';
 
 import {
   getDefaultFilters,
@@ -14,33 +17,46 @@ import {
 
 import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
-import { loadingFamily, driverFamily } from './state';
+import { loadingFamily } from './state';
+import { SearchDriver } from '@elastic/search-ui';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
-export function useSearchDriver({ elasticConfig, appName }) {
-  const driverAtom = driverFamily({ elasticConfig, appName });
-  const driver = useAtomValue(driverAtom);
+export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
+  const [driver, setDriver] = React.useState(null);
+
+  useDeepCompareEffect(() => {
+    setDriver(new SearchDriver(elasticConfig));
+  }, [elasticConfig, appName]);
+
+  // useWhyDidYouUpdate('setStoredSearchDriver', { elasticConfig, appName });
 
   React.useEffect(() => {
-    return () => driver.tearDown();
+    return () => {
+      // console.log('unmount useStoredSearchDriver');
+      driver && driver.tearDown();
+    };
   }, [driver]);
 
   return driver;
 }
 
-export default function useSearchApp({
-  appName,
-  registry,
-  paramOnSearch,
-  paramOnAutocomplete,
-  initialState,
-}) {
-  const appConfig = React.useMemo(
-    () => ({
+export default function useSearchApp(props) {
+  const {
+    appName,
+    registry,
+    paramOnSearch,
+    paramOnAutocomplete,
+    initialState,
+  } = props;
+  // useWhyDidYouUpdate('sss', props);
+
+  const appConfig = React.useMemo(() => {
+    // console.log('redo appConfig');
+    return {
       ...applyConfigurationSchema(rebind(registry.searchui[appName])),
       appName,
-    }),
-    [appName, registry],
-  );
+    };
+  }, [appName, registry]);
 
   const loadingAtom = loadingFamily(appName);
   const [, setIsLoading] = useAtom(loadingAtom);
@@ -84,13 +100,31 @@ export default function useSearchApp({
           : {}),
         ...(initialState || {}),
       },
+      // we don't want to track the URL if our search app is configured as
+      // a simple separate app (for ex. search input or landing page that
+      // trampolines to another instance)
+      trackUrlState: appConfig.url ? false : appConfig.trackUrlState,
     }),
     [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
-  const driverInstance = useSearchDriver({ elasticConfig, appName });
+  const [driverInstance, setDriver] = React.useState(null);
+
+  useDeepCompareEffectNoCheck(() => {
+    if (!driverInstance) {
+      const driver = new SearchDriver(elasticConfig);
+      // console.log('set driver', driver);
+      setDriver(driver);
+    }
+  }, [appName]);
+
+  // const driverInstance = useStoredSearchDriver({
+  //   elasticConfig,
+  //   appName,
+  //   uniqueId,
+  // });
 
   const mapContextToProps = React.useCallback(
     (params) => {
@@ -113,6 +147,27 @@ export default function useSearchApp({
     },
     [appConfig, driverInstance, facetOptions],
   );
+
+  // useWhyDidYouUpdate('useSearchApp', {
+  //   appConfig,
+  //   driverInstance,
+  //   facetOptions,
+  //   registry,
+  //   onAutocomplete,
+  //   onSearch,
+  //   locationSearchTerm,
+  //   initialState,
+  // });
+
+  React.useEffect(() => {
+    return () => {
+      driverInstance && driverInstance.tearDown();
+    };
+  }, [driverInstance]);
+
+  // React.useEffect(() => {
+  //   return () => console.log('unmount useSearchApp');
+  // }, []);
 
   return {
     facetOptions,
