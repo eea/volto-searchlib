@@ -47,8 +47,8 @@ export default function FacetApp(props) {
   // useDeepCompareEffect(() => {
   //   // on initializing the form, set the active value as filters
   //   const activeFilter = filters?.find((filter) => filter.field === field);
-  //   console.log('useDeep', activeFilter);
   //   if (value && !activeFilter) {
+  //     console.log('useDeep', activeFilter);
   //     const sortedFilters = [...filters, value].sort(sorter);
   //     driver._setState({ filters: sortedFilters });
   //   }
@@ -71,18 +71,16 @@ export default function FacetApp(props) {
         onChange(activeValue);
       }
     }, 200);
-
-    return () => {
-      timerRef.current && clearTimeout(timerRef.current);
-    };
-
-    // return () => {
-    //   console.log('removing filter', field);
-    //   // removeFilter(field); // when the Facet is removed, we remove the filter
-    // };
   }, [removeFilter, field, activeValue, value, onChange]);
 
-  React.useEffect(() => () => console.log('unmount', field), [field]);
+  React.useEffect(
+    () => () => {
+      removeFilter(field); // when the Facet is removed, we remove the filter
+      timerRef.current && clearTimeout(timerRef.current);
+      console.log('unmount', field);
+    },
+    [field, removeFilter],
+  );
 
   // React.useEffect(() => {
   //   const { plugins } = driver.events;

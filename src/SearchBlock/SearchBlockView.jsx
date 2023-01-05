@@ -4,6 +4,7 @@ import { SearchBlockSchema } from './schema';
 import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
 import { applyBlockSettings } from './utils';
 import { useDebouncedStableData } from './hocs';
+import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 import './less/styles.less';
 
@@ -41,6 +42,7 @@ function SearchBlockView(props) {
   const registry = React.useMemo(() => {
     // TODO: this has the effect that the appConfig is never stable if the
     // schema changes, even if it's unrelated.
+    console.log('redo registry');
     const reg = applyBlockSettings(
       config.settings.searchlib,
       appName,
@@ -63,6 +65,14 @@ function SearchBlockView(props) {
     return reg;
   }, [appName, stableData, schema, mode]);
 
+  useWhyDidYouUpdate('SearchBlockView', {
+    registry,
+    stableData,
+    schema,
+    mode,
+    appName,
+  });
+
   const Variation = variation.view;
   // React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
 
@@ -76,9 +86,7 @@ function SearchBlockView(props) {
         appName={appName}
         mode={mode}
         defaultSort={data.defaultSort}
-        defaultFilters={data.defaultFilters
-          ?.map((f) => (f.value ? f.value : undefined))
-          .filter((f) => !!f)}
+        defaultFilters={data.defaultFilters}
         onChangeSlotfill={onChangeSlotfill}
         onDeleteSlotfill={onDeleteSlotfill}
         onSelectSlotfill={onSelectSlotfill}
