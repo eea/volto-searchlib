@@ -25,10 +25,10 @@ function BootstrapSearchResultsView(props) {
     registry.resolve[appConfig['contentBodyComponent'] || 'DefaultContentView']
       .component;
 
-  React.useEffect(
-    () => () => console.log('unmount BootstrapSearchResultsView'),
-    [],
-  );
+  // React.useEffect(
+  //   () => () => console.log('unmount BootstrapSearchResultsView'),
+  //   [],
+  // );
 
   return (
     <>
