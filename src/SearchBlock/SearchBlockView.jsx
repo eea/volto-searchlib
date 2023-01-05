@@ -79,7 +79,7 @@ function SearchBlockView(props) {
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
-      {JSON.stringify(data.defaultFilters)}
+      {/* {JSON.stringify(data.defaultFilters)} */}
       <Variation
         slotFills={data.slotFills}
         registry={registry}
