@@ -42,7 +42,7 @@ function SearchBlockView(props) {
   const registry = React.useMemo(() => {
     // TODO: this has the effect that the appConfig is never stable if the
     // schema changes, even if it's unrelated.
-    console.log('redo registry');
+    // console.log('redo registry');
     const reg = applyBlockSettings(
       config.settings.searchlib,
       appName,

@@ -78,21 +78,18 @@ export default function SearchResultsApp(props) {
       : {}),
     ...(defaultSort ? { sortField, sortDirection } : {}),
   }); // this makes the prop stable
-
-  React.useEffect(() => {
-    return () => console.log('unmount SearchResultsApp');
-  }, []);
-
-  const ref = React.useRef();
   const { registry } = props;
 
-  React.useEffect(() => {
-    ref.current = registry;
-  });
-
-  if (!(registry === ref.current))
-    console.log('SearchResultsApp isSame', ref.current, registry);
-
+  // React.useEffect(() => {
+  //   return () => console.log('unmount SearchResultsApp');
+  // }, []);
+  // const ref = React.useRef();
+  // React.useEffect(() => {
+  //   ref.current = registry;
+  // });
+  //
+  // if (!(registry === ref.current))
+  //   console.log('SearchResultsApp isSame', ref.current, registry);
   // useWhyDidYouUpdate('SearchResultsApp', { registry });
   // console.log('redraw SearchResultsApp');
 

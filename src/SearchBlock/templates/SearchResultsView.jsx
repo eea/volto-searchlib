@@ -5,17 +5,14 @@ import { SearchResultsApp } from '@eeacms/search';
 export default function SearchResultsView(props) {
   const { appName, mode } = props;
 
-  const ref = React.useRef();
-  const { registry } = props;
-
-  React.useEffect(() => {
-    ref.current = registry;
-  });
-
-  if (!(registry === ref.current))
-    console.log('SearchResultsView not isSame', ref.current, registry);
-
-  React.useEffect(() => () => console.log('unmount SearchResultsView'), []);
+  // const ref = React.useRef();
+  // const { registry } = props;
+  // React.useEffect(() => {
+  //   ref.current = registry;
+  // });
+  // if (!(registry === ref.current))
+  //   console.log('SearchResultsView not isSame', ref.current, registry);
+  // React.useEffect(() => () => console.log('unmount SearchResultsView'), []);
 
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>

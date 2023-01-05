@@ -19,7 +19,7 @@ import { resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { loadingFamily } from './state';
 import { SearchDriver } from '@elastic/search-ui';
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
   const [driver, setDriver] = React.useState(null);
@@ -28,11 +28,11 @@ export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
     setDriver(new SearchDriver(elasticConfig));
   }, [elasticConfig, appName]);
 
-  useWhyDidYouUpdate('setStoredSearchDriver', { elasticConfig, appName });
+  // useWhyDidYouUpdate('setStoredSearchDriver', { elasticConfig, appName });
 
   React.useEffect(() => {
     return () => {
-      console.log('unmount useStoredSearchDriver');
+      // console.log('unmount useStoredSearchDriver');
       driver && driver.tearDown();
     };
   }, [driver]);
@@ -48,10 +48,10 @@ export default function useSearchApp(props) {
     paramOnAutocomplete,
     initialState,
   } = props;
-  useWhyDidYouUpdate('sss', props);
+  // useWhyDidYouUpdate('sss', props);
 
   const appConfig = React.useMemo(() => {
-    console.log('redo appConfig');
+    // console.log('redo appConfig');
     return {
       ...applyConfigurationSchema(rebind(registry.searchui[appName])),
       appName,
@@ -115,7 +115,7 @@ export default function useSearchApp(props) {
   useDeepCompareEffectNoCheck(() => {
     if (!driverInstance) {
       const driver = new SearchDriver(elasticConfig);
-      console.log('set driver', driver);
+      // console.log('set driver', driver);
       setDriver(driver);
     }
   }, [appName]);
@@ -148,16 +148,16 @@ export default function useSearchApp(props) {
     [appConfig, driverInstance, facetOptions],
   );
 
-  useWhyDidYouUpdate('useSearchApp', {
-    appConfig,
-    driverInstance,
-    facetOptions,
-    registry,
-    onAutocomplete,
-    onSearch,
-    locationSearchTerm,
-    initialState,
-  });
+  // useWhyDidYouUpdate('useSearchApp', {
+  //   appConfig,
+  //   driverInstance,
+  //   facetOptions,
+  //   registry,
+  //   onAutocomplete,
+  //   onSearch,
+  //   locationSearchTerm,
+  //   initialState,
+  // });
 
   React.useEffect(() => {
     return () => {
@@ -165,9 +165,9 @@ export default function useSearchApp(props) {
     };
   }, [driverInstance]);
 
-  React.useEffect(() => {
-    return () => console.log('unmount useSearchApp');
-  }, []);
+  // React.useEffect(() => {
+  //   return () => console.log('unmount useSearchApp');
+  // }, []);
 
   return {
     facetOptions,

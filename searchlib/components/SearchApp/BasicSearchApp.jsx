@@ -11,7 +11,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
 import useSearchApp from './useSearchApp';
-import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 function applySearchWrappers(SearchViewComponent) {
   function SearchWrapper(props) {
@@ -28,7 +28,7 @@ function applySearchWrappers(SearchViewComponent) {
 
     const [payload, update] = React.useState(appConfigContext);
 
-    React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
+    // React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
 
     return (
       <AppConfigContext.Provider value={{ payload, update }}>
@@ -62,25 +62,19 @@ export default function BasicSearchApp(props) {
     ...rest
   } = props;
 
-  const ref = React.useRef();
-
-  React.useEffect(() => {
-    return () => console.log('Unmount BasicSearchApp');
-  }, []);
-
-  React.useEffect(() => {
-    ref.current = registry;
-  });
-
-  if (!(registry === ref.current))
-    console.log('BasicSearchApp not isSame', {
-      current: ref.current,
-      new: registry,
-    });
-
-  const [stableRegistry] = React.useState(registry);
-
-  useWhyDidYouUpdate('BasicSearchApp registry', registry.searchui.minimal);
+  // const ref = React.useRef();
+  // React.useEffect(() => {
+  //   return () => console.log('Unmount BasicSearchApp');
+  // }, []);
+  // React.useEffect(() => {
+  //   ref.current = registry;
+  // });
+  // if (!(registry === ref.current))
+  //   console.log('BasicSearchApp not isSame', {
+  //     current: ref.current,
+  //     new: registry,
+  //   });
+  // useWhyDidYouUpdate('BasicSearchApp registry', registry.searchui.minimal);
 
   const {
     mapContextToProps,
@@ -90,7 +84,7 @@ export default function BasicSearchApp(props) {
     facetOptions,
   } = useSearchApp({
     appName,
-    registry: stableRegistry,
+    registry,
     paramOnSearch,
     paramOnAutocomplete,
     initialState,
@@ -104,23 +98,23 @@ export default function BasicSearchApp(props) {
 
   const [stableContext, setStableContext] = React.useState({
     appConfig,
-    registry: stableRegistry,
+    registry,
   });
 
-  // useDeepCompareEffect(() => {
-  //   setStableContext({ appConfig, registry });
-  // }, [appConfig, registry]);
+  useDeepCompareEffect(() => {
+    setStableContext({ appConfig, registry });
+  }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
     return mappedWithSearch(applySearchWrappers(searchViewComponent));
   }, [mappedWithSearch, searchViewComponent]);
 
-  useWhyDidYouUpdate('BasicSearchApp', {
-    mapContextToProps,
-    searchViewComponent,
-    WrappedSearchView,
-    stableRegistry,
-  });
+  // useWhyDidYouUpdate('BasicSearchApp', {
+  //   mapContextToProps,
+  //   searchViewComponent,
+  //   WrappedSearchView,
+  //   registry,
+  // });
 
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>

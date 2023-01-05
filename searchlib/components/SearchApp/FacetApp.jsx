@@ -6,18 +6,18 @@ import { isEqual } from 'lodash';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useSearchContext, useSearchDriver } from '@eeacms/search/lib/hocs';
+import { useSearchContext } from '@eeacms/search/lib/hocs'; // , useSearchDriver
 
-const sorter = (fa, fb) =>
-  fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
+// const sorter = (fa, fb) =>
+//   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
 
 export default function FacetApp(props) {
   const searchContext = useSearchContext();
   const { appConfig, registry, field, onChange, value } = props;
   // const { field, onChange, value } = props;
-  const driver = useSearchDriver();
+  // const driver = useSearchDriver();
   // console.log({ searchContext, props, driver });
-  const { filters, setFilter, removeFilter, addFilter } = searchContext; // driver.state
+  const { filters, removeFilter, addFilter } = searchContext; // driver.state
 
   const facet = appConfig.facets?.find((f) => f.field === field);
   const FacetComponent = registry.resolve[facet.factory].component;
@@ -56,7 +56,7 @@ export default function FacetApp(props) {
 
   const activeValue = filters.find((f) => f.field === field);
 
-  const dirty = !isEqual(activeValue, value);
+  // const dirty = !isEqual(activeValue, value);
   // console.log('redraw facet', { value, activeValue, dirty });
 
   const timerRef = React.useRef();
@@ -67,7 +67,7 @@ export default function FacetApp(props) {
     timerRef.current && clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       if (!isEqual(activeValue, value)) {
-        console.log('onchange', { activeValue, value });
+        // console.log('onchange', { activeValue, value });
         onChange(activeValue);
       }
     }, 200);
@@ -77,7 +77,7 @@ export default function FacetApp(props) {
     () => () => {
       removeFilter(field); // when the Facet is removed, we remove the filter
       timerRef.current && clearTimeout(timerRef.current);
-      console.log('unmount', field);
+      // console.log('unmount', field);
     },
     [field, removeFilter],
   );
