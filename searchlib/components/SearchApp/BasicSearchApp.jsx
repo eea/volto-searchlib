@@ -27,6 +27,7 @@ function applySearchWrappers(SearchViewComponent) {
     } = props;
 
     const [payload, update] = React.useState(appConfigContext);
+
     // React.useEffect(() => () => console.log('unmount SearchWrappers'), []);
 
     return (
@@ -61,6 +62,20 @@ export default function BasicSearchApp(props) {
     ...rest
   } = props;
 
+  // const ref = React.useRef();
+  // React.useEffect(() => {
+  //   return () => console.log('Unmount BasicSearchApp');
+  // }, []);
+  // React.useEffect(() => {
+  //   ref.current = registry;
+  // });
+  // if (!(registry === ref.current))
+  //   console.log('BasicSearchApp not isSame', {
+  //     current: ref.current,
+  //     new: registry,
+  //   });
+  // useWhyDidYouUpdate('BasicSearchApp registry', registry.searchui.minimal);
+
   const {
     mapContextToProps,
     appConfig,
@@ -75,6 +90,7 @@ export default function BasicSearchApp(props) {
     initialState,
     uniqueId,
   });
+  // console.log('driver', driverInstance);
 
   const mappedWithSearch = React.useMemo(() => withSearch(mapContextToProps), [
     mapContextToProps,
