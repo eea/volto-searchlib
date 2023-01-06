@@ -20,3 +20,16 @@ export function resetSearch(resetState) {
   // console.log('reset state', state);
   driver._updateSearchResults(state);
 }
+
+export function clearFilters(except = []) {
+  const { setFilter } = this.driver;
+
+  this.driver.clearFilters(except);
+  this.appConfig.facets
+    .filter((f) => !!f.default)
+    .forEach((facet) => {
+      facet.default.values.forEach((value) =>
+        setFilter(facet.field, value, facet.default.type || 'any'),
+      );
+    });
+}
