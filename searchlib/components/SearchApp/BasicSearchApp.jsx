@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { SearchProvider, withSearch } from '@elastic/react-search-ui'; // ErrorBoundary,    WithSearch,
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import { useDeepCompareMemoize } from 'use-deep-compare-effect';
 
 import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { bindOnAutocomplete, bindOnSearch } from '@eeacms/search/lib/request';
@@ -96,14 +96,16 @@ export default function BasicSearchApp(props) {
     mapContextToProps,
   ]);
 
-  const [stableContext, setStableContext] = React.useState({
-    appConfig,
-    registry,
-  });
+  const stableContext = useDeepCompareMemoize({ appConfig, registry });
 
-  useDeepCompareEffect(() => {
-    setStableContext({ appConfig, registry });
-  }, [appConfig, registry]);
+  // const [stableContext, setStableContext] = React.useState({
+  //   appConfig,
+  //   registry,
+  // });
+  //
+  // useDeepCompareEffect(() => {
+  //   setStableContext({ appConfig, registry });
+  // }, [appConfig, registry]);
 
   const WrappedSearchView = React.useMemo(() => {
     return mappedWithSearch(applySearchWrappers(searchViewComponent));

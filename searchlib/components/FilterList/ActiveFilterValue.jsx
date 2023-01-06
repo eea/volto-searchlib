@@ -4,7 +4,7 @@ import { Term } from '@eeacms/search/components';
 import { Label } from 'semantic-ui-react';
 
 const ActiveFilterValue = (props) => {
-  const { field, values, removeFilter } = props;
+  const { field, values, type, removeFilter } = props;
   const { appConfig } = useAppConfig();
 
   const filterConfig = appConfig.facets.find(
@@ -37,7 +37,7 @@ const ActiveFilterValue = (props) => {
               </span>
             }
             onRemove={() => {
-              removeFilter(field, value, filterConfig.filterType);
+              removeFilter(field, value, type || filterConfig.filterType);
             }}
           />
         );

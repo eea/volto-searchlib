@@ -15,7 +15,7 @@ import {
   onAutocompleteResultClick,
 } from '@eeacms/search/lib/request';
 
-import { resetFilters, resetSearch } from './request';
+import { clearFilters, resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { loadingFamily } from './state';
 import { SearchDriver } from '@elastic/search-ui';
@@ -139,6 +139,12 @@ export default function useSearchApp(props) {
         searchContext,
       });
       searchContext.resetSearch = resetSearch.bind({
+        appConfig,
+        searchContext,
+        driver,
+      });
+
+      searchContext.clearFilters = clearFilters.bind({
         appConfig,
         searchContext,
         driver,
