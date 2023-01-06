@@ -21,6 +21,26 @@ import { SEARCH_STATE_IDS } from '@eeacms/search/constants';
 import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
+const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
+  // a check that, once toggled true, it always return true
+
+  const [cached, setCached] = React.useState();
+
+  const wasInteracted = !!(
+    searchedTerm ||
+    checkInteracted({
+      searchContext,
+      appConfig,
+    })
+  );
+
+  React.useEffect(() => {
+    if (wasInteracted && !cached) setCached(true);
+  }, [wasInteracted, cached]);
+
+  return cached || wasInteracted;
+};
+
 export const SearchView = (props) => {
   const { appConfig, appName, mode = 'view' } = props;
 
@@ -34,13 +54,11 @@ export const SearchView = (props) => {
     ? driver.URLManager.getStateFromURL().searchTerm
     : null;
 
-  const wasInteracted = !!(
-    searchedTerm ||
-    checkInteracted({
-      searchContext,
-      appConfig,
-    })
-  );
+  const wasInteracted = useWasInteracted({
+    searchedTerm,
+    searchContext,
+    appConfig,
+  });
 
   React.useEffect(() => {
     window.searchContext = searchContext;
