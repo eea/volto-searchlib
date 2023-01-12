@@ -35,8 +35,8 @@ export function buildRequestFilter(filters, config, options = {}) {
   );
 
   const configuredFilters = [
-    ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
-      facetConfig.buildFilter(
+    ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) => {
+      let fc = facetConfig.buildFilter(
         _fieldToFilterValueMap[facetConfig.field] ??
           (facetConfig.default && includeDefaultValues
             ? {
@@ -45,8 +45,13 @@ export function buildRequestFilter(filters, config, options = {}) {
               }
             : null),
         facetConfig,
-      ),
-    ),
+      );
+      if (config.enableNLP && fc && facetConfig.ignoreFromNlp) {
+        fc.bool.ignoreFromNlp = true;
+      }
+
+      return fc;
+    }),
     ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
   ].filter((f) => !!f);
 
