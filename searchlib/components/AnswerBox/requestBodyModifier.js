@@ -1,9 +1,37 @@
+function findKeyInTree(tree, key) {
+  let found = false;
+  if (typeof tree === 'object') {
+    Object.keys(tree).forEach((node_name) => {
+      if (node_name === key) {
+        found = true;
+      } else {
+        found = found || findKeyInTree(tree[node_name], key);
+      }
+    });
+  }
+  return found;
+}
+function findKeysInTree(tree, keys) {
+  let found = false;
+  keys.forEach((key) => {
+    found = found || findKeyInTree(tree, key);
+  });
+
+  return found;
+}
+
 export default function addQAParams(body, config) {
   // const { from, size } = body;
 
   if (Object.keys(body.aggs).length !== 0) return body;
   if (!config.enableNLP) return body;
-
+  const ignoreNLPWhenActive = config.facets
+    .filter((facet) => facet.ignoreNLPWhenActive === true)
+    .map((facet) => facet['field']);
+  let query_types = config.nlp.qa.qa_queryTypes;
+  if (findKeysInTree(body.query, ignoreNLPWhenActive)) {
+    query_types = ['ignore'];
+  }
   body.params = {
     ...(body.params || {}),
 
@@ -28,7 +56,7 @@ export default function addQAParams(body, config) {
       cutoff: parseFloat(config.nlp.qa.cutoffScore ?? 0.1),
     },
     QuerySearch: {
-      query_types: config.nlp.qa.qa_queryTypes,
+      query_types: query_types,
     },
   };
 
