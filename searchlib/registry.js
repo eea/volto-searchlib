@@ -49,7 +49,6 @@ import {
   getValueFacet,
   getRangeFacet,
   getDateRangeFilter,
-  // getDateRangeFacet,
   getHistogramFilter,
   getBooleanFilter,
   getBooleanFacet,
@@ -58,8 +57,6 @@ import {
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
   buildMLTFilter,
-  // getHistogramFacet,
-  // getMLTValue,
   highlightQueryBuilder,
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
@@ -68,7 +65,7 @@ import {
   addQAParams,
   extractAnswers,
 } from '@eeacms/search/components/AnswerBox';
-// import { valueToString } from './lib/utils';
+import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
 
 const config = {
   resolve: {
@@ -236,6 +233,7 @@ const config = {
 
     ResultModel,
     highlightQueryBuilder,
+    defaultGetActiveFilters: getActiveFilters,
   },
 
   searchui: {
@@ -278,6 +276,7 @@ const config = {
       promptQueryInterval: 20000,
       alwaysSearchOnInitialLoad: false, // used in elastic search driver
       showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
+      getActiveFilters: 'defaultGetActiveFilters',
 
       // highlight: {
       //   queryParams: {

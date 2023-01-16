@@ -6,6 +6,7 @@ export * from './lib/facets';
 export * from './lib/utils';
 export * from './lib/hocs';
 export * from './lib/search';
+export * from './lib/search/helpers';
 export * from './lib/models';
 export * from './lib/serialize';
 export * from './state';

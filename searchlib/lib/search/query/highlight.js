@@ -48,15 +48,15 @@ export const buildHighlight = (searchTerm, config) => {
 
   return searchTerm && config.highlight?.fields
     ? {
-      highlight: {
-        ...config.highlight.queryParams,
-        fields: Object.assign(
-          {},
-          ...config.highlight.fields.map((name) => ({
-            [name]: _highlight(searchTerm, name),
-          })),
-        ),
-      },
-    }
+        highlight: {
+          ...config.highlight.queryParams,
+          fields: Object.assign(
+            {},
+            ...config.highlight.fields.map((name) => ({
+              [name]: _highlight(searchTerm, name),
+            })),
+          ),
+        },
+      }
     : {};
 };

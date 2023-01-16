@@ -191,7 +191,8 @@ export class ResultModel extends BasicModel {
   }
 
   get href() {
-    return this._result.about?.raw;
+    const href = this._result.about?.raw || '';
+    return href.includes('/') ? href : `/en/datahub/datahubitem-view/${href}`;
   }
 
   get source() {

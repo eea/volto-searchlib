@@ -218,3 +218,22 @@ export const checkInteracted = ({ searchContext, appConfig }) => {
 
   return wasInteracted;
 };
+
+export function getActiveFilters(filters, appConfig) {
+  const { facets = [] } = appConfig;
+  const filterableFacets = facets.filter(
+    (f) =>
+      f.isFilter ||
+      (typeof f.showInFacetsList !== 'undefined' ? f.showInFacetsList : true),
+  );
+  const facetNames = filterableFacets.map((f) => f.field);
+  const filterNames = filters
+    .filter((f) => facetNames.includes(f.field))
+    .map((f) => f.field);
+
+  const activeFilters = filters
+    .filter((f) => filterNames.includes(f.field))
+    .filter((f) => !isFilterValueDefaultValue(f, appConfig));
+
+  return activeFilters;
+}
