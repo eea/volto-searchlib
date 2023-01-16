@@ -6,7 +6,7 @@ import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 
 import Answers from './Answers';
-import withAnswers from './withAnswers';
+// import withAnswers from './withAnswers';
 import useTimedMessage from './useTimedMessage';
 import Loader from '../Loaders';
 
@@ -112,7 +112,7 @@ const AnswerBox = (props) => {
   );
 };
 
-const WithLiveAnswers = withAnswers(AnswerBox);
+// const WithLiveAnswers = withAnswers(AnswerBox);
 
 const withStateAnswers = (WrappedComponent) => {
   const WrappedAnswerBox = (props) => {
@@ -130,21 +130,31 @@ const withStateAnswers = (WrappedComponent) => {
     } = appConfig?.nlp?.qa || {};
 
     const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
+    return (
+      <WrappedComponent
+        isQuestion={isQuestion}
+        data={searchContext.answers}
+        loading={false}
+        loaded={true}
+        searchedTerm={resultSearchTerm}
+        searchContext={searchContext}
+      />
+    );
 
-    if (searchContext.answers) {
-      return (
-        <WrappedComponent
-          isQuestion={isQuestion}
-          data={searchContext.answers}
-          loading={false}
-          loaded={true}
-          searchedTerm={resultSearchTerm}
-          searchContext={searchContext}
-        />
-      );
-    } else {
-      return <WithLiveAnswers {...props} />;
-    }
+    // if (searchContext.answers) {
+    //   return (
+    //     <WrappedComponent
+    //       isQuestion={isQuestion}
+    //       data={searchContext.answers}
+    //       loading={false}
+    //       loaded={true}
+    //       searchedTerm={resultSearchTerm}
+    //       searchContext={searchContext}
+    //     />
+    //   );
+    // } else {
+    //   return <WithLiveAnswers {...props} />;
+    // }
   };
   return WrappedAnswerBox;
 };
