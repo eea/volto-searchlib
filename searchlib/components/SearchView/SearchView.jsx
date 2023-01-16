@@ -5,6 +5,7 @@
 import React from 'react';
 
 import { withAppConfig } from '@eeacms/search/lib/hocs';
+import { Icon } from 'semantic-ui-react';
 import {
   SearchBox,
   AppInfo,
@@ -78,12 +79,19 @@ export const SearchView = (props) => {
     : SEARCH_STATE_IDS.hasNoResults;
 
   // React.useEffect(() => () => console.log('unmount SearchView'), []);
+
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       <Layout
         appConfig={appConfig}
         header={
           <>
+            {wasInteracted && (
+              <a href={appConfig.landingPageURL} className="back-link">
+                <Icon className="arrow left" />
+                Back to search home
+              </a>
+            )}
             <RenderSlot
               {...props}
               searchState={searchState}
