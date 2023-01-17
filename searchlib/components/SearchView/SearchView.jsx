@@ -86,12 +86,12 @@ export const SearchView = (props) => {
         appConfig={appConfig}
         header={
           <>
-            {wasInteracted && (
-              <a href={appConfig.landingPageURL} className="back-link">
-                <Icon className="arrow left" />
-                Back to search home
-              </a>
-            )}
+            {/* {wasInteracted && ( */}
+            {/*   <a href={appConfig.landingPageURL} className="back-link"> */}
+            {/*     <Icon className="arrow left" /> */}
+            {/*     Back to search home */}
+            {/*   </a> */}
+            {/* )} */}
             <RenderSlot
               {...props}
               searchState={searchState}
