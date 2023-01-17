@@ -56,8 +56,21 @@ const LandingPage = (props) => {
   const [landingPageData, setLandingPageData] = useAtom(landingPageDataAtom);
   const [isRequested, setIsRequested] = useAtom(isRequestedAtom);
 
+  const activeSectionConfig = getFacetConfig(sections, activeSection);
+
   const getTiles = (maxPerSection) => {
     let result = landingPageData?.[activeSection]?.[0]?.data || [];
+
+    if (activeSectionConfig.blacklist !== undefined) {
+      result = result.filter(
+        (res) => !activeSectionConfig.blacklist.includes(res.value),
+      );
+    }
+    if (activeSectionConfig.whitelist !== undefined) {
+      result = result.filter((res) =>
+        activeSectionConfig.whitelist.includes(res.value),
+      );
+    }
 
     // if (activeSection === 'language') {
     //   const fConfig = appConfig.facets.filter((f) => f.field === 'language');
@@ -69,7 +82,6 @@ const LandingPage = (props) => {
 
   const [hasOverflow, tiles] = getTiles(maxPerSection);
 
-  const activeSectionConfig = getFacetConfig(sections, activeSection);
   const { icon } = activeSectionConfig;
 
   useDeepCompareEffect(() => {
