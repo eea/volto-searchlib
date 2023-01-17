@@ -26,6 +26,7 @@ function FullView(props) {
 
   // TODO: (about bodyclass) this is a hack, please solve it properly
 
+  // React.useEffect(() => () => console.log('unmount Fullview', appName), []);
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">

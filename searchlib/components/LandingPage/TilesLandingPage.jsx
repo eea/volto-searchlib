@@ -7,7 +7,7 @@ import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { getFacetCounts } from './request';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { customOrder } from '@eeacms/search/lib/utils';
-import { landingPageDataAtom, isRequestedAtom } from './state';
+import { useLandingPageData, useLandingPageRequest } from './state';
 import { Icon, Term } from '@eeacms/search/components';
 
 const getFacetConfig = (sections, name) => {
@@ -37,6 +37,7 @@ const sortedTiles = (tiles, sectionConfig, appConfig) => {
 
 const LandingPage = (props) => {
   const { appConfig, children, setFilter, setSort } = props;
+  const { appName } = appConfig;
   // const facetsConfig = appConfig.facets;
 
   const {
@@ -53,8 +54,8 @@ const LandingPage = (props) => {
 
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
 
-  const [landingPageData, setLandingPageData] = useAtom(landingPageDataAtom);
-  const [isRequested, setIsRequested] = useAtom(isRequestedAtom);
+  const [landingPageData, setLandingPageData] = useLandingPageData(appName);
+  const [isRequested, setIsRequested] = useLandingPageRequest(appName);
 
   const getTiles = (maxPerSection) => {
     let result = landingPageData?.[activeSection]?.[0]?.data || [];
