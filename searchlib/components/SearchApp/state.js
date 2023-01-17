@@ -1,7 +1,9 @@
-import { atom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import { atomFamily } from 'jotai/utils';
 
-export const loadingFamily = atomFamily(
-  () => atom(),
-  (a, b) => a.appName === b.appName,
-);
+export const loadingFamily = atomFamily(() => atom());
+
+export const useLoadingState = (appName) => {
+  const loadingAtom = loadingFamily(appName);
+  return useAtom(loadingAtom);
+};

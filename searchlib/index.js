@@ -22,7 +22,7 @@ export { default as SearchView } from './components/SearchView/SearchView';
 export { default as registry } from './registry';
 
 export {
-  isRequestedAtom,
-  landingPageDataAtom,
+  useLandingPageRequest,
+  useLandingPageData,
 } from './components/LandingPage/state';
 export { getFacetCounts } from './components/LandingPage/request';

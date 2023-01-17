@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useAtom } from 'jotai';
 import useDeepCompareEffect, {
   useDeepCompareEffectNoCheck,
 } from 'use-deep-compare-effect';
@@ -17,7 +16,7 @@ import {
 
 import { clearFilters, resetFilters, resetSearch } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
-import { loadingFamily } from './state';
+import { useLoadingState } from './state';
 import { SearchDriver } from '@elastic/search-ui';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
@@ -58,8 +57,7 @@ export default function useSearchApp(props) {
     };
   }, [appName, registry]);
 
-  const loadingAtom = loadingFamily(appName);
-  const [, setIsLoading] = useAtom(loadingAtom);
+  const [, setIsLoading] = useLoadingState(appName);
 
   const onSearch = React.useCallback(
     async (state) => {
@@ -115,16 +113,10 @@ export default function useSearchApp(props) {
   useDeepCompareEffectNoCheck(() => {
     if (!driverInstance) {
       const driver = new SearchDriver(elasticConfig);
-      // console.log('set driver', driver);
+      // console.log('set driver', driver, appName);
       setDriver(driver);
     }
   }, [appName]);
-
-  // const driverInstance = useStoredSearchDriver({
-  //   elasticConfig,
-  //   appName,
-  //   uniqueId,
-  // });
 
   const mapContextToProps = React.useCallback(
     (params) => {
