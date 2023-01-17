@@ -20,6 +20,8 @@ function SearchBlockView(props) {
     selectedSlotFill,
     properties,
     metadata,
+    location,
+    path,
   } = props;
   const { appName = 'default' } = data;
   const blacklist = ['slotFills', 'defaultFilters', 'defaultSort'];
@@ -73,6 +75,8 @@ function SearchBlockView(props) {
     appName,
   });
 
+  const key = `${location?.pathname || path}-${props.data?.appName}`;
+  // console.log('render searchblockview', key);
   const Variation = variation.view;
   // React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
 
@@ -81,6 +85,7 @@ function SearchBlockView(props) {
       {mode !== 'view' && 'EEA Semantic Search block'}
       {/* {JSON.stringify(data.defaultFilters)} */}
       <Variation
+        key={key}
         slotFills={data.slotFills}
         registry={registry}
         appName={appName}
