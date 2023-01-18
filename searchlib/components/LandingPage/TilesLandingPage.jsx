@@ -59,7 +59,8 @@ const LandingPage = (props) => {
 
   const activeSectionConfig = getFacetConfig(sections, activeSection);
 
-  const getTiles = (maxPerSection) => {
+  const getTiles = (maxPerSection_default) => {
+    const maxPerSection = activeSectionConfig.maxPerSection || maxPerSection_default;
     let result = landingPageData?.[activeSection]?.[0]?.data || [];
 
     if (activeSectionConfig.blacklist !== undefined) {
