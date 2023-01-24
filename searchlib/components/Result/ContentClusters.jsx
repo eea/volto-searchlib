@@ -1,5 +1,5 @@
 import React from 'react';
-import { StringList } from '@eeacms/search/components'; // Icon
+import { StringList, Icon } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const ContentClusters = ({ clusters, item }) => {
@@ -17,28 +17,28 @@ const ContentClusters = ({ clusters, item }) => {
     ([clusterName, cluster], index) => {
       // protect against async cluster information not filled in yet
       return Object.keys(cluster).length ? (
-        <span className="tags-wrapper" key={index}>
-          {/*<span className="cluster-icon">
+        <div className="tags-wrapper" key={index}>
+          {/* <span className="cluster-icon">
             <Icon {...cluster.icon} />
-          </span>*/}
-          <span className="tags">
+          </span> */}
+          <div className="tags">
             <StringList value={clusterName} />
             {index < Object.keys(displayClusters).length - 1 ? ', ' : ''}
-            {/*{clusterName !== cluster.content_types?.[0] && (
+            {clusterName !== cluster.content_types?.[0] && (
               <>
                 <Icon name="angle right" />
                 <StringList
                   value={displayClusters[clusterName].content_types}
                 />
               </>
-            )}*/}
+            )}
             {format.includes('application/pdf') ? (
               <span className="pdf-icon">PDF</span>
             ) : (
               ''
             )}
-          </span>
-        </span>
+          </div>
+        </div>
       ) : null;
     },
   );
