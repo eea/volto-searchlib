@@ -35,7 +35,7 @@ export default (props) => {
   const { mountedRef } = useIsMounted();
 
   React.useEffect(() => {
-    if (mountedRef.current && hasFilters) setShowFacets(true);
+    if (mountedRef?.current && hasFilters) setShowFacets(true);
   }, [hasFilters, setShowFacets, mountedRef]);
 
   return (
