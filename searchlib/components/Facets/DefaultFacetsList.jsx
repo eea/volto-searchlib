@@ -31,8 +31,7 @@ export default (props) => {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
-
-  const { mountedRef } = useIsMounted();
+  const mountedRef = useIsMounted();
 
   React.useEffect(() => {
     if (mountedRef?.current && hasFilters) setShowFacets(true);
