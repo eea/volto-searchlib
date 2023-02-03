@@ -12,7 +12,8 @@ const ActiveFilters = (props) => {
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
 
-  const [activeFilter, setActiveFilter] = React.useState(initialValue);
+  const activeFilter = initialValue;
+  // const [activeFilter, setActiveFilter] = React.useState(initialValue);
 
   return activeFilter.length > 0 ? (
     <div className="active-filters">
@@ -30,10 +31,10 @@ const ActiveFilters = (props) => {
                         className="clear-filters"
                         size="mini"
                         onClick={() => {
-                          let filteredValues = activeFilter.filter(
-                            (v) => v !== option,
-                          );
-                          setActiveFilter(filteredValues);
+                          // let filteredValues = activeFilter.filter(
+                          //   (v) => v !== option,
+                          // );
+                          // // setActiveFilter(filteredValues);
                           onRemove(option);
                         }}
                       >

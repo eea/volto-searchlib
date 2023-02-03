@@ -22,7 +22,7 @@ const SmallScreenFacets = () => {
   return (
     <div>
       <Dimmer active={active} verticalAlign="top" page className="facet-dimmer">
-        {active ? (
+        {active && (
           <>
             <ErrorBoundary>
               <MoreLikeThis />
@@ -36,8 +36,6 @@ const SmallScreenFacets = () => {
               )}
             />
           </>
-        ) : (
-          ''
         )}
 
         <Button.Group>
