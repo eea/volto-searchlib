@@ -18,7 +18,7 @@ export default function SlotEditor(props) {
     onChangeSlotfill,
     onDeleteSlotfill,
     onSelectSlotfill,
-    properties,
+    // properties,
     metadata,
     mode,
   } = props;
