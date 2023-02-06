@@ -31,7 +31,7 @@ const applyConfig = (config) => {
     edit: SearchBlockEdit,
     restricted: false,
     mostUsed: false,
-    blockHasOwnFocusManagement: false,
+    blockHasOwnFocusManagement: true,
     sidebarTab: 1,
     schema: SearchBlockSchema,
     security: {

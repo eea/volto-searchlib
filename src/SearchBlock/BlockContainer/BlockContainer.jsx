@@ -52,13 +52,17 @@ export default function BlockContainer(props) {
       metadata={metadata}
       selected={selected}
       multiSelected={false}
-      onMoveBlock={() => {}}
-      onDeleteBlock={() => {}}
+      onFocusNextBlock={() => {}}
+      onFocusPreviousBlock={() => {}}
+      onAddBlock={() => {}}
+      onMutateBlock={() => {}}
       onChangeBlock={onChangeSlotfill}
+      onDeleteBlock={() => {}}
+      onInsertBlock={() => {}}
+      onMoveBlock={() => {}}
       onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
       pathname={location.pathname}
       index={index}
-      disableNewBlocks={true}
       blocksConfig={blocksConfig}
     />
   ) : (

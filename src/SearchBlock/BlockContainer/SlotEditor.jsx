@@ -35,7 +35,7 @@ export default function SlotEditor(props) {
         return {
           menuItem: (el, { active, index }) => {
             return (
-              <div className={cx('menu item', { active })}>
+              <div className={cx('menu item', { active })} key={index}>
                 <Button
                   as="a"
                   icon
@@ -72,7 +72,7 @@ export default function SlotEditor(props) {
                 onChangeSlotfill={onChangeSlotfill}
                 onDeleteSlotfill={onDeleteSlotfill}
                 onSelectSlotfill={onSelectSlotfill}
-                properties={properties}
+                properties={data?.[blockId]}
                 metadata={metadata}
               />
             </Tab.Pane>
