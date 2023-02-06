@@ -14,7 +14,7 @@ import {
   onAutocompleteResultClick,
 } from '@eeacms/search/lib/request';
 
-import { clearFilters, resetFilters, resetSearch } from './request';
+import { clearFilters, resetFilters, resetSearch, addFilter } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { useLoadingState } from './state';
 import { SearchDriver } from '@elastic/search-ui';
@@ -126,20 +126,13 @@ export default function useSearchApp(props) {
         driver,
         facetOptions,
       };
-      searchContext.resetFilters = resetFilters.bind({
-        appConfig,
-        searchContext,
-      });
-      searchContext.resetSearch = resetSearch.bind({
-        appConfig,
-        searchContext,
-        driver,
-      });
 
-      searchContext.clearFilters = clearFilters.bind({
-        appConfig,
-        searchContext,
-        driver,
+      [resetFilters, resetSearch, clearFilters, addFilter].forEach((func) => {
+        searchContext[func.name] = func.bind({
+          appConfig,
+          searchContext,
+          driver,
+        });
       });
       return searchContext;
     },

@@ -2,7 +2,7 @@ import React from 'react';
 import { Accordion, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from '../state';
-import { useUpdateAtom } from 'jotai/utils';
+import { useSetAtom } from 'jotai';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import Facet from '../Facet';
 
@@ -13,7 +13,7 @@ const AccordionFacetWrapper = (props) => {
 
   const hasFilter = !!filters.find((filter) => field === filter.field);
   const [openFacets] = useAtom(openFacetsAtom);
-  const updateOpenFacets = useUpdateAtom(openFacetsAtom);
+  const updateOpenFacets = useSetAtom(openFacetsAtom);
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);

@@ -1,3 +1,5 @@
+// This component is used by the dropdown facets to show the selected active filters for that facet
+
 import React from 'react';
 import { Button, Card } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
