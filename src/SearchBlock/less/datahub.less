@@ -53,6 +53,8 @@
   }
 
   .datasets-tab {
+    margin-bottom: 2.5em;
+
     .ui.tab {
       padding-top: 0;
     }
@@ -97,32 +99,6 @@
         &:before,
         &:after {
           background-color: @darkCerulean !important;
-        }
-      }
-    }
-
-    .landing-page-cards.dataset_formats {
-      .ui.list {
-        @media only screen and (min-width: 800px) {
-          max-width: 800px;
-          column-count: 2;
-          column-gap: 2em;
-        }
-      }
-    }
-
-    /* Landing page */
-    .landing-page-cards {
-      .ui.list {
-        .item {
-          .content {
-            cursor: pointer;
-            font-weight: normal;
-
-            .count {
-              margin: 0 7px;
-            }
-          }
         }
       }
     }
@@ -189,10 +165,18 @@
     background: @blue-4 !important;
   }
 
+  .dataset-view {
+    .dataset-container:not(:first-of-type) {
+      padding-top: 2.5em;
+      border-top: 1px solid #eee;
+    }
+  }
+
   .dataset-container {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
+    margin-bottom: 2.5em;
   }
 
   .eea.callout {
@@ -304,13 +288,17 @@
     word-break: keep-all;
   }
 
-  .metadata-wrapper {
-    margin-top: 3.5em;
-  }
-
-  .metadata-section,
   .section-wrapper {
     margin: 2em 0;
+  }
+
+  .metadata-section {
+    break-inside: avoid-column;
+  }
+
+  .metadata-list {
+    column-count: 2;
+    column-gap: 2em;
   }
 
   .formats {
@@ -364,8 +352,6 @@
 }
 
 .more-like-this {
-  margin-top: 3.5em;
-
   .header span {
     .elipsisOverflow(2);
   }
