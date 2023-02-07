@@ -34,6 +34,7 @@ const ActiveFilterValue = (props) => {
                 ) : (
                   <Term term={value} field={field} />
                 )}
+                <span style={{ display: 'none' }}>{` (${type}) `}</span>
               </span>
             }
             onRemove={() => {

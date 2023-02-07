@@ -1,4 +1,7 @@
-import { resetFiltersToDefault } from '@eeacms/search/lib/search/helpers';
+import {
+  resetFiltersToDefault,
+  doFilterValuesMatch,
+} from '@eeacms/search/lib/search/helpers';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
 
 export function resetFilters() {
@@ -32,4 +35,39 @@ export function clearFilters(except = []) {
         setFilter(facet.field, value, facet.default.type || 'any'),
       );
     });
+}
+
+export function addFilter() {
+  const [field, value, type] = arguments;
+  const name = field;
+
+  // a customized version of addFilter that converts existing filters to the
+  // new type, starting from the idea that each field name is unique
+
+  if (this.driver.debug)
+    // eslint-disable-next-line no-console
+    console.log('Search UI: Action', 'addFilter', ...arguments);
+
+  const { driver } = this;
+  const { filters } = driver.state;
+
+  const existingFilter = filters.find((f) => f.field === name) || {}; //  && f.type === type
+  const allOtherFilters = filters.filter((f) => f.field !== name) || []; // || f.type !== type
+  const existingFilterValues = existingFilter.values || [];
+
+  const newFilterValues = existingFilterValues.find((existing) =>
+    doFilterValuesMatch(existing, value),
+  )
+    ? existingFilterValues
+    : existingFilterValues.concat(value);
+
+  driver._updateSearchResults({
+    current: 1,
+    filters: [
+      ...allOtherFilters,
+      { field: name, values: newFilterValues, type },
+    ],
+  });
+
+  // return addFilter.apply(null, arguments);
 }
