@@ -25,6 +25,7 @@
 
     .ui.list {
       .item {
+        padding: 3px 0 !important;
         break-inside: avoid-column;
 
         .content {
@@ -41,6 +42,14 @@
         margin-right: 7px;
       }
 
+      .extra.content {
+        padding: 10px 0;
+
+        .count {
+          margin: 0;
+        }
+      }
+
       img.facet-option-icon {
         display: block;
         width: auto;
@@ -51,7 +60,7 @@
       }
 
       @media only screen and (min-width: 900px) {
-        max-width: 900px;
+        // max-width: 950px;
         column-count: 2;
         column-gap: 2.5em;
       }
