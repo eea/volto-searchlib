@@ -46,6 +46,37 @@
   * Datahub search
   */
 
+.view-datahub-item {
+  .item.tabs-title {
+    margin-top: 2em;
+    font-size: 24px;
+  }
+
+  .datasets-tab {
+    .ui.tab {
+      padding-top: 0;
+    }
+
+    .ui.vertical.menu {
+      width: 100%;
+      height: 100%;
+
+      .item {
+        padding: 1rem 0 1rem 0 !important;
+        border-right-width: 0.2rem !important;
+      }
+    }
+
+    .ui.grid > [class*='four wide'].column {
+      width: 25% !important;
+    }
+
+    .ui.grid > [class*='twelve wide'].column {
+      width: 75% !important;
+    }
+  }
+}
+
 .datahub-view {
   .searchapp-datahub {
     /* Search box */
@@ -170,31 +201,37 @@
     color: @blue-grey-5;
   }
 
-  .ui.accordion .list .item {
-    > .content {
-      display: flex;
-      align-items: center;
-
-      .item-protocol {
-        margin-left: 0.5em;
-      }
-
-      .icon {
-        margin-right: 0.5em;
-      }
-
-      .item-link {
-        margin: 0 0.5em;
-      }
+  .ui.accordion {
+    .title {
+      padding-left: 0 !important;
     }
 
-    .item-description {
-      display: -webkit-box;
-      overflow: hidden;
-      margin-top: 0.7em;
-      -webkit-box-orient: vertical;
-      font-size: 80%;
-      -webkit-line-clamp: 3;
+    .list .item {
+      > .content {
+        display: flex;
+        align-items: center;
+
+        .item-protocol {
+          margin-left: 0.5em;
+        }
+
+        .icon {
+          margin-right: 0.5em;
+        }
+
+        .item-link {
+          margin: 0 0.5em;
+        }
+      }
+
+      .item-description {
+        display: -webkit-box;
+        overflow: hidden;
+        margin-top: 0.7em;
+        -webkit-box-orient: vertical;
+        font-size: 80%;
+        -webkit-line-clamp: 3;
+      }
     }
   }
 
@@ -286,7 +323,7 @@
     font-size: 14px;
 
     > div {
-      margin-bottom: 1em;
+      margin-bottom: 2em;
     }
   }
 
