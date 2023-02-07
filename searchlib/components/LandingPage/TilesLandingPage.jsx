@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Tab, Menu } from 'semantic-ui-react';
+import { Tab, Menu, List } from 'semantic-ui-react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useAtom } from 'jotai';
 
@@ -60,7 +60,8 @@ const LandingPage = (props) => {
   const activeSectionConfig = getFacetConfig(sections, activeSection);
 
   const getTiles = (maxPerSection_default) => {
-    const maxPerSection = activeSectionConfig.maxPerSection || maxPerSection_default;
+    const maxPerSection =
+      activeSectionConfig.maxPerSection || maxPerSection_default;
     let result = landingPageData?.[activeSection]?.[0]?.data || [];
 
     if (activeSectionConfig.blacklist !== undefined) {
@@ -153,8 +154,8 @@ const LandingPage = (props) => {
       render: () => {
         return (
           <Tab.Pane>
-            <div className="landing-page-cards">
-              <Card.Group itemsPerRow={5}>
+            <div className={`landing-page-cards ${activeSection}`}>
+              <List>
                 {sortedTiles(tiles, activeSectionConfig, appConfig).map(
                   (topic, index) => {
                     const onClickHandler = () => {
@@ -181,23 +182,20 @@ const LandingPage = (props) => {
                     };
 
                     return (
-                      <Card onClick={onClickHandler} key={index}>
-                        <Card.Content>
-                          <Card.Header>
-                            {icon ? <Icon {...icon} type={topic.value} /> : ''}
-                            <Term term={topic.value} field={activeSection} />
-                          </Card.Header>
-                        </Card.Content>
-                        <Card.Content extra>
+                      <List.Item onClick={onClickHandler} key={index}>
+                        <List.Content>
+                          {icon ? <Icon {...icon} type={topic.value} /> : ''}
+                          <Term term={topic.value} field={activeSection} />
                           <span className="count">
-                            {topic.count} {topic.count === 1 ? 'item' : 'items'}
+                            ({topic.count}{' '}
+                            {topic.count === 1 ? 'item' : 'items'})
                           </span>
-                        </Card.Content>
-                      </Card>
+                        </List.Content>
+                      </List.Item>
                     );
                   },
                 )}
-              </Card.Group>
+              </List>
             </div>
           </Tab.Pane>
         );
@@ -209,13 +207,11 @@ const LandingPage = (props) => {
     <div className="landing-page-container">
       <div className="landing-page">
         <h4>Or search by</h4>
-        <div className="search-tab-wrapper">
-          <Tab
-            className="search-tab"
-            menu={{ secondary: true, pointing: true }}
-            panes={panes}
-          />
-        </div>
+        <Tab
+          className="search-tab"
+          menu={{ secondary: true, pointing: true }}
+          panes={panes}
+        />
         {hasOverflow ? (
           <div className="tab-info">
             <p>Only first {maxPerSection} items are displayed.</p>
