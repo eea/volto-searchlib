@@ -133,7 +133,7 @@ export class ResultModel extends BasicModel {
 
   get issued() {
     const raw = this._result['issued']?.raw;
-    return raw ? DateTime.fromISO(raw) : DateTime.local();
+    return raw ? DateTime.fromISO(raw) : null;
   }
 
   get expires() {
