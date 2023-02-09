@@ -185,6 +185,10 @@ export function getDateRangeFilter(filter, filterConfig) {
     },
   };
 
+  if (res.bool[op][0].range[filter.field].to === undefined){
+    return;
+  }
+
   return res;
 }
 
