@@ -23,7 +23,6 @@ const ContentClusters = ({ clusters, item }) => {
           </span> */}
           <div className="tags">
             <StringList value={clusterName} />
-            {index < Object.keys(displayClusters).length - 1 ? ', ' : ''}
             {clusterName !== cluster.content_types?.[0] && (
               <>
                 <Icon name="angle right" />
@@ -32,6 +31,7 @@ const ContentClusters = ({ clusters, item }) => {
                 />
               </>
             )}
+            {index < Object.keys(displayClusters).length - 1 ? ', ' : ''}
             {format.includes('application/pdf') ? (
               <span className="pdf-icon">PDF</span>
             ) : (

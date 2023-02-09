@@ -27,7 +27,7 @@ const ExtraContent = (props) => {
         </div>
       </div>
       <div>
-        <div className="result-info">
+        <div className="result-info result-source">
           <span className="result-info-title">Source: </span>
           <ExternalLink href={result.href}>
             <strong title={result.source} className="source">

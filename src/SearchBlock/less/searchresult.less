@@ -18,23 +18,27 @@
   .slot-head {
     display: flex;
     flex-direction: row;
+
+    .listing-header {
+      display: flex;
+
+      .ui.label {
+        margin: 0 0.5em;
+        font-size: 0.75rem;
+      }
+    }
   }
 
-  .listing-header {
-    display: flex;
-
-    .ui.label {
-      margin: 0 0.5em;
-      font-size: 0.75rem;
-    }
+  .slot-bottom {
+    margin-top: auto;
   }
 
   .result-bottom {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 1.5em;
-    gap: 4em;
+    column-gap: 4em;
+    row-gap: 1em;
 
     @media only screen and (max-width: @largestMobileScreen) {
       flex-direction: column;
@@ -46,9 +50,12 @@
     }
   }
 
+  .result-source {
+    margin-top: 1em;
+  }
+
   .result-info {
     display: flex;
-    margin-bottom: 1em;
     color: @midlightGray;
     font-size: 14px;
     gap: 0.5em;
