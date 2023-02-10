@@ -70,33 +70,37 @@ export const FilterAsideContentView = (props) => {
   const loadingAtom = loadingFamily(appConfig.appName);
   const isLoading = useAtomValue(loadingAtom);
 
+  const { showFilters, showFacets, showClusters, showSorting } = appConfig;
+
   return (
     <>
       {appConfig.mode === 'edit' && (
         <div>Active filters are always shown in edit mode</div>
       )}
-      {(appConfig.showFilters || appConfig.mode === 'edit') && (
-        <ActiveFilterList />
-      )}
-      {appConfig.showFilters && <SectionTabs />}
+      {(showFilters || appConfig.mode === 'edit') && <ActiveFilterList />}
+      {showClusters && <SectionTabs />}
       <div className={`results-layout ${layoutMode}`}>
-        {appConfig.showFilters && (
+        {(showFacets || showSorting) && (
           <div className="above-results">
             <div className="above-left">
-              <DropdownFacetsList />
+              {showFacets && <DropdownFacetsList />}
             </div>
             <div className="above-right">
-              <Component factoryName="SecondaryFacetsList" {...props} />
-              <Sorting
-                label={''}
-                sortOptions={sortOptions}
-                view={SortingDropdownWithLabel}
-              />
-              {/* <ViewSelectorWithLabel */}
-              {/*   views={availableResultViews} */}
-              {/*   active={activeViewId} */}
-              {/*   onSetView={setActiveViewId} */}
-              {/* /> */}
+              {showSorting && (
+                <>
+                  <Component factoryName="SecondaryFacetsList" {...props} />
+                  <Sorting
+                    label={''}
+                    sortOptions={sortOptions}
+                    view={SortingDropdownWithLabel}
+                  />
+                  {/* <ViewSelectorWithLabel */}
+                  {/*   views={availableResultViews} */}
+                  {/*   active={activeViewId} */}
+                  {/*   onSetView={setActiveViewId} */}
+                  {/* /> */}
+                </>
+              )}
             </div>
           </div>
         )}

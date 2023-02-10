@@ -78,6 +78,8 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       'defaultResultView',
       'alwaysSearchOnInitialLoad',
       'showFilters',
+      'showFacets',
+      'showSorting',
       'availableFacets',
       'defaultFacets',
       'defaultFilters',
@@ -95,10 +97,28 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       configPath: 'alwaysSearchOnInitialLoad',
     },
     showFilters: {
-      title: 'Show filters?',
+      title: 'Show active filters?',
       type: 'boolean',
       default: true,
       configPath: 'showFilters',
+    },
+    showFacets: {
+      title: 'Show facets?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showFacets',
+    },
+    showClusters: {
+      title: 'Show tab clusters?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showClusters',
+    },
+    showSorting: {
+      title: 'Show sorting?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showSorting',
     },
     defaultFilters: {
       title: 'Pre-applied filters',
