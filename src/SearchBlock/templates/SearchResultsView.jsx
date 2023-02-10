@@ -78,6 +78,8 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       'defaultResultView',
       'alwaysSearchOnInitialLoad',
       'showFilters',
+      'availableFacets',
+      'defaultFacets',
       'defaultFilters',
       'defaultSort',
     ],
@@ -99,10 +101,20 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       configPath: 'showFilters',
     },
     defaultFilters: {
-      title: 'Default filters',
+      title: 'Pre-applied filters',
       widget: 'object_list',
       schema: FilterSchema({ formData }),
       schemaExtender: (schema) => schema,
+    },
+    availableFacets: {
+      title: 'Available Facets',
+      widget: 'array',
+      choices: [],
+    },
+    defaultFacets: {
+      title: 'Default Facets',
+      widget: 'array',
+      choices: [],
     },
     defaultSort: {
       title: 'Default sort',
@@ -113,6 +125,15 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
 
   if (appConfig) {
     const { resultViews } = appConfig;
+    // console.log(appConfig);
+
+    const availableFacets = appConfig.facets?.map(({ field, label }) => [
+      field,
+      label,
+    ]);
+
+    schema.properties.availableFacets.choices = availableFacets;
+    schema.properties.defaultFacets.choices = availableFacets;
 
     // fill in defaultResultView choices
     schema.properties.defaultResultView = {

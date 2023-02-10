@@ -50,7 +50,6 @@ export default function useSearchApp(props) {
   // useWhyDidYouUpdate('sss', props);
 
   const appConfig = React.useMemo(() => {
-    // console.log('redo appConfig');
     return {
       ...applyConfigurationSchema(rebind(registry.searchui[appName])),
       appName,

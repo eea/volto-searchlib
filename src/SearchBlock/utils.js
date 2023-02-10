@@ -45,6 +45,25 @@ const _applyBlockSettings = (config, appName, data, schema) => {
       view.isDefault = view.id === data.defaultResultView;
     });
   }
+
+  // console.log(settings, data);
+  const availableFacets = [
+    ...(data.availableFacets || []),
+    ...(data.defaultFacets || []),
+  ];
+
+  if (data.availableFacets) {
+    settings.facets.forEach((f) => {
+      f.showInFacetsList = availableFacets.indexOf(f.field) > -1 ? true : false;
+    });
+  }
+
+  if (data.defaultFacets) {
+    settings.facets.forEach((f) => {
+      f.alwaysVisible = data.defaultFacets.indexOf(f.field) > -1 ? true : false;
+    });
+  }
+
   return config;
 };
 
