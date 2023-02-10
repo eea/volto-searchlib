@@ -1,10 +1,11 @@
 import superagent from 'superagent';
+import * as path from 'path';
 
 export default async function getIndexInfo(config) {
   const { host, elastic_index } = config;
+  const settings_url = path.join(host, elastic_index, '_settings');
+  const alias_url = path.join(host, elastic_index, '_alias');
 
-  const settings_url = `${host}/${elastic_index}/_settings`;
-  const alias_url = `${host}/${elastic_index}/_alias`;
   try {
     const settings_resp = await superagent
       .get(settings_url)
