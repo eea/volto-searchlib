@@ -57,7 +57,7 @@ export default function FacetApp(props) {
   //   }
   // }, [value, filters, field, setFilter, driver]); // searchContext
 
-  const activeValue = filters.find((f) => f.field === field);
+  // const activeValue = filters.find((f) => f.field === field);
 
   // const dirty = !isEqual(activeValue, value);
   // console.log('redraw facet', { value, activeValue, dirty });
@@ -131,17 +131,17 @@ export default function FacetApp(props) {
       onRemove={() => {
         const filter = driver.state.filters.find((f) => f.field === field);
         onChange(filter);
-        console.log('onRemove', JSON.stringify(driver.state.filters));
+        // console.log('onRemove', JSON.stringify(driver.state.filters));
       }}
       onChange={() => {
         const filter = driver.state.filters.find((f) => f.field === field);
         onChange(filter);
-        console.log('onChange', JSON.stringify(driver.state.filters));
+        // console.log('onChange', JSON.stringify(driver.state.filters));
       }}
       onSelect={() => {
         const filter = driver.state.filters.find((f) => f.field === field);
         onChange(filter);
-        console.log('onSelect', JSON.stringify(driver.state.filters));
+        // console.log('onSelect', JSON.stringify(driver.state.filters));
       }}
     />
   );
