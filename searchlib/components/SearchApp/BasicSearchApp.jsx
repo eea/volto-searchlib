@@ -89,6 +89,7 @@ export default function BasicSearchApp(props) {
     paramOnAutocomplete,
     initialState,
     uniqueId,
+    mode,
   });
   // console.log('driver', driverInstance);
 

@@ -24,7 +24,19 @@ function SearchBlockView(props) {
     path,
   } = props;
   const { appName = 'default' } = data;
-  const blacklist = ['slotFills', 'defaultFilters', 'defaultSort'];
+
+  const schemaFields = [
+    'availableFacets',
+    'defaultFacets',
+    'defaultFilters',
+    'showClusters',
+    'defaultSort',
+    'showFacets',
+    'showFilters',
+    'showSorting',
+  ]; // mutating data in these fields makes the search engine to lose facets
+
+  const blacklist = ['slotFills', ...(mode === 'edit' ? schemaFields : [])];
 
   const stableData = useDebouncedStableData(
     Object.assign(

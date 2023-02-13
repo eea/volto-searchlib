@@ -1,7 +1,7 @@
 import React from 'react';
 import { isEqual } from 'lodash';
 
-export const useDebouncedStableData = (data, timeout = 100) => {
+export const useDebouncedStableData = (data, timeout = 1000) => {
   const [stableData, setStableData] = React.useState(data);
   const timer = React.useRef();
 

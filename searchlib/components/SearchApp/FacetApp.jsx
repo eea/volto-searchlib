@@ -1,12 +1,15 @@
 /**
  * A Search app that wraps and provides access to a single facet
+ *
+ * Note, unlike BasicSearchApp, this is not a standalone search app,
+ * it needs to be executed in the context of a search app
  */
 import React from 'react';
-import { isEqual } from 'lodash';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+// import { isEqual } from 'lodash';
+// import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { useSearchContext } from '@eeacms/search/lib/hocs'; // , useSearchDriver
+import { useSearchContext, useSearchDriver } from '@eeacms/search/lib/hocs'; // , useSearchDriver
 
 // const sorter = (fa, fb) =>
 //   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
@@ -15,7 +18,7 @@ export default function FacetApp(props) {
   const searchContext = useSearchContext();
   const { appConfig, registry, field, onChange, value } = props;
   // const { field, onChange, value } = props;
-  // const driver = useSearchDriver();
+  const driver = useSearchDriver();
   // console.log({ searchContext, props, driver });
   const { filters, removeFilter, addFilter } = searchContext; // driver.state
 
@@ -54,7 +57,7 @@ export default function FacetApp(props) {
   //   }
   // }, [value, filters, field, setFilter, driver]); // searchContext
 
-  const activeValue = filters.find((f) => f.field === field);
+  // const activeValue = filters.find((f) => f.field === field);
 
   // const dirty = !isEqual(activeValue, value);
   // console.log('redraw facet', { value, activeValue, dirty });
@@ -63,15 +66,15 @@ export default function FacetApp(props) {
 
   // const sortedFilters = [...filters].sort(sorter);
 
-  useDeepCompareEffect(() => {
-    timerRef.current && clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      if (!isEqual(activeValue, value)) {
-        // console.log('onchange', { activeValue, value });
-        onChange(activeValue);
-      }
-    }, 200);
-  }, [removeFilter, field, activeValue, value, onChange]);
+  // useDeepCompareEffect(() => {
+  //   timerRef.current && clearTimeout(timerRef.current);
+  //   timerRef.current = setTimeout(() => {
+  //     if (!isEqual(activeValue, value)) {
+  //       console.log('onchange', { activeValue, value });
+  //       onChange(activeValue);
+  //     }
+  //   }, 200);
+  // }, [removeFilter, field, activeValue, value, onChange]);
 
   React.useEffect(
     () => () => {
@@ -125,6 +128,21 @@ export default function FacetApp(props) {
       view={FacetComponent}
       filterType={localFilterType}
       onChangeFilterType={onChangeFilterType}
+      onRemove={() => {
+        const filter = driver.state.filters.find((f) => f.field === field);
+        onChange(filter);
+        // console.log('onRemove', JSON.stringify(driver.state.filters));
+      }}
+      onChange={() => {
+        const filter = driver.state.filters.find((f) => f.field === field);
+        onChange(filter);
+        // console.log('onChange', JSON.stringify(driver.state.filters));
+      }}
+      onSelect={() => {
+        const filter = driver.state.filters.find((f) => f.field === field);
+        onChange(filter);
+        // console.log('onSelect', JSON.stringify(driver.state.filters));
+      }}
     />
   );
 }
