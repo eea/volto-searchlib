@@ -78,6 +78,11 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       'defaultResultView',
       'alwaysSearchOnInitialLoad',
       'showFilters',
+      'showFacets',
+      'showSorting',
+      'showClusters',
+      'availableFacets',
+      'defaultFacets',
       'defaultFilters',
       'defaultSort',
     ],
@@ -93,16 +98,44 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       configPath: 'alwaysSearchOnInitialLoad',
     },
     showFilters: {
-      title: 'Show filters?',
+      title: 'Show active filters?',
       type: 'boolean',
       default: true,
       configPath: 'showFilters',
     },
+    showFacets: {
+      title: 'Show facets?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showFacets',
+    },
+    showClusters: {
+      title: 'Show tab clusters?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showClusters',
+    },
+    showSorting: {
+      title: 'Show sorting?',
+      type: 'boolean',
+      default: true,
+      configPath: 'showSorting',
+    },
     defaultFilters: {
-      title: 'Default filters',
+      title: 'Pre-applied filters',
       widget: 'object_list',
       schema: FilterSchema({ formData }),
       schemaExtender: (schema) => schema,
+    },
+    availableFacets: {
+      title: 'Available Facets',
+      widget: 'array',
+      choices: [],
+    },
+    defaultFacets: {
+      title: 'Default Facets',
+      widget: 'array',
+      choices: [],
     },
     defaultSort: {
       title: 'Default sort',
@@ -113,6 +146,15 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
 
   if (appConfig) {
     const { resultViews } = appConfig;
+    // console.log(appConfig);
+
+    const availableFacets = appConfig.facets?.map(({ field, label }) => [
+      field,
+      label,
+    ]);
+
+    schema.properties.availableFacets.choices = availableFacets;
+    schema.properties.defaultFacets.choices = availableFacets;
 
     // fill in defaultResultView choices
     schema.properties.defaultResultView = {

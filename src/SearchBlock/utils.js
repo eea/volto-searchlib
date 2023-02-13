@@ -45,6 +45,37 @@ const _applyBlockSettings = (config, appName, data, schema) => {
       view.isDefault = view.id === data.defaultResultView;
     });
   }
+
+  // console.log(settings, data);
+  const availableFacets = [
+    ...(data.availableFacets || []),
+    ...(data.defaultFacets || []),
+  ];
+
+  if (data.availableFacets) {
+    settings.facets.forEach((f) => {
+      f.showInFacetsList = availableFacets.indexOf(f.field) > -1 ? true : false;
+    });
+  }
+
+  if (data.defaultFacets) {
+    settings.facets.forEach((f) => {
+      f.alwaysVisible = data.defaultFacets.indexOf(f.field) > -1 ? true : false;
+    });
+  }
+
+  if (data.defaultFilters) {
+    const filters = data.defaultFilters
+      .map((f) => ({ [f.name]: f.value }))
+      .reduce((acc, cur) => ({ ...acc, ...cur }));
+    settings.facets.forEach((f) => {
+      if (filters[f.field]) {
+        f.default = filters[f.field];
+      }
+    });
+  }
+  // console.log(data, settings);
+
   return config;
 };
 

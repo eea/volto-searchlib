@@ -63,6 +63,7 @@ export function applyConfigurationSchema(config) {
       config.disjunctiveFacets.push(facet.field);
     }
   });
+
   return config;
 }
 

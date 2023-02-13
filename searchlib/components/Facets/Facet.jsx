@@ -22,6 +22,9 @@ const FacetContainer = (props) => {
     label,
     view,
     isFilterable = false,
+    onSelect,
+    onChange,
+    onRemove,
     ...rest
   } = props;
   const searchContext = useSearchContext();
@@ -66,12 +69,15 @@ const FacetContainer = (props) => {
       label={label}
       onRemove={(value) => {
         removeFilter(field, value, filterType);
+        onRemove && onRemove(field, value, filterType);
       }}
       onChange={(value) => {
         setFilter(field, value, filterType);
+        onChange && onChange(field, value, filterType);
       }}
       onSelect={(value) => {
         addFilter(field, value, filterType);
+        onSelect && onSelect(field, value, filterType);
       }}
       options={facetValues}
       values={selectedValues}

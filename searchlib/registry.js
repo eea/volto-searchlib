@@ -275,7 +275,12 @@ const config = {
       defaultPromptQueries: [], // offered as possible queries, in a prompt below text input. One per line
       promptQueryInterval: 20000,
       alwaysSearchOnInitialLoad: false, // used in elastic search driver
+
       showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
+      showClusters: true, // enables the tab clusters
+      showSorting: true, // show the sorting controls
+      showFacets: true, // show the facets dropdowns and sidebar facets
+
       getActiveFilters: 'defaultGetActiveFilters',
 
       // highlight: {
