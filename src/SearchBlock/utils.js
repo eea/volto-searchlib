@@ -64,6 +64,18 @@ const _applyBlockSettings = (config, appName, data, schema) => {
     });
   }
 
+  if (data.defaultFilters) {
+    const filters = data.defaultFilters
+      .map((f) => ({ [f.name]: f.value }))
+      .reduce((acc, cur) => ({ ...acc, ...cur }));
+    settings.facets.forEach((f) => {
+      if (filters[f.field]) {
+        f.default = filters[f.field];
+      }
+    });
+  }
+  // console.log(data, settings);
+
   return config;
 };
 

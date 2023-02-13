@@ -46,6 +46,7 @@ export default function useSearchApp(props) {
     paramOnSearch,
     paramOnAutocomplete,
     initialState,
+    mode = 'view',
   } = props;
   // useWhyDidYouUpdate('sss', props);
 
@@ -100,9 +101,21 @@ export default function useSearchApp(props) {
       // we don't want to track the URL if our search app is configured as
       // a simple separate app (for ex. search input or landing page that
       // trampolines to another instance)
-      trackUrlState: appConfig.url ? false : appConfig.trackUrlState,
+      trackUrlState:
+        mode === 'edit'
+          ? false
+          : appConfig.url
+          ? false
+          : appConfig.trackUrlState,
     }),
-    [appConfig, onAutocomplete, onSearch, locationSearchTerm, initialState],
+    [
+      appConfig,
+      onAutocomplete,
+      onSearch,
+      locationSearchTerm,
+      initialState,
+      mode,
+    ],
   );
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));

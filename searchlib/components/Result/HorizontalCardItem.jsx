@@ -61,6 +61,7 @@ const HorizontalCardItem = (props) => {
   const UniversalCard = registry.resolve['UniversalCard'].component;
 
   const item = {
+    '@id': result.href,
     title: (
       <>
         <ExternalLink href={result.href} title={result.title}>
