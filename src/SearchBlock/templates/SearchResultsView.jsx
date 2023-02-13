@@ -80,6 +80,7 @@ SearchResultsView.schemaEnhancer = ({ schema, formData }) => {
       'showFilters',
       'showFacets',
       'showSorting',
+      'showClusters',
       'availableFacets',
       'defaultFacets',
       'defaultFilters',
