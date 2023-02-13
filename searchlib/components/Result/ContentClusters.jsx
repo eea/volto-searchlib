@@ -13,6 +13,20 @@ const ContentClusters = ({ clusters, item }) => {
   const format = Array.isArray(item.format?.raw)
     ? item.format?.raw
     : [item.format?.raw];
+  const formats_to_show = [];
+  if (format.includes('application/msword')) {
+    formats_to_show.push('DOC');
+  }
+  if (
+    format.includes(
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    )
+  ) {
+    formats_to_show.push('DOCX');
+  }
+  if (format.includes('application/pdf')) {
+    formats_to_show.push('PDF');
+  }
   return Object.entries(displayClusters).map(
     ([clusterName, cluster], index) => {
       // protect against async cluster information not filled in yet
@@ -32,11 +46,9 @@ const ContentClusters = ({ clusters, item }) => {
               </>
             )}
             {index < Object.keys(displayClusters).length - 1 ? ', ' : ''}
-            {format.includes('application/pdf') ? (
-              <span className="pdf-icon">PDF</span>
-            ) : (
-              ''
-            )}
+            {formats_to_show.map((format_to_show) => {
+              return <span className="fileformat-icon">{format_to_show}</span>;
+            })}
           </div>
         </div>
       ) : null;
