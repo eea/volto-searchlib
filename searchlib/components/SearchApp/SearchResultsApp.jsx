@@ -1,5 +1,6 @@
 import React from 'react';
 import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
+import { getDefaultFilters } from '@eeacms/search/lib/utils';
 
 import BasicSearchApp from './BasicSearchApp';
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
@@ -65,15 +66,14 @@ function BootstrapSearchResultsView(props) {
 }
 
 export default function SearchResultsApp(props) {
-  const { defaultFilters, defaultSort = '' } = props;
+  const { defaultSort = '' } = props;
   const [sortField, sortDirection] = defaultSort.split('|');
+  const appConfig = props.registry.searchui[props.appName];
+  const appDefaultFilters = getDefaultFilters(appConfig);
   const [initialState] = React.useState({
-    ...(defaultFilters?.length
+    ...(appDefaultFilters?.length
       ? {
-          filters: defaultFilters
-
-            ?.map((f) => (f.value ? f.value : undefined))
-            .filter((f) => !!f),
+          filters: appDefaultFilters,
         }
       : {}),
     ...(defaultSort ? { sortField, sortDirection } : {}),
