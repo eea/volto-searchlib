@@ -138,9 +138,9 @@ export default function useSearchApp(props) {
         driver,
         facetOptions,
       };
-
-      [resetFilters, resetSearch, clearFilters, addFilter].forEach((func) => {
-        searchContext[func.name] = func.bind({
+      const funcs = { resetFilters, resetSearch, clearFilters, addFilter };
+      Object.keys(funcs).forEach((name) => {
+        searchContext[name] = funcs[name].bind({
           appConfig,
           searchContext,
           driver,
