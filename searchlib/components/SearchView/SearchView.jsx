@@ -92,8 +92,11 @@ export const SearchView = (props) => {
     }
   }
 
+  // TODO: here
+
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
+      {props.children}
       <Layout
         appConfig={appConfig}
         header={

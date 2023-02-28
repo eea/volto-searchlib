@@ -87,7 +87,6 @@ function FullView(props) {
                 }))),
           )}
         />
-        {props.children}
       </div>
     </BodyClass>
   );
