@@ -123,7 +123,6 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       configPath: 'landingPageURL',
     },
   };
-  schema.fieldsets[0].fields.push('url');
 
   if (appConfig) {
     const { resultViews } = appConfig;

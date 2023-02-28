@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import { Icon } from 'semantic-ui-react';
 import {
@@ -85,7 +85,7 @@ export const SearchView = (props) => {
   const { landingPageURL } = appConfig;
   let backToHome = landingPageURL;
 
-  if (landingPageURL) {
+  if (landingPageURL && landingPageURL.startsWith('http')) {
     const url = new URL(landingPageURL);
     if (url.host === domain) {
       backToHome = url.pathname;

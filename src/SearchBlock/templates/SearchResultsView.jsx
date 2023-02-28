@@ -25,4 +25,8 @@ export default function SearchResultsView(props) {
   );
 }
 
-SearchResultsView.schemaEnhancer = searchResultsSchemaEnhancer;
+SearchResultsView.schemaEnhancer = (props) => {
+  const schema = searchResultsSchemaEnhancer(props);
+  // schema.fieldsets[0].fields.push('url');
+  return schema;
+};

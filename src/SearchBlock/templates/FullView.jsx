@@ -98,7 +98,7 @@ FullView.schemaEnhancer = (props) => {
   const schema = searchResultsSchemaEnhancer(props);
   schema.fieldsets[1].fields.push('showLandingPage');
   schema.properties.showLandingPage = {
-    title: 'Show landing page?',
+    title: 'Show intro statistics?',
     type: 'boolean',
     default: true,
     configPath: 'showLandingPage',
