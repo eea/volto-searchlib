@@ -2,6 +2,7 @@ import React from 'react';
 import { BodyClass } from '@plone/volto/helpers';
 import { SEARCH_STATES, SLOTS, SearchApp } from '@eeacms/search';
 import { SlotEditor, BlockContainer } from './../BlockContainer';
+import { searchResultsSchemaEnhancer } from './schema';
 
 const slotCombinations = SLOTS.reduce(
   (acc, slot) => [
@@ -92,9 +93,16 @@ function FullView(props) {
   );
 }
 
-FullView.schemaEnhancer = ({ schema }) => {
-  // schema.fieldsets[0].fields.unshift('defaultResultView');
-
+FullView.schemaEnhancer = (props) => {
+  // searchResultsSchemaEnhancer;
+  const schema = searchResultsSchemaEnhancer(props);
+  schema.fieldsets[1].fields.push('showLandingPage');
+  schema.properties.showLandingPage = {
+    title: 'Show landing page?',
+    type: 'boolean',
+    default: true,
+    configPath: 'showLandingPage',
+  };
   return schema;
 };
 
