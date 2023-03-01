@@ -36,7 +36,7 @@ const sortedTiles = (tiles, sectionConfig, appConfig) => {
 };
 
 const LandingPage = (props) => {
-  const { appConfig, children, setFilter, setSort } = props;
+  const { appConfig, setFilter, setSort } = props;
   const { appName } = appConfig;
   // const facetsConfig = appConfig.facets;
 
