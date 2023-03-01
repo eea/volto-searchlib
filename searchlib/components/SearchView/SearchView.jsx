@@ -4,9 +4,7 @@
 
 import React from 'react';
 
-import { Link } from 'react-router-dom';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
-import { Icon } from 'semantic-ui-react';
 import {
   SearchBox,
   AppInfo,
@@ -18,6 +16,7 @@ import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
 
 import { checkInteracted } from '@eeacms/search/lib/search/helpers';
 import { BodyContent } from './BodyContent';
+import BackToHome from './BackToHome';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { SEARCH_STATE_IDS } from '@eeacms/search/constants';
 import { useAtom } from 'jotai';
@@ -40,7 +39,14 @@ const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
     if (wasInteracted && !cached) setCached(true);
   }, [wasInteracted, cached]);
 
-  return cached || wasInteracted;
+  const resetInteracted = React.useCallback(() => {
+    setCached(false);
+  }, []);
+
+  return {
+    wasInteracted: cached || wasInteracted,
+    resetInteracted,
+  };
 };
 
 export const SearchView = (props) => {
@@ -56,7 +62,7 @@ export const SearchView = (props) => {
     ? driver.URLManager.getStateFromURL().searchTerm
     : null;
 
-  const wasInteracted = useWasInteracted({
+  const { wasInteracted, resetInteracted } = useWasInteracted({
     searchedTerm,
     searchContext,
     appConfig,
@@ -81,19 +87,6 @@ export const SearchView = (props) => {
 
   // React.useEffect(() => () => console.log('unmount SearchView'), []);
 
-  const domain = typeof window !== 'undefined' ? window.location.host : null;
-  const { landingPageURL } = appConfig;
-  let backToHome = landingPageURL;
-
-  if (landingPageURL && landingPageURL.startsWith('http')) {
-    const url = new URL(landingPageURL);
-    if (url.host === domain) {
-      backToHome = url.pathname;
-    }
-  }
-
-  // TODO: here
-
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       {props.children}
@@ -101,19 +94,12 @@ export const SearchView = (props) => {
         appConfig={appConfig}
         header={
           <>
-            {wasInteracted &&
-              backToHome &&
-              (backToHome.startsWith('/') ? (
-                <Link to={backToHome} className="back-link">
-                  <Icon className="arrow left" />
-                  Back to search home
-                </Link>
-              ) : (
-                <a href={backToHome} className="back-link">
-                  <Icon className="arrow left" />
-                  Back to search home
-                </a>
-              ))}
+            <BackToHome
+              wasInteracted={wasInteracted}
+              appConfig={appConfig}
+              searchContext={searchContext}
+              resetInteracted={resetInteracted}
+            />
             <RenderSlot
               {...props}
               searchState={searchState}
