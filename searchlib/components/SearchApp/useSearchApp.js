@@ -1,8 +1,6 @@
 import React from 'react';
 
-import useDeepCompareEffect, {
-  useDeepCompareEffectNoCheck,
-} from 'use-deep-compare-effect';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'; // useDeepCompareEffect,
 
 import {
   getDefaultFilters,
@@ -18,26 +16,27 @@ import { clearFilters, resetFilters, resetSearch, addFilter } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { useLoadingState } from './state';
 import { SearchDriver } from '@elastic/search-ui';
+
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
-export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
-  const [driver, setDriver] = React.useState(null);
-
-  useDeepCompareEffect(() => {
-    setDriver(new SearchDriver(elasticConfig));
-  }, [elasticConfig, appName]);
-
-  // useWhyDidYouUpdate('setStoredSearchDriver', { elasticConfig, appName });
-
-  React.useEffect(() => {
-    return () => {
-      // console.log('unmount useStoredSearchDriver');
-      driver && driver.tearDown();
-    };
-  }, [driver]);
-
-  return driver;
-}
+// export function useStoredSearchDriver({ elasticConfig, appName, uniqueId }) {
+//   const [driver, setDriver] = React.useState(null);
+//
+//   useDeepCompareEffect(() => {
+//     setDriver(new SearchDriver(elasticConfig));
+//   }, [elasticConfig, appName]);
+//
+//   // useWhyDidYouUpdate('setStoredSearchDriver', { elasticConfig, appName });
+//
+//   React.useEffect(() => {
+//     return () => {
+//       // console.log('unmount useStoredSearchDriver');
+//       driver && driver.tearDown();
+//     };
+//   }, [driver]);
+//
+//   return driver;
+// }
 
 export default function useSearchApp(props) {
   const {

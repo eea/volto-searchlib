@@ -71,6 +71,7 @@ export const FilterAsideContentView = (props) => {
   const isLoading = useAtomValue(loadingAtom);
 
   const { showFilters, showFacets, showClusters, showSorting } = appConfig;
+  const showPaging = appConfig.showLandingPage === false ? true : wasInteracted;
 
   return (
     <>
@@ -124,7 +125,7 @@ export const FilterAsideContentView = (props) => {
             <Grid centered>
               <Grid.Column textAlign="center">
                 <div className="prev-next-paging">
-                  {!!wasInteracted && <Paging />}
+                  {!!showPaging && <Paging />}
                 </div>
               </Grid.Column>
             </Grid>
