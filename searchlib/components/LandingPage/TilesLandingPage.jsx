@@ -217,7 +217,6 @@ const LandingPage = (props) => {
             <p>Only first {maxPerSection} items are displayed.</p>
           </div>
         ) : null}
-        {children}
       </div>
     </div>
   );

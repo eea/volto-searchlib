@@ -4,6 +4,7 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import { Icon } from 'semantic-ui-react';
 import {
@@ -80,18 +81,39 @@ export const SearchView = (props) => {
 
   // React.useEffect(() => () => console.log('unmount SearchView'), []);
 
+  const domain = typeof window !== 'undefined' ? window.location.host : null;
+  const { landingPageURL } = appConfig;
+  let backToHome = landingPageURL;
+
+  if (landingPageURL && landingPageURL.startsWith('http')) {
+    const url = new URL(landingPageURL);
+    if (url.host === domain) {
+      backToHome = url.pathname;
+    }
+  }
+
+  // TODO: here
+
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
+      {props.children}
       <Layout
         appConfig={appConfig}
         header={
           <>
-            {wasInteracted && (
-              <a href={appConfig.landingPageURL} className="back-link">
-                <Icon className="arrow left" />
-                Back to search home
-              </a>
-            )}
+            {wasInteracted &&
+              backToHome &&
+              (backToHome.startsWith('/') ? (
+                <Link to={backToHome} className="back-link">
+                  <Icon className="arrow left" />
+                  Back to search home
+                </Link>
+              ) : (
+                <a href={backToHome} className="back-link">
+                  <Icon className="arrow left" />
+                  Back to search home
+                </a>
+              ))}
             <RenderSlot
               {...props}
               searchState={searchState}

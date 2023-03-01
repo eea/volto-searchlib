@@ -119,6 +119,8 @@ export default function BasicSearchApp(props) {
   //   registry,
   // });
 
+  // console.log('bsa', props.children);
+
   return driverInstance ? (
     <SearchProvider config={elasticConfig} driver={driverInstance}>
       <WrappedSearchView

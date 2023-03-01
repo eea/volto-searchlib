@@ -22,7 +22,9 @@ export default function FacetApp(props) {
   // console.log({ searchContext, props, driver });
   const { filters, removeFilter, addFilter } = searchContext; // driver.state
 
-  const facet = appConfig.facets?.find((f) => f.field === field);
+  const facet = appConfig.facets?.find(
+    (f) => f.field === field || f.id === field,
+  );
   const FacetComponent = registry.resolve[facet.factory].component;
 
   const fallback = props.filterType || facet.filterType;

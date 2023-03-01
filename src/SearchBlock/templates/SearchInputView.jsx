@@ -15,7 +15,11 @@ function SearchInputView(props) {
       <SearchInputApp
         {...props}
         onSubmitSearch={(searchTerm) => {
-          history.push(`${url}?q=${searchTerm}`);
+          if (!url && window.searchContext) {
+            window.searchContext.resetSearch({ searchTerm });
+          } else {
+            history.push(`${url}?q=${searchTerm}`);
+          }
         }}
       />
       {props.children}

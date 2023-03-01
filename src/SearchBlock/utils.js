@@ -69,7 +69,7 @@ const _applyBlockSettings = (config, appName, data, schema) => {
       .map((f) => ({
         [f.name]: f.value ? f.value : { field: f.name, values: [] },
       }))
-      .reduce((acc, cur) => ({ ...acc, ...cur }));
+      .reduce((acc, cur) => ({ ...acc, ...cur }), {});
     settings.facets.forEach((f) => {
       if (filters[f.field]) {
         f.default = filters[f.field];
