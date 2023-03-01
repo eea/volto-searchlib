@@ -15,7 +15,7 @@ const ResultSource = ({ item }) => {
   const { vocab = {} } = appConfig;
 
   return (
-    <div className="source">
+    <div className="result-info result-source">
       <span className="result-info-title">Source: </span>
 
       <ExternalLink href={item.href}>
