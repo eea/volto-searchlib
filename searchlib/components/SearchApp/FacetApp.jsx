@@ -82,7 +82,7 @@ export default function FacetApp(props) {
     () => () => {
       removeFilter(field); // when the Facet is removed, we remove the filter
       timerRef.current && clearTimeout(timerRef.current);
-      // console.log('unmount', field);
+      console.log('unmount', field);
     },
     [field, removeFilter],
   );
