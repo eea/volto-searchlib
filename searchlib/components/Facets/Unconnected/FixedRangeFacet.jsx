@@ -28,9 +28,9 @@ const FacetOptions = (props) => {
                   option.value,
                 )}`}
                 name={`multiterm_facet_${label}`}
-                type="radio"
+                type="checkbox"
                 className="sui-multi-checkbox-facet__checkbox"
-                defaultChecked={checked}
+                checked={checked}
                 onChange={() => {
                   options.forEach((opt) => {
                     if (opt.value.name === option.value.name) {
