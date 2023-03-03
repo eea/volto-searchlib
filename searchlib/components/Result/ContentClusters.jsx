@@ -46,8 +46,12 @@ const ContentClusters = ({ clusters, item }) => {
               </>
             )}
             {index < Object.keys(displayClusters).length - 1 ? ', ' : ''}
-            {formats_to_show.map((format_to_show) => {
-              return <span className="fileformat-icon">{format_to_show}</span>;
+            {formats_to_show.map((format_to_show, i) => {
+              return (
+                <span key={i} className="fileformat-icon">
+                  {format_to_show}
+                </span>
+              );
             })}
           </div>
         </div>
