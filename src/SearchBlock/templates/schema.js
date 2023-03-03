@@ -55,11 +55,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       'showFacets',
       'showSorting',
       'showClusters',
+      'landingPageURL',
       'availableFacets',
       'defaultFacets',
       'defaultFilters',
       'defaultSort',
-      'landingPageURL',
     ],
   });
 

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
 export default function BackToHome({
@@ -17,6 +17,9 @@ export default function BackToHome({
       backToHome = url.pathname;
     }
   }
+  const location = useLocation();
+
+  const isLocal = backToHome && location.pathname === backToHome;
 
   const resetSearch = (e) => {
     e.preventDefault();
@@ -28,12 +31,30 @@ export default function BackToHome({
 
   return backToHome ? (
     backToHome.startsWith('/') ? (
-      <Link to={backToHome} className="back-link">
+      <Link
+        to={backToHome}
+        className="back-link"
+        onClick={() => {
+          if (isLocal) {
+            searchContext.resetSearch({});
+            resetInteracted();
+          }
+        }}
+      >
         <Icon className="arrow left" />
         Back to search home
       </Link>
     ) : (
-      <a href={backToHome} className="back-link">
+      <a
+        href={backToHome}
+        className="back-link"
+        onClick={() => {
+          if (isLocal) {
+            searchContext.resetSearch({});
+            resetInteracted();
+          }
+        }}
+      >
         <Icon className="arrow left" />
         Back to search home
       </a>
