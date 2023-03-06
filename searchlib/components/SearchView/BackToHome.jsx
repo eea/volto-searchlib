@@ -1,4 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
+import { Link, useHistory } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
 export default function BackToHome({
@@ -17,12 +19,13 @@ export default function BackToHome({
       backToHome = url.pathname;
     }
   }
-  const location = useLocation();
+  const history = useHistory();
 
-  const isLocal = backToHome && location.pathname === backToHome;
+  const isLocal = backToHome && history.location.pathname === backToHome;
+  const { driver } = React.useContext(SUISearchContext);
 
   const resetSearch = (e) => {
-    e.preventDefault();
+    driver.URLManager.history.replace(history.location.pathname);
     resetInteracted();
     searchContext.resetSearch({});
   };
@@ -36,8 +39,7 @@ export default function BackToHome({
         className="back-link"
         onClick={() => {
           if (isLocal) {
-            searchContext.resetSearch({});
-            resetInteracted();
+            resetSearch();
           }
         }}
       >
@@ -50,8 +52,7 @@ export default function BackToHome({
         className="back-link"
         onClick={() => {
           if (isLocal) {
-            searchContext.resetSearch({});
-            resetInteracted();
+            resetSearch();
           }
         }}
       >
@@ -63,8 +64,14 @@ export default function BackToHome({
     <a
       className="back-link"
       as="a"
-      onClick={resetSearch}
-      onKeyDown={resetSearch}
+      onClick={(e) => {
+        resetSearch();
+        e.preventDefault();
+      }}
+      onKeyDown={(e) => {
+        resetSearch();
+        e.preventDefault();
+      }}
       role="button"
       href="./"
     >
