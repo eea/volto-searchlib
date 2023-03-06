@@ -58,6 +58,7 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       'landingPageURL',
       'availableFacets',
       'defaultFacets',
+      'preapliedFilters',
       'defaultFilters',
       'defaultSort',
     ],
@@ -97,10 +98,17 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       configPath: 'showSorting',
     },
     defaultFilters: {
-      title: 'Pre-applied filters',
+      title: 'Default filter values',
       widget: 'object_list',
       schema: FilterSchema({ formData }),
       schemaExtender: (schema) => schema,
+    },
+    preapliedFilters: {
+      title: 'Hidden filters',
+      widget: 'object_list',
+      schema: FilterSchema({ formData }),
+      schemaExtender: (schema) => schema,
+      configPath: 'preapliedFilters',
     },
     availableFacets: {
       title: 'Available Facets',
@@ -146,12 +154,16 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       choices: resultViews.map(({ id, title }) => [id, title]),
       default: resultViews.find(({ isDefault }) => isDefault).id,
     };
-    const { schemaExtender } = schema.properties.defaultFilters;
 
-    if (!schemaExtender.applied) {
+    if (!schema.properties.defaultFilters.schemaExtender.applied) {
       const extender = setFacetWidgetProps(appConfig, registry, appName);
       extender.applied = true;
       schema.properties.defaultFilters.schemaExtender = extender;
+    }
+    if (!schema.properties.preapliedFilters.schemaExtender.applied) {
+      const extender = setFacetWidgetProps(appConfig, registry, appName);
+      extender.applied = true;
+      schema.properties.preapliedFilters.schemaExtender = extender;
     }
 
     schema.properties.defaultSort = {
