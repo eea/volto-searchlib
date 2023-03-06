@@ -25,7 +25,7 @@ import { isLandingPageAtom } from './state';
 const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
   // a check that, once toggled true, it always return true
 
-  const [cached, setCached] = React.useState();
+  const [cached, setCached] = React.useState(null);
 
   const wasInteracted = !!(
     searchedTerm ||
@@ -39,28 +39,11 @@ const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
     if (wasInteracted && !cached) {
       setCached(true);
     }
-    // else if (!wasInteracted && cached === true) {
-    //   setCached(false);
-    // }
   }, [wasInteracted, cached]);
 
   const resetInteracted = React.useCallback(() => {
-    console.log('reset');
     setCached(false);
   }, []);
-
-  // console.log('wasInteracted', {
-  //   wasInteracted,
-  //   searchedTerm,
-  //
-  //   check: checkInteracted({
-  //     searchContext,
-  //     appConfig,
-  //   }),
-  //   cached,
-  // });
-
-  React.useEffect(() => () => console.log('unmount'), []);
 
   return {
     wasInteracted: cached || wasInteracted,
@@ -70,7 +53,6 @@ const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
 
 export const SearchView = (props) => {
   const { appConfig, appName, mode = 'view' } = props;
-  // React.useEffect(() => () => console.log('unmount searchview'), []);
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);
@@ -87,12 +69,6 @@ export const SearchView = (props) => {
     searchContext,
     appConfig,
   });
-
-  // console.log(
-  //   'searchedTerm',
-  //   `-[${searchedTerm}]-[${searchContext.searchTerm}]-`,
-  //   wasInteracted,
-  // );
 
   React.useEffect(() => {
     window.searchContext = searchContext;

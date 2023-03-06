@@ -34,8 +34,8 @@ export default function BackToHome({
 
   return backToHome ? (
     backToHome.startsWith('/') ? (
-      <Link
-        to={backToHome}
+      <a
+        href={backToHome}
         className="back-link"
         onClick={() => {
           if (isLocal) {
@@ -45,7 +45,7 @@ export default function BackToHome({
       >
         <Icon className="arrow left" />
         Back to search home
-      </Link>
+      </a>
     ) : (
       <a
         href={backToHome}
