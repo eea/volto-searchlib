@@ -88,14 +88,15 @@ function SearchBlockView(props) {
   });
 
   const key = `${location?.pathname || path}-${props.data?.appName}`;
-  // console.log('render searchblockview', key);
   const Variation = variation.view;
+
+  // console.log('render searchblockview', key);
   // React.useEffect(() => () => console.log('unmount SearchBlockView'), []);
 
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
-      {/* {JSON.stringify(data.defaultFilters)} */}
+      {mode !== 'view' && JSON.stringify(data.defaultFilters)}
       <Variation
         key={key}
         slotFills={data.slotFills}
