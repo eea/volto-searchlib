@@ -25,7 +25,7 @@ import { isLandingPageAtom } from './state';
 const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
   // a check that, once toggled true, it always return true
 
-  const [cached, setCached] = React.useState();
+  const [cached, setCached] = React.useState(null);
 
   const wasInteracted = !!(
     searchedTerm ||
@@ -36,7 +36,9 @@ const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
   );
 
   React.useEffect(() => {
-    if (wasInteracted && !cached) setCached(true);
+    if (wasInteracted && !cached) {
+      setCached(true);
+    }
   }, [wasInteracted, cached]);
 
   const resetInteracted = React.useCallback(() => {
