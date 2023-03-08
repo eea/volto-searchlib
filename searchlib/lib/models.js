@@ -128,7 +128,11 @@ export class ResultModel extends BasicModel {
   }
 
   get isNew() {
-    return this.daysSinceIssued < 30;
+    const raw = this._result['issued']?.raw;
+    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+    const res = DateTime.local().diff(issued, 'days').as('days');
+
+    return res < 30;
   }
 
   get issued() {
