@@ -40,15 +40,17 @@ function changeSizeToZero(body) {
 }
 
 export async function getFacetCounts(state, config, facetNames) {
+  let { default_filters } = config?.initialView?.tilesLandingPageParams;
+  default_filters = default_filters !== undefined ? default_filters : [];
+  const sf = state.filters.concat(default_filters);
   const disjunctiveFacetNames = facetNames.filter((name) =>
-    state.filters.find((f) => f.field === name),
+    sf.find((f) => f.field === name),
   );
   const normalFacetNames = facetNames.filter(
     (name) => disjunctiveFacetNames.indexOf(name) === -1,
   );
-
   // batch non-exact aggregations together
-  let body = buildRequest({ filters: [] }, config, true); // for normal we don't want filters
+  let body = buildRequest({ filters: default_filters }, config, true); // for normal, apply the default filters from config
   body = changeSizeToZero(body);
   body = removeAllFacetsExcept(body, normalFacetNames);
   const normalRequest = runRequest(body, config);
@@ -71,4 +73,14 @@ export async function getFacetCounts(state, config, facetNames) {
     ],
   );
   return combineAggregationsFromResponses(responses);
+}
+
+export async function getTotal(config) {
+  let { default_filters } = config?.initialView?.tilesLandingPageParams;
+  default_filters = default_filters !== undefined ? default_filters : [];
+  let body = buildRequest({ filters: default_filters }, config, true);
+  body = changeSizeToZero(body);
+  const req = runRequest(body, config);
+  const resp = await req;
+  return resp?.body?.hits?.total?.value;
 }
