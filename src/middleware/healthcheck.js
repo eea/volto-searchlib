@@ -3,7 +3,7 @@ import { registry } from '@eeacms/search';
 export default function healthcheck(req, res, next) {
   const { id } = req.params;
   const appConfig = registry.searchui[id];
-  if (appConfig.healthcheck) {
+  if (appConfig?.healthcheck) {
     appConfig
       .healthcheck(appConfig)
       .then((body) => res.send(body))
@@ -11,6 +11,6 @@ export default function healthcheck(req, res, next) {
         res.send({ error: body });
       });
   } else {
-    next();
+    res.send({ error: 'config not found' });
   }
 }
