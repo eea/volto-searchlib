@@ -79,6 +79,10 @@ const applyConfig = (config) => {
     middleware.all('**/_es/*', handler);
     middleware.id = 'esProxyMiddleware';
 
+    const healthCheckMiddleware = require('./middleware/healthcheck').default;
+    middleware.all('**/_es_healthcheck/:id', healthCheckMiddleware);
+    middleware.id = 'esHealthcheck';
+
     config.settings.expressMiddleware = [
       ...config.settings.expressMiddleware,
       middleware,
