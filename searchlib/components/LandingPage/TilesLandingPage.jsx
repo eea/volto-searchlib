@@ -1,10 +1,10 @@
 import React from 'react';
-import { Tab, Menu, List } from 'semantic-ui-react';
+import { Tab, Menu, List, Divider } from 'semantic-ui-react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useAtom } from 'jotai';
 
 import { showFacetsAsideAtom } from '@eeacms/search/state';
-import { getFacetCounts } from './request';
+import { getFacetCounts, getTotal } from './request';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { customOrder } from '@eeacms/search/lib/utils';
 import { useLandingPageData, useLandingPageRequest } from './state';
@@ -45,6 +45,7 @@ const LandingPage = (props) => {
     maxPerSection = 12,
     sortField,
     sortDirection,
+    filterForAllResults,
   } = appConfig.initialView.tilesLandingPageParams;
 
   const sectionFacetFields = sections.map((s) => s.facetField);
@@ -62,8 +63,7 @@ const LandingPage = (props) => {
   const getTiles = (maxPerSection_default) => {
     const maxPerSection =
       activeSectionConfig.maxPerSection || maxPerSection_default;
-    let result = landingPageData?.[activeSection]?.[0]?.data || [];
-
+    let result = landingPageData?.facets?.[activeSection]?.[0]?.data || [];
     if (activeSectionConfig.blacklist !== undefined) {
       result = result.filter(
         (res) => !activeSectionConfig.blacklist.includes(res.value),
@@ -87,9 +87,12 @@ const LandingPage = (props) => {
 
   const { icon } = activeSectionConfig;
 
+  const total = landingPageData?.total;
+
   useDeepCompareEffect(() => {
     async function fetchFacets() {
       let facets;
+      let total;
       if (!isRequested) {
         setIsRequested(true);
       } else {
@@ -113,10 +116,11 @@ const LandingPage = (props) => {
           sectionFacetFields,
         );
         facets = buildStateFacets(facetCounts, appConfig);
+        total = await getTotal(appConfig);
       }
 
-      if (!landingPageData && facets) {
-        setLandingPageData(facets);
+      if (!landingPageData && facets && total) {
+        setLandingPageData({ facets, total });
       }
     }
     if (!landingPageData) {
@@ -131,6 +135,13 @@ const LandingPage = (props) => {
     setLandingPageData,
     sections,
   ]);
+
+  const fixedOnClickHandler = (conf) => {
+    //TODO: This is a temporary solution, until we find another way to detect if there was any interaction on the landing page
+    if (filterForAllResults) {
+      setFilter(filterForAllResults.field, filterForAllResults.value);
+    }
+  };
 
   const panes = sections.map((section, index) => {
     const tabIndex = index + 1;
@@ -153,51 +164,75 @@ const LandingPage = (props) => {
       },
       render: () => {
         return (
-          <Tab.Pane>
-            <div className={`landing-page-cards ${activeSection}`}>
-              <List>
-                {sortedTiles(tiles, activeSectionConfig, appConfig).map(
-                  (topic, index) => {
-                    const onClickHandler = () => {
-                      setFilter(
-                        activeSection,
-                        topic.value,
-                        activeSectionConfig.filterType || 'any',
+          <>
+            <Tab.Pane>
+              <div className={`landing-page-cards ${activeSection}`}>
+                <List>
+                  {sortedTiles(tiles, activeSectionConfig, appConfig).map(
+                    (topic, index) => {
+                      const onClickHandler = () => {
+                        setFilter(
+                          activeSection,
+                          topic.value,
+                          activeSectionConfig.filterType || 'any',
+                        );
+
+                        // apply configured default values
+                        appConfig.facets
+                          .filter((f) => f.field !== activeSection && f.default)
+                          .forEach((facet) => {
+                            facet.default.values.forEach((value) =>
+                              setFilter(
+                                facet.field,
+                                value,
+                                facet.default.type || 'any',
+                              ),
+                            );
+                          });
+                        setSort(sortField, sortDirection);
+                        setShowFacets(true);
+                      };
+
+                      return (
+                        <List.Item onClick={onClickHandler} key={index}>
+                          <List.Content>
+                            {icon ? <Icon {...icon} type={topic.value} /> : ''}
+                            <Term term={topic.value} field={activeSection} />
+                            <span className="count">
+                              ({topic.count}{' '}
+                              {topic.count === 1 ? 'item' : 'items'})
+                            </span>
+                          </List.Content>
+                        </List.Item>
                       );
-
-                      // apply configured default values
-                      appConfig.facets
-                        .filter((f) => f.field !== activeSection && f.default)
-                        .forEach((facet) => {
-                          facet.default.values.forEach((value) =>
-                            setFilter(
-                              facet.field,
-                              value,
-                              facet.default.type || 'any',
-                            ),
-                          );
-                        });
-                      setSort(sortField, sortDirection);
-                      setShowFacets(true);
-                    };
-
-                    return (
-                      <List.Item onClick={onClickHandler} key={index}>
-                        <List.Content>
-                          {icon ? <Icon {...icon} type={topic.value} /> : ''}
-                          <Term term={topic.value} field={activeSection} />
-                          <span className="count">
-                            ({topic.count}{' '}
-                            {topic.count === 1 ? 'item' : 'items'})
-                          </span>
-                        </List.Content>
-                      </List.Item>
-                    );
-                  },
-                )}
+                    },
+                  )}
+                </List>
+              </div>
+            </Tab.Pane>
+            <Divider />
+            <div className="landing-page-cards">
+              <List>
+                <List.Item>
+                  <List.Content>
+                    <div
+                      key="all_data"
+                      tabIndex="-1"
+                      role="button"
+                      onKeyDown={fixedOnClickHandler}
+                      onClick={fixedOnClickHandler}
+                    >
+                      <div className="extra content">
+                        <span className="count">
+                          Show all {total} documents
+                        </span>
+                      </div>
+                    </div>
+                  </List.Content>
+                </List.Item>
               </List>
             </div>
-          </Tab.Pane>
+          </>
         );
       },
     };

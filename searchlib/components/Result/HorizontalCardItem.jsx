@@ -66,9 +66,11 @@ const HorizontalCardItem = (props) => {
       <>
         <ExternalLink href={result.href} title={result.title}>
           {result.title}
+          {result.isNew && <Label className="new-item">New</Label>}
+          {result.isExpired && (
+            <Label className="archived-item">Archived</Label>
+          )}
         </ExternalLink>
-        {result.isNew && <Label className="new-item">New</Label>}
-        {result.isExpired && <Label className="archived-item">Archived</Label>}
       </>
     ),
     meta: <ContentClusters clusters={clusters} item={result} />,
