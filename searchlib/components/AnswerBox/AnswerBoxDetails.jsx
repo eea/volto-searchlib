@@ -22,22 +22,24 @@ export default (props) => {
       <Modal.Header>Direct answers</Modal.Header>
       <Modal.Content>
         <p>
-          Sometimes we show direct answers to your queries when our AI algorithm
-          automatically detects them within the top search results.
+          When possible, we show direct answers to your queries if our system
+          automatically detects them within the top search results. The answers
+          highlighted are only from content available on our websites. We do not
+          provide answers from other sources or generate new content.
         </p>
         <p>
-          Some answers may not be correct or up to date, they may be based on
-          obsolete content. Therefore, we appreciate your feedback to help us
-          improve.
+          Our algorithm aims to provide you the most relevant and up-to-date
+          results. In some cases, however, the algorithm could display results
+          which are not the most relevant or up-to-date content we have
+          available. We would be grateful if you could let us know. Your
+          feedback can help us improve the algorithm, and hence the search
+          results.
         </p>
-        <p>
-          Our goal is to keep this information and material timely and accurate.
-          If errors are brought to our attention, we will try to correct them.
-        </p>
+
         <AnswerFeedback />
         <p>
           <a
-            href="https://www.eea.europa.eu/legal/disclaimer"
+            href="https://www.eea.europa.eu/en/legal-notice#disclaimer"
             target="_blank"
             rel="noreferrer"
           >
@@ -47,7 +49,7 @@ export default (props) => {
       </Modal.Content>
       <Modal.Actions>
         <Button color="black" onClick={() => setOpen(false)} positive>
-          OK
+          Help us improve our search
         </Button>
       </Modal.Actions>
     </Modal>
