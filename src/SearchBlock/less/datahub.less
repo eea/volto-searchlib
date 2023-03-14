@@ -195,6 +195,7 @@
   .ui.accordion {
     .active.title {
       background-color: #efefef;
+      color: @deepBlue;
     }
 
     .list .item {
@@ -310,6 +311,11 @@
 
   .formats {
     margin-left: 1em;
+
+    svg {
+      position: relative;
+      top: 2px;
+    }
   }
 
   .dataset-content {
@@ -350,19 +356,26 @@
   }
 }
 
-.format-label {
+.dh-label {
   display: inline-block;
   padding: 0.3em 0.6em;
   margin-top: -3px;
-  margin-right: 5px;
-  background-color: #d3d3d3;
+  margin-right: 7px;
   border-radius: 0.25em;
-  color: #434343;
+  color: @deepBlue;
   font-size: 65%;
   line-height: 1;
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
+
+  &:not(.inverted) {
+    background-color: #d3d3d3;
+  }
+
+  &.inverted {
+    box-shadow: 0px 0px 0px 1px @deepBlue inset;
+  }
 }
 
 .more-like-this {
