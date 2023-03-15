@@ -1,10 +1,15 @@
 import superagent from 'superagent';
-import * as path from 'path';
+
+function trim_slash(text) {
+  return text.replace(/^\/+|\/+$/g, '');
+}
 
 export default async function getIndexInfo(config) {
   const { host, elastic_index } = config;
-  const settings_url = path.join(host, elastic_index, '_settings');
-  const alias_url = path.join(host, elastic_index, '_alias');
+  const settings_url =
+    trim_slash(host) + '/' + trim_slash(elastic_index) + '/_settings';
+  const alias_url =
+    trim_slash(host) + '/' + trim_slash(elastic_index) + '/_alias';
 
   try {
     const settings_resp = await superagent

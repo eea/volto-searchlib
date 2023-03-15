@@ -356,6 +356,33 @@
   }
 }
 
+.ui.button.see-more {
+  padding: 0 !important;
+  border: none;
+  margin: 0;
+  margin-left: 10px;
+  background: none;
+  color: @linkColor;
+  font-size: inherit;
+  font-weight: normal;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: none;
+    color: @linkColor;
+    opacity: 0.8;
+  }
+
+  &.open:after {
+    content: '\25B2';
+  }
+
+  &.close:after {
+    content: '\25BC';
+  }
+}
+
 .dh-label {
   display: inline-block;
   padding: 0.3em 0.6em;
