@@ -44,13 +44,12 @@ const AnswerFeedback = (props) => {
 
   return (
     <Modal
+      closeIcon
       open={open}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
       trigger={
-        <Button
-          // basic={basic}
-          onClick={() => setOpen(true)}
-          className="feedback-btn"
-        >
+        <Button primary onClick={() => setOpen(true)} className="feedback-btn">
           Help us improve our answers
           <Icon name="angle right" />
         </Button>
@@ -85,9 +84,7 @@ const AnswerFeedback = (props) => {
         </Segment>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="black" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
+        <Button onClick={() => setOpen(false)}>Cancel</Button>
         <Button
           content="Send feedback"
           labelPosition="right"
