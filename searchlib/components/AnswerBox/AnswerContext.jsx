@@ -1,12 +1,11 @@
 import React from 'react';
 
 import ExternalLink from '@eeacms/search/components/Result/ExternalLink';
-import { ResultSource } from '@eeacms/search/components'; //, StringList, Iconn
+import { ResultSource, DateTime, StringList } from '@eeacms/search/components'; //, StringList, Iconn
 
 import { highlightUrl } from './utils';
 
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import AnswerBoxDetails from './AnswerBoxDetails';
 
 const WHITESPACE_RE = /\n|\t/;
 
@@ -36,12 +35,6 @@ const AnswerContext = ({ item, answerItem }) => {
         {item.title}
       </ExternalLink>
     ),
-    meta: (
-      <div className="answer-header">
-        <div className="answer-header-title">Direct answers</div>
-        <AnswerBoxDetails basic />
-      </div>
-    ),
     description: (
       <>
         <span dangerouslySetInnerHTML={{ __html: pre }}></span>
@@ -56,8 +49,18 @@ const AnswerContext = ({ item, answerItem }) => {
     ),
     // preview_image_url: result.hasImage ? result.thumbUrl : undefined,
     extra: (
-      <div className="result-bottom">
-        <div className="result-info">
+      <div>
+        <div className="result-bottom">
+          <div className="result-info">
+            <span className="result-info-title">Published: </span>
+            <DateTime format="DATE_MED" value={item.issued} />
+          </div>
+          <div className="result-info">
+            <span className="result-info-title">Topics: </span>
+            <StringList value={item.tags} />
+          </div>
+        </div>
+        <div>
           <ResultSource item={item} />
         </div>
       </div>

@@ -8,6 +8,7 @@ import { buildResult } from '@eeacms/search/lib/search/state/results';
 import AnswerContext from './AnswerContext';
 import AnswerLinksList from './AnswersLinksList';
 import AnswerFeedback from './AnswerFeedback';
+import AnswerBoxDetails from './AnswerBoxDetails';
 
 const MAX_COUNT = 1;
 
@@ -96,11 +97,13 @@ const Answers = (props) => {
                   </div>
                 </div>
                 <div className="answers-feedback">
-                  <AnswerFeedback
-                    basic
-                    answer={primaryAnswer}
-                    query={searchedTerm}
-                  />
+                  <div>
+                    <AnswerFeedback
+                      answer={primaryAnswer}
+                      query={searchedTerm}
+                    />
+                    <AnswerBoxDetails />
+                  </div>
                 </div>
                 {/*<div className="answers__bottom">
                   <Popup
