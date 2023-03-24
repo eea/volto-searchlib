@@ -4,7 +4,6 @@ import AnswerFeedback from './AnswerFeedback';
 
 export default (props) => {
   const [open, setOpen] = React.useState(false);
-  const { basic } = props;
   return (
     <Modal
       closeIcon
@@ -12,13 +11,9 @@ export default (props) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       trigger={
-        <Button
-          basic={basic}
-          onClick={() => setOpen(true)}
-          className="header-btn"
-        >
-          <div className="answer-header-title">Highlighted answers</div>
-          <Icon className="ri-information-line" />
+        <Button onClick={() => setOpen(true)} className="feedback-btn">
+          About highlighted answers
+          <Icon name="angle right" />
         </Button>
       }
     >

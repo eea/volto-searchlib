@@ -6,7 +6,6 @@ import { ResultSource, DateTime, StringList } from '@eeacms/search/components'; 
 import { highlightUrl } from './utils';
 
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import AnswerBoxDetails from './AnswerBoxDetails';
 
 const WHITESPACE_RE = /\n|\t/;
 
@@ -35,11 +34,6 @@ const AnswerContext = ({ item, answerItem }) => {
       <ExternalLink href={highlightUrl(item.href, ans)}>
         {item.title}
       </ExternalLink>
-    ),
-    meta: (
-      <div className="answer-header">
-        <AnswerBoxDetails basic />
-      </div>
     ),
     description: (
       <>

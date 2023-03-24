@@ -31,7 +31,7 @@ const AnswerFeedback = (props) => {
   const [open, setOpen] = React.useState(false);
   const [think, setThink] = React.useState('');
   const [comment, setComment] = React.useState('');
-  const { answer, query } = props; // basic
+  const { answer, query } = props;
 
   const { appConfig } = useAppConfig();
 
@@ -49,7 +49,7 @@ const AnswerFeedback = (props) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       trigger={
-        <Button primary onClick={() => setOpen(true)} className="feedback-btn">
+        <Button onClick={() => setOpen(true)} className="feedback-btn">
           Help us improve our answers
           <Icon name="angle right" />
         </Button>
