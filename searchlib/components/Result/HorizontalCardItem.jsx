@@ -18,7 +18,7 @@ const ExtraContent = (props) => {
     <div>
       <div className="result-bottom">
         <div className="result-info">
-          <span className="result-info-title">Published: </span>
+          {/* <span className="result-info-title">Published: </span> */}
           <DateTime format="DATE_MED" value={result.issued} />
         </div>
         <div className="result-info">
