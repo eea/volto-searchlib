@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidebar, Button, Icon } from 'semantic-ui-react';
+import { Sidebar, Button } from 'semantic-ui-react';
 import { useSearchContext, useOutsideClick } from '@eeacms/search/lib/hocs';
 import FacetResolver from './FacetResolver';
 
