@@ -37,6 +37,11 @@ const ActiveFilterList = (props) => {
               size="mini"
               className="clear-btn"
               onClick={() => clearFilters()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  clearFilters();
+                }
+              }}
             >
               clear all
             </Button>

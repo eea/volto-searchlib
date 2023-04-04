@@ -38,9 +38,9 @@ const ViewComponent = (props) => {
         <Dropdown
           icon="chevron down"
           trigger={
-            <>
+            <span tabIndex={0} role="button">
               {labelText} <span>{value}</span>
-            </>
+            </span>
           }
           inline
           options={options}

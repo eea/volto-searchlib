@@ -79,6 +79,11 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
             <Button
               className="sui-button basic"
               onClick={() => setShowSidebar(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setShowSidebar(true);
+                }
+              }}
               // disabled={isLiveSearch}
             >
               + More filters

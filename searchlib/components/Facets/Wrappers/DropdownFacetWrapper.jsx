@@ -130,8 +130,13 @@ const DropdownFacetWrapper = (props) => {
             <Dropdown
               open={isOpen}
               onClick={() => setIsOpen(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setIsOpen(true);
+                }
+              }}
               trigger={
-                <span className="facet-title">
+                <span className="facet-title" tabIndex={0} role="button">
                   {label ? <>{label} </> : <>{title} </>}
                   {filtersCount.length > 0 && (
                     <span className="count">({filtersCount})</span>

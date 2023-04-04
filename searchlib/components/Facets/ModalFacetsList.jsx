@@ -89,6 +89,11 @@ const FacetsList = ({ view, defaultWrapper }) => {
             // clearFilters(exclude);
             // setVisibleFacets(alwaysVisibleFacets);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              searchContext.resetFilters();
+            }
+          }}
         />
       </div>
 
@@ -127,6 +132,11 @@ const FacetsList = ({ view, defaultWrapper }) => {
                   content="clear all filters"
                   onClick={() => {
                     setSelectFilters(alwaysVisibleFacets);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setSelectFilters(alwaysVisibleFacets);
+                    }
                   }}
                 />
               </h5>

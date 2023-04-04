@@ -32,10 +32,10 @@ const SortingViewComponent = (props) => {
         <Dropdown
           icon="chevron down"
           trigger={
-            <>
+            <span tabIndex={0} role="button">
               {label ? `${label}: ` : ''}
               <span>{`${activeLabel}`}</span>
-            </>
+            </span>
           }
           inline
           value={activeValue}

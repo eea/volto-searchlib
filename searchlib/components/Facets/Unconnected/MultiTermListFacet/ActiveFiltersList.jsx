@@ -47,6 +47,18 @@ const ActiveFilters = (props) => {
             }
             setActiveFilter([]);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (state.length > 0) {
+                dispatch({
+                  type: 'reset',
+                  value: [],
+                  id: 'btn-clear-filters',
+                });
+              }
+              setActiveFilter([]);
+            }
+          }}
         />
       </div>
 

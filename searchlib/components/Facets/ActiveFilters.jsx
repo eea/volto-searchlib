@@ -64,6 +64,17 @@ const ActiveFilters = (props) => {
             onRemove([activeFilter || '']);
           }
         }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            if (Array.isArray(activeFilter)) {
+              (activeFilter || []).forEach((v) => {
+                onRemove(v);
+              });
+            } else {
+              onRemove([activeFilter || '']);
+            }
+          }
+        }}
       />
     </div>
   ) : null;
