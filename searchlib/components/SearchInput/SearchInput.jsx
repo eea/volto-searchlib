@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Icon, Image } from 'semantic-ui-react';
+import { Icon, Image, Button } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
@@ -134,10 +134,10 @@ function SearchInput({
 
           <div className="input-controls">
             {(searchTerm || '').trim() && (
-              <div className="ui button basic clear-button">
-                <Icon
-                  name="close"
-                  role="button"
+              <>
+                <Button
+                  basic
+                  className="clear-button"
                   onClick={() => {
                     // inputProps.onChange({ target: { value: '' } });
                     setSearchTerm('', { shouldClearFilters: false });
@@ -148,21 +148,37 @@ function SearchInput({
                     }
                     // onSubmit();
                   }}
-                />
-              </div>
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setSearchTerm('', { shouldClearFilters: false });
+
+                      const sNew = sortOptions.filter(
+                        (s) => s.name === 'Newest',
+                      );
+                      if (sNew.length > 0) {
+                        setSort(sNew[0].value, sNew[0].direction);
+                      }
+                    }
+                  }}
+                >
+                  <Icon name="close" />
+                </Button>
+              </>
             )}
           </div>
 
           <div className="terms-box-left">
             <div
-              className="search-icon"
-              role="button"
               tabIndex={0}
-              onKeyDown={() => {
-                setSearchTerm(currentTerm, { shouldClearFilters: false });
-              }}
+              role="button"
+              className="search-icon"
               onClick={() => {
                 setSearchTerm(currentTerm, { shouldClearFilters: false });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setSearchTerm(currentTerm, { shouldClearFilters: false });
+                }
               }}
             >
               <SVGIcon name={searchSVG} />

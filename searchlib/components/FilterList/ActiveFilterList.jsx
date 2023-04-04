@@ -19,8 +19,14 @@ const ActiveFilterList = (props) => {
     <Segment className="active-filter-list">
       <Accordion>
         <Accordion.Title
+          tabIndex={0}
           active={isOpened}
           onClick={() => setIsOpened(!isOpened)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              setIsOpened(!isOpened);
+            }
+          }}
         >
           <Icon className="ri-arrow-down-s-line" />
           <div className="filter-list-header">
