@@ -290,7 +290,7 @@
   .sui-multi-checkbox-facet__option-label {
     align-items: flex-start;
     justify-content: space-between;
-    margin: 0.5em 0;
+    margin: 0.5em;
   }
 
   .sui-multi-checkbox-facet__option-count {
@@ -334,6 +334,10 @@
       height: 15px;
       border: 1px solid @darkCerulean;
       background-color: @white;
+
+      // &:focus-visible {
+      //   border: 1px solid red;
+      // }
     }
 
     .radio-checkmark {
@@ -362,6 +366,11 @@
 
     input.sui-multi-checkbox-facet__checkbox:checked ~ .checkmark {
       background-color: @darkCerulean;
+    }
+
+    .sui-multi-checkbox-facet__checkbox:focus + .checkmark,
+    .sui-multi-checkbox-facet__checkbox:focus + .radio-checkmark {
+      outline: 0.2rem solid #0083e0 !important;
     }
 
     .checkmark:after,

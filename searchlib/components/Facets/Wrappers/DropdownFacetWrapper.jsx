@@ -136,7 +136,7 @@ const DropdownFacetWrapper = (props) => {
                 }
               }}
               trigger={
-                <span className="facet-title" tabIndex={0} role="button">
+                <span className="facet-title">
                   {label ? <>{label} </> : <>{title} </>}
                   {filtersCount.length > 0 && (
                     <span className="count">({filtersCount})</span>

@@ -28,23 +28,21 @@ const SortingViewComponent = (props) => {
 
   return (
     <div className="sorting">
-      <span>
-        <Dropdown
-          icon="chevron down"
-          trigger={
-            <span tabIndex={0} role="button">
-              {label ? `${label}: ` : ''}
-              <span>{`${activeLabel}`}</span>
-            </span>
-          }
-          inline
-          value={activeValue}
-          options={sortOptions}
-          onChange={(e, { value }) => {
-            onChange(value);
-          }}
-        />
-      </span>
+      <Dropdown
+        icon="chevron down"
+        trigger={
+          <span>
+            {label ? `${label}: ` : ''}
+            <span>{`${activeLabel}`}</span>
+          </span>
+        }
+        inline
+        value={activeValue}
+        options={sortOptions}
+        onChange={(e, { value }) => {
+          onChange(value);
+        }}
+      />
     </div>
   );
 };

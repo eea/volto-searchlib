@@ -46,6 +46,7 @@ const AccordionFacetWrapper = (props) => {
   return collapsable ? (
     <Accordion>
       <Accordion.Title
+        tabIndex={0}
         active={isOpened}
         onClick={() => {
           setCounter(counter + 1); // Force render
@@ -58,6 +59,20 @@ const AccordionFacetWrapper = (props) => {
             isOpened = true;
           }
           updateOpenFacets(temp);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            setCounter(counter + 1); // Force render
+            let temp = openFacets;
+            if (isOpened) {
+              temp[field] = { opened: false };
+              isOpened = false;
+            } else {
+              temp[field] = { opened: true };
+              isOpened = true;
+            }
+            updateOpenFacets(temp);
+          }
         }}
       >
         {label}

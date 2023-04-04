@@ -1,3 +1,7 @@
+*:focus-visible {
+  outline: var(--focus-visible, @focusVisibleOutline) !important;
+}
+
 body.searchlib-page {
   overflow-x: hidden !important;
 
@@ -136,9 +140,6 @@ body.searchlib-page {
       }
 
       .sorting {
-        width: auto;
-        font-size: 16px;
-
         .inline.dropdown > span {
           color: @secondaryColor;
           font-weight: 600;
