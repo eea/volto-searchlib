@@ -24,62 +24,50 @@
         }
       }
 
-      .ui.dropdown {
-        position: relative;
-
-        .menu > * {
-          white-space: normal;
-        }
+      .ui.button.basic.facet-btn {
+        padding: 0 !important;
+        color: @deepBlue !important;
 
         &.active {
-          > span {
+          > .facet-title {
             z-index: 99999 !important;
             box-shadow: 0 5px 0 @white, 0 0 4px rgba(0, 0, 0, 0.25);
             color: @pineGreen;
             font-weight: 700;
           }
-
-          .menu {
-            z-index: 9999 !important;
-          }
         }
 
-        .divider {
-          color: @blue-grey-5;
-          font-size: 16px;
+        &:hover,
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .facet-wrapper {
+        position: absolute;
+        bottom: auto !important;
+        min-width: 350px;
+        max-width: 400px;
+        padding: 1em;
+        border: none;
+        border-bottom: 0.5px solid #4c677f;
+        margin-top: -6px;
+        background-color: @white;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
+        .histogram-facet {
+          width: 350px;
         }
 
-        .menu {
-          bottom: auto !important;
-          min-width: 350px;
-          max-width: 400px;
-          padding: 1em;
-          border: none;
-          border-bottom: 0.5px solid #4c677f;
-          margin-top: -6px;
-          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-
-          .histogram-facet {
-            width: 350px;
-          }
-        }
-
-        .icon.chevron {
-          position: relative;
-          top: -1px;
-          margin-left: 0.3em;
-          font-size: 0.6em;
+        &.active {
+          z-index: 9999 !important;
         }
       }
 
       .clear-filters {
-        padding: 0;
         margin: 0 !important;
         background-color: transparent;
         color: @darkCerulean;
-        float: right;
-        font-size: 14px;
-        font-weight: 500;
       }
     }
 
@@ -93,19 +81,13 @@
     }
 
     .sidebar-wrapper {
-      z-index: 999;
       display: flex;
       height: 100%;
       flex-direction: column;
       padding: 1em;
 
       .clear-btn {
-        margin: 0 !important;
         color: @darkCerulean !important;
-      }
-
-      .sidebar-footer {
-        margin-top: 1em;
       }
 
       .sidebar-header {
@@ -120,44 +102,26 @@
 
       .sidebar-content {
         overflow: auto;
-        background-color: white;
 
         h3 {
           margin: 0;
           color: @pineGreen !important;
         }
 
-        .ui.card.term .header {
-          border: none;
-          color: @blue-grey-5;
-          font-size: 16px;
-          font-weight: 400;
-        }
+        .ui.accordion {
+          padding-right: 0.2rem;
+          padding-left: 0.2rem;
 
-        .ui.card.term span.count {
-          color: @blue-grey-5;
-          font-weight: 400;
-        }
-
-        .ui.card.term:hover {
-          background: @white !important;
-          box-shadow: none;
-        }
-
-        .ui.card.term.active .header,
-        .ui.card.term.active span.count {
-          color: #004b7f;
-          font-weight: 700;
-        }
-
-        .ui.accordion .title i:before {
-          font-size: 2rem;
+          .title i:before {
+            font-size: 2rem;
+          }
         }
       }
     }
 
     .ui.button.sui-button {
       padding: 0;
+      margin: 0 !important;
       color: @secondaryColor !important;
       font-weight: 600;
 
@@ -179,7 +143,7 @@
   .ui.card.term.active-term {
     width: auto !important;
     min-width: auto;
-    margin: 5px 1.5em 5px 0 !important;
+    margin: 5px 1em 5px 0 !important;
 
     .header,
     span.count {
@@ -189,6 +153,7 @@
 
     .card-header {
       flex-direction: row;
+      padding: 0.2rem !important;
       text-align: left !important;
     }
   }
@@ -289,7 +254,7 @@
   .sui-multi-checkbox-facet__option-label {
     align-items: flex-start;
     justify-content: space-between;
-    margin: 0.5em 0;
+    margin: 0.5em;
   }
 
   .sui-multi-checkbox-facet__option-count {
@@ -363,6 +328,11 @@
       background-color: @darkCerulean;
     }
 
+    .sui-multi-checkbox-facet__checkbox:focus + .checkmark,
+    .sui-multi-checkbox-facet__checkbox:focus + .radio-checkmark {
+      outline: 0.2rem solid #0083e0 !important;
+    }
+
     .checkmark:after,
     .radio-checkmark:after {
       position: absolute;
@@ -426,12 +396,6 @@
       margin: 0;
       background-color: transparent;
       font-size: 80%;
-
-      &:focus,
-      &:focus-visible {
-        border: none;
-        outline: none;
-      }
     }
   }
 }

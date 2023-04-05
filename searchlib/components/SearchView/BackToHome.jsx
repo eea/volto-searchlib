@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
 export default function BackToHome({

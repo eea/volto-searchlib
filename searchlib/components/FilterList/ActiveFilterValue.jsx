@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
-import { Label } from 'semantic-ui-react';
+import { Label, Icon } from 'semantic-ui-react';
 
 const ActiveFilterValue = (props) => {
   const { field, values, type, removeFilter } = props;
@@ -20,27 +20,30 @@ const ActiveFilterValue = (props) => {
       <div className="filter-label">{activeFilterLabel || label}:</div>
       {values?.map((value, index) => {
         return (
-          <Label
-            key={index}
-            className="filter-value"
-            basic
-            removeIcon="close"
-            content={
-              <span>
-                {value?.type === 'range' ? (
-                  <>
-                    {value.from} - {value.to}
-                  </>
-                ) : (
-                  <Term term={value} field={field} />
-                )}
-                <span style={{ display: 'none' }}>{` (${type}) `}</span>
-              </span>
-            }
-            onRemove={() => {
-              removeFilter(field, value, type || filterConfig.filterType);
-            }}
-          />
+          <Label basic className="filter-value" key={index}>
+            <span>
+              {value?.type === 'range' ? (
+                <>
+                  {value.from} - {value.to}
+                </>
+              ) : (
+                <Term term={value} field={field} />
+              )}
+              <span style={{ display: 'none' }}>{` (${type}) `}</span>
+            </span>
+            <Icon
+              name="close"
+              tabIndex={0}
+              onClick={() => {
+                removeFilter(field, value, type || filterConfig.filterType);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  removeFilter(field, value, type || filterConfig.filterType);
+                }
+              }}
+            />
+          </Label>
         );
       })}
     </div>

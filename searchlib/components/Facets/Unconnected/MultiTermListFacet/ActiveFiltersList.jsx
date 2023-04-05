@@ -47,6 +47,18 @@ const ActiveFilters = (props) => {
             }
             setActiveFilter([]);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (state.length > 0) {
+                dispatch({
+                  type: 'reset',
+                  value: [],
+                  id: 'btn-clear-filters',
+                });
+              }
+              setActiveFilter([]);
+            }
+          }}
         />
       </div>
 
@@ -69,6 +81,15 @@ const ActiveFilters = (props) => {
                       );
                       setActiveFilter(filteredValues);
                       onRemove(option);
+                    }}
+                    onKeyDown={(e) => {
+                      let filteredValues = activeFilter.filter(
+                        (v) => v !== option,
+                      );
+                      if (e.key === 'Enter') {
+                        setActiveFilter(filteredValues);
+                        onRemove(option);
+                      }
                     }}
                   >
                     <Icon name="close" role="button" />

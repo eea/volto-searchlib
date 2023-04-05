@@ -34,23 +34,21 @@ const ViewComponent = (props) => {
   // TODO: fix styling
   return (
     <div className={cx(className, 'sorting')}>
-      <span>
-        <Dropdown
-          icon="chevron down"
-          trigger={
-            <>
-              {labelText} <span>{value}</span>
-            </>
-          }
-          inline
-          options={options}
-          value={value}
-          onChange={(e, opt) => {
-            removeFilter(field, value, filterConfig.filterType);
-            setFilter(field, opt.value, filterConfig.filterType);
-          }}
-        />
-      </span>
+      <Dropdown
+        icon="chevron down"
+        trigger={
+          <span>
+            {labelText} <span>{value}</span>
+          </span>
+        }
+        inline
+        options={options}
+        value={value}
+        onChange={(e, opt) => {
+          removeFilter(field, value, filterConfig.filterType);
+          setFilter(field, opt.value, filterConfig.filterType);
+        }}
+      />
     </div>
   );
 };

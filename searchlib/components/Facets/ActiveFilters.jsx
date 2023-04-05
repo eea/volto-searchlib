@@ -31,13 +31,17 @@ const ActiveFilters = (props) => {
                       <Term term={option} field={field} />
                       <Button
                         className="clear-filters"
-                        size="mini"
                         onClick={() => {
                           // let filteredValues = activeFilter.filter(
                           //   (v) => v !== option,
                           // );
                           // // setActiveFilter(filteredValues);
                           onRemove(option);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            onRemove(option);
+                          }
                         }}
                       >
                         <Icon name="close" role="button" />
@@ -62,6 +66,17 @@ const ActiveFilters = (props) => {
             });
           } else {
             onRemove([activeFilter || '']);
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            if (Array.isArray(activeFilter)) {
+              (activeFilter || []).forEach((v) => {
+                onRemove(v);
+              });
+            } else {
+              onRemove([activeFilter || '']);
+            }
           }
         }}
       />
