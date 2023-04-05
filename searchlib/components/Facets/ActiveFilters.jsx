@@ -31,7 +31,6 @@ const ActiveFilters = (props) => {
                       <Term term={option} field={field} />
                       <Button
                         className="clear-filters"
-                        size="mini"
                         onClick={() => {
                           // let filteredValues = activeFilter.filter(
                           //   (v) => v !== option,

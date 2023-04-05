@@ -43,7 +43,7 @@
         }
       }
 
-      .facet-menu {
+      .facet-wrapper {
         position: absolute;
         bottom: auto !important;
         min-width: 350px;
@@ -65,13 +65,9 @@
       }
 
       .clear-filters {
-        padding: 0;
         margin: 0 !important;
         background-color: transparent;
         color: @darkCerulean;
-        float: right;
-        font-size: 14px;
-        font-weight: 500;
       }
     }
 
@@ -142,7 +138,7 @@
   .ui.card.term.active-term {
     width: auto !important;
     min-width: auto;
-    margin: 5px 1.5em 5px 0 !important;
+    margin: 5px 1em 5px 0 !important;
 
     .header,
     span.count {
@@ -152,6 +148,7 @@
 
     .card-header {
       flex-direction: row;
+      padding: 0.2rem !important;
       text-align: left !important;
     }
   }

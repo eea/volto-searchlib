@@ -155,9 +155,19 @@ const DropdownFacetWrapper = (props) => {
 
             {isOpen && (
               <div
-                className={cx('facet-menu', {
+                role="tab"
+                tabIndex={0}
+                className={cx('facet-wrapper', {
                   active: isOpen,
                 })}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsOpen(true);
+                  }
+                  if (e.key === 'Escape') {
+                    setIsOpen(false);
+                  }
+                }}
               >
                 <SUIFacet
                   {...props}
