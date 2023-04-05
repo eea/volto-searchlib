@@ -1,11 +1,3 @@
-body.view-viewview {
-  .searchlib-block {
-    *:focus-visible {
-      outline: var(--focus-visible, @focusVisibleOutline) !important;
-    }
-  }
-}
-
 body.searchlib-page {
   overflow-x: hidden !important;
 
@@ -19,6 +11,8 @@ body.searchlib-page {
     color: @deepBlue;
 
     .back-link {
+      display: inline-block;
+      margin: 1em 0;
       color: @deepBlue;
       font-weight: 500;
     }
@@ -187,10 +181,14 @@ body.searchlib-page {
   position: relative;
   top: -1px;
 
+  .ui.toggle.checkbox input:focus + label:before {
+    outline: 0.2rem solid #0083e0 !important;
+  }
+
   label {
     padding-left: 2.1rem;
-    color: @sf-dark-gray !important;
-    font-size: 12px !important;
+    color: @deepBlue;
+    font-size: 14px;
 
     &:before {
       position: absolute;

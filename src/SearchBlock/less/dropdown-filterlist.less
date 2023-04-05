@@ -108,8 +108,13 @@
           color: @pineGreen !important;
         }
 
-        .ui.accordion .title i:before {
-          font-size: 2rem;
+        .ui.accordion {
+          padding-right: 0.2rem;
+          padding-left: 0.2rem;
+
+          .title i:before {
+            font-size: 2rem;
+          }
         }
       }
     }
@@ -293,10 +298,6 @@
       height: 15px;
       border: 1px solid @darkCerulean;
       background-color: @white;
-
-      // &:focus-visible {
-      //   border: 1px solid red;
-      // }
     }
 
     .radio-checkmark {
@@ -395,12 +396,6 @@
       margin: 0;
       background-color: transparent;
       font-size: 80%;
-
-      &:focus,
-      &:focus-visible {
-        border: none;
-        outline: none;
-      }
     }
   }
 }

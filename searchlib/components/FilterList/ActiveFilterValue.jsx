@@ -20,7 +20,7 @@ const ActiveFilterValue = (props) => {
       <div className="filter-label">{activeFilterLabel || label}:</div>
       {values?.map((value, index) => {
         return (
-          <Label basic className="filter-value">
+          <Label basic className="filter-value" key={index}>
             <span>
               {value?.type === 'range' ? (
                 <>

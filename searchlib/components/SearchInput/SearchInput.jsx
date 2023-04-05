@@ -132,24 +132,15 @@ function SearchInput({
             ''
           )}
 
-          <div className="input-controls">
-            {(searchTerm || '').trim() && (
-              <>
-                <Button
-                  basic
-                  className="clear-button"
-                  onClick={() => {
-                    // inputProps.onChange({ target: { value: '' } });
-                    setSearchTerm('', { shouldClearFilters: false });
-
-                    const sNew = sortOptions.filter((s) => s.name === 'Newest');
-                    if (sNew.length > 0) {
-                      setSort(sNew[0].value, sNew[0].direction);
-                    }
-                    // onSubmit();
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+          <div className="terms-box-left">
+            <div className="input-controls">
+              {(searchTerm || '').trim() && (
+                <>
+                  <Button
+                    basic
+                    className="clear-button"
+                    onClick={() => {
+                      // inputProps.onChange({ target: { value: '' } });
                       setSearchTerm('', { shouldClearFilters: false });
 
                       const sNew = sortOptions.filter(
@@ -158,16 +149,27 @@ function SearchInput({
                       if (sNew.length > 0) {
                         setSort(sNew[0].value, sNew[0].direction);
                       }
-                    }
-                  }}
-                >
-                  <Icon name="close" />
-                </Button>
-              </>
-            )}
-          </div>
+                      // onSubmit();
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        setSearchTerm('', { shouldClearFilters: false });
 
-          <div className="terms-box-left">
+                        const sNew = sortOptions.filter(
+                          (s) => s.name === 'Newest',
+                        );
+                        if (sNew.length > 0) {
+                          setSort(sNew[0].value, sNew[0].direction);
+                        }
+                      }
+                    }}
+                  >
+                    <Icon name="close" />
+                  </Button>
+                </>
+              )}
+            </div>
+
             <div
               tabIndex={0}
               role="button"
