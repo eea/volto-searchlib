@@ -161,6 +161,14 @@ const FacetsList = ({ view, defaultWrapper }) => {
                                 );
                                 setSelectFilters(filterValuesBtn);
                               }}
+                              onKeyDown={(e) => {
+                                let filterValuesBtn = selectFilters.filter(
+                                  (l) => l !== facet.field,
+                                );
+                                if (e.key === 'Enter') {
+                                  setSelectFilters(filterValuesBtn);
+                                }
+                              }}
                             >
                               <Icon name="close" role="button" />
                             </Button>

@@ -8,9 +8,11 @@ import {
   SearchContext,
 } from '@eeacms/search/lib/hocs';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { Dropdown, Dimmer, Modal, Button } from 'semantic-ui-react';
+import { Dimmer, Modal, Button } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
+import cx from 'classnames';
+
 import ActiveFilters from '../ActiveFilters';
 
 const SMALL_SCREEN_SIZE = 766;
@@ -127,33 +129,42 @@ const DropdownFacetWrapper = (props) => {
           </Modal>
         ) : (
           <div ref={nodeRef}>
-            <Dropdown
-              open={isOpen}
+            <Button
+              basic
+              className={cx('facet-btn', {
+                active: isOpen,
+              })}
               onClick={() => setIsOpen(true)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   setIsOpen(true);
                 }
+                if (e.key === 'Escape') {
+                  setIsOpen(false);
+                }
               }}
-              trigger={
-                <span className="facet-title">
-                  {label ? <>{label} </> : <>{title} </>}
-                  {filtersCount.length > 0 && (
-                    <span className="count">({filtersCount})</span>
-                  )}
-                  <i aria-hidden="true" className="icon ri-arrow-down-s-line" />
-                </span>
-              }
             >
-              <Dropdown.Menu>
-                {isOpen && (
-                  <SUIFacet
-                    {...props}
-                    active={isOpen}
-                    filterType={localFilterType}
-                    onChangeFilterType={setLocalFilterType}
-                  />
+              <span className="facet-title">
+                {label ? <>{label} </> : <>{title} </>}
+                {filtersCount.length > 0 && (
+                  <span className="count">({filtersCount})</span>
                 )}
+                <i aria-hidden="true" className="icon ri-arrow-down-s-line" />
+              </span>
+            </Button>
+
+            {isOpen && (
+              <div
+                className={cx('facet-menu', {
+                  active: isOpen,
+                })}
+              >
+                <SUIFacet
+                  {...props}
+                  active={isOpen}
+                  filterType={localFilterType}
+                  onChangeFilterType={setLocalFilterType}
+                />
 
                 <ActiveFilters
                   sortedOptions={sortedOptions}
@@ -162,8 +173,8 @@ const DropdownFacetWrapper = (props) => {
                   }}
                   field={field}
                 />
-              </Dropdown.Menu>
-            </Dropdown>
+              </div>
+            )}
           </div>
         )}
       </div>

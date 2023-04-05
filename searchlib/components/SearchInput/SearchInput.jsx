@@ -52,9 +52,9 @@ function SearchInput({
   const inpRef = React.useRef();
   const [, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
 
-  React.useEffect(() => {
-    mode === 'view' && inpRef.current && inpRef.current.focus();
-  }, [searchTerm, mode]);
+  // React.useEffect(() => {
+  //   mode === 'view' && inpRef.current && inpRef.current.focus();
+  // }, [searchTerm, mode]);
 
   return (
     <>

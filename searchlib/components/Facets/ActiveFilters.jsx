@@ -39,6 +39,11 @@ const ActiveFilters = (props) => {
                           // // setActiveFilter(filteredValues);
                           onRemove(option);
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            onRemove(option);
+                          }
+                        }}
                       >
                         <Icon name="close" role="button" />
                       </Button>

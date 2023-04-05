@@ -82,6 +82,9 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
               if (e.key === 'Enter') {
                 setShowSidebar(true);
               }
+              if (e.key === 'Escape') {
+                setShowSidebar(false);
+              }
             }}
             // disabled={isLiveSearch}
           >
