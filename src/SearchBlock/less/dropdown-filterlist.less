@@ -75,9 +75,17 @@
       padding-bottom: 2em;
     }
 
+    .sidebar-dimmer {
+      position: fixed;
+    }
+
     .ui.right.sidebar {
       background-color: white;
       box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .visible.sidebar {
+      z-index: 1003;
     }
 
     .sidebar-wrapper {
@@ -90,6 +98,26 @@
         color: @darkCerulean !important;
       }
 
+      .ui.basic.button.close-btn {
+        padding: 0;
+        margin-right: 0;
+        margin-left: auto;
+
+        &:hover,
+        &:active,
+        &:focus {
+          border: none;
+          box-shadow: none;
+        }
+
+        .close {
+          margin: 0;
+          color: @darkCerulean !important;
+          font-size: 1.2em;
+          opacity: 1;
+        }
+      }
+
       .sidebar-header {
         display: flex;
         align-items: baseline;
@@ -98,6 +126,10 @@
         border-bottom: 1px solid @blue-grey-5;
         margin-bottom: 1em;
         gap: 1em;
+
+        @media only screen and (max-width: @largestMobileScreen) {
+          justify-content: space-between;
+        }
       }
 
       .sidebar-content {
@@ -403,4 +435,37 @@
 .sidebar-content .sui-multi-checkbox-facet__option-label {
   align-items: flex-start;
   justify-content: space-between;
+}
+
+@media only screen and (min-width: @largestMobileScreen) {
+  .ui.basic.button.close-btn {
+    display: none;
+  }
+
+  body.searchlib-page .sidebar-dimmer {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: @largestMobileScreen) {
+  .dropdown-facets-list {
+    .visible.sidebar {
+      top: 100px;
+    }
+  }
+
+  body.has-toolbar-collapsed {
+    .dropdown-facets-list {
+      .visible.sidebar {
+        top: 20px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .horizontal-dropdown-facets {
+    display: flex;
+    flex-direction: column;
+  }
 }
