@@ -2,7 +2,7 @@ body.searchlib-page {
   overflow-x: hidden !important;
 
   .content-area {
-    z-index: 100;
+    z-index: 2 !important;
   }
 
   .searchlib-block {
@@ -11,6 +11,8 @@ body.searchlib-page {
     color: @deepBlue;
 
     .back-link {
+      display: inline-block;
+      margin: 1em 0;
       color: @deepBlue;
       font-weight: 500;
     }
@@ -30,19 +32,18 @@ body.searchlib-page {
     }
 
     .ui.secondary.pointing.content-section-tabs.menu {
-      margin-bottom: 1em;
+      padding-top: 0.2rem;
+      padding-left: 0.2rem;
       overflow-x: auto;
-
-      a.item {
-        font-size: 18px;
-
-        span.title {
-          margin-right: 5px;
-        }
-      }
 
       &::-webkit-scrollbar {
         height: 0.3rem !important;
+      }
+    }
+
+    .sorting {
+      .ui.dropdown:focus-visible {
+        outline: var(--focus-visible, @focusVisibleOutline) !important;
       }
     }
 
@@ -79,6 +80,8 @@ body.searchlib-page {
     }
 
     .above-results {
+      margin-top: 1em;
+
       .above-right {
         display: flex;
         justify-content: flex-end;
@@ -141,9 +144,6 @@ body.searchlib-page {
       }
 
       .sorting {
-        width: auto;
-        font-size: 16px;
-
         .inline.dropdown > span {
           color: @secondaryColor;
           font-weight: 600;
@@ -187,10 +187,14 @@ body.searchlib-page {
   position: relative;
   top: -1px;
 
+  .ui.toggle.checkbox input:focus + label:before {
+    outline: 0.2rem solid @blue-3 !important;
+  }
+
   label {
     padding-left: 2.1rem;
-    color: @sf-dark-gray !important;
-    font-size: 12px !important;
+    color: @deepBlue;
+    font-size: 14px;
 
     &:before {
       position: absolute;

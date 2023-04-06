@@ -89,6 +89,11 @@ const FacetsList = ({ view, defaultWrapper }) => {
             // clearFilters(exclude);
             // setVisibleFacets(alwaysVisibleFacets);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              searchContext.resetFilters();
+            }
+          }}
         />
       </div>
 
@@ -128,6 +133,11 @@ const FacetsList = ({ view, defaultWrapper }) => {
                   onClick={() => {
                     setSelectFilters(alwaysVisibleFacets);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setSelectFilters(alwaysVisibleFacets);
+                    }
+                  }}
                 />
               </h5>
               <div className="facets-wrapper">
@@ -150,6 +160,14 @@ const FacetsList = ({ view, defaultWrapper }) => {
                                   (l) => l !== facet.field,
                                 );
                                 setSelectFilters(filterValuesBtn);
+                              }}
+                              onKeyDown={(e) => {
+                                let filterValuesBtn = selectFilters.filter(
+                                  (l) => l !== facet.field,
+                                );
+                                if (e.key === 'Enter') {
+                                  setSelectFilters(filterValuesBtn);
+                                }
                               }}
                             >
                               <Icon name="close" role="button" />

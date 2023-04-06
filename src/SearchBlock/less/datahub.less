@@ -43,8 +43,8 @@
 }
 
 /**
-  * Datahub search
-  */
+    * Datahub search
+    */
 
 .view-datahub-item {
   .item.tabs-title {
@@ -84,11 +84,26 @@
 .datahub-view {
   .searchapp-datahub {
     /* Search box */
-    .sui-search-box .search-input .terms-box {
-      border-color: @darkCerulean;
+    .sui-search-box {
+      .search-input .terms-box input {
+        border-color: @darkCerulean;
 
-      .terms-box-left .search-icon svg {
-        fill: @darkCerulean !important;
+        &:focus {
+          border-bottom: 3px solid @blue-3;
+          outline: none !important;
+
+          &:focus + .terms-box-left {
+            border-bottom: 3px solid @blue-3;
+          }
+        }
+      }
+
+      .terms-box-left {
+        border-color: @darkCerulean;
+
+        .search-icon svg {
+          fill: @darkCerulean !important;
+        }
       }
 
       .input-controls .clear-button {
@@ -110,7 +125,8 @@
       a.item {
         color: @blue-grey-5;
 
-        &.active {
+        &.active,
+        &:active {
           border-color: @darkCerulean;
           color: @darkCerulean;
         }
@@ -142,8 +158,8 @@
 }
 
 /**
-  * Datahub item view
-  */
+    * Datahub item view
+    */
 .view-datahub-item {
   color: @blue-grey-5;
 

@@ -77,19 +77,31 @@ const SectionTabs = (props) => {
       <Ref innerRef={menuRef}>
         <Menu secondary pointing className="content-section-tabs">
           <Menu.Item
+            tabIndex={0}
+            active={activeValues.length === 0}
             onClick={() => {
               searchContext.removeFilter(facetField, '', 'any');
             }}
-            active={activeValues.length === 0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                searchContext.removeFilter(facetField, '', 'any');
+              }
+            }}
           >
             {`All (${allCount})`}
           </Menu.Item>
           {sections.map(({ value, count }) => (
             <Menu.Item
               key={value}
+              tabIndex={0}
               active={activeValues.includes(value)}
               onClick={() => {
                 searchContext.setFilter(facetField, value, 'any');
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  searchContext.setFilter(facetField, value, 'any');
+                }
               }}
             >
               {/*<Icon type={value} family="Content types" />*/}

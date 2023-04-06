@@ -4,11 +4,15 @@ const ToggleSort = ({ icon, label, on, onToggle, children }) => {
   return (
     <div className="toggleSort">
       <div
+        tabIndex={0}
+        role="button"
         className={on ? 'toggle-label active' : 'toggle-label'}
         onClick={onToggle}
-        onKeyDown={onToggle}
-        role="button"
-        tabIndex="-1"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onToggle();
+          }
+        }}
         title={'Sort by ' + label}
       >
         {/* {label} */}

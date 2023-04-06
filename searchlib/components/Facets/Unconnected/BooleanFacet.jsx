@@ -33,7 +33,8 @@ export const BooleanFacetComponent = (props) => {
     <div className="boolean-facet" {...domProps} id={id}>
       <Radio
         toggle
-        label={textLabel}
+        name={`field-${id}`}
+        label={<label htmlFor={`field-${id}`}>{textLabel}</label>}
         checked={value}
         onChange={(e, { checked }) => {
           if (checked) {

@@ -38,6 +38,30 @@ export default function SidebarFacetsList(props) {
                   searchContext.resetFilters();
                 }}
               />
+              {/* <h3>Filters</h3>
+                <Button
+                  basic
+                  className="clear-btn"
+                  content="clear all"
+                  onClick={() => {
+                    searchContext.resetFilters();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      searchContext.resetFilters();
+                    }
+                  }}
+                />
+              </div>
+              <Button
+                basic
+                className="close-btn"
+                onClick={() => {
+                  onClose(true);
+                }}
+              >
+                <Icon name="close" />
+              </Button> */}
             </div>
             {facets.map((facetInfo, i) => (
               <FacetResolver
