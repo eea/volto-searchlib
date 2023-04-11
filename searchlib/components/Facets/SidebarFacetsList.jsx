@@ -1,6 +1,10 @@
 import React from 'react';
-import { Sidebar, Button } from 'semantic-ui-react';
-import { useSearchContext, useOutsideClick } from '@eeacms/search/lib/hocs';
+import { Sidebar, Button, Icon, Dimmer } from 'semantic-ui-react';
+import {
+  useSearchContext,
+  useOutsideClick,
+  useWindowDimensions,
+} from '@eeacms/search/lib/hocs';
 import FacetResolver from './FacetResolver';
 
 export default function SidebarFacetsList(props) {
@@ -13,6 +17,8 @@ export default function SidebarFacetsList(props) {
     // setIsLiveSearch,
   } = props;
   const nodeRef = React.useRef(null);
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < 768;
 
   useOutsideClick(nodeRef, onClose);
   const searchContext = useSearchContext();
@@ -37,31 +43,27 @@ export default function SidebarFacetsList(props) {
                 onClick={() => {
                   searchContext.resetFilters();
                 }}
-              />
-              {/* <h3>Filters</h3>
-                <Button
-                  basic
-                  className="clear-btn"
-                  content="clear all"
-                  onClick={() => {
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
                     searchContext.resetFilters();
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      searchContext.resetFilters();
-                    }
-                  }}
-                />
-              </div>
+                  }
+                }}
+              />
+
               <Button
                 basic
                 className="close-btn"
                 onClick={() => {
                   onClose(true);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    onClose(true);
+                  }
+                }}
               >
                 <Icon name="close" />
-              </Button> */}
+              </Button>
             </div>
             {facets.map((facetInfo, i) => (
               <FacetResolver
@@ -83,6 +85,9 @@ export default function SidebarFacetsList(props) {
           </div> */}
         </div>
       </Sidebar>
+      {isSmallScreen && (
+        <Dimmer active={open} verticalAlign="top" className="sidebar-dimmer" />
+      )}
     </div>
   );
 }
