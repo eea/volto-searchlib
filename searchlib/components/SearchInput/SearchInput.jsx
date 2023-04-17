@@ -135,10 +135,11 @@ function SearchInput({
           <div className="terms-box-left">
             <div className="input-controls">
               {(searchTerm || '').trim() && (
-                <>
-                  <Button
-                    basic
-                    className="clear-button"
+                <div className="ui button basic clear-button">
+                  <Icon
+                    tabIndex={0}
+                    name="close"
+                    role="button"
                     onClick={() => {
                       // inputProps.onChange({ target: { value: '' } });
                       setSearchTerm('', { shouldClearFilters: false });
@@ -163,10 +164,8 @@ function SearchInput({
                         }
                       }
                     }}
-                  >
-                    <Icon name="close" />
-                  </Button>
-                </>
+                  />
+                </div>
               )}
             </div>
 
