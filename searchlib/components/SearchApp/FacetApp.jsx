@@ -87,6 +87,10 @@ export default function FacetApp(props) {
     [field, removeFilter],
   );
 
+  React.useEffect(() => {
+    value && addFilter(value.field, value.values, value.type);
+  }, []);
+
   // React.useEffect(() => {
   //   const { plugins } = driver.events;
   //   const plugId = `trackFilters-${field}`;

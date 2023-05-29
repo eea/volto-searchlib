@@ -126,11 +126,10 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
 
   if (appConfig) {
     const { resultViews } = appConfig;
-    // console.log(appConfig);
 
     const availableFacets = appConfig.facets?.map(({ field, label }) => [
       field,
-      label,
+      label?.trim() ? label : field,
     ]);
 
     // if (appConfig.landingPageURL) {
@@ -138,7 +137,10 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
     // }
 
     schema.properties.availableFacets.choices = availableFacets;
+    schema.properties.availableFacets.items = { choices: availableFacets };
+
     schema.properties.defaultFacets.choices = availableFacets;
+    schema.properties.defaultFacets.items = { choices: availableFacets };
 
     // fill in defaultResultView choices
     schema.properties.defaultResultView = {
