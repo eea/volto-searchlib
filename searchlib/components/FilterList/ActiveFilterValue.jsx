@@ -35,11 +35,11 @@ const ActiveFilterValue = (props) => {
               name="close"
               tabIndex={0}
               onClick={() => {
-                removeFilter(field, value, type || filterConfig.filterType);
+                removeFilter(field, null, type || filterConfig.filterType);
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  removeFilter(field, value, type || filterConfig.filterType);
+                  removeFilter(field, null, type || filterConfig.filterType);
                 }
               }}
             />
