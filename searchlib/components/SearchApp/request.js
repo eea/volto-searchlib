@@ -94,6 +94,14 @@ export function removeFilter(name, value, type) {
     }
   } else if (value) {
     updatedFilters = removeSingleFilterValue(filters, name, value, type);
+    // console.log('updated', {
+    //   name,
+    //   value,
+    //   type,
+    //   updatedFilters,
+    //   filter,
+    //   filters,
+    // });
   } else {
     if (filter.missing) {
       updatedFilters = [
