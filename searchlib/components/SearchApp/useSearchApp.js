@@ -12,7 +12,13 @@ import {
   onAutocompleteResultClick,
 } from '@eeacms/search/lib/request';
 
-import { clearFilters, resetFilters, resetSearch, addFilter } from './request';
+import {
+  removeFilter,
+  clearFilters,
+  resetFilters,
+  resetSearch,
+  addFilter,
+} from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { useLoadingState } from './state';
 import { SearchDriver } from '@elastic/search-ui';
@@ -137,7 +143,13 @@ export default function useSearchApp(props) {
         driver,
         facetOptions,
       };
-      const funcs = { resetFilters, resetSearch, clearFilters, addFilter };
+      const funcs = {
+        resetFilters,
+        resetSearch,
+        clearFilters,
+        removeFilter,
+        addFilter,
+      };
       Object.keys(funcs).forEach((name) => {
         searchContext[name] = funcs[name].bind({
           appConfig,
