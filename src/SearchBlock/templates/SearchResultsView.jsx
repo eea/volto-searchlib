@@ -6,15 +6,6 @@ import { searchResultsSchemaEnhancer } from './schema';
 export default function SearchResultsView(props) {
   const { appName, mode } = props;
 
-  // const ref = React.useRef();
-  // const { registry } = props;
-  // React.useEffect(() => {
-  //   ref.current = registry;
-  // });
-  // if (!(registry === ref.current))
-  //   console.log('SearchResultsView not isSame', ref.current, registry);
-  // React.useEffect(() => () => console.log('unmount SearchResultsView'), []);
-
   return (
     <BodyClass className={`${appName}-view searchlib-page`}>
       <div className="searchlib-block">
@@ -27,6 +18,5 @@ export default function SearchResultsView(props) {
 
 SearchResultsView.schemaEnhancer = (props) => {
   const schema = searchResultsSchemaEnhancer(props);
-  // schema.fieldsets[0].fields.push('url');
   return schema;
 };
