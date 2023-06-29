@@ -44,8 +44,8 @@ const download = (es_config, appConfig, req, res) => {
     res.end();
   });
 
-  var csv_header = [];
-  for (var i = 0; i < download_mapping.length; i++) {
+  let csv_header = [];
+  for (let i = 0; i < download_mapping.length; i++) {
     csv_header.push(download_mapping[i].name);
   }
 
@@ -58,13 +58,9 @@ const download = (es_config, appConfig, req, res) => {
     levels: ['error'],
   });
 
-  var offset = 0;
+  let offset = 0;
   dataQuery.size = SCROLL_SIZE;
-  // console.log('here');
-  // console.log(es_host);
-  // console.log(es_index);
-  // console.log(SCROLL_TIME);
-  // console.log(JSON.stringify(dataQuery));
+
   client.search(
     {
       index: es_index,
@@ -91,12 +87,12 @@ const download = (es_config, appConfig, req, res) => {
       total = data.hits.total.value;
 
       if (total > offset) {
-        var chunk = '';
+        let chunk = '';
 
-        for (var i = 0; i < data.hits.hits.length; i++) {
+        for (let i = 0; i < data.hits.hits.length; i++) {
           const row = data.hits.hits[i];
           let csv_row = [];
-          for (var j = 0; j < download_mapping.length; j++) {
+          for (let j = 0; j < download_mapping.length; j++) {
             let value = row['_source'][download_mapping[j].field];
             if (value === undefined) {
               value = '';
@@ -106,7 +102,7 @@ const download = (es_config, appConfig, req, res) => {
             }
             const field_whitelist = download_mapping[j].values_whitelist;
             if (field_whitelist !== undefined) {
-              var new_value = [];
+              let new_value = [];
               for (
                 let value_count = 0;
                 value_count < value.length;
@@ -119,7 +115,7 @@ const download = (es_config, appConfig, req, res) => {
               value = new_value;
             }
 
-            var field_blacklist = download_mapping[j].values_blacklist;
+            let field_blacklist = download_mapping[j].values_blacklist;
             if (field_blacklist !== undefined) {
               let new_value = [];
               for (
