@@ -37,7 +37,11 @@ export default function BlockContainer(props) {
     [],
   );
 
-  if (mode !== 'view')
+  if (mode === 'view')
+    return data ? (
+      <RenderBlocks content={content} metadata={metadata} location={location} />
+    ) : null;
+  else
     return data ? (
       <BlockEdit
         id={block}
@@ -66,11 +70,4 @@ export default function BlockContainer(props) {
         <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
       </div>
     );
-
-  return (
-    mode === 'view' &&
-    (data ? (
-      <RenderBlocks content={content} metadata={metadata} location={location} />
-    ) : null)
-  );
 }
