@@ -1,7 +1,7 @@
 body.searchlib-page .searchlib-block {
   .ui.segment.active-filter-list {
-    border: 1px solid @lightgray;
-    background-color: @gray !important;
+    border: 1px solid @lightGrey;
+    background-color: @grey-1 !important;
 
     .filter-list-header {
       display: flex;
@@ -86,7 +86,7 @@ body.searchlib-page .searchlib-block {
       padding: 8px 15px;
       margin-top: 10px;
       margin-right: 11px;
-      background-color: #ebebeb;
+      background-color: @mediumDarkWhite;
       gap: 1em;
 
       .header {
@@ -102,7 +102,7 @@ body.searchlib-page .searchlib-block {
 
   .ui.inverted.segment.filter-list {
     padding: 0.4rem;
-    background-color: #004b87;
+    background-color: @darkBrightBlue;
     border-radius: 0.5rem;
 
     .filter-list-header {
@@ -131,14 +131,14 @@ body.searchlib-page .searchlib-block {
   div.inline-filter-list {
     width: 100%;
     min-height: 50px;
-    background: white;
+    background: @white;
 
     div.filter-list {
       padding-right: 0px;
       padding-left: 0px;
       margin-top: 0px;
       margin-bottom: 10px;
-      background-color: white;
+      background-color: @white;
       border-radius: 0px;
 
       div.filter-list-header {
@@ -186,7 +186,7 @@ body.searchlib-page .searchlib-block {
       }
 
       div.ui.label {
-        background: white;
+        background: @white;
       }
 
       button.reset-filters {
@@ -226,7 +226,7 @@ body.searchlib-page .searchlib-block {
       display: inline;
       max-height: 12px !important;
       margin-right: 0.5em;
-      background: white;
+      background: @white;
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
     }
@@ -253,8 +253,8 @@ body.searchlib-page .searchlib-block {
 
   .ui.button.add-filter {
     margin: 1em 2em 1em 0 !important;
-    background: #f9f9f9;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    background: @grey-1;
+    box-shadow: 0px 2px 4px @dimmedLightBlack;
     color: @lightBlack;
     font-weight: 700;
   }
@@ -299,11 +299,11 @@ body.searchlib-page .searchlib-block {
 .ui.button.add-facet-btn {
   margin: 0 20px 20px 0 !important;
   background: @midGray !important;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0px 2px 4px @dimmedLightBlack !important;
   color: @lightBlack !important;
 
   &:hover {
-    background: #cfcfcf !important;
+    background: @mediumDarkGray !important;
   }
 }
 
@@ -313,11 +313,11 @@ body.searchlib-page .searchlib-block {
   margin: 0 20px 20px 0 !important;
   background: @midGray !important;
   border-radius: 0 !important;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0px 2px 4px @dimmedLightBlack !important;
   color: @lightBlack !important;
 
   &:hover {
-    background: #cfcfcf !important;
+    background: @mediumDarkGray !important;
   }
 
   .content {
@@ -332,7 +332,7 @@ body.searchlib-page .searchlib-block {
       margin-top: 4px;
       margin-bottom: 0px;
       background: @primaryColor;
-      color: white;
+      color: @white;
       font-size: 12px;
 
       .text {

@@ -1,7 +1,7 @@
 .searchlib-block {
   .ui.dimmer.facet-dimmer {
     position: fixed;
-    background-color: rgba(249, 249, 249, 0.4) !important;
+    background-color: @dimmedGray !important;
   }
 
   .dropdown-facets-list {
@@ -15,7 +15,7 @@
         overflow: hidden;
         padding: 0.5em 1em;
         margin-bottom: 0;
-        background-color: white;
+        background-color: @white;
 
         i.icon {
           position: relative;
@@ -31,7 +31,7 @@
         &.active {
           > .facet-title {
             z-index: 99999 !important;
-            box-shadow: 0 5px 0 @white, 0 0 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 5px 0 @white, 0 0 4px @dimmedLightBlack;
             color: @pineGreen;
             font-weight: 700;
           }
@@ -50,10 +50,10 @@
         max-width: 400px;
         padding: 1em;
         border: none;
-        border-bottom: 0.5px solid #4c677f;
+        border-bottom: 0.5px solid @blue-grey-4;
         margin-top: -6px;
         background-color: @white;
-        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 4px @dimmedLightBlack;
 
         .histogram-facet {
           width: 350px;
@@ -80,8 +80,8 @@
     }
 
     .ui.right.sidebar {
-      background-color: white;
-      box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25);
+      background-color: @white;
+      box-shadow: -4px 0px 4px @dimmedLightBlack;
     }
 
     .visible.sidebar {
@@ -197,7 +197,7 @@
     &.disabled {
       .header,
       span.count {
-        color: #bfbfbf;
+        color: @midDarkerGray;
       }
     }
 
@@ -277,7 +277,7 @@
   }
 
   .sui-facet-search {
-    border: 0.5px solid #c4c4c4;
+    border: 0.5px solid @midDarkGray;
     margin: 0.7em 0;
     border-radius: 0;
     font-size: 14px;
@@ -382,7 +382,7 @@
       left: 5px;
       width: 4px;
       height: 9px;
-      border: solid white;
+      border: solid @white;
       border-width: 0 2px 2px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -396,7 +396,7 @@
     }
 
     ::-webkit-scrollbar-track {
-      background-color: #d9d9d9;
+      background-color: @darkWhiteGray;
       border-radius: 10px;
     }
 
