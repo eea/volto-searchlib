@@ -189,6 +189,11 @@ export function getDateRangeFilter(filter, filterConfig) {
     return;
   }
 
+  if (filterConfig.allow_missing) {
+    res.bool.should.push({
+      bool: { must_not: { exists: { field: filter.field } } },
+    });
+  }
   return res;
 }
 
