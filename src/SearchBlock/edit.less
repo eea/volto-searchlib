@@ -1,4 +1,8 @@
 @import '~./less/variables.less';
+@import (multiple, reference, optional) '../../theme.config';
+
+@type: extra;
+@element: custom;
 
 @overlayZIndex: 1;
 
@@ -18,6 +22,12 @@
 
     .item {
       border: none;
+    }
+
+    .redMenuButton {
+      color: @red !important;
+      box-shadow: none !important;
+      font-weight: bold;
     }
 
     .ui.basic.button {
