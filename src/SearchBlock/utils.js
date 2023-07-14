@@ -35,7 +35,6 @@ const _applyBlockSettings = (config, appName, data, schema) => {
         }
         branch = branch[bit];
       });
-      // console.log('set', { branch, key, field: data[fieldName], fieldName });
       branch[key] = data[fieldName];
     }
   });
@@ -46,7 +45,6 @@ const _applyBlockSettings = (config, appName, data, schema) => {
     });
   }
 
-  // console.log(settings, data);
   const availableFacets = [
     ...(data.availableFacets || []),
     ...(data.defaultFacets || []),
@@ -76,7 +74,6 @@ const _applyBlockSettings = (config, appName, data, schema) => {
       }
     });
   }
-  // console.log(data, settings);
 
   return config;
 };
@@ -90,7 +87,6 @@ const cacheOnce = (func) => (config, appName, data, schema) => {
   if (!_params || !isEqual(_params, { appName, data })) {
     _cachedResult = _applyBlockSettings(config, appName, data, schema);
     _params = { appName, data };
-    // console.log('recomputed');
   }
   return _cachedResult;
 };
