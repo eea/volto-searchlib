@@ -4,7 +4,6 @@ import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
 import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
 import { useDebouncedStableData } from './hocs';
-// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 import './edit.less';
 
 const SearchBlockEdit = (props) => {
@@ -67,9 +66,6 @@ const SearchBlockEdit = (props) => {
     },
     [block, onChangeBlock, data],
   );
-
-  // React.useEffect(() => () => console.log('unmount SearchBlockEdit'), []);
-  // useWhyDidYouUpdate('SearchBlockEdit', { schema });
 
   return (
     <div>

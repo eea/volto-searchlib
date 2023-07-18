@@ -3,6 +3,7 @@ import {
   doFilterValuesMatch,
 } from '@eeacms/search/lib/search/helpers';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
+import { removeSingleFilterValue } from '@elastic/search-ui/lib/cjs/helpers';
 
 export function resetFilters() {
   const { appConfig, searchContext } = this;
@@ -70,4 +71,50 @@ export function addFilter() {
   });
 
   // return addFilter.apply(null, arguments);
+}
+
+export function removeFilter(name, value, type) {
+  const { driver, appConfig } = this;
+  const filter = appConfig.facets.filter((f) => f.field === name)[0];
+
+  const { filters } = driver.state;
+
+  let updatedFilters = filters;
+
+  if (!value && type) {
+    if (!filter.missing) {
+      updatedFilters = filters.filter(
+        (filter) => !(filter.field === name && filter.type === type),
+      );
+    } else {
+      updatedFilters = [
+        ...filters.filter((filter) => filter.field !== name),
+        { ...filter.missing, field: name },
+      ];
+    }
+  } else if (value) {
+    updatedFilters = removeSingleFilterValue(filters, name, value, type);
+    // console.log('updated', {
+    //   name,
+    //   value,
+    //   type,
+    //   updatedFilters,
+    //   filter,
+    //   filters,
+    // });
+  } else {
+    if (filter.missing) {
+      updatedFilters = [
+        ...filters.filter((filter) => filter.field !== name),
+        { ...filter.missing, field: name },
+      ];
+    } else {
+      updatedFilters = filters.filter((filter) => filter.field !== name);
+    }
+  }
+
+  driver._updateSearchResults({
+    current: 1,
+    filters: updatedFilters,
+  });
 }

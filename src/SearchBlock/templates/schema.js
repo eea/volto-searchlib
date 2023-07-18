@@ -132,10 +132,6 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       label?.trim() ? label : field,
     ]);
 
-    // if (appConfig.landingPageURL) {
-    //   schema.properties.landingPageURL.default = appConfig.landingPageURL;
-    // }
-
     schema.properties.availableFacets.choices = availableFacets;
     schema.properties.availableFacets.items = { choices: availableFacets };
 

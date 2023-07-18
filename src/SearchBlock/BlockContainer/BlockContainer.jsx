@@ -6,7 +6,6 @@ import BlockEdit from '@plone/volto/components/manage/Blocks/Block/Edit';
 import NewBlockAddButton from './NewBlockAddButton';
 
 export default function BlockContainer(props) {
-  // console.log('block container', props);
   const {
     mode,
     block,
@@ -38,36 +37,37 @@ export default function BlockContainer(props) {
     [],
   );
 
-  return mode === 'view' ? (
-    data ? (
+  if (mode === 'view')
+    return data ? (
       <RenderBlocks content={content} metadata={metadata} location={location} />
-    ) : null
-  ) : data ? (
-    <BlockEdit
-      id={block}
-      block={block}
-      data={data}
-      type={data['@type']}
-      properties={properties}
-      metadata={metadata}
-      selected={selected}
-      multiSelected={false}
-      onFocusNextBlock={() => {}}
-      onFocusPreviousBlock={() => {}}
-      onAddBlock={() => {}}
-      onMutateBlock={() => {}}
-      onChangeBlock={onChangeSlotfill}
-      onDeleteBlock={() => {}}
-      onInsertBlock={() => {}}
-      onMoveBlock={() => {}}
-      onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
-      pathname={location.pathname}
-      index={index}
-      blocksConfig={blocksConfig}
-    />
-  ) : (
-    <div className="block-wrapper">
-      <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
-    </div>
-  );
+    ) : null;
+  else
+    return data ? (
+      <BlockEdit
+        id={block}
+        block={block}
+        data={data}
+        type={data['@type']}
+        properties={properties}
+        metadata={metadata}
+        selected={selected}
+        multiSelected={false}
+        onFocusNextBlock={() => {}}
+        onFocusPreviousBlock={() => {}}
+        onAddBlock={() => {}}
+        onMutateBlock={() => {}}
+        onChangeBlock={onChangeSlotfill}
+        onDeleteBlock={() => {}}
+        onInsertBlock={() => {}}
+        onMoveBlock={() => {}}
+        onSelectBlock={(id, isSelected) => onSelectSlotfill(id)}
+        pathname={location.pathname}
+        index={index}
+        blocksConfig={blocksConfig}
+      />
+    ) : (
+      <div className="block-wrapper">
+        <NewBlockAddButton block={block} onMutateBlock={onChangeSlotfill} />
+      </div>
+    );
 }
