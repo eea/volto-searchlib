@@ -13,7 +13,7 @@ import {
 } from '@eeacms/search/lib/request';
 
 import {
-  removeFilter,
+  // removeFilter,
   clearFilters,
   resetFilters,
   resetSearch,
@@ -147,7 +147,7 @@ export default function useSearchApp(props) {
         resetFilters,
         resetSearch,
         clearFilters,
-        removeFilter,
+        // removeFilter,
         addFilter,
       };
       Object.keys(funcs).forEach((name) => {

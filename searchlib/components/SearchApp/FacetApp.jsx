@@ -5,19 +5,13 @@
  * it needs to be executed in the context of a search app
  */
 import React from 'react';
-// import { isEqual } from 'lodash';
-// import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import { Facet as SUIFacet } from '@eeacms/search/components';
 import { useSearchContext, useSearchDriver } from '@eeacms/search/lib/hocs'; // , useSearchDriver
 
-// const sorter = (fa, fb) =>
-//   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
-
 export default function FacetApp(props) {
   const searchContext = useSearchContext();
   const { appConfig, registry, field, onChange, value } = props;
-  // const { field, onChange, value } = props;
   const driver = useSearchDriver();
   // console.log({ searchContext, props, driver });
   const { filters, removeFilter, addFilter } = searchContext; // driver.state
@@ -49,34 +43,7 @@ export default function FacetApp(props) {
     [field, value, addFilter, removeFilter],
   );
 
-  // useDeepCompareEffect(() => {
-  //   // on initializing the form, set the active value as filters
-  //   const activeFilter = filters?.find((filter) => filter.field === field);
-  //   if (value && !activeFilter) {
-  //     console.log('useDeep', activeFilter);
-  //     const sortedFilters = [...filters, value].sort(sorter);
-  //     driver._setState({ filters: sortedFilters });
-  //   }
-  // }, [value, filters, field, setFilter, driver]); // searchContext
-
-  // const activeValue = filters.find((f) => f.field === field);
-
-  // const dirty = !isEqual(activeValue, value);
-  // console.log('redraw facet', { value, activeValue, dirty });
-
   const timerRef = React.useRef();
-
-  // const sortedFilters = [...filters].sort(sorter);
-
-  // useDeepCompareEffect(() => {
-  //   timerRef.current && clearTimeout(timerRef.current);
-  //   timerRef.current = setTimeout(() => {
-  //     if (!isEqual(activeValue, value)) {
-  //       console.log('onchange', { activeValue, value });
-  //       onChange(activeValue);
-  //     }
-  //   }, 200);
-  // }, [removeFilter, field, activeValue, value, onChange]);
 
   React.useEffect(
     () => () => {
@@ -89,43 +56,8 @@ export default function FacetApp(props) {
 
   React.useEffect(() => {
     value && addFilter(value.field, value.values, value.type);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // React.useEffect(() => {
-  //   const { plugins } = driver.events;
-  //   const plugId = `trackFilters-${field}`;
-  //
-  //   if (!plugins.find((plug) => plug.id === plugId)) {
-  //     function subscribe(payload) {
-  //       const { filters } = driver.state;
-  //       const activeValue = filters.find((f) => f.field === field);
-  //       if (!activeValue) {
-  //         onChange(null);
-  //         return;
-  //       }
-  //       if (!isEqual(activeValue, value)) {
-  //         onChange(activeValue);
-  //       }
-  //     }
-  //     plugins.push({
-  //       id: plugId,
-  //       subscribe,
-  //     });
-  //   }
-  //
-  //   return () => {
-  //     driver.events.plugins = driver.events.plugins.filter(
-  //       (plug) => plug.id !== plugId,
-  //     );
-  //
-  //     // handles deleting the facet
-  //     driver._setState({
-  //       filters: [
-  //         ...driver.state.filters.filter((f) => f.field !== field),
-  //       ].sort(sorter),
-  //     });
-  //   };
-  // }, [driver, field, onChange, value]);
 
   return (
     <SUIFacet
@@ -152,3 +84,72 @@ export default function FacetApp(props) {
     />
   );
 }
+
+// const { field, onChange, value } = props;
+// import { isEqual } from 'lodash';
+// import useDeepCompareEffect from 'use-deep-compare-effect';
+// const sorter = (fa, fb) =>
+//   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;
+
+// React.useEffect(() => {
+//   const { plugins } = driver.events;
+//   const plugId = `trackFilters-${field}`;
+//
+//   if (!plugins.find((plug) => plug.id === plugId)) {
+//     function subscribe(payload) {
+//       const { filters } = driver.state;
+//       const activeValue = filters.find((f) => f.field === field);
+//       if (!activeValue) {
+//         onChange(null);
+//         return;
+//       }
+//       if (!isEqual(activeValue, value)) {
+//         onChange(activeValue);
+//       }
+//     }
+//     plugins.push({
+//       id: plugId,
+//       subscribe,
+//     });
+//   }
+//
+//   return () => {
+//     driver.events.plugins = driver.events.plugins.filter(
+//       (plug) => plug.id !== plugId,
+//     );
+//
+//     // handles deleting the facet
+//     driver._setState({
+//       filters: [
+//         ...driver.state.filters.filter((f) => f.field !== field),
+//       ].sort(sorter),
+//     });
+//   };
+// }, [driver, field, onChange, value]);
+
+// useDeepCompareEffect(() => {
+//   // on initializing the form, set the active value as filters
+//   const activeFilter = filters?.find((filter) => filter.field === field);
+//   if (value && !activeFilter) {
+//     console.log('useDeep', activeFilter);
+//     const sortedFilters = [...filters, value].sort(sorter);
+//     driver._setState({ filters: sortedFilters });
+//   }
+// }, [value, filters, field, setFilter, driver]); // searchContext
+
+// const activeValue = filters.find((f) => f.field === field);
+
+// const dirty = !isEqual(activeValue, value);
+// console.log('redraw facet', { value, activeValue, dirty });
+
+// const sortedFilters = [...filters].sort(sorter);
+
+// useDeepCompareEffect(() => {
+//   timerRef.current && clearTimeout(timerRef.current);
+//   timerRef.current = setTimeout(() => {
+//     if (!isEqual(activeValue, value)) {
+//       console.log('onchange', { activeValue, value });
+//       onChange(activeValue);
+//     }
+//   }, 200);
+// }, [removeFilter, field, activeValue, value, onChange]);
