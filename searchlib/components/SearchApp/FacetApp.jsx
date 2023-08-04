@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Facet as SUIFacet } from '@eeacms/search/components';
 import { useSearchContext, useSearchDriver } from '@eeacms/search/lib/hocs'; // , useSearchDriver
+// import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 export default function FacetApp(props) {
   const searchContext = useSearchContext();
@@ -43,15 +44,17 @@ export default function FacetApp(props) {
     [field, value, addFilter, removeFilter],
   );
 
-  const timerRef = React.useRef();
+  // useWhyDidYouUpdate('FacetApp', removeFilter);
 
+  const timerRef = React.useRef();
   React.useEffect(
     () => () => {
       removeFilter(field); // when the Facet is removed, we remove the filter
       timerRef.current && clearTimeout(timerRef.current);
-      // console.log('unmount', field);
     },
-    [field, removeFilter],
+    // including the dependencies causes a problem with infinite reload
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
 
   React.useEffect(() => {
