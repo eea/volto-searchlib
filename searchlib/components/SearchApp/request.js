@@ -74,47 +74,86 @@ export function addFilter() {
 }
 
 export function removeFilter(name, value, type) {
+  // debugger;
   const { driver, appConfig } = this;
-  const filter = appConfig.facets.filter((f) => f.field === name)[0];
+
+  if (driver.debug)
+    // eslint-disable-next-line no-console
+    console.log('Search UI: Action', 'removeFilter', ...arguments);
 
   const { filters } = driver.state;
 
   let updatedFilters = filters;
 
   if (!value && type) {
-    if (!filter.missing) {
-      updatedFilters = filters.filter(
-        (filter) => !(filter.field === name && filter.type === type),
-      );
-    } else {
-      updatedFilters = [
-        ...filters.filter((filter) => filter.field !== name),
-        { ...filter.missing, field: name },
-      ];
-    }
+    updatedFilters = filters.filter(
+      (filter) => !(filter.field === name && filter.type === type),
+    );
   } else if (value) {
     updatedFilters = removeSingleFilterValue(filters, name, value, type);
-    // console.log('updated', {
-    //   name,
-    //   value,
-    //   type,
-    //   updatedFilters,
-    //   filter,
-    //   filters,
-    // });
   } else {
-    if (filter.missing) {
-      updatedFilters = [
-        ...filters.filter((filter) => filter.field !== name),
-        { ...filter.missing, field: name },
-      ];
-    } else {
-      updatedFilters = filters.filter((filter) => filter.field !== name);
-    }
+    updatedFilters = filters.filter((filter) => filter.field !== name);
   }
 
   driver._updateSearchResults({
     current: 1,
     filters: updatedFilters,
   });
+
+  const events = driver.events;
+
+  events.emit({
+    type: 'FacetFilterRemoved',
+    field: name,
+    value: value, //  && serialiseFilter([value])
+    query: driver.state.searchTerm,
+  });
+
+  console.log('updated');
+
+  // const filter = appConfig.facets.filter((f) => f.field === name)[0];
+  //
+  // const { filters } = driver.state;
+  //
+  // let updatedFilters = [...(filters || [])];
+  //
+  // if (!value && type) {
+  //   if (!filter.missing) {
+  //     updatedFilters = filters.filter(
+  //       (filter) => !(filter.field === name && filter.type === type),
+  //     );
+  //   } else {
+  //     updatedFilters = [
+  //       ...filters.filter((filter) => filter.field !== name),
+  //       { ...filter.missing, field: name },
+  //     ];
+  //   }
+  // } else if (value) {
+  //   updatedFilters = removeSingleFilterValue(filters, name, value, type);
+  //   // console.log('updated', {
+  //   //   name,
+  //   //   value,
+  //   //   type,
+  //   //   updatedFilters,
+  //   //   filter,
+  //   //   filters,
+  //   // });
+  // } else {
+  //   if (filter.missing) {
+  //     updatedFilters = [
+  //       ...filters.filter((filter) => filter.field !== name),
+  //       { ...filter.missing, field: name },
+  //     ];
+  //   } else {
+  //     updatedFilters = filters.filter((filter) => filter.field !== name);
+  //   }
+  // }
+  //
+  // console.log('I would update', { updatedFilters, filters, name, value, type });
+  //
+  // // if (value)
+  // driver._updateSearchResults({
+  //   current: 1,
+  //   filters: updatedFilters,
+  // });
 }
