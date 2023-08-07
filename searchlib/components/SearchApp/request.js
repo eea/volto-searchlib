@@ -69,17 +69,16 @@ export function addFilter() {
       { field: name, values: newFilterValues, type },
     ],
   });
-
-  // return addFilter.apply(null, arguments);
 }
 
 export function removeFilter(name, value, type) {
   const { driver, appConfig } = this;
+
   const filter = appConfig.facets.filter((f) => f.field === name)[0];
 
   const { filters } = driver.state;
 
-  let updatedFilters = filters;
+  let updatedFilters = [...(filters || [])];
 
   if (!value && type) {
     if (!filter.missing) {
@@ -112,6 +111,8 @@ export function removeFilter(name, value, type) {
       updatedFilters = filters.filter((filter) => filter.field !== name);
     }
   }
+
+  // console.log('I would update', { updatedFilters, filters, name, value, type });
 
   driver._updateSearchResults({
     current: 1,
