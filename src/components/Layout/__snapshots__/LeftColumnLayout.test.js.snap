@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeftColumnLayout renders correctly 1`] = `
+<div>
+  <div
+    className="ui container"
+  >
+    <div
+      className="sui-layout-header"
+    >
+      <div
+        className="sui-layout-header__inner"
+      />
+    </div>
+  </div>
+  <div
+    className="ui container stackable two column grid body-content"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="three wide widescreen column"
+      >
+        <div />
+      </div>
+      <div
+        className="nine wide widescreen column"
+      >
+        <div />
+        <div />
+      </div>
+    </div>
+  </div>
+  <div
+    className="ui container grid body-footer"
+  >
+    <div />
+  </div>
+</div>
+`;
