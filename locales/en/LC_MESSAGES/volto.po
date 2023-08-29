@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Choices
+msgid "Choices"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Close
+msgid "Close"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Default
+msgid "Default"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Description
+msgid "Description"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: No options
+msgid "No options"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: No value
+msgid "No value"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Required
+msgid "Required"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Select…
+msgid "Select…"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Short Name
+msgid "Short Name"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Title
+msgid "Title"
+msgstr ""
+
+#: SearchBlock/widgets/SelectWidget
+# defaultMessage: Used for programmatic access to the fieldset.
+msgid "Used for programmatic access to the fieldset."
+msgstr ""

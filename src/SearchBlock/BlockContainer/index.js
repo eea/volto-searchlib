@@ -1,2 +1,2 @@
-export BlockContainer from './BlockContainer';
-export SlotEditor from './SlotEditor';
+export { default as BlockContainer } from './BlockContainer';
+export { default as SlotEditor } from './SlotEditor';
