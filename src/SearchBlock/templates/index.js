@@ -1,4 +1,4 @@
-export FullView from './FullView';
-export LandingPageView from './LandingPageView';
-export SearchInputView from './SearchInputView';
-export SearchResultsView from './SearchResultsView';
+export { default as FullView } from './FullView';
+export { default as LandingPageView } from './LandingPageView';
+export { default as SearchInputView } from './SearchInputView';
+export { default as SearchResultsView } from './SearchResultsView';

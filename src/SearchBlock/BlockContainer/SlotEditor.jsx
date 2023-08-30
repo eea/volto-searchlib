@@ -41,7 +41,7 @@ export default function SlotEditor(props) {
                   icon
                   compact
                   basic
-                  color={hasData ? 'red' : null}
+                  className={hasData ? 'redMenuButton' : null}
                   onClick={() => setActiveIndex(index)}
                 >
                   {label}
