@@ -7,14 +7,8 @@
 @type: extra;
 @element: custom;
 
-@import (multiple) '~@eeacms/search-less/theme.less';
-
-@s-dark-gray: rgba(0, 0, 0, 0.87);
-@s-medium-gray2: rgba(0, 0, 0, 0.67);
-@s-medium-gray: #e0e1e2;
-@s-light-gray: #edf1f2;
-@s-light-orange: #ffdfbb;
-@s-dark-orange: #9c5a0a;
+// @import (multiple) '~@eeacms/search-less/theme.less';
+@import '~./less/variables.less';
 
 .sui-multi-checkbox-facet__option-input-wrapper {
   max-width: 15em;
@@ -41,12 +35,12 @@ a.centered.fluid.image.img-thumbnail {
 }
 
 .ui.cards > .card .meta {
-  color: @s-medium-gray2 !important;
+  color: @s-medium-dimmed-gray !important;
 }
 
 .sui-search-box #exact-phrases-facet label {
   padding-left: 3rem !important;
-  color: black !important;
+  color: @black !important;
 }
 
 div#page-document {
@@ -181,11 +175,11 @@ div#page-document {
       }
 
       .ui.divider {
-        border-top: 1px solid #000 !important;
+        border-top: 1px solid @black !important;
       }
 
       div.ui.label {
-        background: white;
+        background: @white;
       }
 
       button {

@@ -43,9 +43,9 @@
       padding: 0.3em 0.6em;
       margin-top: -2px;
       margin-left: 0.7em !important;
-      background-color: #d3d3d3;
+      background-color: @mediumGray;
       border-radius: 0.25em;
-      color: #434343;
+      color: @lighterBlack;
       font-size: 13px;
       font-weight: normal;
       line-height: 1;
@@ -82,7 +82,7 @@
 
   .result-info {
     display: flex !important;
-    color: @midlightGray;
+    color: @grey;
     font-size: 14px;
     gap: 0.5em;
 
@@ -104,7 +104,7 @@
   .tags {
     justify-content: flex-start;
     margin-right: 0.5em;
-    color: @midlightGray;
+    color: @grey;
     font-size: 14px;
     gap: 0.2rem;
 
@@ -188,12 +188,12 @@ body.searchlib-page {
         }
 
         .extra.content {
-          border-top: 1px solid rgba(34, 36, 38, 0.1) !important;
+          border-top: 1px solid @dimmedDarkBlueBlack !important;
         }
 
         .meta {
           margin: 0;
-          color: rgba(0, 0, 0, 0.4);
+          color: @midDimmedBlack;
         }
 
         .header {
@@ -223,11 +223,11 @@ body.searchlib-page {
           position: absolute;
           z-index: 2;
           margin-top: 30px;
-          background-color: #009590;
+          background-color: @marineBlue;
           border-radius: 0px !important;
           border-bottom-right-radius: 5px !important;
           border-top-right-radius: 5px !important;
-          color: white;
+          color: @white;
           font-size: 12px;
         }
 
@@ -288,21 +288,21 @@ body.searchlib-page {
 
     .details-field {
       display: flex;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid @sf-medium-gray;
       font-size: medium;
 
       .details-field-label {
         width: 25%;
         padding: 0.3em 1em 0.3em 0.3em;
-        border-right: 1px solid #ccc;
-        background: #ddd;
+        border-right: 1px solid @sf-medium-gray;
+        background: @greyWhite;
         font-weight: bold;
       }
 
       .details-field-value {
         width: 75%;
         padding: 0.3em 0.3em 0.3em 1em;
-        background: #f9f9f9;
+        background: @grey-1;
         white-space: pre-wrap;
       }
     }
