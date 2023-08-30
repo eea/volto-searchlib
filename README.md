@@ -18,7 +18,7 @@
 
 ## Features
 
-![Searchlib](./docs/volto-searchlib.gif)
+![Searchlib](https://raw.githubusercontent.com/eea/volto-searchlib/master/docs/volto-searchlib.gif)
 
 ### Elasticsearch and NLPService middleware
 
