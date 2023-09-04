@@ -13,13 +13,15 @@
     "react"
   ],
   "addons": [
-    "@eeacms/volto-eea-design-system"
+    "@eeacms/volto-eea-design-system",
+    "@eeacms/volto-design-tokens"
   ],
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
+    "@eeacms/volto-design-tokens": "*",
     "@eeacms/volto-eea-design-system": "*",
     "@elastic/react-search-ui": "^1.9.0",
     "@elastic/react-search-ui-views": "^1.9.0",

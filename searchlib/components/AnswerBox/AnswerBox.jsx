@@ -52,7 +52,7 @@ const AnswerBox = (props) => {
             className="three-dots-loader"
             type="ThreeDots"
             visible={true}
-            color="#2d9390"
+            color="var(--loaderColor)"
             width={80}
             height={10}
           />

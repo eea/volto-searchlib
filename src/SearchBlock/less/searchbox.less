@@ -8,7 +8,7 @@
     flex-wrap: wrap;
     align-items: center;
     padding: 0;
-    background-color: @white;
+    background-color: @grey-0;
 
     .terms-box {
       display: flex;
@@ -19,7 +19,7 @@
         display: flex;
         flex-grow: 0;
         align-items: center;
-        border-bottom: 2px solid @secondaryColor;
+        border-bottom: 2px solid @green-5;
 
         .search-icon {
           width: 29px;
@@ -28,7 +28,7 @@
           cursor: pointer;
 
           svg {
-            fill: @secondaryColor !important;
+            fill: @green-5 !important;
           }
         }
       }
@@ -36,8 +36,8 @@
       input {
         width: 100%;
         border: none;
-        border-bottom: 2px solid @secondaryColor;
-        color: @deepBlue;
+        border-bottom: 2px solid @green-5;
+        color: @blue-grey-5;
         font-family: @headerFont;
         font-size: 40px;
 
@@ -52,7 +52,7 @@
       }
 
       input::placeholder {
-        color: @deepBlue;
+        color: @blue-grey-5;
         font-weight: 200;
       }
 
@@ -80,7 +80,7 @@
         position: relative;
         width: 28px;
         height: 28px;
-        border: 2px solid @secondaryColor !important;
+        border: 2px solid @green-5 !important;
         margin: 10px;
         border-radius: 4px;
         box-shadow: none;
@@ -98,7 +98,7 @@
         top: 5px;
         left: 0;
         margin: 0 !important;
-        color: @secondaryColor;
+        color: @green-5;
         opacity: 1;
 
         &:before,
@@ -108,7 +108,7 @@
           left: 11px;
           width: 2px;
           height: 15px;
-          background-color: @secondaryColor !important;
+          background-color: @green-5 !important;
           content: ' ';
         }
 
@@ -126,7 +126,7 @@
         border: 1px solid @sf-medium-gray;
         border-left: none;
         margin-right: 4px;
-        background: @white !important;
+        background: @grey-0 !important;
         border-radius: 0px;
         color: @sf-dark-gray !important;
         cursor: initial;
@@ -137,8 +137,8 @@
         }
 
         &.opened {
-          border-bottom: 1px solid @white !important;
-          background: @white !important;
+          border-bottom: 1px solid @grey-0 !important;
+          background: @grey-0 !important;
         }
       }
 
@@ -154,8 +154,8 @@
 
         &.listening {
           background-color: @darkTeal;
-          color: @white !important;
-          fill: @white !important;
+          color: @grey-0 !important;
+          fill: @grey-0 !important;
         }
 
         &.listening::before {
@@ -196,13 +196,13 @@
     border: 1px solid @sf-medium-gray;
     border-top: none;
     margin-top: 0px;
-    background: @white !important;
+    background: @grey-0 !important;
     -webkit-box-shadow: 0px 10px 13px -8px @sf-medium-gray;
     box-shadow: 0px 10px 13px -8px @sf-medium-gray;
 
     #exact-phrases-facet label {
       padding-left: 3rem !important;
-      color: @black !important;
+      color: @grey-6 !important;
     }
   }
 }
@@ -211,7 +211,7 @@
   > .item {
     padding-top: 0 !important;
     padding-bottom: 1em !important;
-    color: @deepBlue !important;
+    color: @blue-grey-5 !important;
     font-size: 18px !important;
     font-weight: 400 !important;
   }
@@ -231,7 +231,7 @@
   .ui.basic.button.explore-more-queries {
     display: flex;
     align-items: center;
-    color: @deepBlue !important;
+    color: @blue-grey-5 !important;
     float: right;
     font-size: 20px;
     font-weight: 700;
@@ -264,7 +264,7 @@
   border-radius: 4px;
   box-shadow: @dimmedLighterBlack 0px 0px 0px 1px inset,
     @dimmedBlueBlack 0px 1px 0px;
-  color: @white;
+  color: @grey-0;
   cursor: pointer;
   font-family: inherit;
   font-size: 14px;
@@ -334,7 +334,7 @@
   flex-direction: column;
   padding: 24px 0 12px 0;
   margin: 0;
-  background: @white;
+  background: @grey-0;
   box-shadow: 0px 4px 4px @dimmedLightBlack;
   line-height: 1.5;
 }
@@ -358,7 +358,7 @@
 
 .sui-search-box__autocomplete-container li {
   padding: 8px 40px;
-  color: @primaryColor;
+  color: @blue-5;
   cursor: pointer;
   font-size: 18px;
   font-weight: 500;
@@ -372,22 +372,22 @@
 
 .sui-search-box__autocomplete-container li:hover {
   background: @brightBlue;
-  color: @white;
+  color: @grey-0;
 }
 
 .sui-search-box__autocomplete-container li:hover em {
   background: transparent;
-  color: @white;
+  color: @grey-0;
 }
 
 .sui-search-box__autocomplete-container li[aria-selected='true'] {
-  background: @primaryColor;
-  color: @white;
+  background: @blue-5;
+  color: @grey-0;
 }
 
 .sui-search-box__autocomplete-container li[aria-selected='true'] em {
   background: transparent;
-  color: @white;
+  color: @grey-0;
 }
 
 .sui-search-box__section-title {

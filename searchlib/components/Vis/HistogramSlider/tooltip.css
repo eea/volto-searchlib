@@ -1,7 +1,7 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted #444;
+  border-bottom: 1px dotted var(--handleTooltipBackgroundColor);
   margin-left: 22px;
 }
 
@@ -13,9 +13,9 @@
   width: 100px;
   padding: 5px 0;
   margin-left: -60px;
-  background-color: #444;
+  background-color: var(--handleTooltipBackgroundColor);
   border-radius: 6px;
-  color: #f0f0f0;
+  color: var(--handleTooltipTextColor);
   opacity: 0.8;
   text-align: center;
 }
@@ -26,7 +26,8 @@
   left: 50%;
   border-width: 5px;
   border-style: solid;
-  border-color: #444 transparent transparent transparent;
+  border-color: var(--handleTooltipBackgroundColor) transparent transparent
+    transparent;
   margin-left: -5px;
   content: '';
 }
