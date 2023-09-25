@@ -18,6 +18,8 @@
 
 ## Features
 
+![Searchlib](https://raw.githubusercontent.com/eea/volto-searchlib/master/docs/volto-searchlib.gif)
+
 ### Elasticsearch and NLPService middleware
 
 You can configure the proxied Elasticsearch with the env var:
@@ -54,25 +56,25 @@ Go to http://localhost:3000
 
 1. Start Volto frontend
 
-* If you already have a volto project, just update `package.json`:
+- If you already have a volto project, just update `package.json`:
 
-   ```JSON
-   "addons": [
-       "@eeacms/volto-searchlib"
-   ],
+  ```JSON
+  "addons": [
+      "@eeacms/volto-searchlib"
+  ],
 
-   "dependencies": {
-       "@eeacms/volto-searchlib": "^1.0.0"
-   }
-   ```
+  "dependencies": {
+      "@eeacms/volto-searchlib": "^1.0.0"
+  }
+  ```
 
-* If not, create one:
+- If not, create one:
 
-   ```
-   npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --addon @eeacms/volto-searchlib
-   cd my-volto-project
-   ```
+  ```
+  npm install -g yo @plone/generator-volto
+  yo @plone/volto my-volto-project --addon @eeacms/volto-searchlib
+  cd my-volto-project
+  ```
 
 1. Install new add-ons and restart Volto:
 

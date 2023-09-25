@@ -183,6 +183,18 @@
     background-color: @blue-4;
   }
 
+  .prod-id {
+    cursor: pointer;
+
+    i.icon {
+      position: relative;
+      top: 1px;
+      margin: 0;
+      font-size: 1.2em;
+      vertical-align: bottom;
+    }
+  }
+
   #search-box {
     background: @blue-4 !important;
   }
@@ -224,15 +236,15 @@
         align-items: center;
 
         .item-protocol {
-          margin-left: 0.5em;
+          margin-left: 0.3em;
         }
 
         .icon {
-          margin-right: 0.5em;
+          margin-right: 0.3em;
         }
 
         .item-link {
-          margin: 0 0.5em;
+          margin: 0 0.3em;
         }
       }
 
@@ -356,7 +368,7 @@
 
   .d-link {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     margin: 0.5em 0;
     font-weight: 500;
 
@@ -437,6 +449,7 @@
 
 .dataset-item {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   span {
