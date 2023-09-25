@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash';
 import { applyBlockSettings } from './utils'; // Replace with your module path
 
 describe('applyBlockSettings', () => {
@@ -69,6 +68,7 @@ describe('applyBlockSettings', () => {
     // Verify that the results are different, indicating no caching
     expect(result1).not.toBe(result2);
   });
+
   it('should modify config based on schema and data', () => {
     const config = {
       searchui: {
