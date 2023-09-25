@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SearchBlockView from './SearchBlockView';
 import '@testing-library/jest-dom/extend-expect';
 
