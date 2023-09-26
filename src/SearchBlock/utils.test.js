@@ -1,4 +1,4 @@
-import { applyBlockSettings } from './utils'; // Replace with your module path
+import { applyBlockSettings } from './utils';
 
 describe('applyBlockSettings', () => {
   beforeEach(() => {
@@ -274,7 +274,6 @@ describe('applyBlockSettings', () => {
       properties: {
         field1: {
           modifyConfig: (settings, value) => {
-            console.log({ settings });
             settings.someConfig.path1 = value;
           },
         },
