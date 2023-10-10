@@ -63,7 +63,10 @@ describe('SelectWidgetComponent', () => {
       AsyncPaginate: (props) => (
         <div
           onClick={() => props.loadOptions(search, previousOptions, additional)}
+          onKeyDown={() => {}}
           id="test-async-paginate"
+          role="button"
+          tabIndex="0"
         >
           Async Paginate
         </div>
@@ -179,7 +182,10 @@ describe('SelectWidgetComponent', () => {
                 onClick={() =>
                   props.loadOptions(search, mockChoices, { offset: 1 })
                 }
+                onKeyDown={() => {}}
                 id="test-async-paginate"
+                role="button"
+                tabIndex="0"
               >
                 Async Paginate
               </div>
@@ -212,7 +218,10 @@ describe('SelectWidgetComponent', () => {
             AsyncPaginate: (props) => (
               <div
                 onClick={() => props.loadOptions('', mockChoices, additional)}
+                onKeyDown={() => {}}
                 id="test-async-paginate"
+                role="button"
+                tabIndex="0"
               >
                 Async Paginate
                 <input onChange={props.onChange} id="input-async" />
@@ -272,7 +281,10 @@ describe('SelectWidgetComponent', () => {
             AsyncPaginate: (props) => (
               <div
                 onClick={() => props.loadOptions('', mockChoices, additional)}
+                onKeyDown={() => {}}
                 id="test-async-paginate"
+                role="button"
+                tabIndex="0"
               >
                 Async Paginate
               </div>
