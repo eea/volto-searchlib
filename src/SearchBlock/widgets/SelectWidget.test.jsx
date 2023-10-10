@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-onchange */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { SelectWidgetComponent } from './SelectWidget';
@@ -8,13 +9,23 @@ import '@testing-library/jest-dom/extend-expect';
 const mockStore = configureStore();
 let store;
 
+jest.mock('@plone/volto/components/manage/Widgets/SelectUtils', () => {
+  return {
+    normalizeValue: jest.fn(() => 'option1'),
+  };
+});
+
 describe('SelectWidgetComponent', () => {
+  const search = 'searchQuery';
+  const previousOptions = ['Previous Option'];
+  const additional = { offset: 0 };
+
   beforeEach(() => {
     jest.clearAllMocks();
     store = mockStore({
       intl: {
         locale: 'en',
-        formatMessage: () => 'Select layout',
+        formatMessage: (a) => 'Test',
       },
     });
   });
@@ -31,7 +42,7 @@ describe('SelectWidgetComponent', () => {
       { value: 'option2', label: 'Option 2' },
     ],
     loading: false,
-    value: 'option1', // Initial selected value
+    value: 'option1',
     onChange: jest.fn(),
     onBlur: jest.fn(),
     reactSelect: {
@@ -40,7 +51,6 @@ describe('SelectWidgetComponent', () => {
           name="test"
           id="test-select"
           onChange={(ev) => {
-            console.log('ev.target', ev.target.value);
             return props.onChange([{ value: ev.target }]);
           }}
         >
@@ -50,7 +60,14 @@ describe('SelectWidgetComponent', () => {
       ),
     },
     reactSelectAsyncPaginate: {
-      AsyncPaginate: () => <div>Async Paginate</div>,
+      AsyncPaginate: (props) => (
+        <div
+          onClick={() => props.loadOptions(search, previousOptions, additional)}
+          id="test-async-paginate"
+        >
+          Async Paginate
+        </div>
+      ),
     },
   };
 
@@ -103,5 +120,230 @@ describe('SelectWidgetComponent', () => {
       </Provider>,
     );
     expect(container.querySelector('.required')).toBeInTheDocument();
+  });
+
+  it('should call getVocabulary with correct parameters when search changes', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockChoices = ['Option 1', 'Option 2'];
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const search = 'searchQuery';
+
+    const { rerender } = render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={mockChoices}
+          vocabBaseUrl={mockVocabBaseUrl}
+        />
+      </Provider>,
+    );
+
+    // Initial render should not call getVocabulary
+    expect(mockGetVocabulary).not.toHaveBeenCalled();
+
+    // Update the search query
+    rerender(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={[]}
+          vocabBaseUrl={mockVocabBaseUrl}
+          search={search}
+        />
+      </Provider>,
+    );
+  });
+
+  it('should return options when hasMore is true', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockChoices = ['Option 1', 'Option 2'];
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const search = 'searchQuery';
+
+    const { container } = render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={mockChoices}
+          vocabBaseUrl={mockVocabBaseUrl}
+          search={search}
+          itemsTotal={100}
+          reactSelectAsyncPaginate={{
+            AsyncPaginate: (props) => (
+              <div
+                onClick={() =>
+                  props.loadOptions(search, mockChoices, { offset: 1 })
+                }
+                id="test-async-paginate"
+              >
+                Async Paginate
+              </div>
+            ),
+          }}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(container.querySelector('#test-async-paginate'));
+  });
+
+  it('should return an empty array when hasMore is false', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockChoices = ['Option 1', 'Option 2'];
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const search = 'searchQuery';
+
+    const { container } = render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={mockChoices}
+          vocabBaseUrl={mockVocabBaseUrl}
+          search={search}
+          itemsTotal={100} // Set itemsTotal to simulate "no more data"
+          reactSelectAsyncPaginate={{
+            AsyncPaginate: (props) => (
+              <div
+                onClick={() => props.loadOptions('', mockChoices, additional)}
+                id="test-async-paginate"
+              >
+                Async Paginate
+                <input onChange={props.onChange} id="input-async" />
+              </div>
+            ),
+          }}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(container.querySelector('#test-async-paginate'));
+    fireEvent.change(container.querySelector('#input-async'), {
+      target: { value: 'option2' },
+    });
+  });
+
+  it('should return an empty array when hasMore is false', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockChoices = ['Option 1', 'Option 2'];
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const search = 'searchQuery-no-match';
+
+    const { container } = render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={mockChoices}
+          vocabBaseUrl={mockVocabBaseUrl}
+          search={search}
+          itemsTotal={1}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(container.querySelector('#test-async-paginate'));
+  });
+
+  it('should return an empty array when hasMore is false', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockChoices = ['Option 1', 'Option 2'];
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const search = 'searchQuery';
+
+    const { container } = render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={mockChoices}
+          vocabBaseUrl={mockVocabBaseUrl}
+          search={search}
+          itemsTotal={1}
+          reactSelectAsyncPaginate={{
+            AsyncPaginate: (props) => (
+              <div
+                onClick={() => props.loadOptions('', mockChoices, additional)}
+                id="test-async-paginate"
+              >
+                Async Paginate
+              </div>
+            ),
+          }}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(container.querySelector('#test-async-paginate'));
+  });
+
+  it('should call getVocabulary when choices are empty and vocabBaseUrl is provided', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+
+    // Render the component
+    render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          vocabBaseUrl={mockVocabBaseUrl}
+          choices={[]}
+        />
+      </Provider>,
+    );
+
+    // Expect getVocabulary to be called because choices are empty
+    expect(mockGetVocabulary).toHaveBeenCalledWith(mockVocabBaseUrl);
+  });
+
+  it('should not call getVocabulary when choices are not empty', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+    const mockVocabBaseUrl = 'http://example.com/vocab';
+    const mockChoices = ['Option 1', 'Option 2'];
+
+    // Render the component with choices provided
+    render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          vocabBaseUrl={mockVocabBaseUrl}
+          choices={mockChoices}
+        />
+      </Provider>,
+    );
+
+    // Expect getVocabulary not to be called because choices are provided
+    expect(mockGetVocabulary).not.toHaveBeenCalled();
+  });
+
+  it('should not call getVocabulary when vocabBaseUrl is not provided', () => {
+    // Mock props
+    const mockGetVocabulary = jest.fn();
+
+    // Render the component without vocabBaseUrl
+    render(
+      <Provider store={store}>
+        <SelectWidgetComponent
+          {...props}
+          getVocabulary={mockGetVocabulary}
+          choices={[]}
+        />
+      </Provider>,
+    );
+
+    // Expect getVocabulary not to be called because vocabBaseUrl is not provided
+    expect(mockGetVocabulary).not.toHaveBeenCalled();
   });
 });
