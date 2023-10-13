@@ -20,7 +20,7 @@ const DataTooltip = ({
       fontSize: 'x-small',
     }}
   >
-    <div style={{ color: 'var(--tooltipTextColor)' }}>
+    <div style={{ color: 'var(--tooltip-text-color)' }}>
       <strong>{`${tooltipData.x0} to ${tooltipData.x}`}</strong>
       <br />
       {fieldName}
@@ -90,7 +90,7 @@ class Histogram extends Component {
                 style={Object.assign(
                   {
                     display: 'block',
-                    backgroundColor: 'var(--backgroundColor)',
+                    backgroundColor: 'var(--background-color)',
                   },
                   histogramStyle,
                 )}

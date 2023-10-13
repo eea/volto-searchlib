@@ -32,8 +32,8 @@
       &.checked {
         label {
           &:before {
-            background-color: @green-5 !important;
-            box-shadow: 0px 0px 0px 2px @green-5 !important;
+            background-color: var(--background-color-secondary) !important;
+            box-shadow: 0px 0px 0px 2px var(--box-shadow-color) !important;
           }
         }
       }
@@ -287,7 +287,7 @@
     margin-right: 0px;
     background: @sf-light-gray !important;
     border-radius: 2px;
-    color: @green-5 !important;
+    color: var(--text-color-secondary) !important;
     float: right;
     font-size: 12px;
   }
@@ -347,7 +347,7 @@
           button {
             padding: 3px;
             background: @sf-light-gray !important;
-            color: @green-5;
+            color: var(--text-color-secondary);
             float: right;
             font-size: 10px;
           }
@@ -377,7 +377,7 @@
       div.label {
         max-width: 100%;
         background: @sf-light-gray !important;
-        color: @green-5;
+        color: var(--text-color-secondary);
         font-weight: 600;
 
         span.text {
@@ -533,7 +533,7 @@
             }
 
             &.active {
-              color: @green-5;
+              color: var(--text-color-secondary);
               font-weight: 700;
             }
           }
@@ -570,8 +570,8 @@
         &.checked {
           label {
             &:before {
-              background-color: @green-5 !important;
-              box-shadow: 0px 0px 0px 2px @green-5 !important;
+              background-color: var(--background-color-secondary) !important;
+              box-shadow: 0px 0px 0px 2px var(--box-shadow-color) !important;
             }
 
             &:after {
@@ -590,7 +590,7 @@
 
     .header,
     span.count {
-      color: @green-5;
+      color: var(--text-color-secondary);
       font-weight: 700;
     }
   }
@@ -622,7 +622,7 @@
     &.active {
       .header,
       span.count {
-        color: @blue-5;
+        color: var(--text-color-primary);
         font-weight: 700;
       }
 
@@ -651,7 +651,7 @@
   div.actions {
     a.clear-filters {
       margin-left: auto;
-      color: @green-5;
+      color: var(--text-color-secondary);
       font-size: 12px;
     }
   }

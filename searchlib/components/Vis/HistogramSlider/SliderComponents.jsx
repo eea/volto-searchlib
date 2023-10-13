@@ -22,7 +22,7 @@ const railCenterStyle = {
   borderRadius: 7,
   cursor: 'pointer',
   pointerEvents: 'none',
-  backgroundColor: 'var(--histogramRailBackgroundColor)',
+  backgroundColor: 'var(--histogram-rail-background-color)',
 };
 
 export class TooltipRail extends Component {
@@ -102,7 +102,7 @@ const railInnerStyle = {
   transform: 'translate(0%, -50%)',
   borderRadius: 7,
   pointerEvents: 'none',
-  backgroundColor: 'var(--histogramRailBackgroundColor)',
+  backgroundColor: 'var(--histogram-rail-background-color)',
 };
 
 export const SliderRail = ({ getRailProps }) => (
@@ -161,7 +161,7 @@ export class Handle extends Component {
             left: `${percent}%`,
             position: 'absolute',
             transform: 'translate(-50%, -50%)',
-            WebkitTapHighlightColor: 'var(--sliderHandlesHighlightColor)',
+            WebkitTapHighlightColor: 'var(--slider-handles-highlight-color)',
             zIndex: 400,
             width: 26,
             height: 42,
@@ -182,16 +182,16 @@ export class Handle extends Component {
             left: `${percent}%`,
             position: 'absolute',
             transform: 'translate(-50%, -50%)',
-            WebkitTapHighlightColor: 'var(--sliderHandlesHighlightColor)',
+            WebkitTapHighlightColor: 'var(--slider-handles-highlight-color)',
             zIndex: 300,
             width: 24,
             height: 24,
             border: 0,
             borderRadius: '50%',
-            boxShadow: '1px 1px 1px 1px var(--sliderHandlesBoxShadowColor)',
+            boxShadow: '1px 1px 1px 1px var(--slider-handles-box-shadow-color)',
             backgroundColor: disabled
-              ? 'var(--disabledSliderHandlesBackgroundColor)'
-              : 'var(--sliderHandlesBackgroundColor)',
+              ? 'var(--disabled-slider-handles-background-color)'
+              : 'var(--slider-handles-background-color)',
           }}
         />
       </Fragment>
@@ -208,7 +208,7 @@ export const Track = ({
   target,
   getTrackProps,
   disabled,
-  trackColor = 'var(--histogramFacetDefaultTrackColor)',
+  trackColor = 'var(--histogram-facet-default-track-color)',
 }) => {
   return (
     <div
@@ -218,7 +218,7 @@ export const Track = ({
         height: 14,
         zIndex: 1,
         backgroundColor: disabled
-          ? 'var(--disabledTrackBackgroundColor)'
+          ? 'var(--disabled-track-background-color)'
           : trackColor,
         borderRadius: 7,
         cursor: 'pointer',
@@ -243,7 +243,7 @@ export const Tick = ({ tick, count, format = (d) => d }) => {
           marginTop: 17,
           width: 1,
           height: 5,
-          backgroundColor: 'var(--tickBackgroundColor)',
+          backgroundColor: 'var(--tick-background-color)',
           left: `${tick.percent}%`,
         }}
       />

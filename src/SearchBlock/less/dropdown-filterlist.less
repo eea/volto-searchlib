@@ -20,7 +20,7 @@
         i.icon {
           position: relative;
           top: 3px;
-          color: @green-5;
+          color: var(--icon-color);
         }
       }
 
@@ -154,7 +154,7 @@
     .ui.button.sui-button {
       padding: 0;
       margin: 0 !important;
-      color: @green-5 !important;
+      color: var(--background-color-secondary) !important;
       font-weight: 600;
 
       &:hover,
@@ -163,7 +163,7 @@
         border: none;
         background: none !important;
         box-shadow: none;
-        color: @green-5 !important;
+        color: var(--background-color-secondary) !important;
       }
     }
   }
@@ -179,7 +179,7 @@
 
     .header,
     span.count {
-      color: @green-5;
+      color: var(--text-color-secondary);
       font-weight: 700;
     }
 
@@ -218,7 +218,7 @@
     &.active {
       .header,
       span.count {
-        color: @blue-5;
+        color: var(--text-color-primary);
         font-weight: 700;
       }
 

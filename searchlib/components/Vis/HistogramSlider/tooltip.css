@@ -1,7 +1,7 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted var(--handleTooltipBackgroundColor);
+  border-bottom: 1px dotted var(--handle-tooltip-background-color);
   margin-left: 22px;
 }
 
@@ -13,9 +13,9 @@
   width: 100px;
   padding: 5px 0;
   margin-left: -60px;
-  background-color: var(--handleTooltipBackgroundColor);
+  background-color: var(--handle-tooltip-background-color);
   border-radius: 6px;
-  color: var(--handleTooltipTextColor);
+  color: var(--handle-tooltip-text-color);
   opacity: 0.8;
   text-align: center;
 }
@@ -26,7 +26,7 @@
   left: 50%;
   border-width: 5px;
   border-style: solid;
-  border-color: var(--handleTooltipBackgroundColor) transparent transparent
+  border-color: var(--handle-tooltip-background-color) transparent transparent
     transparent;
   margin-left: -5px;
   content: '';

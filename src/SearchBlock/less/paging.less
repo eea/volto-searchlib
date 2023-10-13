@@ -24,7 +24,7 @@
     &.active {
       position: relative;
       background: none;
-      color: @green-5;
+      color: var(--text-color-secondary);
 
       &:after {
         position: absolute;
@@ -32,7 +32,7 @@
         left: 0;
         display: inline-block;
         width: 100%;
-        border-bottom: 5px solid @green-5;
+        border-bottom: 5px solid var(--border-color);
         color: @blue-grey-5;
         content: '';
       }
@@ -43,7 +43,7 @@
     &:active,
     &:focus {
       background: none;
-      color: @green-5;
+      color: var(--text-color-secondary);
     }
   }
 
@@ -76,13 +76,13 @@
 
     &:hover {
       background: none;
-      color: @green-5;
+      color: var(--text-color-secondary);
     }
 
     &.single-angle:hover:after,
     &.double-angle:hover:after,
     &.double-angle:hover:before {
-      color: @green-5;
+      color: var(--text-color-secondary);
     }
   }
 

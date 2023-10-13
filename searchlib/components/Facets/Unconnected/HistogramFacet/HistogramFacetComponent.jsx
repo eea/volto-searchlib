@@ -6,9 +6,9 @@ import { HistogramSlider } from '@eeacms/search/components/Vis';
 import debounce from 'lodash.debounce';
 
 const visualStyle = {
-  selectedColor: 'var(--histogramFacetSelectedColor)',
-  unselectedColor: 'var(--histogramFacetUnselectedColor)',
-  trackColor: 'var(--histogramFacetTrackColor)',
+  selectedColor: 'var(--histogram-facet-selected-color)',
+  unselectedColor: 'var(--histogram-facet-unselected-color)',
+  trackColor: 'var(--histogram-facet-track-color)',
 };
 
 const HistogramFacetComponent = (props) => {

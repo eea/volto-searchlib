@@ -8,7 +8,7 @@ const ThreeDots = ({
   height = 80,
   width = 80,
   radius = 9,
-  color = 'var(--loaderDefaultColor)',
+  color = 'var(--loader-default-color)',
   ariaLabel = 'three-dots-loading',
   wrapperStyle,
   wrapperClass,

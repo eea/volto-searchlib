@@ -51,7 +51,7 @@ RevolvingDot.propTypes = {
 RevolvingDot.defaultProps = {
   height: 80,
   width: 80,
-  color: 'var(--loaderDefaultColor)',
+  color: 'var(--loader-default-color)',
   label: 'audio-loading',
   radius: 6,
 };

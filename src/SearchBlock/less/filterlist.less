@@ -46,7 +46,7 @@ body.searchlib-page .searchlib-block {
         width: 16px;
         height: 16px;
         padding: 3px;
-        border: 1px solid @green-5 !important;
+        border: 1px solid var(--border-color) !important;
         border-radius: 2px;
         color: @blue-grey-6;
         opacity: 1;
@@ -58,7 +58,7 @@ body.searchlib-page .searchlib-block {
           left: 7px;
           width: 1px;
           height: 9px;
-          background-color: @green-5 !important;
+          background-color: var(--background-color-secondary) !important;
           content: ' ';
         }
 
@@ -96,7 +96,7 @@ body.searchlib-page .searchlib-block {
 
     .ui.basic.button.clear-btn {
       margin: 0;
-      color: @blue-5 !important;
+      color: var(--text-color-primary) !important;
     }
   }
 
@@ -144,7 +144,7 @@ body.searchlib-page .searchlib-block {
       div.filter-list-header {
         padding-right: 0.5rem;
         padding-left: 0.5rem;
-        color: @green-5 !important;
+        color: var(--text-color-secondary) !important;
         font-size: 14px;
 
         i.dropdown.icon {
@@ -190,7 +190,7 @@ body.searchlib-page .searchlib-block {
       }
 
       button.reset-filters {
-        color: @green-5 !important;
+        color: var(--text-color-secondary) !important;
         font-size: 14px;
 
         i.icon {
@@ -210,7 +210,7 @@ body.searchlib-page .searchlib-block {
     margin-right: 0px;
     background: @sf-light-gray !important;
     border-radius: 2px;
-    color: @green-5 !important;
+    color: var(--text-color-secondary) !important;
     float: right;
     font-size: 12px;
   }
@@ -282,7 +282,7 @@ body.searchlib-page .searchlib-block {
 
 .ui.basic.button.clear-btn {
   padding: 0;
-  color: @green-5 !important;
+  color: var(--text-color-secondary) !important;
   font-size: 14px;
   font-weight: 700;
 
@@ -292,7 +292,7 @@ body.searchlib-page .searchlib-block {
     border: none;
     background: none !important;
     box-shadow: none;
-    color: @green-5 !important;
+    color: var(--text-color-secondary) !important;
   }
 }
 
@@ -331,7 +331,7 @@ body.searchlib-page .searchlib-block {
       padding: 5px;
       margin-top: 4px;
       margin-bottom: 0px;
-      background: @blue-5;
+      background: var(--background-color-primary);
       color: @grey-0;
       font-size: 12px;
 
@@ -344,7 +344,7 @@ body.searchlib-page .searchlib-block {
   &.active {
     .label {
       max-width: 100%;
-      color: @green-5;
+      color: var(--text-color-secondary);
       font-weight: 600;
 
       .text {
@@ -425,12 +425,12 @@ body.searchlib-page .searchlib-block {
 
 .ui.card.active-term {
   .clear-filters {
-    border: 1px solid @green-5 !important;
+    border: 1px solid var(--border-color) !important;
 
     i.close.icon {
       &:before,
       &:after {
-        background-color: @green-5 !important;
+        background-color: var(--background-color-secondary) !important;
       }
     }
   }
