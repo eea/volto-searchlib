@@ -57,7 +57,8 @@
     "semantic-ui-react": "2.0.3",
     "superagent": "3.8.2",
     "svg-loader": "0.0.2",
-    "use-deep-compare-effect": "1.8.1"
+    "use-deep-compare-effect": "1.8.1",
+    "razzle-plugin-scss": "^4.2.18"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
