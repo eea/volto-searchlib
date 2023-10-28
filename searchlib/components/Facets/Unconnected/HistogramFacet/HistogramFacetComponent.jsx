@@ -11,14 +11,43 @@ const visualStyle = {
   trackColor: 'var(--histogram-facet-track-color)',
 };
 
+const useDebouncedInput = (initialValue) => {
+  const [storedValue, setValue] = React.useState(initialValue);
+  React.useEffect(() => {
+    if (initialValue !== storedValue && storedValue === undefined) {
+      // console.log('should update internal state', {
+      //   initialValue,
+      //   storedValue,
+      // });
+      setValue(initialValue);
+    }
+  }, [storedValue, initialValue]);
+
+  const timerRef = React.useRef();
+
+  const changeHandler = React.useCallback((newValue, callback) => {
+    setValue(newValue);
+    timerRef.current && clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      // console.log('calling callback');
+      callback();
+    }, 1000);
+  }, []);
+
+  return [storedValue, changeHandler];
+};
+
 const HistogramFacetComponent = (props) => {
-  const { data, ranges, onChange, selection, step } = props;
+  const { data, ranges, onChange, selection } = props; // , step
 
   const range = getRangeStartEnd(ranges);
   const {
     start = selection ? selection[0] : undefined ?? range.start,
     end = selection ? selection[1] : undefined ?? range.end,
   } = props;
+
+  const [startValue, handleChangeStartValue] = useDebouncedInput(start);
+  const [endValue, handleChangeEndValue] = useDebouncedInput(end);
 
   const debouncedSliderChangeHandler = React.useMemo(
     () =>
@@ -28,30 +57,35 @@ const HistogramFacetComponent = (props) => {
     [onChange],
   );
 
+  // step={step}
   return (
     <div className="histogram-facet">
       <div className="text-input">
         <Input
           type="number"
-          value={start}
-          onChange={(e, { value }) =>
-            onChange({ from: value, to: selection?.[1] })
-          }
+          value={startValue}
+          onChange={(e, { value }) => {
+            handleChangeStartValue(value, () =>
+              onChange({ from: value, to: end }),
+            );
+            // console.log('selection', value, end, start);
+            // onChange({ from: value, to: end }); //selection?.[1]
+          }}
           min={range.start}
           max={range.end}
-          step={step}
-          disabled
         />
         <Input
           type="number"
-          value={end}
-          onChange={(e, { value }) =>
-            onChange({ from: selection?.[0], to: value })
-          }
+          value={endValue}
+          onChange={(e, { value }) => {
+            handleChangeEndValue(value, () =>
+              onChange({ from: start, to: value }),
+            );
+            // console.log('selection', value, end, start);
+            // onChange({ from: start, to: value }); // selection?.[0]
+          }}
           min={range.start}
           max={range.end}
-          step={step}
-          disabled
         />
       </div>
 
