@@ -28,6 +28,7 @@ function SearchBlockView(props) {
   const schemaFields = [
     'availableFacets',
     'defaultFacets',
+    'authOnlyFacets',
     'defaultFilters',
     'showClusters',
     'defaultSort',

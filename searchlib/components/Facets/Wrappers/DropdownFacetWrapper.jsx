@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -30,6 +31,7 @@ const DropdownFacetWrapper = (props) => {
     removeFilter,
     sortedOptions,
     filterType,
+    token,
   } = props;
   const rawSearchContext = useSearchContext();
   const {
@@ -65,6 +67,7 @@ const DropdownFacetWrapper = (props) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
   if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
 
   return (
     <>
@@ -197,4 +200,6 @@ const DropdownFacetWrapper = (props) => {
   );
 };
 
-export default DropdownFacetWrapper;
+export default connect((state) => ({
+  token: state.userSession?.token,
+}))(DropdownFacetWrapper);
