@@ -36,7 +36,7 @@ const DropdownFacetWrapper = (props) => {
     searchContext: facetSearchContext,
     applySearch,
   } = useProxiedSearchContext(rawSearchContext);
-  const { filters } = facetSearchContext;
+  const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
@@ -64,6 +64,7 @@ const DropdownFacetWrapper = (props) => {
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
+  if (facets[field] === undefined) return null;
 
   return (
     <>
