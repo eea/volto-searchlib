@@ -62,7 +62,7 @@ const _applyBlockSettings = (config, appName, data, schema) => {
     });
   }
 
-  if (data.authOnlyFacets){
+  if (data.authOnlyFacets) {
     settings.facets.forEach((f) => {
       f.authOnly = data.authOnlyFacets.indexOf(f.field) > -1 ? true : false;
     });
