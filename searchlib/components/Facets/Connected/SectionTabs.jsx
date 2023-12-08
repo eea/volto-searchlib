@@ -5,14 +5,12 @@
 import React from 'react';
 import { Menu, Ref } from 'semantic-ui-react'; // Dropdown
 import { Icon } from '@eeacms/search/components';
-import { useAtom } from 'jotai';
 
 import {
   // useWindowDimensions,
   useSearchContext,
   useAppConfig,
 } from '@eeacms/search/lib/hocs';
-import { isLandingPageAtom } from '@eeacms/search/state';
 
 const cmp = (a, b) => (a > b ? 1 : a === b ? 0 : a < b ? -1 : 0);
 
@@ -20,7 +18,6 @@ const SectionTabs = (props) => {
   // const { width } = useWindowDimensions();
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
-  const [isLandingPage] = useAtom(isLandingPageAtom);
   const menuRef = React.useRef(null);
 
   const showOverflow = false;
@@ -42,7 +39,7 @@ const SectionTabs = (props) => {
   // }, []);
 
   const { contentSectionsParams = {} } = appConfig;
-  if (!contentSectionsParams.enable || isLandingPage) return null;
+  if (!contentSectionsParams.enable) return null;
 
   const { facets = {}, filters = [] } = searchContext;
   const facetField = contentSectionsParams.sectionFacetsField;
