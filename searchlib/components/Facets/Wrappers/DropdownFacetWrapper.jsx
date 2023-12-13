@@ -30,6 +30,7 @@ const DropdownFacetWrapper = (props) => {
     removeFilter,
     sortedOptions,
     filterType,
+    isLoading,
   } = props;
   const rawSearchContext = useSearchContext();
   const {
@@ -94,6 +95,7 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
+                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -169,6 +171,7 @@ const DropdownFacetWrapper = (props) => {
                   }
                 }}
               >
+                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}

@@ -5,9 +5,10 @@ import { openFacetsAtom } from '../state';
 import { useSetAtom } from 'jotai';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import Facet from '../Facet';
+import { Dimmer } from 'semantic-ui-react';
 
 const AccordionFacetWrapper = (props) => {
-  const { collapsable = true, field, label } = props;
+  const { collapsable = true, field, label, isLoading } = props;
   const searchContext = useSearchContext();
   const { filters } = searchContext;
 
@@ -79,6 +80,7 @@ const AccordionFacetWrapper = (props) => {
         <Icon className="ri-arrow-down-s-line" />
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
+        {isLoading && <Dimmer active></Dimmer>}
         <Facet
           {...props}
           active={isOpened}
