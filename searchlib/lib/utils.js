@@ -308,3 +308,42 @@ export function getBuckets({
     ];
   }
 }
+
+export function stripArray(a) {
+  while (true) {
+    if (a.length === 0) {
+      break;
+    }
+    if (a[0].count !== 0) {
+      break;
+    }
+    a = a.slice(1);
+  }
+
+  while (true) {
+    if (a.length === 0) {
+      break;
+    }
+    if (a[a.length - 1].count !== 0) {
+      break;
+    }
+    a.splice(-1);
+  }
+  return a;
+}
+
+export function getRangeStartEndFromData(data, ranges) {
+  const stripped_data = stripArray(data);
+
+  if (!data || data.length === 0 || stripped_data.length === 0) {
+    const fallback = getRangeStartEnd(ranges);
+    return { start: fallback.start, end: fallback.end, ranges: data };
+  }
+
+  const start = stripped_data[0].config.from || stripped_data[0].config.to;
+  const end =
+    stripped_data[stripped_data.length - 1].config.to ||
+    stripped_data[stripped_data.length - 1].config.from;
+
+  return { start, end, ranges: stripped_data };
+}
