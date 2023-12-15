@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Accordion, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from '../state';
@@ -8,9 +9,9 @@ import Facet from '../Facet';
 import { Dimmer } from 'semantic-ui-react';
 
 const AccordionFacetWrapper = (props) => {
-  const { collapsable = true, field, label, isLoading } = props;
+  const { collapsable = true, field, label, token, isLoading } = props;
   const searchContext = useSearchContext();
-  const { filters } = searchContext;
+  const { facets, filters } = searchContext;
 
   const hasFilter = !!filters.find((filter) => field === filter.field);
   const [openFacets] = useAtom(openFacetsAtom);
@@ -43,7 +44,8 @@ const AccordionFacetWrapper = (props) => {
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);
-
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
   return collapsable ? (
     <Accordion>
       <Accordion.Title
@@ -100,4 +102,6 @@ const AccordionFacetWrapper = (props) => {
   );
 };
 
-export default AccordionFacetWrapper;
+export default connect((state) => ({
+  token: state.userSession?.token,
+}))(AccordionFacetWrapper);

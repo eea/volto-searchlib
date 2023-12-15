@@ -58,6 +58,7 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       'landingPageURL',
       'availableFacets',
       'defaultFacets',
+      'authOnlyFacets',
       'defaultFilters',
       'defaultSort',
     ],
@@ -112,6 +113,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       widget: 'array',
       choices: [],
     },
+    authOnlyFacets: {
+      title: 'Facets for authenticated users',
+      widget: 'array',
+      choices: [],
+    },
     defaultSort: {
       title: 'Default sort',
       // widget: 'sort_widget',
@@ -137,6 +143,9 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
 
     schema.properties.defaultFacets.choices = availableFacets;
     schema.properties.defaultFacets.items = { choices: availableFacets };
+
+    schema.properties.authOnlyFacets.choices = availableFacets;
+    schema.properties.authOnlyFacets.items = { choices: availableFacets };
 
     // fill in defaultResultView choices
     schema.properties.defaultResultView = {
