@@ -3,6 +3,7 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
 function getFilterValueDisplay(filterValue) {
@@ -97,14 +98,27 @@ const MultiTermFacetViewComponent = (props) => {
   ];
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
+  const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
+  const configSortOn = facetConfig.sortOn || 'count';
+  const configSortOrder = facetConfig.sortOrder || 'descending';
+  debugger;
+  let defaultSortOrder = {
+    // each criteria has its own default sort order
+    count: 'descending',
+    value: 'ascending',
+    custom: 'ascending',
+  };
 
+  defaultSortOrder[configSortOn] = configSortOrder;
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
     ['value', 'count'],
     {
-      defaultSortOn: 'count',
-      defaultSortOrder: 'descending',
+      defaultSortOn: configSortOn,
+      defaultSortOrder: defaultSortOrder,
     },
+    field,
   );
 
   return (
