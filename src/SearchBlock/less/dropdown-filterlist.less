@@ -179,7 +179,7 @@
   .ui.card.term.active-term {
     width: auto !important;
     min-width: auto;
-    margin: 5px 1em 5px 0 !important;
+    margin: 0 !important;
 
     .header,
     span.count {
@@ -188,9 +188,14 @@
     }
 
     .card-header {
-      flex-direction: row;
+      display: inline-block !important;
       padding: 0.2rem !important;
       text-align: left !important;
+
+       .clear-filters {
+        top: -5px;
+      }
+      max-width:100%;
     }
   }
 

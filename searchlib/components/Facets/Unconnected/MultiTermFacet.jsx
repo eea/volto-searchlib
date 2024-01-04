@@ -102,7 +102,6 @@ const MultiTermFacetViewComponent = (props) => {
   const facetConfig = appConfig.facets.find((f) => f.field === field);
   const configSortOn = facetConfig.sortOn || 'count';
   const configSortOrder = facetConfig.sortOrder || 'descending';
-  debugger;
   let defaultSortOrder = {
     // each criteria has its own default sort order
     count: 'descending',
