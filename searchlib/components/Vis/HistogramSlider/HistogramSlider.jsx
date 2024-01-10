@@ -49,7 +49,7 @@ const HistogramSlider = ({
   const step = (extent[1] - extent[0]) / data.length;
 
   // TODO: fix step, ticks count
-
+  const ticks_cnt = Math.min(data.length, 5) || 5;
   return (
     <div
       style={{
@@ -117,7 +117,7 @@ const HistogramSlider = ({
             </div>
           )}
         </Tracks>
-        <Ticks count={5}>
+        <Ticks count={ticks_cnt}>
           {({ ticks }) => (
             <div className="slider-ticks">
               {ticks.map((tick) => (

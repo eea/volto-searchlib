@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -30,13 +31,15 @@ const DropdownFacetWrapper = (props) => {
     removeFilter,
     sortedOptions,
     filterType,
+    isLoading,
+    token,
   } = props;
   const rawSearchContext = useSearchContext();
   const {
     searchContext: facetSearchContext,
     applySearch,
   } = useProxiedSearchContext(rawSearchContext);
-  const { filters } = facetSearchContext;
+  const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
@@ -64,6 +67,8 @@ const DropdownFacetWrapper = (props) => {
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
 
   return (
     <>
@@ -94,6 +99,7 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
+                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -169,6 +175,7 @@ const DropdownFacetWrapper = (props) => {
                   }
                 }}
               >
+                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -196,4 +203,6 @@ const DropdownFacetWrapper = (props) => {
   );
 };
 
-export default DropdownFacetWrapper;
+export default connect((state) => ({
+  token: state.userSession?.token,
+}))(DropdownFacetWrapper);

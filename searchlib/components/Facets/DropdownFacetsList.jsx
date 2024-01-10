@@ -74,23 +74,25 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
             wrapper="DropdownFacetWrapper"
           />
         ))}
-        <div className="dropdown-facet">
-          <Button
-            className="sui-button basic"
-            onClick={() => setShowSidebar(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setShowSidebar(true);
-              }
-              if (e.key === 'Escape') {
-                setShowSidebar(false);
-              }
-            }}
-            // disabled={isLiveSearch}
-          >
-            <span className="facet-title">+ More filters</span>
-          </Button>
-        </div>
+        {sidebarFacets.length > 0 && (
+          <div className="dropdown-facet">
+            <Button
+              className="sui-button basic"
+              onClick={() => setShowSidebar(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setShowSidebar(true);
+                }
+                if (e.key === 'Escape') {
+                  setShowSidebar(false);
+                }
+              }}
+              // disabled={isLiveSearch}
+            >
+              <span className="facet-title">+ More filters</span>
+            </Button>
+          </div>
+        )}
         {/*
         {filterNames.length > 0 && (
           <Button
