@@ -1,5 +1,6 @@
 import React from 'react';
 import HistogramFacetComponent from './HistogramFacetComponent';
+import { getRangeStartEndFromData } from '@eeacms/search/lib/utils';
 
 const HistogramFacet = (props) => {
   // We're using the facet information to get the available values for the
@@ -15,6 +16,7 @@ const HistogramFacet = (props) => {
     onChange,
     onRemove,
     isInAccordion,
+    ranges,
   } = props; // , filters
   const filterValue = filters.find((f) => f.field === field);
 
@@ -30,19 +32,24 @@ const HistogramFacet = (props) => {
     : filterValue
     ? [filterValue.values?.[0]?.from, filterValue.values?.[0]?.to]
     : null;
-  const range_start = facet.data[0].value.from;
-  const range_end = facet.data[facet.data.length - 1].value.to;
-  // console.log('rendering', field, facet?.data);
+  const { data } = facet;
+  const histogram_range = getRangeStartEndFromData(data, ranges);
+
   return (
     props.active &&
     !!facet?.data && (
       <HistogramFacetComponent
         {...props}
-        data={facet?.data}
+        data={histogram_range.ranges}
         selection={value}
+        histogram_range={histogram_range}
         title={title || label}
         onChange={({ to, from }) => {
-          if (to === range_end && from === range_start && isInAccordion) {
+          if (
+            to === histogram_range.end &&
+            from === histogram_range.start &&
+            isInAccordion
+          ) {
             if (value) {
               const v = { to: value[1], from: value[0], type: 'range' };
               onRemove(v);
