@@ -20,7 +20,7 @@ export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
         <a
           href="https://componentdriven.org"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
         >
           <strong>component-driven</strong>
         </a>{' '}
@@ -46,7 +46,7 @@ export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
         <a
           href="https://storybook.js.org/tutorials/"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
         >
           Storybook tutorials
         </a>
@@ -54,7 +54,7 @@ export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
         <a
           href="https://storybook.js.org/docs"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
         >
           docs
         </a>

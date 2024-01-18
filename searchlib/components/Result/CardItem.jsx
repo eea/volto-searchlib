@@ -23,7 +23,7 @@ const ExternalLink = (props) => {
       className={props.className}
       href={props.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener"
       style={props.style}
     >
       {props.children}
@@ -89,7 +89,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         as={ExternalLink}
         href={url}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener"
         label={
           (result.daysSinceIssued < 30 && (
             <Label color="yellow" ribbon="right">
