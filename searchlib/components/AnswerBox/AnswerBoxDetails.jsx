@@ -41,7 +41,7 @@ export default (props) => {
             <a
               href="https://www.eea.europa.eu/en/legal-notice#disclaimer"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener"
             >
               EEA Disclaimer
             </a>

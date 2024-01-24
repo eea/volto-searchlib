@@ -6,7 +6,7 @@ const ExternalLink = (props) => {
       className={props.className}
       href={props.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener"
       style={props.style}
       title={props.title}
     >

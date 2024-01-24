@@ -45,10 +45,10 @@ const MoreLikeThisEntry = (props) => {
           as={ExternalLink}
           href={item.href}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener"
         />
         <h4>
-          <a href={item.href} target="_blank" rel="noreferrer">
+          <a href={item.href} target="_blank" rel="noopener">
             <Icon name="external" size="small" />
             {item.title}
           </a>
