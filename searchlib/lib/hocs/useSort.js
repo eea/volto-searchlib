@@ -4,7 +4,7 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const useSort = (
   values,
-  // criterias,
+  _criterias_unused,
   { defaultSortOn, defaultSortOrder },
   field = null, // in case of custom order, we get the facetValues order from field's configuration
 ) => {
