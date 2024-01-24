@@ -262,7 +262,7 @@ export const customOrder = (values, facetValues, sortOrder = 'ascending') => {
   // facetValues: ['sq', 'bg', ...]
   // Return values ordered as in facetValues
   let result = [];
-  for (let value of facetValues) {
+  for (let value of facetValues || []) {
     let item = values.filter((c) => c.value === value)[0];
     if (item !== undefined) {
       result.push(item);

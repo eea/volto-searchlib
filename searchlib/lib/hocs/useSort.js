@@ -4,7 +4,7 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const useSort = (
   values,
-  criterias,
+  // criterias,
   { defaultSortOn, defaultSortOrder },
   field = null, // in case of custom order, we get the facetValues order from field's configuration
 ) => {
@@ -27,6 +27,13 @@ const useSort = (
     if (sortOn === 'custom') {
       const fConfig = appConfig.facets.filter((f) => f.field === field);
       const facetValues = fConfig[0].facetValues;
+      if (!facetValues || facetValues.length === 0) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'You need to configure the custom facet values for',
+          field,
+        );
+      }
 
       return sortOrder === 'ascending'
         ? customOrder(options, facetValues, 'ascending')
@@ -40,10 +47,10 @@ const useSort = (
               : 0
             : -1
           : b[sortOn] > a[sortOn]
-          ? b[sortOn] !== a[sortOn]
-            ? 1
-            : 0
-          : -1;
+            ? b[sortOn] !== a[sortOn]
+              ? 1
+              : 0
+            : -1;
       });
     }
   };
