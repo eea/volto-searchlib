@@ -1,4 +1,4 @@
-function FilterSchema({ formData }) {
+function FilterSchema({ formData: _formData }) {
   return {
     title: 'Filter',
     fieldsets: [
@@ -23,7 +23,7 @@ function FilterSchema({ formData }) {
 }
 
 const setFacetWidgetProps = (appConfig, registry, appName) => {
-  return (schema, data, intl) => {
+  return (schema, data, _intl) => {
     // Note: this is a hack, it's needed to be able to pass the computed
     // appConfig from the edit block. Hackish because the block schemaEnhancers
     // (and the ObjectWidget) aren't passed the whole available props
@@ -55,6 +55,7 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       'showFacets',
       'showSorting',
       'showClusters',
+      ...[formData?.showClusters ? ['showClusterAsIcons'] : []],
       'landingPageURL',
       'availableFacets',
       'defaultFacets',
@@ -90,6 +91,12 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       type: 'boolean',
       default: true,
       configPath: 'showClusters',
+    },
+    showClusterAsIcons: {
+      title: 'Use icons for tab clusters',
+      type: 'boolean',
+      default: false,
+      configPath: 'showClusterAsIcons',
     },
     showSorting: {
       title: 'Show sorting?',
