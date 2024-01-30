@@ -35,6 +35,40 @@ body.searchlib-page {
       &::-webkit-scrollbar {
         height: 0.3rem !important;
       }
+
+      .active.item {
+        .tab-icon {
+          .count {
+            border: none;
+            color: @white;
+            background-color: @primaryColor;
+            border: 2px solid @primaryColor;
+          }
+        }
+      }
+
+      .tab-icon {
+        position: relative;
+      }
+
+      .tab-icon .count {
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 50%;
+        height: 26px;
+        width: 26px;
+        line-height: 23px;
+        background-color: @white;
+        color: #3d5265; // TODO: replace with @blue-grey-5 from volto-design-tokens
+        border: 2px solid #3d5265;
+        top: auto;
+        bottom: -0.6em;
+        text-align: center;
+        position: absolute;
+        z-index: 100;
+        left: 100%;
+        margin-left: -1.5em;
+      }
     }
 
     .sorting {
