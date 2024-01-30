@@ -278,6 +278,7 @@ const config = {
 
       showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
       showClusters: true, // enables the tab clusters
+      showClusterAsIcons: false, // use icons instead of text in the tab clusters
       showSorting: true, // show the sorting controls
       showFacets: true, // show the facets dropdowns and sidebar facets
 

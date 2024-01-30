@@ -21,6 +21,7 @@ const SectionTabs = (props) => {
   const menuRef = React.useRef(null);
 
   const showOverflow = false;
+  const showIcons = appConfig.showClusterAsIcons || false;
 
   // TODO: use https://www.npmjs.com/package/react-horizontal-scrolling-menu ?
   //
@@ -101,7 +102,7 @@ const SectionTabs = (props) => {
                 }
               }}
             >
-              {/*<Icon type={value} family="Content types" />*/}
+              {showIcons && <Icon type={value} family="Content types" />}
               <span className="title">{value}&nbsp;</span>
               <span className="count">({count})</span>
             </Menu.Item>
