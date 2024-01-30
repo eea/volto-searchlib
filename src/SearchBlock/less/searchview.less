@@ -51,22 +51,22 @@ body.searchlib-page {
       }
 
       .tab-icon .count {
-        font-size: 10px;
+        position: absolute;
+        z-index: 100;
+        top: auto;
+        bottom: -0.6em;
+        left: 100%;
         width: 26px;
         height: 26px;
-        border-radius: 50%;
-        font-weight: bold;
-        background-color: @white;
-        line-height: 23px;
-        top: auto;
         border: 2px solid #3d5265;
-        color: #3d5265; // TODO: replace with @blue-grey-5 from volto-design-tokens
-        position: absolute;
-        bottom: -0.6em;
-        text-align: center;
-        z-index: 100;
-        left: 100%;
         margin-left: -1.5em;
+        background-color: @white;
+        border-radius: 50%;
+        color: #3d5265; // TODO: replace with @blue-grey-5 from volto-design-tokens
+        font-size: 10px;
+        font-weight: bold;
+        line-height: 23px;
+        text-align: center;
       }
     }
 
