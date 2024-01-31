@@ -186,7 +186,7 @@ const DropdownFacetWrapper = (props) => {
                 <ActiveFilters
                   sortedOptions={sortedOptions}
                   onRemove={(value) => {
-                    removeFilter(field, value, filterConfig.filterType);
+                    removeFilter(field, value, localFilterType);
                   }}
                   field={field}
                 />
