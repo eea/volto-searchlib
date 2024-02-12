@@ -9,7 +9,7 @@ pipeline {
   environment {
     GIT_NAME = "volto-searchlib"
     NAMESPACE = "@eeacms"
-    SONARQUBE_TAGS = "volto.eea.europa.eu,clms.land.copernicus.eu,demo-www.eea.europa.eu,prod-www.eea.europa.eu,water.europa.eu-marine,www.eea.europa.eu-en,climate-adapt.eea.europa.eu"
+    SONARQUBE_TAGS = "volto.eea.europa.eu,clms.land.copernicus.eu,demo-www.eea.europa.eu,prod-www.eea.europa.eu,water.europa.eu-marine,www.eea.europa.eu-en,climate-adapt.eea.europa.eu,water.europa.eu-freshwater"
     DEPENDENCIES = ""
     BACKEND_PROFILES = "eea.kitkat:testing"
     BACKEND_ADDONS = ""
