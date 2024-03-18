@@ -66,6 +66,25 @@ export const suiRangeFacet = ({
   };
 };
 
+export const singleTermFacet = ({
+  field,
+  label,
+  filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    ...defaults,
+    field,
+    factory: 'SingleTermFacet',
+    label: label || field,
+    showInFacetsList: true,
+    filterType,
+    isFilterable,
+    ...params,
+  };
+};
+
 export const multiTermFacet = ({
   field,
   label,
