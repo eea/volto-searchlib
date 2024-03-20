@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Icon, Image, Button } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
