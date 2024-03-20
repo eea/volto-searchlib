@@ -74,24 +74,27 @@ export class SearchBoxContainer extends Component {
   };
 
   completeSuggestion = (suggestedTerm) => {
-    const { shouldClearFilters, setSearchTerm } = this.props;
+    const {
+      // shouldClearFilters,
+      setSearchTerm,
+    } = this.props;
 
-    if (this.props.useSearchPhrases) {
-      let searchPhrases = this.props.searchTerm.split('|');
-      searchPhrases.pop();
-      searchPhrases.push(suggestedTerm);
+    // if (this.props.useSearchPhrases) {
+    //   let searchPhrases = this.props.searchTerm.split('|');
+    //   searchPhrases.pop();
+    //   searchPhrases.push(suggestedTerm);
 
-      setSearchTerm(`${searchPhrases.join('|')}|`, {
-        shouldClearFilters,
-      });
-    } else {
-      const { searchContext, appConfig } = this.props;
-      if (!searchContext.filters?.length)
-        resetFiltersToDefault(searchContext, appConfig);
-      setSearchTerm(suggestedTerm, {
-        shouldClearFilters: false,
-      });
-    }
+    //   setSearchTerm(`${searchPhrases.join('|')}|`, {
+    //     shouldClearFilters,
+    //   });
+    // } else {
+    // }
+    const { searchContext, appConfig } = this.props;
+    if (!searchContext.filters?.length)
+      resetFiltersToDefault(searchContext, appConfig);
+    setSearchTerm(suggestedTerm, {
+      shouldClearFilters: false,
+    });
   };
 
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
@@ -116,10 +119,10 @@ export class SearchBoxContainer extends Component {
       searchTerm = submittedSearchTerm ?? this.props.searchTerm;
     }
 
-    if (this.props.useSearchPhrases) {
-      if (!!searchTerm && !searchTerm.endsWith('|'))
-        searchTerm = `${searchTerm}|`;
-    }
+    // if (this.props.useSearchPhrases) {
+    //   if (!!searchTerm && !searchTerm.endsWith('|'))
+    //     searchTerm = `${searchTerm}|`;
+    // }
 
     e && e.preventDefault();
     setSearchTerm(searchTerm, {

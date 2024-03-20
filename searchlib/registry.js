@@ -267,7 +267,9 @@ const config = {
       // the "content" layout, everything below the search input
       contentBodyComponent: 'DefaultContentView',
 
-      useSearchPhrases: true,
+      // disable search phrases for now, maybe it will be enabled in the future
+      // but that requires further development
+      // useSearchPhrases: true,
 
       // when entering in search view, this will be the default search text
       defaultSearchText: '',
