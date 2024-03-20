@@ -54,8 +54,8 @@ const DropdownFacetWrapper = (props) => {
     (f) => (f.id || f.field) === field,
   );
 
+  const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-
   const [localFilterType, setLocalFilterType] = React.useState(
     defaultTypeValue,
   );
@@ -113,13 +113,15 @@ const DropdownFacetWrapper = (props) => {
                 />
               </SearchContext.Provider>
 
-              <ActiveFilters
-                sortedOptions={sortedOptions}
-                onRemove={(value) => {
-                  removeFilter(field, value, filterConfig.filterType);
-                }}
-                field={field}
-              />
+              {!hideActiveFilters && (
+                <ActiveFilters
+                  sortedOptions={sortedOptions}
+                  onRemove={(value) => {
+                    removeFilter(field, value, filterConfig.filterType);
+                  }}
+                  field={field}
+                />
+              )}
             </Modal.Content>
             <Modal.Actions>
               <Button
@@ -188,13 +190,15 @@ const DropdownFacetWrapper = (props) => {
                   onChangeFilterType={setLocalFilterType}
                 />
 
-                <ActiveFilters
-                  sortedOptions={sortedOptions}
-                  onRemove={(value) => {
-                    removeFilter(field, value, filterConfig.filterType);
-                  }}
-                  field={field}
-                />
+                {!hideActiveFilters && (
+                  <ActiveFilters
+                    sortedOptions={sortedOptions}
+                    onRemove={(value) => {
+                      removeFilter(field, value, filterConfig.filterType);
+                    }}
+                    field={field}
+                  />
+                )}
               </div>
             )}
           </div>
