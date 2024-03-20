@@ -9,7 +9,7 @@ import {
   SearchContext,
 } from '@eeacms/search/lib/hocs';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { Dimmer, Modal, Button } from 'semantic-ui-react';
+import { Dimmer, Modal, Button, Loader } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
 import cx from 'classnames';
@@ -54,8 +54,8 @@ const DropdownFacetWrapper = (props) => {
     (f) => (f.id || f.field) === field,
   );
 
+  const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-
   const [localFilterType, setLocalFilterType] = React.useState(
     defaultTypeValue,
   );
@@ -99,7 +99,12 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
-                {isLoading && <Dimmer active></Dimmer>}
+                {isLoading && (
+                  <Dimmer active>
+                    <Loader active size="medium" />
+                  </Dimmer>
+                )}
+
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -108,13 +113,15 @@ const DropdownFacetWrapper = (props) => {
                 />
               </SearchContext.Provider>
 
-              <ActiveFilters
-                sortedOptions={sortedOptions}
-                onRemove={(value) => {
-                  removeFilter(field, value, filterConfig.filterType);
-                }}
-                field={field}
-              />
+              {!hideActiveFilters && (
+                <ActiveFilters
+                  sortedOptions={sortedOptions}
+                  onRemove={(value) => {
+                    removeFilter(field, value, filterConfig.filterType);
+                  }}
+                  field={field}
+                />
+              )}
             </Modal.Content>
             <Modal.Actions>
               <Button
@@ -183,13 +190,15 @@ const DropdownFacetWrapper = (props) => {
                   onChangeFilterType={setLocalFilterType}
                 />
 
-                <ActiveFilters
-                  sortedOptions={sortedOptions}
-                  onRemove={(value) => {
-                    removeFilter(field, value, filterConfig.filterType);
-                  }}
-                  field={field}
-                />
+                {!hideActiveFilters && (
+                  <ActiveFilters
+                    sortedOptions={sortedOptions}
+                    onRemove={(value) => {
+                      removeFilter(field, value, filterConfig.filterType);
+                    }}
+                    field={field}
+                  />
+                )}
               </div>
             )}
           </div>

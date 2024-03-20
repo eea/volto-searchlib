@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Icon, Image, Button } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
@@ -46,8 +46,8 @@ function SearchInput({
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
   const searchTerm = inputProps.value;
 
-  const searchPhrases = inputProps.value.split('|') || []; //.filter((p) => !!p);
-  const currentTerm = searchPhrases.pop();
+  // const searchPhrases = inputProps.value.split('|') || []; //.filter((p) => !!p);
+  // const currentTerm = searchPhrases.pop();
 
   const inpRef = React.useRef();
   const [, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
@@ -60,77 +60,73 @@ function SearchInput({
     <>
       <div className="search-input">
         <div className="terms-box">
-          {searchPhrases.length === 0 ? (
-            <input
-              {...domProps}
-              enterKeyHint="search"
-              value={currentTerm}
-              ref={inpRef}
-              className=""
-              placeholder={searchPhrases?.length ? null : domProps.placeholder}
-              onChange={(event) => {
-                setShowExtraFacets(false);
-                let {
-                  target: { value },
-                } = event;
-                value = [...searchPhrases, value].join('|');
-                inputProps.onChange({ target: { value } });
-              }}
-              onKeyDown={(ev) => {
-                if (ev.key === 'Home' || ev.key === 'End') {
-                  ev.preventDefault();
-                  const {
-                    selectionStart,
-                    selectionEnd,
-                    selectionDirection,
-                  } = ev.currentTarget;
-                  let from = ev.key === 'Home' ? 0 : 10000;
-                  let to = ev.key === 'Home' ? 0 : 10000;
-                  let direction = 'forward';
-                  if (ev.shiftKey) {
-                    if (ev.key === 'Home') {
-                      from = 0;
-                      to = selectionEnd;
-                      if (selectionDirection === 'forward') {
-                        to = selectionStart;
-                      }
-                      direction = 'backward';
+          <input
+            {...domProps}
+            enterKeyHint="search"
+            value={searchTerm}
+            ref={inpRef}
+            className=""
+            placeholder={domProps.placeholder}
+            onChange={(event) => {
+              setShowExtraFacets(false);
+              let {
+                target: { value },
+              } = event;
+              // value = [...searchPhrases, value].join('|');
+              inputProps.onChange({ target: { value } });
+            }}
+            onKeyDown={(ev) => {
+              if (ev.key === 'Home' || ev.key === 'End') {
+                ev.preventDefault();
+                const {
+                  selectionStart,
+                  selectionEnd,
+                  selectionDirection,
+                } = ev.currentTarget;
+                let from = ev.key === 'Home' ? 0 : 10000;
+                let to = ev.key === 'Home' ? 0 : 10000;
+                let direction = 'forward';
+                if (ev.shiftKey) {
+                  if (ev.key === 'Home') {
+                    from = 0;
+                    to = selectionEnd;
+                    if (selectionDirection === 'forward') {
+                      to = selectionStart;
                     }
-                    if (ev.key === 'End') {
-                      from = selectionStart;
-                      to = 10000;
-                      if (selectionDirection === 'backward') {
-                        from = selectionEnd;
-                      }
-                      direction = 'forward';
-                    }
+                    direction = 'backward';
                   }
-                  ev.currentTarget.setSelectionRange(from, to, direction);
-                  return;
-                }
-                if (ev.key === 'Backspace') {
-                  if (currentTerm === '' && searchPhrases.length > 0) {
-                    const lastPhrase = searchPhrases[searchPhrases.length - 1];
-                    const fakeEvent = {
-                      target: {
-                        value: `${searchPhrases
-                          .slice(0, searchPhrases.length - 1)
-                          .join('|')}|${lastPhrase}`,
-                      },
-                    };
-                    ev.preventDefault();
-                    inputProps.onChange(fakeEvent);
-                    return;
+                  if (ev.key === 'End') {
+                    from = selectionStart;
+                    to = 10000;
+                    if (selectionDirection === 'backward') {
+                      from = selectionEnd;
+                    }
+                    direction = 'forward';
                   }
                 }
+                ev.currentTarget.setSelectionRange(from, to, direction);
+                return;
+              }
+              // if (ev.key === 'Backspace') {
+              //   if (currentTerm === '' && searchPhrases.length > 0) {
+              //     const lastPhrase = searchPhrases[searchPhrases.length - 1];
+              //     const fakeEvent = {
+              //       target: {
+              //         value: `${searchPhrases
+              //           .slice(0, searchPhrases.length - 1)
+              //           .join('|')}|${lastPhrase}`,
+              //       },
+              //     };
+              //     ev.preventDefault();
+              //     inputProps.onChange(fakeEvent);
+              //     return;
+              //   }
+              // }
 
-                return inputProps.onKeyDown(ev);
-              }}
-              onBlur={() => {}}
-            />
-          ) : (
-            ''
-          )}
+              return inputProps.onKeyDown(ev);
+            }}
+            onBlur={() => {}}
+          />
 
           <div className="terms-box-left">
             <div className="input-controls">
@@ -174,11 +170,11 @@ function SearchInput({
               role="button"
               className="search-icon"
               onClick={() => {
-                setSearchTerm(currentTerm, { shouldClearFilters: false });
+                setSearchTerm(searchTerm, { shouldClearFilters: false });
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  setSearchTerm(currentTerm, { shouldClearFilters: false });
+                  setSearchTerm(searchTerm, { shouldClearFilters: false });
                 }
               }}
             >
