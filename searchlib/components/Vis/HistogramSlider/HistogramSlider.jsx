@@ -18,9 +18,9 @@ const HistogramSlider = ({
   padding = 10,
   sliderHeight = 0,
   defaultWidth = 200,
-  selectedColor = 'blue',
-  unselectedColor = '#e8e8e8',
-  trackColor = 'red',
+  selectedColor = 'var(--histogram-facet-default-selected-color)',
+  unselectedColor = 'var(--histogram-facet-unselected-color)',
+  trackColor = 'var(--histogram-facet-default-track-color)',
   selection,
   onChange,
 }) => {

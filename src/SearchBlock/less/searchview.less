@@ -3,13 +3,13 @@ body.searchlib-page {
 
   .searchlib-block {
     position: relative;
-    background-color: @white;
-    color: @deepBlue;
+    background-color: @grey-0;
+    color: @blue-grey-5;
 
     .back-link {
       display: inline-block;
       margin: 1em 0;
-      color: @deepBlue;
+      color: @blue-grey-5;
       font-weight: 500;
     }
 
@@ -143,7 +143,7 @@ body.searchlib-page {
           }
 
           > i.icon {
-            color: @secondaryColor;
+            color: var(--icon-color);
           }
 
           i.icon {
@@ -158,7 +158,7 @@ body.searchlib-page {
 
         .buttons {
           button {
-            background: @midGray;
+            background: @grey-3;
             font-size: 12px;
           }
 
@@ -174,7 +174,7 @@ body.searchlib-page {
 
       .sorting {
         .inline.dropdown > span {
-          color: @secondaryColor;
+          color: var(--text-color-secondary);
           font-weight: 600;
         }
 
@@ -222,7 +222,7 @@ body.searchlib-page {
 
   label {
     padding-left: 2.1rem;
-    color: @deepBlue;
+    color: @blue-grey-5;
     font-size: 14px;
 
     &:before {
@@ -240,18 +240,18 @@ body.searchlib-page {
       left: 0.08rem !important;
       width: 0.6rem !important;
       height: 0.6rem !important;
-      background: @white;
+      background: @grey-0;
     }
   }
 
   .checked {
     label {
-      color: @secondaryColor !important;
+      color: var(--text-color-secondary) !important;
       font-weight: 600;
 
       &:before {
-        background-color: @secondaryColor !important;
-        box-shadow: 0px 0px 0px 2px @secondaryColor !important;
+        background-color: var(--background-color-secondary) !important;
+        box-shadow: 0px 0px 0px 2px var(--box-shadow-color) !important;
       }
 
       &:after {

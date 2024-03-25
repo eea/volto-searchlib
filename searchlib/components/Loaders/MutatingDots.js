@@ -71,8 +71,8 @@ MutatingDots.propTypes = {
 MutatingDots.defaultProps = {
   width: 80,
   height: 90,
-  color: 'green',
+  color: 'var(--loader-default-color)',
   radius: 11,
-  secondaryColor: 'green',
+  secondaryColor: 'var(--loader-default-color)',
   label: 'audio-loading',
 };
