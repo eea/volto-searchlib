@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -32,8 +32,8 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
     isLoading,
-    token,
   } = props;
+  const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
   const {
     searchContext: facetSearchContext,
@@ -99,7 +99,6 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
-                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -107,7 +106,6 @@ const DropdownFacetWrapper = (props) => {
                   onChangeFilterType={setLocalFilterType}
                 />
               </SearchContext.Provider>
-
               {!hideActiveFilters && (
                 <ActiveFilters
                   sortedOptions={sortedOptions}
@@ -207,6 +205,4 @@ const DropdownFacetWrapper = (props) => {
   );
 };
 
-export default connect((state) => ({
-  token: state.userSession?.token,
-}))(DropdownFacetWrapper);
+export default DropdownFacetWrapper;
