@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -9,7 +9,7 @@ import {
   SearchContext,
 } from '@eeacms/search/lib/hocs';
 import { Facet as SUIFacet } from '@eeacms/search/components';
-import { Dimmer, Modal, Button, Loader } from 'semantic-ui-react';
+import { Dimmer, Modal, Button } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
 import cx from 'classnames';
@@ -32,8 +32,8 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
     isLoading,
-    token,
   } = props;
+  const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
   const {
     searchContext: facetSearchContext,
@@ -99,12 +99,6 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
-                {isLoading && (
-                  <Dimmer active>
-                    <Loader active size="medium" />
-                  </Dimmer>
-                )}
-
                 <SUIFacet
                   {...props}
                   active={isOpen}
@@ -112,7 +106,6 @@ const DropdownFacetWrapper = (props) => {
                   onChangeFilterType={setLocalFilterType}
                 />
               </SearchContext.Provider>
-
               {!hideActiveFilters && (
                 <ActiveFilters
                   sortedOptions={sortedOptions}
@@ -212,6 +205,4 @@ const DropdownFacetWrapper = (props) => {
   );
 };
 
-export default connect((state) => ({
-  token: state.userSession?.token,
-}))(DropdownFacetWrapper);
+export default DropdownFacetWrapper;
