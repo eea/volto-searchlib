@@ -68,8 +68,8 @@ export default function SidebarFacetsList(props) {
             {facets.map((facetInfo, i) => (
               <FacetResolver
                 key={i}
-                {...searchContext}
                 {...facetInfo}
+                {...searchContext}
                 wrapper="AccordionFacetWrapper"
               />
             ))}

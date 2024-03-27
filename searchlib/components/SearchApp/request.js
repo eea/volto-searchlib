@@ -81,14 +81,14 @@ export function removeFilter(name, value, type) {
   let updatedFilters = [...(filters || [])];
 
   if (!value && type) {
-    if (!filter.missing) {
+    if (!filter?.missing) {
       updatedFilters = filters.filter(
         (filter) => !(filter.field === name && filter.type === type),
       );
     } else {
       updatedFilters = [
         ...filters.filter((filter) => filter.field !== name),
-        { ...filter.missing, field: name },
+        { ...filter?.missing, field: name },
       ];
     }
   } else if (value) {
