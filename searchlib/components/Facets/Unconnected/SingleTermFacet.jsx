@@ -3,7 +3,7 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -68,6 +68,11 @@ const SingleTermFacetViewComponent = (props) => {
     onSearch,
     field,
   } = props;
+  const searchContext = useSearchContext();
+  const { filters = [] } = searchContext;
+
+  const initialValue =
+    (filters.find((f) => f.field === field) || {})?.values || [];
 
   const { appConfig } = useAppConfig();
   const facetConfig = appConfig.facets.find((f) => f.field === field);
@@ -90,6 +95,13 @@ const SingleTermFacetViewComponent = (props) => {
     },
     field,
   );
+
+  const sortedOptionsAdjusted = sortedOptions.map((item) => {
+    if (initialValue.includes(item.value)) {
+      item.selected = true;
+    }
+    return item;
+  });
 
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
@@ -145,7 +157,8 @@ const SingleTermFacetViewComponent = (props) => {
       </div>
       <Resizable>
         <FacetOptions
-          sortedOptions={sortedOptions}
+          // sortedOptions={sortedOptions}
+          sortedOptions={sortedOptionsAdjusted}
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
