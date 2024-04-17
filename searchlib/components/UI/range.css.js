@@ -20,10 +20,10 @@ const styles = {
     borderRadius: '4px',
     top: '9px',
     left: '0',
-    backgroundColor: 'rgba(0,0,0,.05)',
+    backgroundColor: 'var(--range-track-background-color)',
   },
   invertedTrack: {
-    backgroundColor: 'rgba(255,255,255,.08)',
+    backgroundColor: 'var(--range-inverted-track-background-color)',
   },
   trackFill: {
     position: 'absolute',
@@ -32,10 +32,10 @@ const styles = {
     borderRadius: '4px',
     top: '9px',
     left: '0',
-    backgroundColor: '#1b1c1d',
+    backgroundColor: 'var(--range-track-fill-background-color)',
   },
   invertedTrackFill: {
-    backgroundColor: '#545454',
+    backgroundColor: 'var(--range-inverted-track-fill-background-color)',
   },
   knob: {
     position: 'absolute',
@@ -43,14 +43,18 @@ const styles = {
     left: '0',
     height: '20px',
     width: '20px',
-    background: '#fff linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -o-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
+    background:
+      'var(--background-color) linear-gradient(transparent, var(--range-knob-background-color-gradient))',
+    background:
+      'var(--background-color) -webkit-linear-gradient(transparent, var(--range-knob-background-color-gradient))',
+    background:
+      'var(--background-color) -o-linear-gradient(transparent, var(--range-knob-background-color-gradient))',
+    background:
+      'var(--background-color) -moz-linear-gradient(transparent, var(--range-knob-background-color-gradient))',
     borderRadius: '6px',
-    backgroundColor: '#205c90',
+    backgroundColor: 'var(--range-knob-background-color)',
     boxShadow:
-      '0 1px 2px 0 rgba(34,36,38,.15),0 0 0 1px rgba(34,36,38,.15) inset',
+      '0 1px 2px 0 var(--range-knob-box-shadow-color),0 0 0 1px var(--range-knob-box-shadow-color) inset',
   },
   red: {
     backgroundColor: '#DB2828',
@@ -155,7 +159,7 @@ const styles = {
 ---------------*/
 
   disabledTrackFill: {
-    backgroundColor: '#ccc',
+    backgroundColor: 'var(--disabled-track-fill-background-color)',
   },
 
   /*--------------
@@ -164,7 +168,7 @@ const styles = {
   invalidInputTrack: {
     cursor: 'not-allowed',
     opacity: '.3',
-    background: '#ff0000',
+    background: 'var(--invalid-input-track-background-color)',
   },
   invalidInputTrackFill: {
     opacity: '.0',
