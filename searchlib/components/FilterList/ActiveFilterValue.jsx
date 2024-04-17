@@ -1,11 +1,12 @@
 import React from 'react';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
 import { Label, Icon } from 'semantic-ui-react';
 
 const ActiveFilterValue = (props) => {
   const { field, values, type, removeFilter } = props;
   const { appConfig } = useAppConfig();
+  const { clearFilters } = useSearchContext();
 
   const filterConfig = appConfig.facets.find(
     (f) => (f.id || f.field) === field,
@@ -37,7 +38,9 @@ const ActiveFilterValue = (props) => {
                 name="close"
                 tabIndex={0}
                 onClick={() => {
-                  if (values.length === 1) {
+                  if (!filterConfig.isMulti) {
+                    clearFilters();
+                  } else if (values.length === 1) {
                     removeFilter(field, null, type || filterConfig.filterType);
                   } else {
                     removeFilter(field, value, type || filterConfig.filterType);
