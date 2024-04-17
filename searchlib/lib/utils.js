@@ -59,7 +59,10 @@ export function applyConfigurationSchema(config) {
   config.disjunctiveFacets = [...(config.disjunctiveFacets || [])];
   const { facets = [] } = config;
   facets.forEach((facet) => {
-    if (facet.isMulti && !config.disjunctiveFacets.includes(facet.field)) {
+    if (
+      facet.factory === 'SingleTermFacet' ||
+      (facet.isMulti && !config.disjunctiveFacets.includes(facet.field))
+    ) {
       config.disjunctiveFacets.push(facet.field);
     }
   });
@@ -291,8 +294,8 @@ export function getBuckets({
 
     let filtered_data = blacklist.length
       ? unfiltered_data.filter(
-        (bucket) => blacklist.indexOf(bucket.value) === -1,
-      )
+          (bucket) => blacklist.indexOf(bucket.value) === -1,
+        )
       : unfiltered_data;
 
     filtered_data = whitelist.length
