@@ -87,9 +87,9 @@
     left: 50%;
     width: 100px;
     padding: 5px 0;
+    border-radius: 6px;
     margin-left: -60px;
     background-color: @darkerGray;
-    border-radius: 6px;
     color: @mediumLightWhite;
     opacity: 0.8;
     text-align: center;
@@ -252,8 +252,8 @@
   height: 100%;
   padding: 6px;
   border: 1px solid @sf-medium-gray;
-  margin: 0;
   border-radius: 4px;
+  margin: 0;
   font-family: inherit;
   outline: none;
 }
@@ -279,14 +279,16 @@
     max-height: 97vh;
     padding: 20px;
     background-color: @sf-light-gray2;
-    box-shadow: 1px 3px 3px 0px @darkBlueGray, 1px 3px 15px 2px @darkBlueGray;
+    box-shadow:
+      1px 3px 3px 0px @darkBlueGray,
+      1px 3px 15px 2px @darkBlueGray;
   }
 
   button.show-filters {
+    border-radius: 2px;
     margin-top: 30px;
     margin-right: 0px;
     background: @sf-light-gray !important;
-    border-radius: 2px;
     color: @secondaryColor !important;
     float: right;
     font-size: 12px;
@@ -316,8 +318,8 @@
   .card {
     width: 80% !important;
     border: none;
-    margin: 3px 0px 3px 10%;
     border-radius: 3px;
+    margin: 3px 0px 3px 10%;
     box-shadow: none;
 
     &:hover {
@@ -494,9 +496,9 @@
         width: 40%;
         padding: 0.2em;
         border: 1px solid @sf-medium-gray;
+        border-radius: 5px;
         margin-right: 1em;
         margin-bottom: 0.2em;
-        border-radius: 5px;
         font-size: 80%;
       }
 
@@ -521,9 +523,9 @@
           padding-left: 0.3em;
 
           div.toggle-label {
+            border-radius: 8px;
             margin-left: 10px;
             background: @white;
-            border-radius: 8px;
             color: @deepBlue;
             font-size: 16px;
             font-weight: 400;
