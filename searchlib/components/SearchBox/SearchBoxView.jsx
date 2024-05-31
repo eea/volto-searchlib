@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
-import { Result } from '@elastic/react-search-ui-views';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import Autocomplete from './Autocomplete';
 
@@ -143,7 +142,7 @@ function SearchBoxView(props) {
 SearchBoxView.propTypes = {
   // Provided by container
   allAutocompletedItemsCount: PropTypes.number.isRequired,
-  autocompletedResults: PropTypes.arrayOf(Result).isRequired,
+  // autocompletedResults: PropTypes.arrayOf(Result).isRequired,
   // autocompletedSuggestions: PropTypes.objectOf(PropTypes.arrayOf(Suggestion))
   //   .isRequired,
   autocompletedSuggestionsCount: PropTypes.number.isRequired,
