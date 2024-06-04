@@ -1,4 +1,5 @@
 import registry from '@eeacms/search/registry';
+import { DateTime } from 'luxon';
 
 function getHighlight(hit, fieldName) {
   if (
@@ -115,33 +116,11 @@ export class BasicModel {
 }
 
 export class ResultModel extends BasicModel {
-  constructor(record, config, field_filters) {
-    super(record, config, field_filters);
-    this._getDateTime = this._getDateTime.bind(this);
-  }
-
-  async _getDateTime() {
-    if (!this._DateTime) {
-      const { DateTime } = await import('luxon');
-      this._DateTime = DateTime;
-    }
-    return this._DateTime;
-  }
-
-  async _getDateTimeValue(fieldName) {
-    const DateTime = await this._getDateTime();
-    const raw = this._result[fieldName]?.raw;
-    return raw ? DateTime.fromISO(raw) : null;
-  }
-
-  async _getDaysSinceIssued() {
-    const DateTime = await this._getDateTime();
-    const issued = (await this._getDateTimeValue('issued')) ?? DateTime.local();
-    return DateTime.local().diff(issued, 'days').as('days');
-  }
-
   get daysSinceIssued() {
-    return this._getDaysSinceIssued();
+    const raw = this._result['issued']?.raw;
+    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+    const res = DateTime.local().diff(issued, 'days').as('days');
+    return res;
   }
 
   get id() {
@@ -149,18 +128,26 @@ export class ResultModel extends BasicModel {
   }
 
   get isNew() {
-    return this._getDaysSinceIssued().then(
-      (daysSinceIssued) => daysSinceIssued < 30,
-    );
+    const raw = this._result['issued']?.raw;
+    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+    const res = DateTime.local().diff(issued, 'days').as('days');
+
+    return res < 30;
   }
 
   get issued() {
-    return this._getDateTimeValue('issued');
+    const raw = this._result['issued']?.raw;
+    return raw ? DateTime.fromISO(raw) : null;
   }
 
   get expires() {
-    return this._getDateTimeValue('expires');
+    const raw = this._result['expires']?.raw;
+    return raw ? DateTime.fromISO(raw) : null;
   }
+
+  // get isExpired() {
+  //   return this.expires ? this.expires < DateTime.local() : false;
+  // }
 
   get isExpired() {
     return this._result?.['expires']?.raw
