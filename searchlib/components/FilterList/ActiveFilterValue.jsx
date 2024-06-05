@@ -11,7 +11,7 @@ const ActiveFilterValue = (props) => {
   const filterConfig = appConfig.facets.find(
     (f) => (f.id || f.field) === field,
   );
-  const hideRemoveFilter = filterConfig.hideRemoveFilter || false;
+  const hideRemoveFilter = filterConfig?.hideRemoveFilter || false;
   const facetField = field;
   const { label, activeFilterLabel } = appConfig.facets.find(
     ({ field }) => field === facetField,
