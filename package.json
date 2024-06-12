@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@eeacms/volto-eea-design-system": "*",
-    "@elastic/react-search-ui": "^1.9.0",
+    "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",
-    "@elastic/search-ui": "1.19.0",
+    "@elastic/search-ui": "1.20.2",
     "@visx/group": "^1.7.0",
     "@visx/responsive": "^1.10.1",
     "@visx/scale": "^1.11.1",
