@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -22,6 +22,7 @@
   "dependencies": {
     "@eeacms/volto-eea-design-system": "*",
     "@elastic/react-search-ui": "^1.9.0",
+    "@elastic/react-search-ui-views": "1.20.2",
     "@elastic/search-ui": "1.19.0",
     "@visx/group": "^1.7.0",
     "@visx/responsive": "^1.10.1",
@@ -57,10 +58,10 @@
     "use-deep-compare-effect": "1.8.1"
   },
   "devDependencies": {
-    "cypress": "13.1.0",
     "@cypress/code-coverage": "^3.10.0",
     "@plone/scripts": "*",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "cypress": "13.1.0",
     "dotenv": "^16.3.2",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
