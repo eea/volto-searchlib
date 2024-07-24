@@ -59,7 +59,6 @@ const AccordionFacetWrapper = (props) => {
   React.useEffect(() => {
     function changeFilterType(data) {
       if (data.field === field) {
-        console.log('Sidebar changeFilterType', data.type);
         setLocalFilterType(data.type);
       }
     }
