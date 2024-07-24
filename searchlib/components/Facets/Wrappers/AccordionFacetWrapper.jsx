@@ -9,7 +9,14 @@ import Facet from '../Facet';
 import { Dimmer } from 'semantic-ui-react';
 
 const AccordionFacetWrapper = (props) => {
-  const { collapsable = true, field, label, token, isLoading } = props;
+  const {
+    collapsable = true,
+    field,
+    label,
+    token,
+    isLoading,
+    eventEmitter,
+  } = props;
   const searchContext = useSearchContext();
   const { facets, filters } = searchContext;
 
@@ -26,9 +33,16 @@ const AccordionFacetWrapper = (props) => {
 
   const [defaultTypeValue] = (defaultValue || '').split(':');
 
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
+
+  const onChangeFilterType = (v) => {
+    setLocalFilterType(v);
+    eventEmitter.emit('change:filterType', {
+      field,
+      type: v,
+    });
+  };
 
   React.useEffect(() => {
     let temp = openFacets;
@@ -41,6 +55,21 @@ const AccordionFacetWrapper = (props) => {
     }
     updateOpenFacets(temp);
   }, [hasFilter, field, openFacets, updateOpenFacets]);
+
+  React.useEffect(() => {
+    function changeFilterType(data) {
+      if (data.field === field) {
+        console.log('Sidebar changeFilterType', data.type);
+        setLocalFilterType(data.type);
+      }
+    }
+
+    eventEmitter.on('change:filterType', changeFilterType);
+
+    return () => {
+      eventEmitter.off('change:filterType', changeFilterType);
+    };
+  }, []);
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);
@@ -88,7 +117,7 @@ const AccordionFacetWrapper = (props) => {
           active={isOpened}
           filterType={localFilterType}
           isInAccordion={true}
-          onChangeFilterType={(v) => setLocalFilterType(v)}
+          onChangeFilterType={onChangeFilterType}
         />
       </Accordion.Content>
     </Accordion>
@@ -97,7 +126,7 @@ const AccordionFacetWrapper = (props) => {
       {...props}
       isInAccordion={true}
       filterType={localFilterType}
-      onChangeFilterType={(v) => setLocalFilterType(v)}
+      onChangeFilterType={onChangeFilterType}
     />
   );
 };

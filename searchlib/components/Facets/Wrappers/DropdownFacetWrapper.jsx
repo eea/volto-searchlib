@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -32,13 +32,12 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
     isLoading,
-    token,
+    eventEmitter,
   } = props;
+  const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
-  const {
-    searchContext: facetSearchContext,
-    applySearch,
-  } = useProxiedSearchContext(rawSearchContext);
+  const { searchContext: facetSearchContext, applySearch } =
+    useProxiedSearchContext(rawSearchContext);
   const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
@@ -54,16 +53,37 @@ const DropdownFacetWrapper = (props) => {
     (f) => (f.id || f.field) === field,
   );
 
+  const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();
 
   useOutsideClick(nodeRef, () => setIsOpen(false));
+
+  const onChangeFilterType = (v) => {
+    setLocalFilterType(v);
+    eventEmitter.emit('change:filterType', {
+      field,
+      type: v,
+    });
+  };
+
+  React.useEffect(() => {
+    function changeFilterType(data) {
+      if (data.field === field) {
+        setLocalFilterType(data.type);
+      }
+    }
+
+    eventEmitter.on('change:filterType', changeFilterType);
+
+    return () => {
+      eventEmitter.off('change:filterType', changeFilterType);
+    };
+  }, []);
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
@@ -99,22 +119,22 @@ const DropdownFacetWrapper = (props) => {
             </Modal.Header>
             <Modal.Content>
               <SearchContext.Provider value={facetSearchContext}>
-                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={setLocalFilterType}
+                  onChangeFilterType={onChangeFilterType}
                 />
               </SearchContext.Provider>
-
-              <ActiveFilters
-                sortedOptions={sortedOptions}
-                onRemove={(value) => {
-                  removeFilter(field, value, filterConfig.filterType);
-                }}
-                field={field}
-              />
+              {!hideActiveFilters && (
+                <ActiveFilters
+                  sortedOptions={sortedOptions}
+                  onRemove={(value) => {
+                    removeFilter(field, value, filterConfig.filterType);
+                  }}
+                  field={field}
+                />
+              )}
             </Modal.Content>
             <Modal.Actions>
               <Button
@@ -180,16 +200,18 @@ const DropdownFacetWrapper = (props) => {
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={setLocalFilterType}
+                  onChangeFilterType={onChangeFilterType}
                 />
 
-                <ActiveFilters
-                  sortedOptions={sortedOptions}
-                  onRemove={(value) => {
-                    removeFilter(field, value, localFilterType);
-                  }}
-                  field={field}
-                />
+                {!hideActiveFilters && (
+                  <ActiveFilters
+                    sortedOptions={sortedOptions}
+                    onRemove={(value) => {
+                      removeFilter(field, value, filterConfig.filterType);
+                    }}
+                    field={field}
+                  />
+                )}
               </div>
             )}
           </div>
@@ -203,6 +225,4 @@ const DropdownFacetWrapper = (props) => {
   );
 };
 
-export default connect((state) => ({
-  token: state.userSession?.token,
-}))(DropdownFacetWrapper);
+export default DropdownFacetWrapper;

@@ -1,15 +1,17 @@
 import React from 'react';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
 import { Label, Icon } from 'semantic-ui-react';
 
 const ActiveFilterValue = (props) => {
   const { field, values, type, removeFilter } = props;
   const { appConfig } = useAppConfig();
+  const { clearFilters } = useSearchContext();
 
   const filterConfig = appConfig.facets.find(
     (f) => (f.id || f.field) === field,
   );
+  const hideRemoveFilter = filterConfig?.hideRemoveFilter || false;
   const facetField = field;
   const { label, activeFilterLabel } = appConfig.facets.find(
     ({ field }) => field === facetField,
@@ -31,26 +33,38 @@ const ActiveFilterValue = (props) => {
               )}
               <span style={{ display: 'none' }}>{` (${type}) `}</span>
             </span>
-            <Icon
-              name="close"
-              tabIndex={0}
-              onClick={() => {
-                if (values.length === 1) {
-                  removeFilter(field, null, type || filterConfig.filterType);
-                } else {
-                  removeFilter(field, value, type || filterConfig.filterType);
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  if (values.length === 1) {
+            {!hideRemoveFilter && (
+              <Icon
+                name="close"
+                tabIndex={0}
+                onClick={() => {
+                  if (!filterConfig.isMulti) {
+                    clearFilters();
+                  } else if (values.length === 1) {
                     removeFilter(field, null, type || filterConfig.filterType);
                   } else {
                     removeFilter(field, value, type || filterConfig.filterType);
                   }
-                }
-              }}
-            />
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    if (values.length === 1) {
+                      removeFilter(
+                        field,
+                        null,
+                        type || filterConfig.filterType,
+                      );
+                    } else {
+                      removeFilter(
+                        field,
+                        value,
+                        type || filterConfig.filterType,
+                      );
+                    }
+                  }
+                }}
+              />
+            )}
           </Label>
         );
       })}

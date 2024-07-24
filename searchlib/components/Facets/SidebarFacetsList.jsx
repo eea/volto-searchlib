@@ -15,6 +15,7 @@ export default function SidebarFacetsList(props) {
     // applySearch,
     // isLiveSearch,
     // setIsLiveSearch,
+    eventEmitter,
   } = props;
   const nodeRef = React.useRef(null);
   const { width } = useWindowDimensions();
@@ -68,8 +69,9 @@ export default function SidebarFacetsList(props) {
             {facets.map((facetInfo, i) => (
               <FacetResolver
                 key={i}
-                {...searchContext}
                 {...facetInfo}
+                {...searchContext}
+                eventEmitter={eventEmitter}
                 wrapper="AccordionFacetWrapper"
               />
             ))}
