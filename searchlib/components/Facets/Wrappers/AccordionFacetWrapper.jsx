@@ -38,6 +38,7 @@ const AccordionFacetWrapper = (props) => {
 
   const onChangeFilterType = (v) => {
     setLocalFilterType(v);
+    if (!eventEmitter) return;
     eventEmitter.emit('change:filterType', {
       field,
       type: v,
@@ -57,6 +58,8 @@ const AccordionFacetWrapper = (props) => {
   }, [hasFilter, field, openFacets, updateOpenFacets]);
 
   React.useEffect(() => {
+    if (!eventEmitter) return;
+
     function changeFilterType(data) {
       if (data.field === field) {
         setLocalFilterType(data.type);
@@ -68,7 +71,7 @@ const AccordionFacetWrapper = (props) => {
     return () => {
       eventEmitter.off('change:filterType', changeFilterType);
     };
-  }, []);
+  }, [eventEmitter]);
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);

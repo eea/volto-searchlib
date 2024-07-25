@@ -65,6 +65,7 @@ const DropdownFacetWrapper = (props) => {
 
   const onChangeFilterType = (v) => {
     setLocalFilterType(v);
+    if (!eventEmitter) return;
     eventEmitter.emit('change:filterType', {
       field,
       type: v,
@@ -72,6 +73,8 @@ const DropdownFacetWrapper = (props) => {
   };
 
   React.useEffect(() => {
+    if (!eventEmitter) return;
+
     function changeFilterType(data) {
       if (data.field === field) {
         setLocalFilterType(data.type);
@@ -83,7 +86,7 @@ const DropdownFacetWrapper = (props) => {
     return () => {
       eventEmitter.off('change:filterType', changeFilterType);
     };
-  }, []);
+  }, [eventEmitter]);
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
