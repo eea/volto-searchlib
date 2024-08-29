@@ -15,7 +15,12 @@ import { getDefaultFilters } from '@eeacms/search/lib/utils';
  * @param {*} filterType
  */
 export function findFilterValues(filters, name, filterType) {
-  const filter = filters.find((f) => f.field === name && f.type === filterType);
+  const filter = filters.find((f) => {
+    if (filterType) {
+      return f.field === name && f.type === filterType;
+    }
+    return f.field === name;
+  });
   if (!filter) return [];
   return filter.values;
 }
