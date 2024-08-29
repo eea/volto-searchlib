@@ -1,4 +1,5 @@
 import React from 'react';
+import EventEmitter from 'events';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import {
   useSearchContext,
@@ -12,6 +13,8 @@ import FacetResolver from './FacetResolver';
 import SidebarFacetsList from './SidebarFacetsList';
 import { sidebarState, liveSearchState } from './state';
 import { useAtom } from 'jotai';
+
+const eventEmitter = new EventEmitter();
 
 const DropdownFacetsList = ({ defaultWrapper }) => {
   const { appConfig } = useAppConfig();
@@ -71,6 +74,7 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
             {...facetInfo}
             {...rawSearchContext}
             applySearch={applySearch}
+            eventEmitter={eventEmitter}
             wrapper="DropdownFacetWrapper"
           />
         ))}
@@ -115,6 +119,7 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
         facets={sidebarFacets}
         isLiveSearch={isLiveSearch}
         setIsLiveSearch={setIsLiveSearch}
+        eventEmitter={eventEmitter}
       />
       {/* {!isLiveSearch ? (
         <SearchContext.Provider value={sidebarSearchContext}>

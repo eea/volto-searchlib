@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
+import { markSelectedFacetValuesFromFilters } from '@eeacms/search/lib/search/helpers';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
@@ -13,6 +14,7 @@ function getFilterValueDisplay(filterValue) {
 }
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
+
   return (
     <div className="sui-multi-checkbox-facet">
       {sortedOptions.map((option) => {
@@ -53,17 +55,15 @@ const FacetOptions = (props) => {
 };
 
 const Select = ({ options, value, onChange, className }) => {
-  const [val, setVal] = React.useState(value);
   const handler = (e) => {
     onChange(e.target.value);
-    setVal(e.target.value);
   };
 
   return (
     <select
       onBlur={handler}
       onChange={handler}
-      value={val}
+      value={value}
       className={className}
     >
       {options.map((opt) => (
@@ -88,9 +88,12 @@ const MultiTermFacetViewComponent = (props) => {
     onSearch,
     // searchPlaceholder,
     onChangeFilterType,
+    facet,
+    filters,
     field,
     filterType = 'any',
   } = props;
+  const prevFilterType = React.useRef(filterType);
 
   const filterTypes = [
     { key: 2, text: 'Match any', value: 'any' },
@@ -110,7 +113,11 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
@@ -119,6 +126,17 @@ const MultiTermFacetViewComponent = (props) => {
     },
     field,
   );
+
+  useEffect(() => {
+    if (prevFilterType.current !== filterType) {
+      markSelectedFacetValuesFromFilters(facet, filters, field).data.forEach(
+        (fv) => {
+          if (fv.selected) onSelect(fv.value);
+        },
+      );
+      prevFilterType.current = filterType;
+    }
+  }, [field, facet, filters, filterType, onSelect]);
 
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
