@@ -118,14 +118,15 @@ export const FilterAsideContentView = (props) => {
               <Grid.Column>
                 <ResultsPerPageSelector />
               </Grid.Column>
-              <Grid.Column textAlign="right">
-                <DownloadButton appConfig={appConfig} />
-              </Grid.Column>
+              <Grid.Column textAlign="right"></Grid.Column>
             </Grid>
             <Grid centered>
               <Grid.Column textAlign="center">
                 <div className="prev-next-paging">
                   {!!showPaging && <Paging />}
+                </div>
+                <div>
+                  <DownloadButton appConfig={appConfig} />
                 </div>
               </Grid.Column>
             </Grid>
