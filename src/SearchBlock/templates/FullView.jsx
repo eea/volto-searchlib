@@ -56,8 +56,8 @@ function FullView(props) {
                           slotFills?.[blockId]
                             ? slotFills?.[blockId]
                             : mode === 'view'
-                            ? slotFills?.[fallbackId]
-                            : null
+                              ? slotFills?.[fallbackId]
+                              : null
                         }
                         onChangeSlotfill={onChangeSlotfill}
                         onDeleteSlotfill={onDeleteSlotfill}
@@ -94,12 +94,22 @@ function FullView(props) {
 FullView.schemaEnhancer = (props) => {
   // searchResultsSchemaEnhancer;
   const schema = searchResultsSchemaEnhancer(props);
-  schema.fieldsets[1].fields.push('showLandingPage');
+  schema.fieldsets[1].fields = [
+    ...schema.fieldsets[1].fields,
+    'showLandingPage',
+    'showDownloadButton',
+  ];
   schema.properties.showLandingPage = {
     title: 'Show intro statistics?',
     type: 'boolean',
     default: true,
     configPath: 'showLandingPage',
+  };
+  schema.properties.showDownloadButton = {
+    title: 'Show download button?',
+    type: 'boolean',
+    default: false,
+    configPath: 'showDownloadButton',
   };
   return schema;
 };
