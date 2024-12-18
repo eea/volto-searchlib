@@ -2,15 +2,17 @@ import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { withSearch } from '@elastic/react-search-ui';
 
-const DownloadButton = (props) => {
-  const { searchTerm, filters } = props.searchContext;
+const DownloadButton = ({ searchContext, appConfig }) => {
+  const { searchTerm, filters } = searchContext;
   const {
     host = 'http://0.0.0.0:9200',
-    elastic_index,
+    // elastic_index,
     showDownloadButton,
-  } = props.appConfig;
+    appName,
+  } = appConfig;
   const es_url = new URL(host);
-  es_url.pathname = `${elastic_index}/_download`;
+  // TODO: this hardcodes the _es router
+  es_url.pathname = `_es/${appName}/_download`;
   return showDownloadButton ? (
     <Form action={es_url.href} method="post">
       <input

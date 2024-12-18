@@ -6,6 +6,7 @@ const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
 const download = (es_config, appConfig, req, res) => {
+  // console.log('appConfig', appConfig);
   const es_url = new URL(es_config);
   const es_path_parts = es_url.pathname.split('/');
 
