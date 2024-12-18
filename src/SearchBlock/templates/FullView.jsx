@@ -56,8 +56,8 @@ function FullView(props) {
                           slotFills?.[blockId]
                             ? slotFills?.[blockId]
                             : mode === 'view'
-                              ? slotFills?.[fallbackId]
-                              : null
+                            ? slotFills?.[fallbackId]
+                            : null
                         }
                         onChangeSlotfill={onChangeSlotfill}
                         onDeleteSlotfill={onDeleteSlotfill}
