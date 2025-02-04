@@ -6,6 +6,19 @@ import { markSelectedFacetValuesFromFilters } from '@eeacms/search/lib/search/he
 import { useSort } from '@eeacms/search/lib/hocs';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  matchAny: {
+    id: 'Match any',
+    defaultMessage: 'Match any',
+  },
+  matchAll: {
+    id: 'Match all',
+    defaultMessage: 'Match all',
+  },
+});
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -95,9 +108,18 @@ const MultiTermFacetViewComponent = (props) => {
   } = props;
   const prevFilterType = React.useRef(filterType);
 
+  const intl = useIntl();
   const filterTypes = [
-    { key: 2, text: 'Match any', value: 'any' },
-    { key: 1, text: 'Match all', value: 'all' },
+    {
+      key: 2,
+      text: intl.formatMessage(messages.matchAny),
+      value: 'any',
+    },
+    {
+      key: 1,
+      text: intl.formatMessage(messages.matchAll),
+      value: 'all',
+    },
   ];
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
@@ -113,11 +135,7 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const {
-    sortedValues: sortedOptions,
-    toggleSort,
-    sorting,
-  } = useSort(
+  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
     ['value', 'count'],
     {

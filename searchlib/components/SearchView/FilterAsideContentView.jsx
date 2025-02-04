@@ -32,7 +32,7 @@ const messages = defineMessages({
     id: 'Title z-a',
     defaultMessage: 'Title z-a',
   },
-  Newest1: {
+  Newest: {
     id: 'Newest',
     defaultMessage: 'Newest',
   },
