@@ -11,57 +11,113 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr ""
+
 #. Default: "Choices"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
 msgstr ""
 
 #. Default: "Close"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
 msgstr ""
 
 #. Default: "Default"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
 msgstr ""
 
 #. Default: "Description"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
 msgstr ""
 
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr ""
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr ""
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr ""
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr ""
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr ""
+
 #. Default: "No options"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
 msgstr ""
 
 #. Default: "No value"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
 msgstr ""
 
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr ""
+
 #. Default: "Required"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
 msgstr ""
 
 #. Default: "Select…"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
 msgstr ""
 
 #. Default: "Short Name"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr ""
 
 #. Default: "Title"
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
 msgstr ""
 
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr ""
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr ""
+
 #. Default: "Used for programmatic access to the fieldset."
-#: SearchBlock/widgets/SelectWidget
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
+msgstr ""
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "clear all"
 msgstr ""

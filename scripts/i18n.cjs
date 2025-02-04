@@ -64,7 +64,7 @@ function getMessages() {
         // If so, we should do it in the config object or somewhere else
         // We also ignore the addons folder since they are populated using
         // their own locales files and taken care separatedly in this script
-        glob('build/messages/src/**/*.json', {
+        glob('build/messages/**/*.json', {
           ignore: [
             'build/messages/src/customizations/**',
             'build/messages/src/addons/**',
@@ -73,7 +73,7 @@ function getMessages() {
         (filename) =>
           map(JSON.parse(fs.readFileSync(filename, 'utf8')), (message) => ({
             ...message,
-            filename: filename.match(/build\/messages\/src\/(.*).json$/)[1],
+            filename: filename.match(/build\/messages\/(.*).json$/)[1],
           })),
       ),
     ),
