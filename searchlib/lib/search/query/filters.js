@@ -36,6 +36,7 @@ export function buildRequestFilter(filters, config, options = {}) {
 
   // TODO: includeDefaultValues is not actually used anywhere. Instead, it's applied from
   // getDefaultFilters in SearchApp
+  // TODO: tibi implement facet.default as function
   const configuredFilters = [
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) => {
       let fc = facetConfig.buildFilter(
@@ -68,7 +69,7 @@ export function buildRequestFilter(filters, config, options = {}) {
     .map((fname) => getTermFilter(_fieldToFilterValueMap[fname]));
 
   const res = [...configuredFilters, ...requestFilters];
-  console.log('res', { requestFilters, _configuredFacets });
+  // console.log('res', { requestFilters, _configuredFacets });
 
   return res;
 }
@@ -134,7 +135,8 @@ export function getRangeFilter(filter) {
   };
 }
 
-const splitter_re = /(?<now>now)\s?(?<op>[\+|\-])\s?(?<count>\d+)(?<quantifier>\w)/;
+const splitter_re =
+  /(?<now>now)\s?(?<op>[\+|\-])\s?(?<count>\d+)(?<quantifier>\w)/;
 
 const DAY = 86400000; // 1000 * 60 * 60 * 24
 
@@ -150,12 +152,12 @@ export function getDateRangeFilter(filter, filterConfig) {
     quantifier === 'd'
       ? (x) => x * 1
       : quantifier === 'w'
-      ? (x) => x * 7
-      : quantifier === 'm'
-      ? (x) => x * 30
-      : quantifier === 'y'
-      ? (x) => x * 365
-      : (x) => x * 1;
+        ? (x) => x * 7
+        : quantifier === 'm'
+          ? (x) => x * 30
+          : quantifier === 'y'
+            ? (x) => x * 365
+            : (x) => x * 1;
 
   const toDate = (name) => {
     if (!name) return {};
