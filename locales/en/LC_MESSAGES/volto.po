@@ -11,57 +11,57 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Choices"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Choices
 msgid "Choices"
 msgstr ""
 
+#. Default: "Close"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Close
 msgid "Close"
 msgstr ""
 
+#. Default: "Default"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Default
 msgid "Default"
 msgstr ""
 
+#. Default: "Description"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Description
 msgid "Description"
 msgstr ""
 
+#. Default: "No options"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: No options
 msgid "No options"
 msgstr ""
 
+#. Default: "No value"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: No value
 msgid "No value"
 msgstr ""
 
+#. Default: "Required"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Required
 msgid "Required"
 msgstr ""
 
+#. Default: "Select…"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Select…
 msgid "Select…"
 msgstr ""
 
+#. Default: "Short Name"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Short Name
 msgid "Short Name"
 msgstr ""
 
+#. Default: "Title"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Title
 msgid "Title"
 msgstr ""
 
+#. Default: "Used for programmatic access to the fieldset."
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Used for programmatic access to the fieldset.
 msgid "Used for programmatic access to the fieldset."
 msgstr ""

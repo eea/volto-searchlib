@@ -1,69 +1,69 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2023-08-29T17:43:33.458Z\n"
+"POT-Creation-Date: 2025-02-04T08:50:53.252Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: volto\n"
 
+#. Default: "Choices"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Choices
 msgid "Choices"
 msgstr ""
 
+#. Default: "Close"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Close
 msgid "Close"
 msgstr ""
 
+#. Default: "Default"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Default
 msgid "Default"
 msgstr ""
 
+#. Default: "Description"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Description
 msgid "Description"
 msgstr ""
 
+#. Default: "No options"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: No options
 msgid "No options"
 msgstr ""
 
+#. Default: "No value"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: No value
 msgid "No value"
 msgstr ""
 
+#. Default: "Required"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Required
 msgid "Required"
 msgstr ""
 
+#. Default: "Select…"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Select…
 msgid "Select…"
 msgstr ""
 
+#. Default: "Short Name"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Short Name
 msgid "Short Name"
 msgstr ""
 
+#. Default: "Title"
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Title
 msgid "Title"
 msgstr ""
 
+#. Default: "Used for programmatic access to the fieldset."
 #: SearchBlock/widgets/SelectWidget
-# defaultMessage: Used for programmatic access to the fieldset.
 msgid "Used for programmatic access to the fieldset."
 msgstr ""
