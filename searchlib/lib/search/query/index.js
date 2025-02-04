@@ -56,6 +56,7 @@ export default function buildRequest(state, config, includeAggs = null) {
     sortDirection,
     sortField,
   } = state;
+  console.log('state', state);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildFullTextMatch(searchTerm, filters, config);
@@ -110,6 +111,8 @@ export default function buildRequest(state, config, includeAggs = null) {
       ...(config.debugQuery ? { explain: true } : {}),
     },
   );
+
+  // console.log('body', JSON.stringify(body, null, 2));
 
   // body.params.query = searchTerm;
   // body.params.custom_query = body.query;

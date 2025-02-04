@@ -34,6 +34,8 @@ export function buildRequestFilter(filters, config, options = {}) {
     }),
   );
 
+  // TODO: includeDefaultValues is not actually used anywhere. Instead, it's applied from
+  // getDefaultFilters in SearchApp
   const configuredFilters = [
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) => {
       let fc = facetConfig.buildFilter(
@@ -52,7 +54,7 @@ export function buildRequestFilter(filters, config, options = {}) {
 
       return fc;
     }),
-    ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
+    ...config.permanentFilters?.map((f) => (isFunction(f) ? f(filters) : f)),
   ].filter((f) => !!f);
 
   const requestFilters = Object.keys(_fieldToFilterValueMap)
@@ -66,7 +68,7 @@ export function buildRequestFilter(filters, config, options = {}) {
     .map((fname) => getTermFilter(_fieldToFilterValueMap[fname]));
 
   const res = [...configuredFilters, ...requestFilters];
-  // console.log('res', { requestFilters, _configuredFacets });
+  console.log('res', { requestFilters, _configuredFacets });
 
   return res;
 }

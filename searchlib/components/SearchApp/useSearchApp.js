@@ -123,6 +123,8 @@ export default function useSearchApp(props) {
     ],
   );
 
+  console.log('elasticConfig', elasticConfig);
+
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
   const [driverInstance, setDriver] = React.useState(null);
