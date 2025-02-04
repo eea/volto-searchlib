@@ -7,6 +7,7 @@
 import React from 'react';
 import { markSelectedFacetValuesFromFilters } from '@eeacms/search/lib/search/helpers';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useIntl } from 'react-intl';
 
 export const accentFold = (str = '') =>
   str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -62,11 +63,14 @@ const FacetContainer = (props) => {
   }
 
   const View = view; //  || MultiCheckboxFacet
-
+  const intl = useIntl();
+  const labelPrint =
+    typeof label === 'object' ? intl.formatMessage(label) : label;
   return (
     <View
       className={className}
-      label={label}
+      label={labelPrint}
+      dataId="dataId"
       onRemove={(value) => {
         removeFilter(field, value, filterType);
         onRemove && onRemove(field, value, filterType);

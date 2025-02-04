@@ -1,8 +1,8 @@
 import buildStateFacets from './facets';
 import buildResults from './results';
 
-export buildStateFacets from './facets';
-export buildResults from './results';
+export { default as buildStateFacets } from './facets';
+export { default as buildResults } from './results';
 
 /*
   Converts an Elasticsearch response to new application state

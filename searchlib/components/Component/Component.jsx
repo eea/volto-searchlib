@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useIntl } from 'react-intl';
 
 /**
  * A component that can autommatically look up its implementation from the
@@ -15,6 +16,11 @@ const Component = ({ name, factoryName, ...rest }) => {
     console.warn(`Component not found in registry: ${factoryName}`);
     return null;
   }
+  const intl = useIntl();
+  rest.label =
+    typeof rest.label === 'object'
+      ? intl.formatMessage(rest.label)
+      : rest.label;
 
   return <Component {...rest} />;
 };

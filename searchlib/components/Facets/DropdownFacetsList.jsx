@@ -14,6 +14,27 @@ import SidebarFacetsList from './SidebarFacetsList';
 import { sidebarState, liveSearchState } from './state';
 import { useAtom } from 'jotai';
 
+import { defineMessages, FormattedMessage } from 'react-intl';
+
+const messages = defineMessages({
+  sortTitleAZ: {
+    id: 'Title a-z',
+    defaultMessage: 'Title a-z',
+  },
+  sortTitleZA: {
+    id: 'Title z-a',
+    defaultMessage: 'Title z-a',
+  },
+  sortNewest: {
+    id: 'Newest',
+    defaultMessage: 'Newest',
+  },
+  sortOldest: {
+    id: 'Oldest',
+    defaultMessage: 'Oldest',
+  },
+});
+
 const eventEmitter = new EventEmitter();
 
 const DropdownFacetsList = ({ defaultWrapper }) => {
@@ -93,7 +114,13 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
               }}
               // disabled={isLiveSearch}
             >
-              <span className="facet-title">+ More filters</span>
+              <span className="facet-title">
+                +{' '}
+                <FormattedMessage
+                  id="More filters"
+                  defaultMessage="More filters"
+                />
+              </span>
             </Button>
           </div>
         )}

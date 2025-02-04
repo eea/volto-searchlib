@@ -139,10 +139,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
 
   if (appConfig) {
     const { resultViews } = appConfig;
+    // debugger;
 
     const availableFacets = appConfig.facets?.map(({ field, label }) => [
       field,
-      label?.trim() ? label : field,
+      typeof label === 'object' ? label.id : label?.trim() ? label : field,
     ]);
 
     schema.properties.availableFacets.choices = availableFacets;

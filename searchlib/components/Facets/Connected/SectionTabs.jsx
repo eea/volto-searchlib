@@ -5,6 +5,8 @@
 import React from 'react';
 import { Menu, Ref } from 'semantic-ui-react'; // Dropdown
 import { Icon } from '@eeacms/search/components';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import {
   // useWindowDimensions,
@@ -13,6 +15,13 @@ import {
 } from '@eeacms/search/lib/hocs';
 
 const cmp = (a, b) => (a > b ? 1 : a === b ? 0 : a < b ? -1 : 0);
+
+const messages = defineMessages({
+  all: {
+    id: 'All',
+    defaultMessage: 'All',
+  },
+});
 
 const SectionTabs = (props) => {
   // const { width } = useWindowDimensions();
@@ -62,6 +71,7 @@ const SectionTabs = (props) => {
   sections.sort((s1, s2) =>
     cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
   );
+  const intl = useIntl();
 
   return (
     <div>
@@ -86,7 +96,7 @@ const SectionTabs = (props) => {
               }
             }}
           >
-            {`All (${allCount})`}
+            {`${intl.formatMessage(messages.all)} (${allCount})`}
           </Menu.Item>
           {sections.map(({ value, count }) => (
             <Menu.Item
