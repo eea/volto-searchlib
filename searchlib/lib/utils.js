@@ -126,7 +126,7 @@ export const normalizeFilters = (filters) =>
  * Compute the default filters, to be used as initial empty state
  */
 export function getDefaultFilters(appConfig, options) {
-  const valueObj = getDefaultFilterValues(appConfig.facets);
+  const valueObj = getDefaultFilterValues(appConfig.facets, options);
   return Object.keys(valueObj).map((field) => ({ field, ...valueObj[field] }));
   // //
   // //   Array.from((valueObj || {}).values());

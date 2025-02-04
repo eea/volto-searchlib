@@ -56,7 +56,7 @@ export default function buildRequest(state, config, includeAggs = null) {
     sortDirection,
     sortField,
   } = state;
-  console.log('state', state);
+  // console.log('state', state);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildFullTextMatch(searchTerm, filters, config);
