@@ -14,114 +14,110 @@ msgstr ""
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-<<<<<<< HEAD
-msgstr ""
-=======
-msgstr "Alle"
->>>>>>> a1653db (Refs #283012 - add translations)
+msgstr "Всички"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr "Auswahlmöglichkeiten"
+msgstr "Избори"
 
 #. Default: "Close"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr "Schließen"
+msgstr "затвори"
 
 #. Default: "Default"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr "Standard"
+msgstr "По подразбиране"
 
 #. Default: "Description"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "Описание"
 
 #. Default: "Filters"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "Filters"
-msgstr "Filter"
+msgstr "Филтри"
 
 #. Default: "Match all"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match all"
-msgstr "Passen Sie alle zusammen"
+msgstr "Съвпадение на всички"
 
 #. Default: "Match any"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match any"
-msgstr "Passen Sie zu jedem"
+msgstr "Съпоставете всяко"
 
 #. Default: "More filters"
 #: searchlib/components/Facets/DropdownFacetsList
 msgid "More filters"
-msgstr "Weitere Filter"
+msgstr "Още филтри"
 
 #. Default: "Newest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Newest"
-msgstr "Neueste"
+msgstr "Най-новите"
 
 #. Default: "No options"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr "Keine Optionen"
+msgstr "Без опции"
 
 #. Default: "No value"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr "Kein Wert"
+msgstr "Без стойност"
 
 #. Default: "Oldest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Oldest"
-msgstr "Älteste"
+msgstr "Най-старият"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Задължително"
 
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Изберете..."
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr "Kurzname"
+msgstr "Кратко име"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr "Titel"
+msgstr "Заглавие"
 
 #. Default: "Title a-z"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title a-z"
-msgstr "Titel a-z"
+msgstr "Заглавие a-z"
 
 #. Default: "Title z-a"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
-msgstr "Titel z-a"
+msgstr "Заглавие z-a"
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
+msgstr "Използва се за програмен достъп до полетата."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
-msgstr "alles klar"
+msgstr "изчисти всичко"

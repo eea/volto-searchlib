@@ -14,114 +14,110 @@ msgstr ""
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-<<<<<<< HEAD
-msgstr ""
-=======
-msgstr "Alle"
->>>>>>> a1653db (Refs #283012 - add translations)
+msgstr "Gach"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr "Auswahlmöglichkeiten"
+msgstr "Roghanna"
 
 #. Default: "Close"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr "Schließen"
+msgstr "Dún"
 
 #. Default: "Default"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr "Standard"
+msgstr "Réamhshocrú"
 
 #. Default: "Description"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "Cur síos"
 
 #. Default: "Filters"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "Filters"
-msgstr "Filter"
+msgstr "Scagairí"
 
 #. Default: "Match all"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match all"
-msgstr "Passen Sie alle zusammen"
+msgstr "Meaitseáil go léir"
 
 #. Default: "Match any"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match any"
-msgstr "Passen Sie zu jedem"
+msgstr "Meaitseáil ar bith"
 
 #. Default: "More filters"
 #: searchlib/components/Facets/DropdownFacetsList
 msgid "More filters"
-msgstr "Weitere Filter"
+msgstr "Tuilleadh scagairí"
 
 #. Default: "Newest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Newest"
-msgstr "Neueste"
+msgstr "is nuaí"
 
 #. Default: "No options"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr "Keine Optionen"
+msgstr "Gan roghanna"
 
 #. Default: "No value"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr "Kein Wert"
+msgstr "Gan luach"
 
 #. Default: "Oldest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Oldest"
-msgstr "Älteste"
+msgstr "Is sine"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Ag teastáil"
 
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Roghnaigh…"
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr "Kurzname"
+msgstr "Ainm Gearr"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr "Titel"
+msgstr "Teideal"
 
 #. Default: "Title a-z"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title a-z"
-msgstr "Titel a-z"
+msgstr "Teideal a-z"
 
 #. Default: "Title z-a"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
-msgstr "Titel z-a"
+msgstr "Teideal z-a"
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
+msgstr "Úsáidtear é le haghaidh rochtain ríomhchláraithe ar an réimse réimse."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
-msgstr "alles klar"
+msgstr "soiléir ar fad"

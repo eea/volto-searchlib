@@ -14,114 +14,110 @@ msgstr ""
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-<<<<<<< HEAD
-msgstr ""
-=======
-msgstr "Alle"
->>>>>>> a1653db (Refs #283012 - add translations)
+msgstr "Sve"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr "Auswahlmöglichkeiten"
+msgstr "Izbori"
 
 #. Default: "Close"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr "Schließen"
+msgstr "Zatvoriti"
 
 #. Default: "Default"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr "Standard"
+msgstr "Zadano"
 
 #. Default: "Description"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "Opis"
 
 #. Default: "Filters"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "Filters"
-msgstr "Filter"
+msgstr "Filteri"
 
 #. Default: "Match all"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match all"
-msgstr "Passen Sie alle zusammen"
+msgstr "Uskladi sve"
 
 #. Default: "Match any"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match any"
-msgstr "Passen Sie zu jedem"
+msgstr "Podudaranje bilo kojeg"
 
 #. Default: "More filters"
 #: searchlib/components/Facets/DropdownFacetsList
 msgid "More filters"
-msgstr "Weitere Filter"
+msgstr "Više filtera"
 
 #. Default: "Newest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Newest"
-msgstr "Neueste"
+msgstr "Najnoviji"
 
 #. Default: "No options"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr "Keine Optionen"
+msgstr "Bez mogućnosti"
 
 #. Default: "No value"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr "Kein Wert"
+msgstr "Bez vrijednosti"
 
 #. Default: "Oldest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Oldest"
-msgstr "Älteste"
+msgstr "Najstariji"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Potreban"
 
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Odaberite…"
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr "Kurzname"
+msgstr "Kratko ime"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr "Titel"
+msgstr "Titula"
 
 #. Default: "Title a-z"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title a-z"
-msgstr "Titel a-z"
+msgstr "Naslov a-z"
 
 #. Default: "Title z-a"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
-msgstr "Titel z-a"
+msgstr "Naslov z-a"
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
+msgstr "Koristi se za programski pristup skupu polja."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
-msgstr "alles klar"
+msgstr "jasno sve"

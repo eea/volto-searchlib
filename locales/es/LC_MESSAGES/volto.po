@@ -14,114 +14,110 @@ msgstr ""
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-<<<<<<< HEAD
-msgstr ""
-=======
-msgstr "Alle"
->>>>>>> a1653db (Refs #283012 - add translations)
+msgstr "Todo"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr "Auswahlmöglichkeiten"
+msgstr "Opciones"
 
 #. Default: "Close"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr "Schließen"
+msgstr "Cerca"
 
 #. Default: "Default"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr "Standard"
+msgstr "Por defecto"
 
 #. Default: "Description"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "Descripción"
 
 #. Default: "Filters"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "Filters"
-msgstr "Filter"
+msgstr "Filtros"
 
 #. Default: "Match all"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match all"
-msgstr "Passen Sie alle zusammen"
+msgstr "Combinar todos"
 
 #. Default: "Match any"
 #: searchlib/components/Facets/lib/withMultiTypeFilter
 #: searchlib/components/Facets/Unconnected/MultiTermFacet
 msgid "Match any"
-msgstr "Passen Sie zu jedem"
+msgstr "Coincide con cualquier"
 
 #. Default: "More filters"
 #: searchlib/components/Facets/DropdownFacetsList
 msgid "More filters"
-msgstr "Weitere Filter"
+msgstr "Más filtros"
 
 #. Default: "Newest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Newest"
-msgstr "Neueste"
+msgstr "El más nuevo"
 
 #. Default: "No options"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr "Keine Optionen"
+msgstr "Sin opciones"
 
 #. Default: "No value"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr "Kein Wert"
+msgstr "Sin valor"
 
 #. Default: "Oldest"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Oldest"
-msgstr "Älteste"
+msgstr "más antiguo"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Requerido"
 
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Seleccionar…"
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr "Kurzname"
+msgstr "Nombre corto"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr "Titel"
+msgstr "Título"
 
 #. Default: "Title a-z"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title a-z"
-msgstr "Titel a-z"
+msgstr "Título a-z"
 
 #. Default: "Title z-a"
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
-msgstr "Titel z-a"
+msgstr "Título z-a"
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
+msgstr "Se utiliza para el acceso programático al conjunto de campos."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
-msgstr "alles klar"
+msgstr "borrar todo"
