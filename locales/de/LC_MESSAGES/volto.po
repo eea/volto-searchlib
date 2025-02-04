@@ -14,11 +14,7 @@ msgstr ""
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-<<<<<<< HEAD
 msgstr ""
-=======
-msgstr "Alle"
->>>>>>> a1653db (Refs #283012 - add translations)
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
