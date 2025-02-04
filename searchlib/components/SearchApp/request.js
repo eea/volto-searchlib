@@ -25,16 +25,21 @@ export function resetSearch(resetState) {
   driver._updateSearchResults(state);
 }
 
-export function clearFilters(except = []) {
+export function clearFilters(except = [], options) {
+  // TODO: tibi add options
   const { setFilter } = this.driver;
 
   this.driver.clearFilters(except);
   this.appConfig.facets
     .filter((f) => !!f.default)
     .forEach((facet) => {
-      facet.default.values.forEach((value) =>
-        setFilter(facet.field, value, facet.default.type || 'any'),
-      );
+      const fdefault =
+        typeof facet.default === 'function'
+          ? facet.default(options)
+          : facet.default;
+      fdefault.values.forEach((value) => {
+        setFilter(facet.field, value, fdefault.type || 'any');
+      });
     });
 }
 

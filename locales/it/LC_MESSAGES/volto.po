@@ -11,57 +11,113 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Choices
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr ""
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Close
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Default
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Description
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No options
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr ""
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr ""
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr ""
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr ""
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr ""
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No value
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Required
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr ""
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Select…
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Short Name
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Title
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
 msgstr ""
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Used for programmatic access to the fieldset.
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr ""
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr ""
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
+msgstr ""
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "clear all"
 msgstr ""

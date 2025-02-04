@@ -76,10 +76,10 @@ export default function useSearchApp(props) {
     [appConfig, paramOnSearch, setIsLoading],
   );
 
-  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
-    appConfig,
-    paramOnAutocomplete,
-  ]);
+  const onAutocomplete = React.useMemo(
+    () => paramOnAutocomplete(appConfig),
+    [appConfig, paramOnAutocomplete],
+  );
 
   const locationSearchTerm = React.useMemo(
     () =>
@@ -88,6 +88,12 @@ export default function useSearchApp(props) {
         : null,
     [],
   );
+
+  // we don't want to track the URL if our search app is configured as
+  // a simple separate app (for ex. search input or landing page that
+  // trampolines to another instance)
+  const trackUrlState =
+    mode === 'edit' ? false : appConfig.url ? false : appConfig.trackUrlState;
 
   const elasticConfig = React.useMemo(
     () => ({
@@ -103,15 +109,7 @@ export default function useSearchApp(props) {
           : {}),
         ...(initialState || {}),
       },
-      // we don't want to track the URL if our search app is configured as
-      // a simple separate app (for ex. search input or landing page that
-      // trampolines to another instance)
-      trackUrlState:
-        mode === 'edit'
-          ? false
-          : appConfig.url
-          ? false
-          : appConfig.trackUrlState,
+      trackUrlState,
     }),
     [
       appConfig,
@@ -119,9 +117,11 @@ export default function useSearchApp(props) {
       onSearch,
       locationSearchTerm,
       initialState,
-      mode,
+      trackUrlState,
     ],
   );
+
+  // console.log('elasticConfig', elasticConfig);
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 

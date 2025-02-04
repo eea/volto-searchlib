@@ -132,7 +132,8 @@ export function mergeFilters(filters1, filters2) {
   }, filters1);
 }
 
-export function resetFiltersToDefault(searchContext, appConfig) {
+// TODO: tibi pass down options
+export function resetFiltersToDefault(searchContext, appConfig, options) {
   const { setFilter, clearFilters } = searchContext;
 
   clearFilters();
@@ -140,7 +141,11 @@ export function resetFiltersToDefault(searchContext, appConfig) {
   appConfig.facets
     .filter((f) => !!f.default)
     .forEach((facet) => {
-      facet.default.values.forEach((value) =>
+      const fdefault =
+        typeof facet.default === 'function'
+          ? facet.default(options)
+          : facet.default;
+      fdefault.values.forEach((value) =>
         setFilter(facet.field, value, facet.default.type || 'any'),
       );
     });
@@ -184,16 +189,23 @@ export function hasNonDefaultFilters(filters, appConfig) {
 /**
  * Returns true if the filter value object (like {field, type, value}) is default
  */
-export function isFilterValueDefaultValue(filter, appConfig) {
+export function isFilterValueDefaultValue(filter, appConfig, options) {
+  // TODO: tibi pass down options
   const field = filter.field;
 
   const defaultFiltersList = appConfig.facets
     .filter((f) => f.field === field && !!(f.default ?? false))
-    .map((facet) => ({
-      field: facet.field,
-      values: facet.default.values.sort(),
-      type: facet.default.type || 'any',
-    }));
+    .map((facet) => {
+      const fdefault =
+        typeof facet.default === 'function'
+          ? facet.default(options)
+          : facet.default;
+      return {
+        field: facet.field,
+        values: fdefault.values.sort(),
+        type: fdefault.type || 'any',
+      };
+    });
   const defaultFilterValue = defaultFiltersList[0];
 
   return equal(filter, defaultFilterValue);
