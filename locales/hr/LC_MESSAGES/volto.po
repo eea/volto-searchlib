@@ -80,6 +80,11 @@ msgstr "Bez vrijednosti"
 msgid "Oldest"
 msgstr "Najstariji"
 
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
@@ -121,3 +126,18 @@ msgstr "Koristi se za programski pristup skupu polja."
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
 msgstr "jasno sve"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr ""
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr ""
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr ""

@@ -80,6 +80,11 @@ msgstr "Ei mingit väärtust"
 msgid "Oldest"
 msgstr "Vanim"
 
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
@@ -121,3 +126,18 @@ msgstr "Kasutatakse programmiliseks juurdepääsuks väljakomplektile."
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
 msgstr "tühjenda kõik"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr ""
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr ""
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr ""

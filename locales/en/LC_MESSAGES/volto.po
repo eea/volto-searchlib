@@ -80,6 +80,11 @@ msgstr ""
 msgid "Oldest"
 msgstr ""
 
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Or search by translated"
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
@@ -121,3 +126,18 @@ msgstr ""
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
 msgstr ""
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "item translated"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "items translated"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Show all translated {total} documents translated"

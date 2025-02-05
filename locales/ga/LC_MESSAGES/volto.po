@@ -80,6 +80,11 @@ msgstr "Gan luach"
 msgid "Oldest"
 msgstr "Is sine"
 
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
@@ -121,3 +126,18 @@ msgstr "Úsáidtear é le haghaidh rochtain ríomhchláraithe ar an réimse réi
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
 msgstr "soiléir ar fad"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr ""
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr ""
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr ""
