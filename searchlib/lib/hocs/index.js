@@ -10,3 +10,4 @@ export { default as useOutsideClick } from './useOutsideClick';
 export { default as usePrevious } from './usePrevious';
 export { default as useProxiedSearchContext } from './useProxiedSearchContext';
 export { default as useSearchDriver } from './useSearchDriver';
+export { default as withLanguage } from './withLanguage';

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 /**
  * A hoc that grants multi-type faceting (all/any)
@@ -7,12 +9,24 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
  * TODO: is this actually used?
  */
 
+const messages = defineMessages({
+  matchAny: {
+    id: 'Match any',
+    defaultMessage: 'Match any',
+  },
+  matchAll: {
+    id: 'Match all',
+    defaultMessage: 'Match all',
+  },
+});
+
 const withMultiTypeFilter = (options = {}) => {
   const { defaultType = 'any' } = options;
+  const intl = useIntl();
 
   const filterTypes = [
-    { key: 2, text: 'Match any', value: 'any' },
-    { key: 1, text: 'Match all', value: 'all' },
+    { key: 2, text: intl.formatMessage(messages.matchAny), value: 'any' },
+    { key: 1, text: intl.formatMessage(messages.matchAll), value: 'all' },
   ];
 
   const decorator = (WrappedComponent) => {

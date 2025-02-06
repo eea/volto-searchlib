@@ -1,7 +1,11 @@
 import React from 'react';
 import Filter from './Filter';
 import { Divider, Segment, Accordion, Button, Icon } from 'semantic-ui-react';
-import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import {
+  useSearchContext,
+  useAppConfig,
+  withLanguage,
+} from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { isLandingPageAtom } from './../SearchView/state';
@@ -15,6 +19,8 @@ const InlineFilterList = (props) => {
   const { appConfig } = useAppConfig();
   const { facets } = appConfig;
   const hideFilters = true; // TODO Show/Hide filters + Reset + Sort + Display - in the same component
+  const { language } = props;
+  const options = { language };
 
   return !isLandingPage ? (
     <div className="inline-filter-list">
@@ -55,10 +61,14 @@ const InlineFilterList = (props) => {
 
                   facets.forEach((facet) => {
                     if (facet.default) {
+                      const fdefault =
+                        typeof facet.default === 'function'
+                          ? facet.default(options)
+                          : facet.default;
                       setFilter(
                         facet.field,
-                        facet.default.values,
-                        facet.default.type || 'any',
+                        fdefault.values,
+                        fdefault.type || 'any',
                       );
                     }
                   });
@@ -110,4 +120,4 @@ const InlineFilterList = (props) => {
   ) : null;
 };
 
-export default InlineFilterList;
+export default withLanguage(InlineFilterList);

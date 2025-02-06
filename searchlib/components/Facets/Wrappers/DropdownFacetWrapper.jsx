@@ -13,6 +13,7 @@ import { Dimmer, Modal, Button } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
 import cx from 'classnames';
+import { useIntl } from 'react-intl';
 
 import ActiveFilters from '../ActiveFilters';
 
@@ -36,8 +37,10 @@ const DropdownFacetWrapper = (props) => {
   } = props;
   const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
-  const { searchContext: facetSearchContext, applySearch } =
-    useProxiedSearchContext(rawSearchContext);
+  const {
+    searchContext: facetSearchContext,
+    applySearch,
+  } = useProxiedSearchContext(rawSearchContext);
   const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
@@ -55,8 +58,9 @@ const DropdownFacetWrapper = (props) => {
 
   const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-  const [localFilterType, setLocalFilterType] =
-    React.useState(defaultTypeValue);
+  const [localFilterType, setLocalFilterType] = React.useState(
+    defaultTypeValue,
+  );
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();
@@ -93,6 +97,10 @@ const DropdownFacetWrapper = (props) => {
   if (facets[field] === undefined) return null;
   if (facet?.authOnly && token === undefined) return null;
 
+  const intl = useIntl();
+  const labelPrint =
+    typeof label === 'object' ? intl.formatMessage(label) : label;
+
   return (
     <>
       <div className="dropdown-facet">
@@ -104,7 +112,7 @@ const DropdownFacetWrapper = (props) => {
             open={isOpen}
             trigger={
               <span className="facet-title">
-                {label ? <>{label} </> : <>{title} </>}
+                {labelPrint ? <>{labelPrint} </> : <>{title} </>}
                 {filtersCount.length > 0 && (
                   <span className="count">({filtersCount})</span>
                 )}
@@ -174,7 +182,7 @@ const DropdownFacetWrapper = (props) => {
               }}
             >
               <span className="facet-title">
-                {label ? <>{label} </> : <>{title} </>}
+                {labelPrint ? <>{labelPrint} </> : <>{title} </>}
                 {filtersCount.length > 0 && (
                   <span className="count">({filtersCount})</span>
                 )}

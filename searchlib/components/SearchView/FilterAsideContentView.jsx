@@ -20,6 +20,28 @@ import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { loadingFamily } from '@eeacms/search/state';
 import { useAtomValue } from 'jotai';
 
+import { useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
+
+const messages = defineMessages({
+  'Title a-z': {
+    id: 'Title a-z',
+    defaultMessage: 'Title a-z',
+  },
+  'Title z-a': {
+    id: 'Title z-a',
+    defaultMessage: 'Title z-a',
+  },
+  Newest: {
+    id: 'Newest',
+    defaultMessage: 'Newest',
+  },
+  Oldest: {
+    id: 'Oldest',
+    defaultMessage: 'Oldest',
+  },
+});
+
 export const FilterAsideContentView = (props) => {
   // console.log('redraw FilterAsideContentView');
   const { appConfig, children, current, wasInteracted } = props;
@@ -72,6 +94,20 @@ export const FilterAsideContentView = (props) => {
 
   const { showFilters, showFacets, showClusters, showSorting } = appConfig;
   const showPaging = appConfig.showLandingPage === false ? true : wasInteracted;
+  const intl = useIntl();
+  const sortOptions2 = sortOptions.map((item) => {
+    if (!(item.name instanceof String) && item?.name?.id) {
+      if (item?.name?.id in messages) {
+        // console.log('sortOptions2', item?.name?.id);
+        item.name = intl.formatMessage(messages[item.name.id]);
+      } else {
+        item.name = item.name.id;
+      }
+    }
+    return item;
+  });
+  // console.log('sortOptions3', sortOptions, sortOptions2);
+  // console.log('props', props);
 
   return (
     <>
@@ -92,7 +128,7 @@ export const FilterAsideContentView = (props) => {
                   <Component factoryName="SecondaryFacetsList" {...props} />
                   <Sorting
                     label={''}
-                    sortOptions={sortOptions}
+                    sortOptions={sortOptions2}
                     view={SortingDropdownWithLabel}
                   />
                   {/* <ViewSelectorWithLabel */}

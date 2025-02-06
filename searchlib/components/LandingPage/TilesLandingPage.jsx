@@ -9,6 +9,7 @@ import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { customOrder } from '@eeacms/search/lib/utils';
 import { useLandingPageData, useLandingPageRequest } from './state';
 import { Icon, Term } from '@eeacms/search/components';
+import { withLanguage } from '@eeacms/search/lib/hocs';
 
 const getFacetConfig = (sections, name) => {
   return sections?.find((facet) => facet.facetField === name);
@@ -143,6 +144,9 @@ const LandingPage = (props) => {
     }
   };
 
+  const { language } = props;
+  const options = { language };
+
   const panes = sections.map((section, index) => {
     const tabIndex = index + 1;
 
@@ -187,7 +191,11 @@ const LandingPage = (props) => {
                         appConfig.facets
                           .filter((f) => f.field !== activeSection && f.default)
                           .forEach((facet) => {
-                            facet.default.values.forEach((value) =>
+                            const fdefault =
+                              typeof facet.default === 'function'
+                                ? facet.default(options)
+                                : facet.default;
+                            fdefault.values.forEach((value) =>
                               setFilter(
                                 facet.field,
                                 value,
@@ -276,4 +284,4 @@ const LandingPage = (props) => {
   );
 };
 
-export default LandingPage;
+export default withLanguage(LandingPage);
