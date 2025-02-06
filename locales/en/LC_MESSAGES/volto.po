@@ -83,7 +83,7 @@ msgstr ""
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr "Or search by translated"
+msgstr ""
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -98,6 +98,11 @@ msgstr ""
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
+msgstr ""
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
 msgstr ""
 
 #. Default: "Title"
@@ -117,6 +122,11 @@ msgstr ""
 msgid "Title z-a"
 msgstr ""
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr ""
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -130,14 +140,14 @@ msgstr ""
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr "item translated"
+msgstr ""
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr "items translated"
+msgstr ""
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr "Show all translated {total} documents translated"
+msgstr ""

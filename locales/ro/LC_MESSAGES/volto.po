@@ -83,7 +83,7 @@ msgstr "Cel mai vechi"
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr ""
+msgstr "Sau caută după"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -99,6 +99,11 @@ msgstr "Selecta…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr "Nume scurt"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Sursă:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -117,6 +122,11 @@ msgstr "Titlul a-z"
 msgid "Title z-a"
 msgstr "Titlul z-a"
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Subiecte:"
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -130,14 +140,14 @@ msgstr "șterge totul"
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr ""
+msgstr "articol"
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr ""
+msgstr "articole"
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr ""
+msgstr "Afișați toate cele {total} documente"

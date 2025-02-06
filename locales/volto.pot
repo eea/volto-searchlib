@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2025-02-05T13:58:54.412Z\n"
+"POT-Creation-Date: 2025-02-05T14:50:13.885Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -102,6 +102,11 @@ msgstr ""
 msgid "Short Name"
 msgstr ""
 
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr ""
+
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
@@ -117,6 +122,11 @@ msgstr ""
 #: searchlib/components/Facets/DropdownFacetsList
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
+msgstr ""
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
 msgstr ""
 
 #. Default: "Used for programmatic access to the fieldset."

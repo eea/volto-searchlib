@@ -83,7 +83,7 @@ msgstr "Najstarszy"
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr ""
+msgstr "Lub wyszukaj według"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -99,6 +99,11 @@ msgstr "Wybierać…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr "Krótkie imię"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Źródło:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -117,6 +122,11 @@ msgstr "Tytuł a-z"
 msgid "Title z-a"
 msgstr "Tytuł z-a"
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Tematy:"
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -130,14 +140,14 @@ msgstr "wyczyść wszystko"
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr ""
+msgstr "przedmiot"
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr ""
+msgstr "rzeczy"
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr ""
+msgstr "Pokaż wszystkie {total} dokumenty"

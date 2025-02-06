@@ -83,7 +83,7 @@ msgstr "Най-старият"
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr ""
+msgstr "Или търсете по"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -99,6 +99,11 @@ msgstr "Изберете..."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr "Кратко име"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "източник:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -117,6 +122,11 @@ msgstr "Заглавие a-z"
 msgid "Title z-a"
 msgstr "Заглавие z-a"
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "теми:"
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -130,14 +140,14 @@ msgstr "изчисти всичко"
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr ""
+msgstr "елемент"
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr ""
+msgstr "елементи"
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr ""
+msgstr "Показване на всички {total} документи"

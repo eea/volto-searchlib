@@ -100,6 +100,11 @@ msgstr "Selecione…"
 msgid "Short Name"
 msgstr "Nome curto"
 
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr ""
+
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
@@ -116,6 +121,11 @@ msgstr "Título a-z"
 #: searchlib/components/SearchView/FilterAsideContentView
 msgid "Title z-a"
 msgstr "Título z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr ""
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget

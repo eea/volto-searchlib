@@ -83,7 +83,7 @@ msgstr "Najstariji"
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr ""
+msgstr "Ili pretražite prema"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -99,6 +99,11 @@ msgstr "Odaberite…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr "Kratko ime"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Izvor:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -117,6 +122,11 @@ msgstr "Naslov a-z"
 msgid "Title z-a"
 msgstr "Naslov z-a"
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Teme:"
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -130,14 +140,14 @@ msgstr "jasno sve"
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr ""
+msgstr "artikal"
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr ""
+msgstr "stavke"
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr ""
+msgstr "Prikaži sve {total} dokumenata"
