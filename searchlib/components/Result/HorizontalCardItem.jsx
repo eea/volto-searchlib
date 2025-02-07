@@ -11,6 +11,7 @@ import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 import ExternalLink from './ExternalLink';
 import ResultContext from './ResultContext';
 import ContentClusters from './ContentClusters';
+import { FormattedMessage } from 'react-intl';
 
 const ExtraContent = (props) => {
   const { result, vocab } = props;
@@ -22,13 +23,17 @@ const ExtraContent = (props) => {
           <DateTime format="DATE_MED" value={result.issued} />
         </div>
         <div className="result-info">
-          <span className="result-info-title">Topics: </span>
+          <span className="result-info-title">
+            <FormattedMessage id="Topics:" defaultMessage="Topics:" />{' '}
+          </span>
           <StringList value={result.tags} />
         </div>
       </div>
       <div>
         <div className="result-info result-source">
-          <span className="result-info-title">Source: </span>
+          <span className="result-info-title">
+            <FormattedMessage id="Source:" defaultMessage="Source:" />{' '}
+          </span>
           <ExternalLink href={result.href}>
             <strong title={result.source} className="source">
               {firstWords(

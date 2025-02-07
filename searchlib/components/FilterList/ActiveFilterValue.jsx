@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
 import { Label, Icon } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 const ActiveFilterValue = (props) => {
   const { field, values, type, removeFilter } = props;
@@ -16,10 +17,17 @@ const ActiveFilterValue = (props) => {
   const { label, activeFilterLabel } = appConfig.facets.find(
     ({ field }) => field === facetField,
   ) || { label: field?.trim() };
+  const filterLabel = activeFilterLabel || label;
+  const objFilterLabel =
+    typeof filterLabel === 'object' ? (
+      <FormattedMessage {...filterLabel} />
+    ) : (
+      filterLabel
+    );
 
   return (
     <div className="filter-wrapper">
-      <div className="filter-label">{activeFilterLabel || label}:</div>
+      <div className="filter-label">{objFilterLabel}:</div>
       {values?.map((value, index) => {
         return (
           <Label basic className="filter-value" key={index}>
