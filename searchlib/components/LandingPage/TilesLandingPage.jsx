@@ -11,6 +11,8 @@ import { useLandingPageData, useLandingPageRequest } from './state';
 import { Icon, Term } from '@eeacms/search/components';
 import { withLanguage } from '@eeacms/search/lib/hocs';
 
+import { FormattedMessage } from 'react-intl';
+
 const getFacetConfig = (sections, name) => {
   return sections?.find((facet) => facet.facetField === name);
 };
@@ -223,7 +225,18 @@ const LandingPage = (props) => {
                             <Term term={topic.value} field={activeSection} />
                             <span className="count">
                               ({topic.count}{' '}
-                              {topic.count === 1 ? 'item' : 'items'})
+                              {topic.count === 1 ? (
+                                <FormattedMessage
+                                  id="item"
+                                  defaultMessage="item"
+                                />
+                              ) : (
+                                <FormattedMessage
+                                  id="items"
+                                  defaultMessage="items"
+                                />
+                              )}
+                              )
                             </span>
                           </List.Content>
                         </List.Item>
@@ -251,7 +264,14 @@ const LandingPage = (props) => {
                     >
                       <div className="extra content">
                         <span className="count">
-                          Show all {total} documents
+                          <FormattedMessage
+                            id="showAllTotalDocuments"
+                            description="Show all documents on intro statistics"
+                            defaultMessage="Show all {total} documents"
+                            values={{
+                              total: total,
+                            }}
+                          />
                         </span>
                       </div>
                     </div>
@@ -268,7 +288,10 @@ const LandingPage = (props) => {
   return (
     <div className="landing-page-container">
       <div className="landing-page">
-        <h4>Or search by</h4>
+        <h4>
+          {' '}
+          <FormattedMessage id="Or search by" defaultMessage="Or search by" />
+        </h4>
         <Tab
           className="search-tab"
           menu={{ secondary: true, pointing: true }}

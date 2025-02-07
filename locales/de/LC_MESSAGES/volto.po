@@ -80,6 +80,11 @@ msgstr "Kein Wert"
 msgid "Oldest"
 msgstr "Älteste"
 
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Oder suchen Sie nach"
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
@@ -94,6 +99,11 @@ msgstr "Wählen…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
 msgstr "Kurzname"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Quelle:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -112,6 +122,11 @@ msgstr "Titel a-z"
 msgid "Title z-a"
 msgstr "Titel z-a"
 
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Themen:"
+
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
@@ -121,3 +136,18 @@ msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
 #: searchlib/components/Facets/SidebarFacetsList
 msgid "clear all"
 msgstr "alles klar"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "Artikel"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "Artikel"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Alle {total} Dokumente anzeigen"
