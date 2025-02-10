@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import config from '@plone/volto/registry';
 import { SearchBlockSchema } from './schema';
 import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
@@ -20,10 +21,13 @@ function SearchBlockView(props) {
     selectedSlotFill,
     properties,
     metadata,
-    location,
     path,
   } = props;
+  const location = useLocation();
   const { appName = 'default' } = data;
+
+  // Detect if we are on the homepage (`/en`)
+  const isHomepage = /^\/[a-z]{2}\/?$/.test(location.pathname);
 
   const schemaFields = [
     'availableFacets',
@@ -91,29 +95,47 @@ function SearchBlockView(props) {
   });
 
   const key = `${location?.pathname || path}-${props.data?.appName}`;
+
+  const searchDriverRef = useRef(null);
+
+  useEffect(() => {
+    if (!isHomepage) {
+      searchDriverRef.current =
+        config.settings.searchlib.searchui[appName].searchDriver;
+    }
+
+    return () => {
+      if (searchDriverRef.current) {
+        searchDriverRef.current = null;
+      }
+    };
+  }, [isHomepage, appName]);
+
   const Variation = variation.view;
 
   return (
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
       {mode !== 'view' && JSON.stringify(data.defaultFilters)}
-      <Variation
-        key={key}
-        slotFills={data.slotFills}
-        registry={registry}
-        appName={appName}
-        mode={mode}
-        defaultSort={data.defaultSort}
-        defaultFilters={data.defaultFilters}
-        onChangeSlotfill={onChangeSlotfill}
-        onDeleteSlotfill={onDeleteSlotfill}
-        onSelectSlotfill={onSelectSlotfill}
-        selectedSlotFill={selectedSlotFill}
-        properties={properties}
-        metadata={metadata}
-      >
-        {mode !== 'view' ? children : null}
-      </Variation>
+      {!isHomepage && (
+        <Variation
+          key={key}
+          slotFills={data.slotFills}
+          registry={registry}
+          appName={appName}
+          mode={mode}
+          defaultSort={data.defaultSort}
+          defaultFilters={data.defaultFilters}
+          onChangeSlotfill={onChangeSlotfill}
+          onDeleteSlotfill={onDeleteSlotfill}
+          onSelectSlotfill={onSelectSlotfill}
+          selectedSlotFill={selectedSlotFill}
+          properties={properties}
+          metadata={metadata}
+        >
+          {mode !== 'view' ? children : null}
+        </Variation>
+      )}
     </div>
   );
 }
