@@ -29,6 +29,7 @@ const ViewComponent = (props) => {
   }
 
   let value = (filter?.values || filterConfig['default'].values)?.[0];
+  const activeLabel = options.find((opt) => opt.value === value)?.text || value;
   // value = filterConfig.isMulti ? value : value[0];
 
   // TODO: fix styling
@@ -38,7 +39,7 @@ const ViewComponent = (props) => {
         icon="chevron down"
         trigger={
           <span>
-            {labelText} <span>{value}</span>
+            {labelText} <span>{activeLabel}</span>
           </span>
         }
         inline
