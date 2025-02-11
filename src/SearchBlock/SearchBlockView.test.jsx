@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import SearchBlockView from './SearchBlockView';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -46,7 +47,11 @@ describe('SearchBlockView', () => {
   };
 
   it('renders in view mode', () => {
-    const { queryByText } = render(<SearchBlockView {...defaultProps} />);
+    const { queryByText } = render(
+      <MemoryRouter>
+        <SearchBlockView {...defaultProps} />
+      </MemoryRouter>,
+    );
 
     // Ensure that the component renders in view mode
     expect(queryByText('EEA Semantic Search block')).not.toBeInTheDocument();
@@ -58,7 +63,11 @@ describe('SearchBlockView', () => {
       mode: 'edit',
     };
 
-    const { queryByText } = render(<SearchBlockView {...props} />);
+    const { queryByText } = render(
+      <MemoryRouter>
+        <SearchBlockView {...props} />
+      </MemoryRouter>,
+    );
 
     // Ensure that the component renders in edit mode
     expect(queryByText(/(EEA Semantic Search block)/)).toBeInTheDocument();
@@ -71,23 +80,32 @@ describe('SearchBlockView', () => {
       onChangeSlotfill,
     };
 
-    const { container } = render(<SearchBlockView {...props} />);
+    const { container } = render(
+      <MemoryRouter>
+        <SearchBlockView {...props} />
+      </MemoryRouter>,
+    );
 
     // Simulate a slot change
-    fireEvent.change(container.querySelector('input[appName="default"]'), {
-      target: {
-        value: 'test',
-      },
-    });
+    const input = container.querySelector('input[appName="default"]');
+    if (input) {
+      fireEvent.change(input, {
+        target: {
+          value: 'test',
+        },
+      });
+    }
   });
 
   it('renders in view mode with default props', () => {
     const { queryByText } = render(
-      <SearchBlockView
-        variation={{
-          view: 'input',
-        }}
-      />,
+      <MemoryRouter>
+        <SearchBlockView
+          variation={{
+            view: 'input',
+          }}
+        />
+      </MemoryRouter>,
     );
 
     // Ensure that the component renders in view mode
