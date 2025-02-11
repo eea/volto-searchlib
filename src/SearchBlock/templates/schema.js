@@ -30,10 +30,13 @@ const setFacetWidgetProps = (appConfig, registry, appName) => {
     // appConfig from the edit block. Hackish because the block schemaEnhancers
     // (and the ObjectWidget) aren't passed the whole available props
 
-    schema.properties.name.choices = appConfig.facets.map((facet) => [
-      facet.id || facet.field,
-      facet.activeFilterLabel || facet.label || facet.field,
-    ]);
+    schema.properties.name.choices = appConfig.facets.map((facet) => {
+      const label = facet.activeFilterLabel || facet.label || facet.field;
+      return [
+        facet.id || facet.field,
+        typeof label === 'object' ? <FormattedMessage {...label} /> : label,
+      ];
+    });
 
     schema.properties.value.facetName = data.name;
     schema.properties.value.appConfig = appConfig;
