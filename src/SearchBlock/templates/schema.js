@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 function FilterSchema({ formData: _formData }) {
   return {
     title: 'Filter',
@@ -176,7 +178,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       appName,
       choices: appConfig.sortOptions.map((opt) => [
         `${opt.value}|${opt.direction}`,
-        opt.name,
+        typeof opt.name === 'object' ? (
+          <FormattedMessage {...opt.name} />
+        ) : (
+          opt.name
+        ),
       ]),
     };
   }
