@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Actieve filters"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Actieve filters:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
 msgstr "Alle"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Terug naar huis zoeken"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,6 +149,7 @@ msgstr "Wordt gebruikt voor programmatische toegang tot de veldset."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "alles wissen"
 
