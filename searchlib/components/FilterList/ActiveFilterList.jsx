@@ -32,7 +32,6 @@ const ActiveFilterList = (props) => {
           <Icon className="ri-arrow-down-s-line" />
           <div className="filter-list-header">
             <h4 className="filter-list-title">
-              {' '}
               <FormattedMessage
                 id="Active filters"
                 defaultMessage="Active filters"
