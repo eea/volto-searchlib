@@ -2,6 +2,7 @@ import React from 'react';
 import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
 import { useHistory } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 export default function BackToHome({
   appConfig,
@@ -44,7 +45,10 @@ export default function BackToHome({
         }}
       >
         <Icon className="arrow left" />
-        Back to search home
+        <FormattedMessage
+          id="Back to search home"
+          defaultMessage="Back to search home"
+        />
       </a>
     ) : (
       <a
@@ -57,7 +61,10 @@ export default function BackToHome({
         }}
       >
         <Icon className="arrow left" />
-        Back to search home
+        <FormattedMessage
+          id="Back to search home"
+          defaultMessage="Back to search home"
+        />
       </a>
     )
   ) : (
@@ -76,7 +83,10 @@ export default function BackToHome({
       href="./"
     >
       <Icon className="arrow left" />
-      Back to search home
+      <FormattedMessage
+        id="Back to search home"
+        defaultMessage="Back to search home"
+      />
     </a>
   );
 }

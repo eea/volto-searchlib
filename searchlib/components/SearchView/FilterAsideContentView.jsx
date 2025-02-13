@@ -21,7 +21,7 @@ import { loadingFamily } from '@eeacms/search/state';
 import { useAtomValue } from 'jotai';
 
 import { useIntl } from 'react-intl';
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   'Title a-z': {
@@ -40,10 +40,13 @@ const messages = defineMessages({
     id: 'Oldest',
     defaultMessage: 'Oldest',
   },
+  Relevance: {
+    id: 'Relevance',
+    defaultMessage: 'Relevance',
+  },
 });
 
 export const FilterAsideContentView = (props) => {
-  // console.log('redraw FilterAsideContentView');
   const { appConfig, children, current, wasInteracted } = props;
   const { sortOptions, resultViews } = appConfig;
   const views = useViews();
@@ -95,19 +98,13 @@ export const FilterAsideContentView = (props) => {
   const { showFilters, showFacets, showClusters, showSorting } = appConfig;
   const showPaging = appConfig.showLandingPage === false ? true : wasInteracted;
   const intl = useIntl();
-  const sortOptions2 = sortOptions.map((item) => {
-    if (!(item.name instanceof String) && item?.name?.id) {
-      if (item?.name?.id in messages) {
-        // console.log('sortOptions2', item?.name?.id);
-        item.name = intl.formatMessage(messages[item.name.id]);
-      } else {
-        item.name = item.name.id;
-      }
-    }
-    return item;
-  });
-  // console.log('sortOptions3', sortOptions, sortOptions2);
-  // console.log('props', props);
+
+  const sortOptions2 = sortOptions.map((item) => ({
+    ...item,
+    name: messages[item.name?.id]
+      ? intl.formatMessage(messages[item.name.id])
+      : item.name,
+  }));
 
   return (
     <>

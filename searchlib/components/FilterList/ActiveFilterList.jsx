@@ -3,6 +3,7 @@ import { Segment, Accordion, Button, Icon } from 'semantic-ui-react';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { isLandingPageAtom } from '@eeacms/search/state';
 import { useAtom } from 'jotai';
+import { FormattedMessage } from 'react-intl';
 
 import ActiveFilterValue from './ActiveFilterValue';
 
@@ -30,7 +31,12 @@ const ActiveFilterList = (props) => {
         >
           <Icon className="ri-arrow-down-s-line" />
           <div className="filter-list-header">
-            <h4 className="filter-list-title">Active filters</h4>
+            <h4 className="filter-list-title">
+              <FormattedMessage
+                id="Active filters"
+                defaultMessage="Active filters"
+              />
+            </h4>
             <Button
               compact
               basic
@@ -43,7 +49,7 @@ const ActiveFilterList = (props) => {
                 }
               }}
             >
-              clear all
+              <FormattedMessage id="clear all" defaultMessage="clear all" />
             </Button>
           </div>
         </Accordion.Title>

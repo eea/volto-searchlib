@@ -463,11 +463,11 @@ const config = {
       },
 
       sortOptions: [
-        {
-          name: 'Relevance',
-          value: '',
-          direction: '',
-        },
+        // {
+        //   name: 'Relevance',
+        //   value: '',
+        //   direction: '',
+        // },
       ],
     },
   },

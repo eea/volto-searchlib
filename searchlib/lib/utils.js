@@ -137,7 +137,6 @@ export function getDefaultFilters(appConfig, options) {
   //     values: facet.default.values.sort(),
   //     type: facet.default.type || 'any',
   //   }));
-  // console.log(defaultFiltersList);
   // return defaultFiltersList;
 }
 
@@ -157,7 +156,6 @@ export const getDefaultFilterValues = (facets, options) => {
         : acc,
     [],
   );
-  // console.log('defaultFilterValues', defaultFilterValues);
   return normalizeFilters(defaultFilterValues);
 };
 
