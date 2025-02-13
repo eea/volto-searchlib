@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Filtre active"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Filtre active:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
 msgstr "Toate"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Înapoi la căutare acasă"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,6 +149,7 @@ msgstr "Folosit pentru acces programatic la setul de câmpuri."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "șterge totul"
 

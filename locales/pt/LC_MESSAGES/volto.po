@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Filtros ativos"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Filtros ativos:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
 msgstr "Todos"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Voltar para pesquisar em casa"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -83,7 +98,7 @@ msgstr "Mais antigo"
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
-msgstr ""
+msgstr "Ou pesquise por"
 
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
@@ -103,7 +118,7 @@ msgstr "Nome curto"
 #. Default: "Source:"
 #: searchlib/components/Result/HorizontalCardItem
 msgid "Source:"
-msgstr ""
+msgstr "Fonte:"
 
 #. Default: "Title"
 #: src/SearchBlock/widgets/SelectWidget
@@ -125,7 +140,7 @@ msgstr "Título z-a"
 #. Default: "Topics:"
 #: searchlib/components/Result/HorizontalCardItem
 msgid "Topics:"
-msgstr ""
+msgstr "Tópicos:"
 
 #. Default: "Used for programmatic access to the fieldset."
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,20 +149,21 @@ msgstr "Usado para acesso programático ao fieldset."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "limpar tudo"
 
 #. Default: "item"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "item"
-msgstr ""
+msgstr "item"
 
 #. Default: "items"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "items"
-msgstr ""
+msgstr "Unid"
 
 #. Default: "Show all {total} documents"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "showAllTotalDocuments"
-msgstr ""
+msgstr "Mostrar todos os {total} documentos"

@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Aktywne filtry"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Aktywne filtry:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
 msgstr "Wszystko"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Wróć do szukania domu"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,6 +149,7 @@ msgstr "Służy do programowego dostępu do zestawu pól."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "wyczyść wszystko"
 

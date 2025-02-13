@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Aktyvūs filtrai"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Aktyvūs filtrai:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
 msgstr "Visi"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Grįžti į paiešką namo"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,6 +149,7 @@ msgstr "Naudojamas programinei prieigai prie laukų rinkinio."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "išvalyti viską"
 

@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, Card } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+import { FormattedMessage } from 'react-intl';
 
 const ActiveFilters = (props) => {
   const { onRemove, field } = props;
@@ -26,7 +27,12 @@ const ActiveFilters = (props) => {
     <div className="active-filters">
       {!activeFilter[0].type ? (
         <>
-          <h5>Active filters:</h5>
+          <h5>
+            <FormattedMessage
+              id="Active filters:"
+              defaultMessage="Active filters:"
+            />
+          </h5>
           <div className="facets-wrapper">
             {activeFilter.map((option, i) => {
               return (
