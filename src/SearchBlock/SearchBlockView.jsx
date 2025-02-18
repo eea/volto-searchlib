@@ -26,8 +26,7 @@ function SearchBlockView(props) {
   const location = useLocation();
   const { appName = 'default' } = data;
 
-  // Detect if we are on the homepage (`/en`)
-  const isHomepage = /^\/[a-z]{2}\/?$/.test(location.pathname);
+  const isSearchPage = /advanced-search/.test(location.pathname);
 
   const schemaFields = [
     'availableFacets',
@@ -84,8 +83,6 @@ function SearchBlockView(props) {
     return reg;
   }, [appName, stableData, schema, mode]);
 
-  // console.log('registry', registry, appName);
-
   useWhyDidYouUpdate('SearchBlockView', {
     registry,
     stableData,
@@ -99,7 +96,7 @@ function SearchBlockView(props) {
   const searchDriverRef = useRef(null);
 
   useEffect(() => {
-    if (!isHomepage) {
+    if (isSearchPage) {
       searchDriverRef.current =
         config.settings.searchlib.searchui[appName].searchDriver;
     }
@@ -109,7 +106,7 @@ function SearchBlockView(props) {
         searchDriverRef.current = null;
       }
     };
-  }, [isHomepage, appName]);
+  }, [isSearchPage, appName]);
 
   const Variation = variation.view;
 
@@ -117,7 +114,7 @@ function SearchBlockView(props) {
     <div>
       {mode !== 'view' && 'EEA Semantic Search block'}
       {mode !== 'view' && JSON.stringify(data.defaultFilters)}
-      {!isHomepage && (
+      {isSearchPage && (
         <Variation
           key={key}
           slotFills={data.slotFills}
