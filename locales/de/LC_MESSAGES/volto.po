@@ -29,7 +29,7 @@ msgstr "Vše"
 #. Default: "Back to search home"
 #: searchlib/components/SearchView/BackToHome
 msgid "Back to search home"
-msgstr "Zpět k hledání domů"
+msgstr "Zurück zur Suchseite"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
