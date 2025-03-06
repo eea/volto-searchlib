@@ -14,9 +14,8 @@ const SortingViewComponent = (props) => {
 
   const activeValue = `${sortField}|||${sortDirection}`;
 
-  const activeLabel = sortOptions.filter(
-    ({ value }) => value === activeValue,
-  )[0].text;
+  const activeLabel =
+    sortOptions.find(({ value }) => value === activeValue)?.text || '';
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 1000;
