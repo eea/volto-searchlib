@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'; // useDeepCompareEffect,
+import { trackSiteSearch } from '@eeacms/volto-matomo/utils';
 
 import {
   getDefaultFilters,
@@ -71,15 +72,25 @@ export default function useSearchApp(props) {
       setIsLoading(true);
       const res = await paramOnSearch(appConfig)(state);
       setIsLoading(false);
+
+      const searchTerm = state.searchTerm?.trim();
+      if (appConfig.enableMatomoTracking && searchTerm.length > 0) {
+        trackSiteSearch({
+          keyword: searchTerm,
+          category: appName,
+          count: res.totalResults,
+        });
+      }
+
       return res;
     },
-    [appConfig, paramOnSearch, setIsLoading],
+    [appConfig, appName, paramOnSearch, setIsLoading],
   );
 
-  const onAutocomplete = React.useMemo(
-    () => paramOnAutocomplete(appConfig),
-    [appConfig, paramOnAutocomplete],
-  );
+  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
+    appConfig,
+    paramOnAutocomplete,
+  ]);
 
   const locationSearchTerm = React.useMemo(
     () =>
