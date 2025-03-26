@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@eeacms/volto-eea-design-system": "*",
+    "@eeacms/volto-matomo": "5.0.0",
     "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",
     "@elastic/search-ui": "1.20.2",

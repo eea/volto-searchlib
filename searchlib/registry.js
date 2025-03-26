@@ -341,6 +341,8 @@ const config = {
         },
       },
 
+      enableMatomoTracking: true,
+
       contentSectionsParams: {
         // This enables the content as section tabs
         enable: false,
