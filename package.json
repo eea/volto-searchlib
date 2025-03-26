@@ -13,7 +13,8 @@
     "react"
   ],
   "addons": [
-    "@eeacms/volto-eea-design-system"
+    "@eeacms/volto-eea-design-system",
+    "@eeacms/volto-matomo"
   ],
   "repository": {
     "type": "git",
