@@ -14,17 +14,17 @@ msgstr ""
 #. Default: "Active filters"
 #: searchlib/components/FilterList/ActiveFilterList
 msgid "Active filters"
-msgstr "Aktive Filter"
+msgstr "Aktive filter"
 
 #. Default: "Active filters:"
 #: searchlib/components/Facets/ActiveFilters
 msgid "Active filters:"
-msgstr "Aktivní filtry:"
+msgstr "Aktive filter:"
 
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-msgstr "Vše"
+msgstr "Alle"
 
 #. Default: "Back to search home"
 #: searchlib/components/SearchView/BackToHome
@@ -108,7 +108,7 @@ msgstr "Erforderlich"
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Auswählen…"
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
