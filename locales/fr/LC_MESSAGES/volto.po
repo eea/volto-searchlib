@@ -19,12 +19,12 @@ msgstr "Filtres actifs"
 #. Default: "Active filters:"
 #: searchlib/components/Facets/ActiveFilters
 msgid "Active filters:"
-msgstr "Filtres actifs :"
+msgstr "Filtres actifs:"
 
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-msgstr "Tous"
+msgstr "Tout"
 
 #. Default: "Back to search home"
 #: searchlib/components/SearchView/BackToHome
