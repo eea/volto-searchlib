@@ -39,6 +39,8 @@ const useSort = (
         ? customOrder(options, facetValues, 'ascending')
         : customOrder(options, facetValues, 'descending');
     } else {
+      // TODO: the above method uses facetValues to filter the available values (only shows those that are defined)
+      // Right now, once sorted, the facetValues are ignored and all possible values are shown
       return Array.from(options).sort((a, b) => {
         return sortOrder === 'ascending'
           ? a[sortOn] > b[sortOn]
@@ -47,10 +49,10 @@ const useSort = (
               : 0
             : -1
           : b[sortOn] > a[sortOn]
-            ? b[sortOn] !== a[sortOn]
-              ? 1
-              : 0
-            : -1;
+          ? b[sortOn] !== a[sortOn]
+            ? 1
+            : 0
+          : -1;
       });
     }
   };
