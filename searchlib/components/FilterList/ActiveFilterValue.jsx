@@ -25,6 +25,7 @@ const ActiveFilterValue = (props) => {
       filterLabel
     );
 
+  // TODO: the active filters are retrieved from the request URL. They should be treated as IDs and translated
   return (
     <div className="filter-wrapper">
       <div className="filter-label">{objFilterLabel}:</div>

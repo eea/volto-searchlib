@@ -24,6 +24,7 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'debugQuery',
         'customConfig',
         'enableNLP',
+        'enableMatomoTracking',
       ],
     },
     ...(formData?.enableNLP
@@ -66,6 +67,13 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       type: 'boolean',
       title: 'Enable NLP capabilities?',
       configPath: 'enableNLP',
+    },
+
+    enableMatomoTracking: {
+      type: 'boolean',
+      title: 'Enable Matomo Tracking?',
+      configPath: 'enableMatomoTracking',
+      default: true,
     },
 
     customConfig: {

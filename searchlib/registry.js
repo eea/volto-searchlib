@@ -341,6 +341,8 @@ const config = {
         },
       },
 
+      enableMatomoTracking: true,
+
       contentSectionsParams: {
         // This enables the content as section tabs
         enable: false,
@@ -463,11 +465,11 @@ const config = {
       },
 
       sortOptions: [
-        {
-          name: 'Relevance',
-          value: '',
-          direction: '',
-        },
+        // {
+        //   name: 'Relevance',
+        //   value: '',
+        //   direction: '',
+        // },
       ],
     },
   },

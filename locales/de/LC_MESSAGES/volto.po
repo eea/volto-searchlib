@@ -11,10 +11,25 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Aktive filter"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Aktive filter:"
+
 #. Default: "All"
 #: searchlib/components/Facets/Connected/SectionTabs
 msgid "All"
-msgstr ""
+msgstr "Alle"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Zurück zur Suchseite"
 
 #. Default: "Choices"
 #: src/SearchBlock/widgets/SelectWidget
@@ -93,7 +108,7 @@ msgstr "Erforderlich"
 #. Default: "Select…"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr "Wählen…"
+msgstr "Auswählen…"
 
 #. Default: "Short Name"
 #: src/SearchBlock/widgets/SelectWidget
@@ -134,6 +149,7 @@ msgstr "Wird für den programmgesteuerten Zugriff auf das Feldset verwendet."
 
 #. Default: "clear all"
 #: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
 msgid "clear all"
 msgstr "alles klar"
 
