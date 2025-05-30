@@ -15,12 +15,17 @@ import { getDefaultFilters } from '@eeacms/search/lib/utils';
  * @param {*} filterType
  */
 export function findFilterValues(filters, name, filterType) {
+  if (name === 'spatial') {
+    console.log({ name, filters, filterType });
+  }
+
   const filter = filters.find((f) => {
     if (filterType) {
       return f.field === name && f.type === filterType;
     }
     return f.field === name;
   });
+
   if (!filter) return [];
   return filter.values;
 }
@@ -73,18 +78,18 @@ export function markSelectedFacetValuesFromFilters(
 ) {
   // debugger;
   const facetValues = facet.data;
-  const filterValuesForField =
-    findFilterValues(filters, fieldName, filterType) || [];
+  const filterValuesForField = new Set(
+    findFilterValues(filters, fieldName, filterType) || [],
+  );
+
+  const data = facetValues.map((facetValue) => ({
+    ...facetValue,
+    selected: filterValuesForField.has(facetValue.value),
+  }));
+
   return {
     ...facet,
-    data: facetValues.map((facetValue) => {
-      return {
-        ...facetValue,
-        selected: filterValuesForField.some((filterValue) => {
-          return doFilterValuesMatch(filterValue, facetValue.value);
-        }),
-      };
-    }),
+    data,
   };
 }
 

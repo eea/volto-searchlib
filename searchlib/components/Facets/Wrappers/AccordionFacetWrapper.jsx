@@ -37,6 +37,7 @@ const AccordionFacetWrapper = (props) => {
     React.useState(defaultTypeValue);
 
   const onChangeFilterType = (v) => {
+    console.log('??? ', v);
     setLocalFilterType(v);
     if (!eventEmitter) return;
     eventEmitter.emit('change:filterType', {
@@ -61,6 +62,10 @@ const AccordionFacetWrapper = (props) => {
     if (!eventEmitter) return;
 
     function changeFilterType(data) {
+      if (data.field === 'spatial') {
+        console.log('HA?! ', { eventEmitter, data });
+      }
+
       if (data.field === field) {
         setLocalFilterType(data.type);
       }

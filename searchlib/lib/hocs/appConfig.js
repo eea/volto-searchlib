@@ -15,6 +15,8 @@ export const useAppConfig = () => {
     );
   }
 
+  context.payload.appConfig.host = 'https://www.eea.europa.eu';
+
   return context.payload;
 };
 

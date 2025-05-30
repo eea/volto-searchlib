@@ -34,6 +34,7 @@ export const useResult = (initial, id) => {
   const [docData, setDocData] = useAtom(docAtom);
 
   React.useEffect(() => {
+    console.log('APP CONFIG: ', appConfig);
     let ignore = false;
 
     const doIt = async () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
@@ -67,7 +67,7 @@ const FacetOptions = (props) => {
   );
 };
 
-const Select = ({ options, value, onChange, className }) => {
+const Select = ({ options, value, onChange, className, disabled }) => {
   const handler = (e) => {
     onChange(e.target.value);
   };
@@ -78,6 +78,7 @@ const Select = ({ options, value, onChange, className }) => {
       onChange={handler}
       value={value}
       className={className}
+      disabled={disabled}
     >
       {options.map((opt) => (
         <option value={opt.value} key={opt.key}>
@@ -135,7 +136,11 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
@@ -144,6 +149,12 @@ const MultiTermFacetViewComponent = (props) => {
     },
     field,
   );
+
+  const noOptionsSelected = useMemo(() => {
+    const selectedOptions = sortedOptions.filter((option) => option.selected);
+    // console.log({ label, selectedOptions, sortedOptions });
+    return selectedOptions.length === 0;
+  }, [sortedOptions]);
 
   useEffect(() => {
     if (prevFilterType.current !== filterType) {
@@ -186,6 +197,8 @@ const MultiTermFacetViewComponent = (props) => {
                 value={filterType}
                 options={filterTypes}
                 onChange={onChangeFilterType}
+                disabled={noOptionsSelected}
+                defaultSelected={filterType}
               />
             </span>
           </div>
