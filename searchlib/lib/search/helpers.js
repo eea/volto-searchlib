@@ -17,7 +17,7 @@ import { getDefaultFilters } from '@eeacms/search/lib/utils';
 export function findFilterValues(filters, name, filterType) {
   const filter = filters.find((f) => {
     if (filterType) {
-      return f.field === name && f.type === filterType;
+      return f.field === name;
     }
     return f.field === name;
   });
@@ -73,18 +73,18 @@ export function markSelectedFacetValuesFromFilters(
 ) {
   // debugger;
   const facetValues = facet.data;
-  const filterValuesForField =
-    findFilterValues(filters, fieldName, filterType) || [];
+  const filterValuesForField = new Set(
+    findFilterValues(filters, fieldName, filterType) || [],
+  );
+
+  const data = facetValues.map((facetValue) => ({
+    ...facetValue,
+    selected: filterValuesForField.has(facetValue.value),
+  }));
+
   return {
     ...facet,
-    data: facetValues.map((facetValue) => {
-      return {
-        ...facetValue,
-        selected: filterValuesForField.some((filterValue) => {
-          return doFilterValuesMatch(filterValue, facetValue.value);
-        }),
-      };
-    }),
+    data,
   };
 }
 
