@@ -33,7 +33,6 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
     isLoading,
-    eventEmitter,
   } = props;
   const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
@@ -44,9 +43,15 @@ const DropdownFacetWrapper = (props) => {
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
   const fallback = filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
-    ? filters?.find((f) => f.field === field)?.type || fallback
-    : fallback;
+
+  const defaultValue = React.useMemo(
+    () =>
+      field
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback,
+    [field, filters, fallback],
+  );
+
   const filtersCount = rawSearchContext.filters
     .filter((filter) => filter.field === field)
     .map((filter) => filter.values.length);
@@ -61,17 +66,24 @@ const DropdownFacetWrapper = (props) => {
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();
-
-  useOutsideClick(nodeRef, () => setIsOpen(false));
-
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
-  if (facets[field] === undefined) return null;
-  if (facet?.authOnly && token === undefined) return null;
 
   const intl = useIntl();
   const labelPrint =
     typeof label === 'object' ? intl.formatMessage(label) : label;
+
+  useOutsideClick(nodeRef, () => setIsOpen(false));
+
+  React.useEffect(() => {
+    if (defaultValue !== localFilterType) {
+      setLocalFilterType(defaultValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
+
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
 
   return (
     <>
