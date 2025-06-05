@@ -48,9 +48,9 @@ const FacetOptions = (props) => {
                 type="checkbox"
                 className="sui-multi-checkbox-facet__checkbox"
                 checked={checked}
-                onChange={() => {
-                  checked ? onRemove(option.value) : onSelect(option.value);
-                }}
+                onChange={() =>
+                  checked ? onRemove(option.value) : onSelect(option.value)
+                }
               />
               <span className="checkmark" />
               <span className="sui-multi-checkbox-facet__input-text">
@@ -67,11 +67,7 @@ const FacetOptions = (props) => {
   );
 };
 
-const Select = ({ options, value, onChange, className, field }) => {
-  useEffect(() => {
-    // console.log('VALUE: ', { field, value });
-    // Set filterType for all dependencies
-  }, [field, value]);
+const Select = ({ options, value, onChange, className }) => {
   const handler = (e) => {
     onChange(e.target.value);
   };
@@ -154,15 +150,6 @@ const MultiTermFacetViewComponent = (props) => {
   );
 
   useEffect(() => {
-    // if (facet.field === 'spatial') {
-    //   console.log('Somegthing updated in : ', {
-    //     facet,
-    //     filters,
-    //     currentType: prevFilterType.current,
-    //     filterType,
-    //   });
-    // }
-
     if (prevFilterType.current !== filterType) {
       markSelectedFacetValuesFromFilters(facet, filters, field).data.forEach(
         (fv) => {
@@ -203,7 +190,6 @@ const MultiTermFacetViewComponent = (props) => {
                 value={filterType}
                 options={filterTypes}
                 onChange={onChangeFilterType}
-                field={field}
               />
             </span>
           </div>
@@ -243,7 +229,6 @@ const MultiTermFacetViewComponent = (props) => {
           sortedOptions={sortedOptions}
           label={label}
           onSelect={onSelect}
-          onChangeFilterTyp={onChangeFilterType}
           onRemove={onRemove}
           field={field}
         />
