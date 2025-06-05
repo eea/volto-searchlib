@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
@@ -48,9 +48,9 @@ const FacetOptions = (props) => {
                 type="checkbox"
                 className="sui-multi-checkbox-facet__checkbox"
                 checked={checked}
-                onChange={() =>
-                  checked ? onRemove(option.value) : onSelect(option.value)
-                }
+                onChange={() => {
+                  checked ? onRemove(option.value) : onSelect(option.value);
+                }}
               />
               <span className="checkmark" />
               <span className="sui-multi-checkbox-facet__input-text">
@@ -67,7 +67,11 @@ const FacetOptions = (props) => {
   );
 };
 
-const Select = ({ options, value, onChange, className }) => {
+const Select = ({ options, value, onChange, className, field }) => {
+  useEffect(() => {
+    // console.log('VALUE: ', { field, value });
+    // Set filterType for all dependencies
+  }, [field, value]);
   const handler = (e) => {
     onChange(e.target.value);
   };
@@ -104,7 +108,7 @@ const MultiTermFacetViewComponent = (props) => {
     facet,
     filters,
     field,
-    filterType = 'any',
+    filterType,
   } = props;
   const prevFilterType = React.useRef(filterType);
 
@@ -135,7 +139,11 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
@@ -146,6 +154,15 @@ const MultiTermFacetViewComponent = (props) => {
   );
 
   useEffect(() => {
+    // if (facet.field === 'spatial') {
+    //   console.log('Somegthing updated in : ', {
+    //     facet,
+    //     filters,
+    //     currentType: prevFilterType.current,
+    //     filterType,
+    //   });
+    // }
+
     if (prevFilterType.current !== filterType) {
       markSelectedFacetValuesFromFilters(facet, filters, field).data.forEach(
         (fv) => {
@@ -186,6 +203,7 @@ const MultiTermFacetViewComponent = (props) => {
                 value={filterType}
                 options={filterTypes}
                 onChange={onChangeFilterType}
+                field={field}
               />
             </span>
           </div>
@@ -225,6 +243,7 @@ const MultiTermFacetViewComponent = (props) => {
           sortedOptions={sortedOptions}
           label={label}
           onSelect={onSelect}
+          onChangeFilterTyp={onChangeFilterType}
           onRemove={onRemove}
           field={field}
         />

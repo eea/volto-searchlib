@@ -9,14 +9,8 @@ import Facet from '../Facet';
 import { Dimmer } from 'semantic-ui-react';
 
 const AccordionFacetWrapper = (props) => {
-  const {
-    collapsable = true,
-    field,
-    label,
-    token,
-    isLoading,
-    eventEmitter,
-  } = props;
+  const { collapsable = true, field, label, token, isLoading } = props;
+
   const searchContext = useSearchContext();
   const { facets, filters } = searchContext;
 
@@ -27,23 +21,26 @@ const AccordionFacetWrapper = (props) => {
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
   const fallback = props.filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
-    ? filters?.find((f) => f.field === field)?.type || fallback
-    : fallback;
+
+  const defaultValue = React.useMemo(
+    () =>
+      field
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback,
+    [field, filters, fallback],
+  );
 
   const [defaultTypeValue] = (defaultValue || '').split(':');
 
   const [localFilterType, setLocalFilterType] =
     React.useState(defaultTypeValue);
 
-  const onChangeFilterType = (v) => {
-    setLocalFilterType(v);
-    if (!eventEmitter) return;
-    eventEmitter.emit('change:filterType', {
-      field,
-      type: v,
-    });
-  };
+  React.useEffect(() => {
+    if (defaultValue !== localFilterType) {
+      setLocalFilterType(defaultValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
 
   React.useEffect(() => {
     let temp = openFacets;
@@ -56,22 +53,6 @@ const AccordionFacetWrapper = (props) => {
     }
     updateOpenFacets(temp);
   }, [hasFilter, field, openFacets, updateOpenFacets]);
-
-  React.useEffect(() => {
-    if (!eventEmitter) return;
-
-    function changeFilterType(data) {
-      if (data.field === field) {
-        setLocalFilterType(data.type);
-      }
-    }
-
-    eventEmitter.on('change:filterType', changeFilterType);
-
-    return () => {
-      eventEmitter.off('change:filterType', changeFilterType);
-    };
-  }, [eventEmitter]);
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);
@@ -119,7 +100,7 @@ const AccordionFacetWrapper = (props) => {
           active={isOpened}
           filterType={localFilterType}
           isInAccordion={true}
-          onChangeFilterType={onChangeFilterType}
+          onChangeFilterType={(v) => setLocalFilterType(v)}
         />
       </Accordion.Content>
     </Accordion>
@@ -128,7 +109,7 @@ const AccordionFacetWrapper = (props) => {
       {...props}
       isInAccordion={true}
       filterType={localFilterType}
-      onChangeFilterType={onChangeFilterType}
+      onChangeFilterType={(v) => setLocalFilterType(v)}
     />
   );
 };

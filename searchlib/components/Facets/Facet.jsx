@@ -19,7 +19,7 @@ const FacetContainer = (props) => {
     className,
     id,
     field,
-    filterType = 'all',
+    filterType,
     label,
     view,
     isFilterable = false,
@@ -40,6 +40,8 @@ const FacetContainer = (props) => {
   // will likely be enforced in future version, so instead of an array, there
   // will only be one facet allowed per field.
   const facet = facetsForField[0];
+
+  // console.log({ filters });
 
   let facetValues = markSelectedFacetValuesFromFilters(
     facet,
