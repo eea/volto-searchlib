@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { customOrder } from '@eeacms/search/lib/utils';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { filter } from 'lodash';
 
 const useSort = (
   values,
@@ -11,15 +13,20 @@ const useSort = (
   const [sortOn, setSortOn] = React.useState(defaultSortOn);
   const [sortOrder, setSortOrder] = React.useState(defaultSortOrder[sortOn]);
   const { appConfig } = useAppConfig();
+  const { filters, setSort } = useSearchContext();
 
   const toggleSort = (name) => {
+    // Handle setting sort here
     if (sortOn === name) {
-      // toggle sort direction;
-      setSortOrder(sortOrder === 'ascending' ? 'descending' : 'ascending');
+      const sOrder = sortOrder === 'ascending' ? 'descending' : 'ascending';
+      setSortOrder(sOrder);
+      setSort({ field, sortOn, sortOrder: sOrder });
       return;
     } else {
-      setSortOrder(defaultSortOrder[name]);
+      const sOrder = defaultSortOrder[name];
+      setSortOrder(sOrder);
       setSortOn(name);
+      setSort({ field, sortOn: name, sortOrder: sOrder });
     }
   };
 
@@ -47,13 +54,22 @@ const useSort = (
               : 0
             : -1
           : b[sortOn] > a[sortOn]
-            ? b[sortOn] !== a[sortOn]
-              ? 1
-              : 0
-            : -1;
+          ? b[sortOn] !== a[sortOn]
+            ? 1
+            : 0
+          : -1;
       });
     }
   };
+
+  useEffect(() => {
+    // console.log('FFF: ', filters);
+    const data = filters.find((f) => f.field === field);
+    if (data) {
+      setSortOn(data.sortOn);
+      setSortOrder(data.sortOrder);
+    }
+  }, [filters, field, sortOrder, sortOn]);
 
   return {
     sortedValues: sorter(values),

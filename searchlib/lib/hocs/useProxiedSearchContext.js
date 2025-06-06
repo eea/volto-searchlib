@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { SearchDriver } from '@elastic/search-ui';
 import { atom, useAtom } from 'jotai';
 
@@ -10,9 +10,10 @@ const stateFields = [
   'sortDirection',
   'sortField',
   'sortList',
+  'sortTest',
 ];
 
-const filterActions = ['removeFilter', 'setFilter', 'addFilter'];
+const filterActions = ['removeFilter', 'setFilter', 'addFilter', 'setSort'];
 
 const buildDriver = (searchContext, onSearchTrigger) => {
   const initialState = Object.assign(

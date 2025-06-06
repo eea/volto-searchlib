@@ -61,6 +61,8 @@ export function addFilter() {
   const allOtherFilters = filters.filter((f) => f.field !== name) || []; // || f.type !== type
   const existingFilterValues = existingFilter.values || [];
 
+  console.log([...existingFilter, allOtherFilters]);
+
   const newFilterValues = existingFilterValues.find((existing) =>
     doFilterValuesMatch(existing, value),
   )
@@ -71,9 +73,42 @@ export function addFilter() {
     current: 1,
     filters: [
       ...allOtherFilters,
-      { field: name, values: newFilterValues, type },
+      {
+        field: name,
+        values: newFilterValues,
+        type,
+      },
     ],
   });
+}
+
+export function setSort({ field, sortOn, sortOrder }) {
+  if (!field) {
+    return;
+  }
+
+  const { driver } = this;
+  const { filters } = driver.state;
+
+  console.log({ state: driver.state });
+
+  const mappedFilters = filters.map((f) => {
+    if (f.field === field) {
+      return {
+        ...f,
+        sortOn,
+        sortOrder,
+      };
+    }
+    return f;
+  });
+
+  driver._updateSearchResults({
+    current: 1,
+    filters: mappedFilters,
+  });
+
+  // console.log('SET SORT ACTION!!!', field, sortOn, sortOrder, filters);
 }
 
 export function removeFilter(name, value, type) {

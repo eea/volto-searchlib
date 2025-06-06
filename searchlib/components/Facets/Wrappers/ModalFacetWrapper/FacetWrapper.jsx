@@ -28,9 +28,8 @@ const FacetWrapperComponent = (props) => {
 
   const [defaultTypeValue, defaultIsExact] = (defaultValue || '').split(':');
 
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
 
   const [isExact, setIsExact] = React.useState(defaultIsExact);
 

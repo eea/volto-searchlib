@@ -25,6 +25,7 @@ function getFilterValueDisplay(filterValue) {
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
 
