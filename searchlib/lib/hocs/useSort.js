@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { customOrder } from '@eeacms/search/lib/utils';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { filter } from 'lodash';
 
 const useSort = (
   values,
@@ -13,7 +12,7 @@ const useSort = (
   const [sortOn, setSortOn] = React.useState(defaultSortOn);
   const [sortOrder, setSortOrder] = React.useState(defaultSortOrder[sortOn]);
   const { appConfig } = useAppConfig();
-  const { filters, setSort } = useSearchContext();
+  const { sortList, setSort } = useSearchContext();
 
   const toggleSort = (name) => {
     // Handle setting sort here
@@ -64,12 +63,12 @@ const useSort = (
 
   useEffect(() => {
     // console.log('FFF: ', filters);
-    const data = filters.find((f) => f.field === field);
+    const data = sortList.find((item) => item.field === field);
     if (data) {
       setSortOn(data.sortOn);
       setSortOrder(data.sortOrder);
     }
-  }, [filters, field, sortOrder, sortOn]);
+  }, [field, sortOrder, sortOn, sortList]);
 
   return {
     sortedValues: sorter(values),
