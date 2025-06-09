@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';

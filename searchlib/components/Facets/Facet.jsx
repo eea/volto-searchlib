@@ -79,19 +79,10 @@ const FacetContainer = (props) => {
       }}
       onChange={(value) => {
         setFilter(field, value, filterType);
-        console.log('CHANGE / This changes the filter in context ', {
-          field,
-          filterType,
-        });
         onChange && onChange(field, value, filterType);
       }}
       onSelect={(value) => {
         addFilter(field, value, filterType);
-        console.log('SELECT / This changes the filter in context ', {
-          field,
-          value,
-          filterType,
-        });
         onSelect && onSelect(field, value, filterType);
       }}
       options={facetValues}

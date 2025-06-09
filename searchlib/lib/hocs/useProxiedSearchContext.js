@@ -9,8 +9,6 @@ const stateFields = [
   'searchTerm',
   'sortDirection',
   'sortField',
-  'sortList',
-  'sortTest',
 ];
 
 const filterActions = ['removeFilter', 'setFilter', 'addFilter', 'setSort'];

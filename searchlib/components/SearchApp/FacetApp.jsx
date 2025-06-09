@@ -32,7 +32,6 @@ export default function FacetApp(props) {
 
   const onChangeFilterType = React.useCallback(
     (_type) => {
-      console.log('Is this the base?', _type);
       removeFilter(field);
       const { values = [] } = value || {};
       values.forEach((v) => {
