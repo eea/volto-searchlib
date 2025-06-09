@@ -106,8 +106,6 @@ export function setSort({ field, sortOn, sortOrder }) {
   driver._updateSearchResults({
     sortList: sortOptions,
   });
-
-  // console.log('SET SORT ACTION!!!', field, sortOn, sortOrder, filters);
 }
 
 export function removeFilter(name, value, type) {
