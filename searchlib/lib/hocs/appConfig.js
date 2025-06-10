@@ -8,9 +8,6 @@ export const AppConfigContext = React.createContext({
 export const useAppConfig = () => {
   const context = React.useContext(AppConfigContext);
 
-  // TODO: For develpment mode
-  context.payload.appConfig.host = 'https://www.eea.europa.eu';
-
   if (!context) {
     // eslint-disable-next-line no-console
     console.warn(
