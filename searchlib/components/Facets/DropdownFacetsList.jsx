@@ -1,5 +1,4 @@
 import React from 'react';
-import EventEmitter from 'events';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import {
   useSearchContext,
@@ -34,8 +33,6 @@ const messages = defineMessages({
     defaultMessage: 'Oldest',
   },
 });
-
-const eventEmitter = new EventEmitter();
 
 const DropdownFacetsList = ({ defaultWrapper }) => {
   const { appConfig } = useAppConfig();
@@ -95,7 +92,6 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
             {...facetInfo}
             {...rawSearchContext}
             applySearch={applySearch}
-            eventEmitter={eventEmitter}
             wrapper="DropdownFacetWrapper"
           />
         ))}
@@ -146,7 +142,6 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
         facets={sidebarFacets}
         isLiveSearch={isLiveSearch}
         setIsLiveSearch={setIsLiveSearch}
-        eventEmitter={eventEmitter}
       />
       {/* {!isLiveSearch ? (
         <SearchContext.Provider value={sidebarSearchContext}>

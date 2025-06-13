@@ -71,8 +71,40 @@ export function addFilter() {
     current: 1,
     filters: [
       ...allOtherFilters,
-      { field: name, values: newFilterValues, type },
+      {
+        field: name,
+        values: newFilterValues,
+        type,
+      },
     ],
+  });
+}
+
+export function setSort({ field, sortOn, sortOrder }) {
+  if (!field) {
+    return;
+  }
+
+  const { driver } = this;
+  const { sortList } = driver.state;
+  console.log({ sortList });
+
+  let sortOptions = [];
+  const existingSort = sortList.filter((item) => item.field === field);
+
+  if (existingSort.length === 0) {
+    sortOptions = [...sortList, { field, sortOn, sortOrder }];
+  } else {
+    sortOptions = sortList.map((item) => {
+      if (item.field === field) {
+        return { field, sortOn, sortOrder };
+      }
+      return item;
+    });
+  }
+
+  driver._updateSearchResults({
+    sortList: sortOptions,
   });
 }
 

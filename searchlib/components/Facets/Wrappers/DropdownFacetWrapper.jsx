@@ -33,22 +33,25 @@ const DropdownFacetWrapper = (props) => {
     sortedOptions,
     filterType,
     isLoading,
-    eventEmitter,
   } = props;
   const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
-  const {
-    searchContext: facetSearchContext,
-    applySearch,
-  } = useProxiedSearchContext(rawSearchContext);
+  const { searchContext: facetSearchContext, applySearch } =
+    useProxiedSearchContext(rawSearchContext);
   const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
   const fallback = filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
-    ? filters?.find((f) => f.field === field)?.type || fallback
-    : fallback;
+
+  const defaultValue = React.useMemo(
+    () =>
+      field
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback,
+    [field, filters, fallback],
+  );
+
   const filtersCount = rawSearchContext.filters
     .filter((filter) => filter.field === field)
     .map((filter) => filter.values.length);
@@ -58,48 +61,29 @@ const DropdownFacetWrapper = (props) => {
 
   const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();
-
-  useOutsideClick(nodeRef, () => setIsOpen(false));
-
-  const onChangeFilterType = (v) => {
-    setLocalFilterType(v);
-    if (!eventEmitter) return;
-    eventEmitter.emit('change:filterType', {
-      field,
-      type: v,
-    });
-  };
-
-  React.useEffect(() => {
-    if (!eventEmitter) return;
-
-    function changeFilterType(data) {
-      if (data.field === field) {
-        setLocalFilterType(data.type);
-      }
-    }
-
-    eventEmitter.on('change:filterType', changeFilterType);
-
-    return () => {
-      eventEmitter.off('change:filterType', changeFilterType);
-    };
-  }, [eventEmitter]);
-
   const { width } = useWindowDimensions();
   const isSmallScreen = width < SMALL_SCREEN_SIZE;
-  if (facets[field] === undefined) return null;
-  if (facet?.authOnly && token === undefined) return null;
 
   const intl = useIntl();
   const labelPrint =
     typeof label === 'object' ? intl.formatMessage(label) : label;
+
+  useOutsideClick(nodeRef, () => setIsOpen(false));
+
+  React.useEffect(() => {
+    if (defaultValue !== localFilterType) {
+      setLocalFilterType(defaultValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
+
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
 
   return (
     <>
@@ -134,7 +118,7 @@ const DropdownFacetWrapper = (props) => {
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={onChangeFilterType}
+                  onChangeFilterType={(v) => setLocalFilterType(v)}
                 />
               </SearchContext.Provider>
               {!hideActiveFilters && (
@@ -211,7 +195,7 @@ const DropdownFacetWrapper = (props) => {
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={onChangeFilterType}
+                  onChangeFilterType={(v) => setLocalFilterType(v)}
                 />
 
                 {!hideActiveFilters && (
