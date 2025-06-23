@@ -13,7 +13,6 @@
     "react"
   ],
   "addons": [
-    "@eeacms/volto-eea-design-system",
     "@eeacms/volto-matomo"
   ],
   "repository": {
@@ -21,7 +20,7 @@
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
-    "@eeacms/volto-eea-design-system": "1.37.0",
+    "@eeacms/volto-design-tokens": "1.0.2",
     "@eeacms/volto-matomo": "5.0.0",
     "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",
