@@ -72,7 +72,7 @@ body.searchlib-page {
 
     .sorting {
       .ui.dropdown:focus-visible {
-        outline: @focusVisibleOutline !important;
+        outline: var(--focus-visible, @focusVisibleOutline) !important;
       }
     }
 

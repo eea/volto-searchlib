@@ -453,12 +453,13 @@
       align-items: center;
       margin-top: 1.5em;
       margin-bottom: 1em;
+      --text-divider-gap: 0.5em;
     }
 
     .group-heading::after {
       height: 1px;
       flex-grow: 1;
-      margin-left: @textDividerGap;
+      margin-left: var(--text-divider-gap);
       background-color: @sf-light-gray;
       content: '';
     }
