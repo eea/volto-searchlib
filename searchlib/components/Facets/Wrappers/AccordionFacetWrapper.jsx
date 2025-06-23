@@ -1,15 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Accordion, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from '../state';
 import { useSetAtom } from 'jotai';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import Facet from '../Facet';
+import { Dimmer } from 'semantic-ui-react';
 
 const AccordionFacetWrapper = (props) => {
-  const { collapsable = true, field, label } = props;
+  const { collapsable = true, field, label, token, isLoading } = props;
+
   const searchContext = useSearchContext();
-  const { filters } = searchContext;
+  const { facets, filters } = searchContext;
 
   const hasFilter = !!filters.find((filter) => field === filter.field);
   const [openFacets] = useAtom(openFacetsAtom);
@@ -18,15 +21,26 @@ const AccordionFacetWrapper = (props) => {
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
   const fallback = props.filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
-    ? filters?.find((f) => f.field === field)?.type || fallback
-    : fallback;
+
+  const defaultValue = React.useMemo(
+    () =>
+      field
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback,
+    [field, filters, fallback],
+  );
 
   const [defaultTypeValue] = (defaultValue || '').split(':');
 
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
+
+  React.useEffect(() => {
+    if (defaultValue !== localFilterType) {
+      setLocalFilterType(defaultValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
 
   React.useEffect(() => {
     let temp = openFacets;
@@ -42,7 +56,8 @@ const AccordionFacetWrapper = (props) => {
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);
-
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
   return collapsable ? (
     <Accordion>
       <Accordion.Title
@@ -79,6 +94,7 @@ const AccordionFacetWrapper = (props) => {
         <Icon className="ri-arrow-down-s-line" />
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
+        {isLoading && <Dimmer active></Dimmer>}
         <Facet
           {...props}
           active={isOpened}
@@ -98,4 +114,6 @@ const AccordionFacetWrapper = (props) => {
   );
 };
 
-export default AccordionFacetWrapper;
+export default connect((state) => ({
+  token: state.userSession?.token,
+}))(AccordionFacetWrapper);

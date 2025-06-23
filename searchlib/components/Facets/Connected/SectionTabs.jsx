@@ -5,25 +5,32 @@
 import React from 'react';
 import { Menu, Ref } from 'semantic-ui-react'; // Dropdown
 import { Icon } from '@eeacms/search/components';
-import { useAtom } from 'jotai';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import {
   // useWindowDimensions,
   useSearchContext,
   useAppConfig,
 } from '@eeacms/search/lib/hocs';
-import { isLandingPageAtom } from '@eeacms/search/state';
 
 const cmp = (a, b) => (a > b ? 1 : a === b ? 0 : a < b ? -1 : 0);
+
+const messages = defineMessages({
+  all: {
+    id: 'All',
+    defaultMessage: 'All',
+  },
+});
 
 const SectionTabs = (props) => {
   // const { width } = useWindowDimensions();
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
-  const [isLandingPage] = useAtom(isLandingPageAtom);
   const menuRef = React.useRef(null);
 
   const showOverflow = false;
+  const showIcons = appConfig.showClusterAsIcons || false;
 
   // TODO: use https://www.npmjs.com/package/react-horizontal-scrolling-menu ?
   //
@@ -42,7 +49,7 @@ const SectionTabs = (props) => {
   // }, []);
 
   const { contentSectionsParams = {} } = appConfig;
-  if (!contentSectionsParams.enable || isLandingPage) return null;
+  if (!contentSectionsParams.enable) return null;
 
   const { facets = {}, filters = [] } = searchContext;
   const facetField = contentSectionsParams.sectionFacetsField;
@@ -64,6 +71,7 @@ const SectionTabs = (props) => {
   sections.sort((s1, s2) =>
     cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
   );
+  const intl = useIntl();
 
   return (
     <div>
@@ -88,7 +96,7 @@ const SectionTabs = (props) => {
               }
             }}
           >
-            {`All (${allCount})`}
+            {`${intl.formatMessage(messages.all)} (${allCount})`}
           </Menu.Item>
           {sections.map(({ value, count }) => (
             <Menu.Item
@@ -104,9 +112,17 @@ const SectionTabs = (props) => {
                 }
               }}
             >
-              {/*<Icon type={value} family="Content types" />*/}
-              <span className="title">{value}&nbsp;</span>
-              <span className="count">({count})</span>
+              {showIcons ? (
+                <div className="tab-icon" title={value}>
+                  <Icon className="small" type={value} family="Content types" />
+                  <span className="count">{count}</span>
+                </div>
+              ) : (
+                <>
+                  <span className="title">{value}&nbsp;</span>
+                  <span className="count">({count})</span>
+                </>
+              )}
             </Menu.Item>
           ))}
         </Menu>

@@ -25,16 +25,21 @@ export function resetSearch(resetState) {
   driver._updateSearchResults(state);
 }
 
-export function clearFilters(except = []) {
+export function clearFilters(except = [], options) {
+  // TODO: tibi add options
   const { setFilter } = this.driver;
 
   this.driver.clearFilters(except);
   this.appConfig.facets
     .filter((f) => !!f.default)
     .forEach((facet) => {
-      facet.default.values.forEach((value) =>
-        setFilter(facet.field, value, facet.default.type || 'any'),
-      );
+      const fdefault =
+        typeof facet.default === 'function'
+          ? facet.default(options)
+          : facet.default;
+      fdefault.values.forEach((value) => {
+        setFilter(facet.field, value, fdefault.type || 'any');
+      });
     });
 }
 
@@ -66,8 +71,40 @@ export function addFilter() {
     current: 1,
     filters: [
       ...allOtherFilters,
-      { field: name, values: newFilterValues, type },
+      {
+        field: name,
+        values: newFilterValues,
+        type,
+      },
     ],
+  });
+}
+
+export function setSort({ field, sortOn, sortOrder }) {
+  if (!field) {
+    return;
+  }
+
+  const { driver } = this;
+  const { sortList } = driver.state;
+  console.log({ sortList });
+
+  let sortOptions = [];
+  const existingSort = sortList.filter((item) => item.field === field);
+
+  if (existingSort.length === 0) {
+    sortOptions = [...sortList, { field, sortOn, sortOrder }];
+  } else {
+    sortOptions = sortList.map((item) => {
+      if (item.field === field) {
+        return { field, sortOn, sortOrder };
+      }
+      return item;
+    });
+  }
+
+  driver._updateSearchResults({
+    sortList: sortOptions,
   });
 }
 
@@ -81,14 +118,14 @@ export function removeFilter(name, value, type) {
   let updatedFilters = [...(filters || [])];
 
   if (!value && type) {
-    if (!filter.missing) {
+    if (!filter?.missing) {
       updatedFilters = filters.filter(
         (filter) => !(filter.field === name && filter.type === type),
       );
     } else {
       updatedFilters = [
         ...filters.filter((filter) => filter.field !== name),
-        { ...filter.missing, field: name },
+        { ...filter?.missing, field: name },
       ];
     }
   } else if (value) {

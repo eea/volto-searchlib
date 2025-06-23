@@ -17,7 +17,9 @@ function combineAggregationsFromResponses(responses) {
 function removeFilterByName(state, facetName) {
   return {
     ...state,
-    filters: state.filters.filter((f) => f.field !== facetName),
+    filters: state.filters.filter(
+      (f) => f.type === 'all' || f.field !== facetName,
+    ),
   };
 }
 

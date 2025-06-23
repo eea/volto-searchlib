@@ -6,6 +6,19 @@ import {
   useWindowDimensions,
 } from '@eeacms/search/lib/hocs';
 import FacetResolver from './FacetResolver';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  clearAll: {
+    id: 'clear all',
+    defaultMessage: 'clear all',
+  },
+  filters: {
+    id: 'Filters',
+    defaultMessage: 'Filters',
+  },
+});
 
 export default function SidebarFacetsList(props) {
   const {
@@ -22,7 +35,7 @@ export default function SidebarFacetsList(props) {
 
   useOutsideClick(nodeRef, onClose);
   const searchContext = useSearchContext();
-
+  const intl = useIntl();
   return (
     <div ref={nodeRef}>
       <Sidebar
@@ -35,11 +48,11 @@ export default function SidebarFacetsList(props) {
         <div className="sidebar-wrapper">
           <div className="sidebar-content">
             <div className="sidebar-header">
-              <h3>Filters</h3>
+              <h3>{intl.formatMessage(messages.filters)}</h3>
               <Button
                 basic
                 className="clear-btn"
-                content="clear all"
+                content={intl.formatMessage(messages.clearAll)}
                 onClick={() => {
                   searchContext.resetFilters();
                 }}
@@ -68,8 +81,8 @@ export default function SidebarFacetsList(props) {
             {facets.map((facetInfo, i) => (
               <FacetResolver
                 key={i}
-                {...searchContext}
                 {...facetInfo}
+                {...searchContext}
                 wrapper="AccordionFacetWrapper"
               />
             ))}

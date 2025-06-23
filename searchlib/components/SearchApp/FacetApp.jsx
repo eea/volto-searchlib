@@ -27,9 +27,8 @@ export default function FacetApp(props) {
     ? filters?.find((f) => f.field === field)?.type || fallback
     : fallback;
   const [defaultTypeValue] = (_defaultValue || '').split(':');
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
 
   const onChangeFilterType = React.useCallback(
     (_type) => {

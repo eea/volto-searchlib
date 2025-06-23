@@ -1,14 +1,19 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { withSearch } from '@elastic/react-search-ui';
-import path from 'path';
 
-const DownloadButton = (props) => {
-  const { searchTerm, filters } = props.searchContext;
-  const { host = 'http://0.0.0.0:9200', elastic_index } = props.appConfig;
+const DownloadButton = ({ searchContext, appConfig }) => {
+  const { searchTerm, filters } = searchContext;
+  const {
+    host = 'http://0.0.0.0:9200',
+    // elastic_index,
+    showDownloadButton,
+    appName,
+  } = appConfig;
   const es_url = new URL(host);
-  es_url.pathname = path.join(elastic_index, '_download');
-  return (
+  // TODO: this hardcodes the _es router
+  es_url.pathname = `_es/${appName}/_download`;
+  return showDownloadButton ? (
     <Form action={es_url.href} method="post">
       <input
         type="hidden"
@@ -19,7 +24,7 @@ const DownloadButton = (props) => {
         Download search results (CSV)
       </Button>
     </Form>
-  );
+  ) : null;
 };
 
 export default withSearch((context) => ({ searchContext: context }))(

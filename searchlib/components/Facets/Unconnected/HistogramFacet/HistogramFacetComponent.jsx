@@ -1,5 +1,4 @@
 import React from 'react';
-import { getRangeStartEnd } from '@eeacms/search/lib/utils';
 import { Input } from 'semantic-ui-react';
 import { HistogramSlider } from '@eeacms/search/components/Vis';
 
@@ -14,7 +13,7 @@ const visualStyle = {
 const useDebouncedInput = (initialValue) => {
   const [storedValue, setValue] = React.useState(initialValue);
   React.useEffect(() => {
-    if (initialValue !== storedValue && storedValue === undefined) {
+    if (initialValue !== storedValue) {
       // console.log('should update internal state', {
       //   initialValue,
       //   storedValue,
@@ -38,12 +37,10 @@ const useDebouncedInput = (initialValue) => {
 };
 
 const HistogramFacetComponent = (props) => {
-  const { data, ranges, onChange, selection } = props; // , step
-
-  const range = getRangeStartEnd(ranges);
+  const { data, histogram_range, onChange, selection } = props; // , step
   const {
-    start = selection ? selection[0] : undefined ?? range.start,
-    end = selection ? selection[1] : undefined ?? range.end,
+    start = selection ? selection[0] : undefined ?? histogram_range.start,
+    end = selection ? selection[1] : undefined ?? histogram_range.end,
   } = props;
 
   const [startValue, handleChangeStartValue] = useDebouncedInput(start);
@@ -71,8 +68,8 @@ const HistogramFacetComponent = (props) => {
             // console.log('selection', value, end, start);
             // onChange({ from: value, to: end }); //selection?.[1]
           }}
-          min={range.start}
-          max={range.end}
+          min={histogram_range.start}
+          max={histogram_range.end}
         />
         <Input
           type="number"
@@ -84,8 +81,8 @@ const HistogramFacetComponent = (props) => {
             // console.log('selection', value, end, start);
             // onChange({ from: start, to: value }); // selection?.[0]
           }}
-          min={range.start}
-          max={range.end}
+          min={histogram_range.start}
+          max={histogram_range.end}
         />
       </div>
 

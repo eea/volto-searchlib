@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
+import { markSelectedFacetValuesFromFilters } from '@eeacms/search/lib/search/helpers';
 import { useSort } from '@eeacms/search/lib/hocs';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
+import { defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  matchAny: {
+    id: 'Match any',
+    defaultMessage: 'Match any',
+  },
+  matchAll: {
+    id: 'Match all',
+    defaultMessage: 'Match all',
+  },
+});
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
+
   return (
     <div className="sui-multi-checkbox-facet">
       {sortedOptions.map((option) => {
@@ -52,17 +69,15 @@ const FacetOptions = (props) => {
 };
 
 const Select = ({ options, value, onChange, className }) => {
-  const [val, setVal] = React.useState(value);
   const handler = (e) => {
     onChange(e.target.value);
-    setVal(e.target.value);
   };
 
   return (
     <select
       onBlur={handler}
       onChange={handler}
-      value={val}
+      value={value}
       className={className}
     >
       {options.map((opt) => (
@@ -87,25 +102,64 @@ const MultiTermFacetViewComponent = (props) => {
     onSearch,
     // searchPlaceholder,
     onChangeFilterType,
+    facet,
+    filters,
     field,
-    filterType = 'any',
+    filterType,
   } = props;
+  const prevFilterType = React.useRef(filterType);
 
+  const intl = useIntl();
   const filterTypes = [
-    { key: 2, text: 'Match any', value: 'any' },
-    { key: 1, text: 'Match all', value: 'all' },
+    {
+      key: 2,
+      text: intl.formatMessage(messages.matchAny),
+      value: 'any',
+    },
+    {
+      key: 1,
+      text: intl.formatMessage(messages.matchAll),
+      value: 'all',
+    },
   ];
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
+  const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
+  const configSortOn = facetConfig.sortOn || 'count';
+  const configSortOrder = facetConfig.sortOrder || 'descending';
+  let defaultSortOrder = {
+    // each criteria has its own default sort order
+    count: 'descending',
+    value: 'ascending',
+    custom: 'ascending',
+  };
 
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  defaultSortOrder[configSortOn] = configSortOrder;
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
-      defaultSortOn: 'count',
-      defaultSortOrder: 'descending',
+      defaultSortOn: configSortOn,
+      defaultSortOrder: defaultSortOrder,
     },
+    field,
   );
+
+  useEffect(() => {
+    if (prevFilterType.current !== filterType) {
+      markSelectedFacetValuesFromFilters(facet, filters, field).data.forEach(
+        (fv) => {
+          if (fv.selected) onSelect(fv.value);
+        },
+      );
+      prevFilterType.current = filterType;
+    }
+  }, [field, facet, filters, filterType, onSelect]);
 
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>

@@ -1,2 +1,2 @@
-export addQAParams from './requestBodyModifier';
-export extractAnswers from './globalStateModifier';
+export { default as addQAParams } from './requestBodyModifier';
+export { default as extractAnswers } from './globalStateModifier';

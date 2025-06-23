@@ -1,13 +1,14 @@
 import React from 'react';
 import { SearchView } from '@eeacms/search/components/SearchView/SearchView';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
-import qs from 'querystring';
+import { withLanguage } from '@eeacms/search/lib/hocs';
+import qs from 'query-string';
 
 import BasicSearchApp from './BasicSearchApp';
 
 const getParams = (s) => (s ? (s.startsWith('?') ? s.slice(1) : s) : '');
 
-export default function SearchApp(props) {
+function SearchApp(props) {
   const locationSearch = __CLIENT__
     ? qs.parse(getParams(window.location.search))?.['q']
     : null;
@@ -15,7 +16,9 @@ export default function SearchApp(props) {
   const [sortField, sortDirection] = defaultSort.split('|');
 
   const appConfig = props.registry.searchui[props.appName];
-  const appDefaultFilters = getDefaultFilters(appConfig);
+  const appDefaultFilters = getDefaultFilters(appConfig, {
+    language: props.language,
+  });
   const [initialState] = React.useState({
     ...(appDefaultFilters?.length
       ? {
@@ -44,3 +47,7 @@ export default function SearchApp(props) {
     />
   );
 }
+
+const WithLanguageSearchApp = withLanguage(SearchApp);
+
+export default WithLanguageSearchApp;

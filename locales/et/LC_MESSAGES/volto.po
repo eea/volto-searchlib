@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Aktiivsed filtrid"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Aktiivsed filtrid:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Kõik"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Tagasi kodu otsimiseks"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Choices"
+msgstr "Valikud"
+
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Close"
+msgstr "Sule"
+
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Default"
+msgstr "Vaikimisi"
+
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Description"
+msgstr "Kirjeldus"
+
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Filtrid"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Sobi kõik"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Sobivad mis tahes"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "Rohkem filtreid"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "Uusim"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No options"
+msgstr "Valikud puuduvad"
+
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No value"
+msgstr "Ei mingit väärtust"
+
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Vanim"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Või otsige järgi"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Required"
+msgstr "Nõutav"
+
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Select…"
+msgstr "Vali…"
+
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Short Name"
+msgstr "Lühike nimi"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Allikas:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Title"
+msgstr "Pealkiri"
+
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Pealkiri a-z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Pealkiri z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Teemad:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Used for programmatic access to the fieldset."
+msgstr "Kasutatakse programmiliseks juurdepääsuks väljakomplektile."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "tühjenda kõik"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "üksus"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "esemed"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Kuva kõik {total} dokumenti"

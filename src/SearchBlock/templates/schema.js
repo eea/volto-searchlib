@@ -1,4 +1,6 @@
-function FilterSchema({ formData }) {
+import { FormattedMessage } from 'react-intl';
+
+function FilterSchema({ formData: _formData }) {
   return {
     title: 'Filter',
     fieldsets: [
@@ -23,15 +25,18 @@ function FilterSchema({ formData }) {
 }
 
 const setFacetWidgetProps = (appConfig, registry, appName) => {
-  return (schema, data, intl) => {
+  return (schema, data, _intl) => {
     // Note: this is a hack, it's needed to be able to pass the computed
     // appConfig from the edit block. Hackish because the block schemaEnhancers
     // (and the ObjectWidget) aren't passed the whole available props
 
-    schema.properties.name.choices = appConfig.facets.map((facet) => [
-      facet.id || facet.field,
-      facet.activeFilterLabel || facet.label || facet.field,
-    ]);
+    schema.properties.name.choices = appConfig.facets.map((facet) => {
+      const label = facet.activeFilterLabel || facet.label || facet.field;
+      return [
+        facet.id || facet.field,
+        typeof label === 'object' ? <FormattedMessage {...label} /> : label,
+      ];
+    });
 
     schema.properties.value.facetName = data.name;
     schema.properties.value.appConfig = appConfig;
@@ -55,9 +60,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       'showFacets',
       'showSorting',
       'showClusters',
+      ...[formData?.showClusters ? ['showClusterAsIcons'] : []],
       'landingPageURL',
       'availableFacets',
       'defaultFacets',
+      'authOnlyFacets',
       'defaultFilters',
       'defaultSort',
     ],
@@ -90,6 +97,12 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       default: true,
       configPath: 'showClusters',
     },
+    showClusterAsIcons: {
+      title: 'Use icons for tab clusters',
+      type: 'boolean',
+      default: false,
+      configPath: 'showClusterAsIcons',
+    },
     showSorting: {
       title: 'Show sorting?',
       type: 'boolean',
@@ -112,6 +125,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       widget: 'array',
       choices: [],
     },
+    authOnlyFacets: {
+      title: 'Facets for authenticated users',
+      widget: 'array',
+      choices: [],
+    },
     defaultSort: {
       title: 'Default sort',
       // widget: 'sort_widget',
@@ -126,10 +144,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
 
   if (appConfig) {
     const { resultViews } = appConfig;
+    // debugger;
 
     const availableFacets = appConfig.facets?.map(({ field, label }) => [
       field,
-      label?.trim() ? label : field,
+      typeof label === 'object' ? label.id : label?.trim() ? label : field,
     ]);
 
     schema.properties.availableFacets.choices = availableFacets;
@@ -137,6 +156,9 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
 
     schema.properties.defaultFacets.choices = availableFacets;
     schema.properties.defaultFacets.items = { choices: availableFacets };
+
+    schema.properties.authOnlyFacets.choices = availableFacets;
+    schema.properties.authOnlyFacets.items = { choices: availableFacets };
 
     // fill in defaultResultView choices
     schema.properties.defaultResultView = {
@@ -159,7 +181,11 @@ export const searchResultsSchemaEnhancer = ({ schema, formData }) => {
       appName,
       choices: appConfig.sortOptions.map((opt) => [
         `${opt.value}|${opt.direction}`,
-        opt.name,
+        typeof opt.name === 'object' ? (
+          <FormattedMessage {...opt.name} />
+        ) : (
+          opt.name
+        ),
       ]),
     };
   }

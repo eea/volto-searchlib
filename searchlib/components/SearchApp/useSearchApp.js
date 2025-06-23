@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'; // useDeepCompareEffect,
+import { trackSiteSearch } from '@eeacms/volto-matomo/utils';
 
 import {
   getDefaultFilters,
@@ -18,6 +19,7 @@ import {
   resetFilters,
   resetSearch,
   addFilter,
+  setSort,
 } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { useLoadingState } from './state';
@@ -71,15 +73,25 @@ export default function useSearchApp(props) {
       setIsLoading(true);
       const res = await paramOnSearch(appConfig)(state);
       setIsLoading(false);
+
+      const searchTerm = state.searchTerm?.trim();
+      if (appConfig.enableMatomoTracking && searchTerm.length > 0) {
+        trackSiteSearch({
+          keyword: searchTerm,
+          category: appName,
+          count: res.totalResults,
+        });
+      }
+
       return res;
     },
-    [appConfig, paramOnSearch, setIsLoading],
+    [appConfig, appName, paramOnSearch, setIsLoading],
   );
 
-  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
-    appConfig,
-    paramOnAutocomplete,
-  ]);
+  const onAutocomplete = React.useMemo(
+    () => paramOnAutocomplete(appConfig),
+    [appConfig, paramOnAutocomplete],
+  );
 
   const locationSearchTerm = React.useMemo(
     () =>
@@ -88,6 +100,12 @@ export default function useSearchApp(props) {
         : null,
     [],
   );
+
+  // we don't want to track the URL if our search app is configured as
+  // a simple separate app (for ex. search input or landing page that
+  // trampolines to another instance)
+  const trackUrlState =
+    mode === 'edit' ? false : appConfig.url ? false : appConfig.trackUrlState;
 
   const elasticConfig = React.useMemo(
     () => ({
@@ -103,15 +121,7 @@ export default function useSearchApp(props) {
           : {}),
         ...(initialState || {}),
       },
-      // we don't want to track the URL if our search app is configured as
-      // a simple separate app (for ex. search input or landing page that
-      // trampolines to another instance)
-      trackUrlState:
-        mode === 'edit'
-          ? false
-          : appConfig.url
-          ? false
-          : appConfig.trackUrlState,
+      trackUrlState,
     }),
     [
       appConfig,
@@ -119,9 +129,11 @@ export default function useSearchApp(props) {
       onSearch,
       locationSearchTerm,
       initialState,
-      mode,
+      trackUrlState,
     ],
   );
+
+  // console.log('elasticConfig', elasticConfig);
 
   const { facetOptions } = React.useState(useFacetsWithAllOptions(appConfig));
 
@@ -149,6 +161,7 @@ export default function useSearchApp(props) {
         clearFilters,
         removeFilter,
         addFilter,
+        setSort,
       };
       Object.keys(funcs).forEach((name) => {
         searchContext[name] = funcs[name].bind({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   useAppConfig,
   useProxiedSearchContext,
@@ -12,6 +13,7 @@ import { Dimmer, Modal, Button } from 'semantic-ui-react';
 import { atomFamily } from 'jotai/utils';
 import { useAtom, atom } from 'jotai';
 import cx from 'classnames';
+import { useIntl } from 'react-intl';
 
 import ActiveFilters from '../ActiveFilters';
 
@@ -30,20 +32,26 @@ const DropdownFacetWrapper = (props) => {
     removeFilter,
     sortedOptions,
     filterType,
+    isLoading,
   } = props;
+  const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
-  const {
-    searchContext: facetSearchContext,
-    applySearch,
-  } = useProxiedSearchContext(rawSearchContext);
-  const { filters } = facetSearchContext;
+  const { searchContext: facetSearchContext, applySearch } =
+    useProxiedSearchContext(rawSearchContext);
+  const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
   const facet = appConfig.facets?.find((f) => f.field === field);
   const fallback = filterType ? props.filterType : facet.filterType;
-  const defaultValue = field
-    ? filters?.find((f) => f.field === field)?.type || fallback
-    : fallback;
+
+  const defaultValue = React.useMemo(
+    () =>
+      field
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback,
+    [field, filters, fallback],
+  );
+
   const filtersCount = rawSearchContext.filters
     .filter((filter) => filter.field === field)
     .map((filter) => filter.values.length);
@@ -51,19 +59,31 @@ const DropdownFacetWrapper = (props) => {
     (f) => (f.id || f.field) === field,
   );
 
+  const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < SMALL_SCREEN_SIZE;
+
+  const intl = useIntl();
+  const labelPrint =
+    typeof label === 'object' ? intl.formatMessage(label) : label;
 
   useOutsideClick(nodeRef, () => setIsOpen(false));
 
-  const { width } = useWindowDimensions();
-  const isSmallScreen = width < SMALL_SCREEN_SIZE;
+  React.useEffect(() => {
+    if (defaultValue !== localFilterType) {
+      setLocalFilterType(defaultValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
+
+  if (facets[field] === undefined) return null;
+  if (facet?.authOnly && token === undefined) return null;
 
   return (
     <>
@@ -76,7 +96,7 @@ const DropdownFacetWrapper = (props) => {
             open={isOpen}
             trigger={
               <span className="facet-title">
-                {label ? <>{label} </> : <>{title} </>}
+                {labelPrint ? <>{labelPrint} </> : <>{title} </>}
                 {filtersCount.length > 0 && (
                   <span className="count">({filtersCount})</span>
                 )}
@@ -98,17 +118,18 @@ const DropdownFacetWrapper = (props) => {
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={setLocalFilterType}
+                  onChangeFilterType={(v) => setLocalFilterType(v)}
                 />
               </SearchContext.Provider>
-
-              <ActiveFilters
-                sortedOptions={sortedOptions}
-                onRemove={(value) => {
-                  removeFilter(field, value, filterConfig.filterType);
-                }}
-                field={field}
-              />
+              {!hideActiveFilters && (
+                <ActiveFilters
+                  sortedOptions={sortedOptions}
+                  onRemove={(value) => {
+                    removeFilter(field, value, filterConfig.filterType);
+                  }}
+                  field={field}
+                />
+              )}
             </Modal.Content>
             <Modal.Actions>
               <Button
@@ -145,7 +166,7 @@ const DropdownFacetWrapper = (props) => {
               }}
             >
               <span className="facet-title">
-                {label ? <>{label} </> : <>{title} </>}
+                {labelPrint ? <>{labelPrint} </> : <>{title} </>}
                 {filtersCount.length > 0 && (
                   <span className="count">({filtersCount})</span>
                 )}
@@ -169,20 +190,23 @@ const DropdownFacetWrapper = (props) => {
                   }
                 }}
               >
+                {isLoading && <Dimmer active></Dimmer>}
                 <SUIFacet
                   {...props}
                   active={isOpen}
                   filterType={localFilterType}
-                  onChangeFilterType={setLocalFilterType}
+                  onChangeFilterType={(v) => setLocalFilterType(v)}
                 />
 
-                <ActiveFilters
-                  sortedOptions={sortedOptions}
-                  onRemove={(value) => {
-                    removeFilter(field, value, filterConfig.filterType);
-                  }}
-                  field={field}
-                />
+                {!hideActiveFilters && (
+                  <ActiveFilters
+                    sortedOptions={sortedOptions}
+                    onRemove={(value) => {
+                      removeFilter(field, value, filterConfig.filterType);
+                    }}
+                    field={field}
+                  />
+                )}
               </div>
             )}
           </div>

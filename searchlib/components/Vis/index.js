@@ -1,3 +1,3 @@
 // export * from './Histogram';
 
-export HistogramSlider from './HistogramSlider/HistogramSlider';
+export { default as HistogramSlider } from './HistogramSlider/HistogramSlider';

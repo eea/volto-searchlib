@@ -28,6 +28,7 @@ function SearchBlockView(props) {
   const schemaFields = [
     'availableFacets',
     'defaultFacets',
+    'authOnlyFacets',
     'defaultFilters',
     'showClusters',
     'defaultSort',
@@ -78,6 +79,8 @@ function SearchBlockView(props) {
     };
     return reg;
   }, [appName, stableData, schema, mode]);
+
+  // console.log('registry', registry, appName);
 
   useWhyDidYouUpdate('SearchBlockView', {
     registry,

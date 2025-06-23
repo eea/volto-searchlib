@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Aktív szűrők"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Aktív szűrők:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Minden"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Vissza a kereséshez"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Choices"
+msgstr "Választások"
+
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Close"
+msgstr "Közeli"
+
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Description"
+msgstr "Leírás"
+
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Szűrők"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Egyezik minden"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Egyezik bármelyik"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "További szűrők"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "Legújabb"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No options"
+msgstr "Nincs lehetőség"
+
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No value"
+msgstr "Nincs érték"
+
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Legrégebbi"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Vagy keressen"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Required"
+msgstr "Kívánt"
+
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Select…"
+msgstr "Válasszon…"
+
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Short Name"
+msgstr "Rövid név"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Forrás:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Title"
+msgstr "Cím"
+
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Cím a-z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Cím z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Témák:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Used for programmatic access to the fieldset."
+msgstr "A mezőkészlethez való programozott hozzáféréshez használható."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "mindent törölni"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "tétel"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "tételeket"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Az összes {total} dokumentum megjelenítése"

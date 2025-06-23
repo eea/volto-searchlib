@@ -35,7 +35,7 @@ const BootstrapSearchInputView = (props) => {
       autocompleteResults={appConfig.autocomplete.results}
       autocompleteSuggestions={appConfig.autocomplete.suggestions}
       shouldClearFilters={false}
-      useSearchPhrases={appConfig.useSearchPhrases}
+      // useSearchPhrases={appConfig.useSearchPhrases}
       inputView={
         appConfig.searchBoxInputComponent
           ? registry.resolve[appConfig.searchBoxInputComponent].component

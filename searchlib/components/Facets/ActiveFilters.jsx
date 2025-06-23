@@ -3,11 +3,17 @@
 import React from 'react';
 import { Button, Card } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+import { FormattedMessage } from 'react-intl';
 
 const ActiveFilters = (props) => {
   const { onRemove, field } = props;
+  const { appConfig } = useAppConfig();
+  const { clearFilters } = useSearchContext();
 
+  const filterConfig = appConfig.facets.find(
+    (f) => (f.id || f.field) === field,
+  );
   const searchContext = useSearchContext();
   const { filters = [] } = searchContext;
 
@@ -21,7 +27,12 @@ const ActiveFilters = (props) => {
     <div className="active-filters">
       {!activeFilter[0].type ? (
         <>
-          <h5>Active filters:</h5>
+          <h5>
+            <FormattedMessage
+              id="Active filters:"
+              defaultMessage="Active filters:"
+            />
+          </h5>
           <div className="facets-wrapper">
             {activeFilter.map((option, i) => {
               return (
@@ -36,11 +47,19 @@ const ActiveFilters = (props) => {
                           //   (v) => v !== option,
                           // );
                           // // setActiveFilter(filteredValues);
-                          onRemove(option);
+                          if (!filterConfig.isMulti) {
+                            clearFilters();
+                          } else {
+                            onRemove(option);
+                          }
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
-                            onRemove(option);
+                            if (!filterConfig.isMulti) {
+                              clearFilters();
+                            } else {
+                              onRemove(option);
+                            }
                           }
                         }}
                       >
@@ -60,7 +79,9 @@ const ActiveFilters = (props) => {
         className="clear-btn"
         content="Clear all"
         onClick={() => {
-          if (Array.isArray(activeFilter)) {
+          if (!filterConfig.isMulti) {
+            clearFilters();
+          } else if (Array.isArray(activeFilter)) {
             (activeFilter || []).forEach((v) => {
               onRemove(v);
             });
@@ -70,7 +91,9 @@ const ActiveFilters = (props) => {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            if (Array.isArray(activeFilter)) {
+            if (!filterConfig.isMulti) {
+              clearFilters();
+            } else if (Array.isArray(activeFilter)) {
               (activeFilter || []).forEach((v) => {
                 onRemove(v);
               });

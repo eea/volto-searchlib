@@ -19,6 +19,10 @@ describe('NewBlockAddButton', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     store = mockStore({
+      userSession: {
+        token:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0NDM4MzA0NCwiZnVsbG5hbWUiOm51bGx9.cB_q3Q0Jhu8h2m_SDmmknodpDxDLfb4o-qY6Y2plE04',
+      },
       intl: {
         locale: 'en',
         formatMessage: () => 'Select layout',

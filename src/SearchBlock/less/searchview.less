@@ -35,6 +35,39 @@ body.searchlib-page {
       &::-webkit-scrollbar {
         height: 0.3rem !important;
       }
+
+      .active.item {
+        .tab-icon {
+          .count {
+            border: 2px solid @primaryColor;
+            background-color: @primaryColor;
+            color: @white;
+          }
+        }
+      }
+
+      .tab-icon {
+        position: relative;
+      }
+
+      .tab-icon .count {
+        position: absolute;
+        z-index: 100;
+        top: auto;
+        bottom: -0.6em;
+        left: 100%;
+        width: 26px;
+        height: 26px;
+        border: 2px solid #3d5265;
+        border-radius: 50%;
+        margin-left: -1.5em;
+        background-color: @white;
+        color: #3d5265; // TODO: replace with @blue-grey-5 from volto-design-tokens
+        font-size: 10px;
+        font-weight: bold;
+        line-height: 23px;
+        text-align: center;
+      }
     }
 
     .sorting {
@@ -69,9 +102,10 @@ body.searchlib-page {
     }
 
     button.download-btn {
-      display: none;
-      // background: #f2f2f2 !important;
-      // color: @secondaryColor !important;
+      margin-top: 2em;
+      background: #f2f2f2 !important;
+      color: @secondaryColor !important;
+      // display: none;
       // font-size: 10px !important;
     }
 

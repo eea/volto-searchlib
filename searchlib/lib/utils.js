@@ -59,7 +59,10 @@ export function applyConfigurationSchema(config) {
   config.disjunctiveFacets = [...(config.disjunctiveFacets || [])];
   const { facets = [] } = config;
   facets.forEach((facet) => {
-    if (facet.isMulti && !config.disjunctiveFacets.includes(facet.field)) {
+    if (
+      facet.factory === 'SingleTermFacet' ||
+      (facet.isMulti && !config.disjunctiveFacets.includes(facet.field))
+    ) {
       config.disjunctiveFacets.push(facet.field);
     }
   });
@@ -122,8 +125,8 @@ export const normalizeFilters = (filters) =>
 /**
  * Compute the default filters, to be used as initial empty state
  */
-export function getDefaultFilters(appConfig) {
-  const valueObj = getDefaultFilterValues(appConfig.facets);
+export function getDefaultFilters(appConfig, options) {
+  const valueObj = getDefaultFilterValues(appConfig.facets, options);
   return Object.keys(valueObj).map((field) => ({ field, ...valueObj[field] }));
   // //
   // //   Array.from((valueObj || {}).values());
@@ -134,17 +137,25 @@ export function getDefaultFilters(appConfig) {
   //     values: facet.default.values.sort(),
   //     type: facet.default.type || 'any',
   //   }));
-  // console.log(defaultFiltersList);
   // return defaultFiltersList;
 }
 
-export const getDefaultFilterValues = (facets) => {
+export const getDefaultFilterValues = (facets, options) => {
   const defaultFilterValues = facets.reduce(
     (acc, facet) =>
-      facet.default ? [...acc, { field: facet.field, ...facet.default }] : acc,
+      facet.default
+        ? [
+            ...acc,
+            {
+              field: facet.field,
+              ...(typeof facet.default === 'function'
+                ? facet.default(options)
+                : facet.default),
+            },
+          ]
+        : acc,
     [],
   );
-  // console.log('defaultFilterValues', defaultFilterValues);
   return normalizeFilters(defaultFilterValues);
 };
 
@@ -262,7 +273,7 @@ export const customOrder = (values, facetValues, sortOrder = 'ascending') => {
   // facetValues: ['sq', 'bg', ...]
   // Return values ordered as in facetValues
   let result = [];
-  for (let value of facetValues) {
+  for (let value of facetValues || []) {
     let item = values.filter((c) => c.value === value)[0];
     if (item !== undefined) {
       result.push(item);
@@ -307,4 +318,43 @@ export function getBuckets({
       },
     ];
   }
+}
+
+export function stripArray(a) {
+  while (true) {
+    if (a.length === 0) {
+      break;
+    }
+    if (a[0].count !== 0) {
+      break;
+    }
+    a = a.slice(1);
+  }
+
+  while (true) {
+    if (a.length === 0) {
+      break;
+    }
+    if (a[a.length - 1].count !== 0) {
+      break;
+    }
+    a.splice(-1);
+  }
+  return a;
+}
+
+export function getRangeStartEndFromData(data, ranges) {
+  const stripped_data = stripArray(data);
+
+  if (!data || data.length === 0 || stripped_data.length === 0) {
+    const fallback = getRangeStartEnd(ranges);
+    return { start: fallback.start, end: fallback.end, ranges: data };
+  }
+
+  const start = stripped_data[0].config.from || stripped_data[0].config.to;
+  const end =
+    stripped_data[stripped_data.length - 1].config.to ||
+    stripped_data[stripped_data.length - 1].config.from;
+
+  return { start, end, ranges: stripped_data };
 }

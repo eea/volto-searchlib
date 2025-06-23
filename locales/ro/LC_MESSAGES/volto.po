@@ -11,57 +11,159 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Choices
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Filtre active"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Filtre active:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Toate"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Înapoi la căutare acasă"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr ""
+msgstr "Alegeri"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Close
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr ""
+msgstr "Inchide"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Default
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr ""
+msgstr "Implicit"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Description
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr ""
+msgstr "Descriere"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No options
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Filtre"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Se potrivesc cu toate"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Potriviți oricare"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "Mai multe filtre"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "Cel mai nou"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr ""
+msgstr "Fără opțiuni"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No value
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr ""
+msgstr "Nicio valoare"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Required
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Cel mai vechi"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Sau caută după"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr ""
+msgstr "Necesar"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Select…
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr ""
+msgstr "Selecta…"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Short Name
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr ""
+msgstr "Nume scurt"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Title
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Sursă:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr ""
+msgstr "Titlu"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Used for programmatic access to the fieldset.
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Titlul a-z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Titlul z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Subiecte:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr ""
+msgstr "Folosit pentru acces programatic la setul de câmpuri."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "șterge totul"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "articol"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "articole"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Afișați toate cele {total} documente"

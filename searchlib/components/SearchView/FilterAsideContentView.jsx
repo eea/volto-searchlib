@@ -20,8 +20,33 @@ import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { loadingFamily } from '@eeacms/search/state';
 import { useAtomValue } from 'jotai';
 
+import { useIntl } from 'react-intl';
+import { defineMessages } from 'react-intl';
+
+const messages = defineMessages({
+  'Title a-z': {
+    id: 'Title a-z',
+    defaultMessage: 'Title a-z',
+  },
+  'Title z-a': {
+    id: 'Title z-a',
+    defaultMessage: 'Title z-a',
+  },
+  Newest: {
+    id: 'Newest',
+    defaultMessage: 'Newest',
+  },
+  Oldest: {
+    id: 'Oldest',
+    defaultMessage: 'Oldest',
+  },
+  Relevance: {
+    id: 'Relevance',
+    defaultMessage: 'Relevance',
+  },
+});
+
 export const FilterAsideContentView = (props) => {
-  // console.log('redraw FilterAsideContentView');
   const { appConfig, children, current, wasInteracted } = props;
   const { sortOptions, resultViews } = appConfig;
   const views = useViews();
@@ -72,6 +97,14 @@ export const FilterAsideContentView = (props) => {
 
   const { showFilters, showFacets, showClusters, showSorting } = appConfig;
   const showPaging = appConfig.showLandingPage === false ? true : wasInteracted;
+  const intl = useIntl();
+
+  const sortOptions2 = sortOptions.map((item) => ({
+    ...item,
+    name: messages[item.name?.id]
+      ? intl.formatMessage(messages[item.name.id])
+      : item.name,
+  }));
 
   return (
     <>
@@ -92,7 +125,7 @@ export const FilterAsideContentView = (props) => {
                   <Component factoryName="SecondaryFacetsList" {...props} />
                   <Sorting
                     label={''}
-                    sortOptions={sortOptions}
+                    sortOptions={sortOptions2}
                     view={SortingDropdownWithLabel}
                   />
                   {/* <ViewSelectorWithLabel */}
@@ -118,14 +151,15 @@ export const FilterAsideContentView = (props) => {
               <Grid.Column>
                 <ResultsPerPageSelector />
               </Grid.Column>
-              <Grid.Column textAlign="right">
-                <DownloadButton appConfig={appConfig} />
-              </Grid.Column>
+              <Grid.Column textAlign="right"></Grid.Column>
             </Grid>
             <Grid centered>
               <Grid.Column textAlign="center">
                 <div className="prev-next-paging">
                   {!!showPaging && <Paging />}
+                </div>
+                <div>
+                  <DownloadButton appConfig={appConfig} />
                 </div>
               </Grid.Column>
             </Grid>

@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Filtros ativos"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Filtros ativos:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Todos"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Voltar para pesquisar em casa"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Choices"
+msgstr "Escolhas"
+
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Close"
+msgstr "Fechar"
+
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Default"
+msgstr "Padrão"
+
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Description"
+msgstr "Descrição"
+
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Filtros"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Combine tudo"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Combine qualquer"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "Mais filtros"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "Mais recente"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No options"
+msgstr "Sem opções"
+
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No value"
+msgstr "Sem valor"
+
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Mais antigo"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Ou pesquise por"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Required"
+msgstr "Obrigatório"
+
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Select…"
+msgstr "Selecione…"
+
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Short Name"
+msgstr "Nome curto"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Fonte:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Title"
+msgstr "Título"
+
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Título a-z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Título z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Tópicos:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Used for programmatic access to the fieldset."
+msgstr "Usado para acesso programático ao fieldset."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "limpar tudo"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "item"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "Unid"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Mostrar todos os {total} documentos"

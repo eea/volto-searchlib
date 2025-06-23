@@ -9,6 +9,9 @@ import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { customOrder } from '@eeacms/search/lib/utils';
 import { useLandingPageData, useLandingPageRequest } from './state';
 import { Icon, Term } from '@eeacms/search/components';
+import { withLanguage } from '@eeacms/search/lib/hocs';
+
+import { FormattedMessage } from 'react-intl';
 
 const getFacetConfig = (sections, name) => {
   return sections?.find((facet) => facet.facetField === name);
@@ -143,6 +146,9 @@ const LandingPage = (props) => {
     }
   };
 
+  const { language } = props;
+  const options = { language };
+
   const panes = sections.map((section, index) => {
     const tabIndex = index + 1;
 
@@ -187,7 +193,11 @@ const LandingPage = (props) => {
                         appConfig.facets
                           .filter((f) => f.field !== activeSection && f.default)
                           .forEach((facet) => {
-                            facet.default.values.forEach((value) =>
+                            const fdefault =
+                              typeof facet.default === 'function'
+                                ? facet.default(options)
+                                : facet.default;
+                            fdefault.values.forEach((value) =>
                               setFilter(
                                 facet.field,
                                 value,
@@ -215,7 +225,18 @@ const LandingPage = (props) => {
                             <Term term={topic.value} field={activeSection} />
                             <span className="count">
                               ({topic.count}{' '}
-                              {topic.count === 1 ? 'item' : 'items'})
+                              {topic.count === 1 ? (
+                                <FormattedMessage
+                                  id="item"
+                                  defaultMessage="item"
+                                />
+                              ) : (
+                                <FormattedMessage
+                                  id="items"
+                                  defaultMessage="items"
+                                />
+                              )}
+                              )
                             </span>
                           </List.Content>
                         </List.Item>
@@ -243,7 +264,14 @@ const LandingPage = (props) => {
                     >
                       <div className="extra content">
                         <span className="count">
-                          Show all {total} documents
+                          <FormattedMessage
+                            id="showAllTotalDocuments"
+                            description="Show all documents on intro statistics"
+                            defaultMessage="Show all {total} documents"
+                            values={{
+                              total: total,
+                            }}
+                          />
                         </span>
                       </div>
                     </div>
@@ -260,7 +288,10 @@ const LandingPage = (props) => {
   return (
     <div className="landing-page-container">
       <div className="landing-page">
-        <h4>Or search by</h4>
+        <h4>
+          {' '}
+          <FormattedMessage id="Or search by" defaultMessage="Or search by" />
+        </h4>
         <Tab
           className="search-tab"
           menu={{ secondary: true, pointing: true }}
@@ -276,4 +307,4 @@ const LandingPage = (props) => {
   );
 };
 
-export default LandingPage;
+export default withLanguage(LandingPage);

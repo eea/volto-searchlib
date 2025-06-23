@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Scagairí gníomhacha"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Scagairí gníomhacha:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Gach"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Ar ais ag cuardach abhaile"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Choices"
+msgstr "Roghanna"
+
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Close"
+msgstr "Dún"
+
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Default"
+msgstr "Réamhshocrú"
+
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Description"
+msgstr "Cur síos"
+
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Scagairí"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Meaitseáil go léir"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Meaitseáil ar bith"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "Tuilleadh scagairí"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "is nuaí"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No options"
+msgstr "Gan roghanna"
+
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "No value"
+msgstr "Gan luach"
+
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Is sine"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Nó cuardaigh de réir"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Required"
+msgstr "Ag teastáil"
+
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Select…"
+msgstr "Roghnaigh…"
+
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Short Name"
+msgstr "Ainm Gearr"
+
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Foinse:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Title"
+msgstr "Teideal"
+
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Teideal a-z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Teideal z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Ábhair:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
+msgid "Used for programmatic access to the fieldset."
+msgstr "Úsáidtear é le haghaidh rochtain ríomhchláraithe ar an réimse réimse."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "soiléir ar fad"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "mír"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "míreanna"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Taispeáin gach doiciméad {total}"

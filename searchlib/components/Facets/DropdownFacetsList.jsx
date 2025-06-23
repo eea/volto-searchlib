@@ -13,6 +13,27 @@ import SidebarFacetsList from './SidebarFacetsList';
 import { sidebarState, liveSearchState } from './state';
 import { useAtom } from 'jotai';
 
+import { defineMessages, FormattedMessage } from 'react-intl';
+
+const messages = defineMessages({
+  sortTitleAZ: {
+    id: 'Title a-z',
+    defaultMessage: 'Title a-z',
+  },
+  sortTitleZA: {
+    id: 'Title z-a',
+    defaultMessage: 'Title z-a',
+  },
+  sortNewest: {
+    id: 'Newest',
+    defaultMessage: 'Newest',
+  },
+  sortOldest: {
+    id: 'Oldest',
+    defaultMessage: 'Oldest',
+  },
+});
+
 const DropdownFacetsList = ({ defaultWrapper }) => {
   const { appConfig } = useAppConfig();
   const rawSearchContext = useSearchContext();
@@ -74,23 +95,31 @@ const DropdownFacetsList = ({ defaultWrapper }) => {
             wrapper="DropdownFacetWrapper"
           />
         ))}
-        <div className="dropdown-facet">
-          <Button
-            className="sui-button basic"
-            onClick={() => setShowSidebar(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setShowSidebar(true);
-              }
-              if (e.key === 'Escape') {
-                setShowSidebar(false);
-              }
-            }}
-            // disabled={isLiveSearch}
-          >
-            <span className="facet-title">+ More filters</span>
-          </Button>
-        </div>
+        {sidebarFacets.length > 0 && (
+          <div className="dropdown-facet">
+            <Button
+              className="sui-button basic"
+              onClick={() => setShowSidebar(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setShowSidebar(true);
+                }
+                if (e.key === 'Escape') {
+                  setShowSidebar(false);
+                }
+              }}
+              // disabled={isLiveSearch}
+            >
+              <span className="facet-title">
+                +{' '}
+                <FormattedMessage
+                  id="More filters"
+                  defaultMessage="More filters"
+                />
+              </span>
+            </Button>
+          </div>
+        )}
         {/*
         {filterNames.length > 0 && (
           <Button

@@ -80,9 +80,9 @@
         position: relative;
         width: 28px;
         height: 28px;
-        border: 2px solid var(--border-color) !important;
-        margin: 10px;
+        border: 2px solid @secondaryColor !important;
         border-radius: 4px;
+        margin: 10px;
         box-shadow: none;
         opacity: 1;
 
@@ -124,10 +124,10 @@
       .show-extra-facets {
         padding: 14px !important;
         border: 1px solid @sf-medium-gray;
+        border-radius: 0px;
         border-left: none;
         margin-right: 4px;
-        background: @grey-0 !important;
-        border-radius: 0px;
+        background: @white !important;
         color: @sf-dark-gray !important;
         cursor: initial;
 
@@ -143,8 +143,8 @@
       }
 
       .button.microphone-input {
-        background: @sf-light-gray !important;
         border-radius: 20px;
+        background: @sf-light-gray !important;
 
         i.icon {
           padding: 0;
@@ -164,9 +164,9 @@
           left: 50%;
           width: 100px;
           height: 100px;
+          border-radius: 50%;
           animation: listening infinite 1.5s;
           background-color: @darkDimmedWhite;
-          border-radius: 50%;
           content: '';
           transform: translate(-50%, -50%) scale(1.4);
         }
@@ -258,11 +258,12 @@
   flex-shrink: 0;
   padding: 16px;
   border: none;
+  border-radius: 4px;
   margin-left: 10px;
   background: linear-gradient(@lightGradientBlue, @darkGradientBlue)
     @midGradientBlue;
-  border-radius: 4px;
-  box-shadow: @dimmedLighterBlack 0px 0px 0px 1px inset,
+  box-shadow:
+    @dimmedLighterBlack 0px 0px 0px 1px inset,
     @dimmedBlueBlack 0px 1px 0px;
   color: @grey-0;
   cursor: pointer;
@@ -273,7 +274,9 @@
   &:hover {
     background: linear-gradient(@lightGradientBlueHover, @darkGradientBlueHover)
       @midGradientBlueHover;
-    box-shadow: @dimmedBlack 0px 0px 0px 1px inset, @dimmedDarkGray 0px 2px 4px;
+    box-shadow:
+      @dimmedBlack 0px 0px 0px 1px inset,
+      @dimmedDarkGray 0px 2px 4px;
   }
 }
 
@@ -346,9 +349,9 @@
 
 .sui-search-box__autocomplete-container ul {
   padding: 0 0 24px 0;
+  border-radius: 3px;
   margin: 0;
   background: transparent;
-  border-radius: 3px;
   list-style: none;
 }
 

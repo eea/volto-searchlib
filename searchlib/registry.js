@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
+import SingleTermFacet from '@eeacms/search/components/Facets/Unconnected/SingleTermFacet';
 import MultiTermFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermFacet';
 import MultiTermListFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermListFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/Unconnected/HistogramFacet';
@@ -111,6 +112,12 @@ const config = {
       buildRequest: buildBooleanFacetRequest,
       buildFilter: getBooleanFilter,
       getValue: getBooleanFacet,
+    },
+    SingleTermFacet: {
+      component: SingleTermFacet,
+      buildRequest: buildTermFacetAggregationRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
     },
     MultiTermFacet: {
       component: MultiTermFacet,
@@ -260,7 +267,9 @@ const config = {
       // the "content" layout, everything below the search input
       contentBodyComponent: 'DefaultContentView',
 
-      useSearchPhrases: true,
+      // disable search phrases for now, maybe it will be enabled in the future
+      // but that requires further development
+      // useSearchPhrases: true,
 
       // when entering in search view, this will be the default search text
       defaultSearchText: '',
@@ -278,6 +287,7 @@ const config = {
 
       showFilters: true, // enables the filters interface, to allow falling back to just a simple results list
       showClusters: true, // enables the tab clusters
+      showClusterAsIcons: false, // use icons instead of text in the tab clusters
       showSorting: true, // show the sorting controls
       showFacets: true, // show the facets dropdowns and sidebar facets
 
@@ -330,6 +340,8 @@ const config = {
           servicePath: 'feedback',
         },
       },
+
+      enableMatomoTracking: true,
 
       contentSectionsParams: {
         // This enables the content as section tabs
@@ -453,11 +465,11 @@ const config = {
       },
 
       sortOptions: [
-        {
-          name: 'Relevance',
-          value: '',
-          direction: '',
-        },
+        // {
+        //   name: 'Relevance',
+        //   value: '',
+        //   direction: '',
+        // },
       ],
     },
   },

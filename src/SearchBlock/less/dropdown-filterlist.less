@@ -31,8 +31,10 @@
         &.active {
           > .facet-title {
             z-index: 99999 !important;
-            box-shadow: 0 5px 0 @grey-0, 0 0 4px @dimmedLightBlack;
-            color: @green-5;
+            box-shadow:
+              0 5px 0 @white,
+              0 0 4px @dimmedLightBlack;
+            color: @pineGreen;
             font-weight: 700;
           }
         }
@@ -147,6 +149,10 @@
           .title i:before {
             font-size: 2rem;
           }
+
+          .content.active {
+            position: relative !important;
+          }
         }
       }
     }
@@ -175,7 +181,7 @@
   .ui.card.term.active-term {
     width: auto !important;
     min-width: auto;
-    margin: 5px 1em 5px 0 !important;
+    margin: 0 !important;
 
     .header,
     span.count {
@@ -184,9 +190,14 @@
     }
 
     .card-header {
-      flex-direction: row;
+      display: inline-block !important;
+      max-width: 100%;
       padding: 0.2rem !important;
       text-align: left !important;
+
+      .clear-filters {
+        top: -5px;
+      }
     }
   }
 
@@ -278,8 +289,8 @@
 
   .sui-facet-search {
     border: 0.5px solid @midDarkGray;
-    margin: 0.7em 0;
     border-radius: 0;
+    margin: 0.7em 0;
     font-size: 14px;
   }
 
@@ -338,9 +349,9 @@
       left: 0;
       width: 14px;
       height: 14px;
-      border: 2px solid @blue-5;
-      background-color: @grey-0;
+      border: 2px solid @darkCerulean;
       border-radius: 50%;
+      background-color: @white;
     }
 
     .radio-checkmark:after {
@@ -348,8 +359,8 @@
       left: 2px;
       width: 6px;
       height: 6px;
-      background: @blue-5;
       border-radius: 50%;
+      background: @darkCerulean;
     }
 
     input.sui-multi-checkbox-facet__checkbox:checked ~ .radio-checkmark {
@@ -396,13 +407,13 @@
     }
 
     ::-webkit-scrollbar-track {
-      background-color: @darkWhiteGray;
       border-radius: 10px;
+      background-color: @darkWhiteGray;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: @blue-5;
       border-radius: 10px;
+      background: @darkCerulean;
     }
   }
 

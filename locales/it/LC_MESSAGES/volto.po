@@ -11,57 +11,159 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Choices
+#. Default: "Active filters"
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "Active filters"
+msgstr "Filtri attivi"
+
+#. Default: "Active filters:"
+#: searchlib/components/Facets/ActiveFilters
+msgid "Active filters:"
+msgstr "Filtri attivi:"
+
+#. Default: "All"
+#: searchlib/components/Facets/Connected/SectionTabs
+msgid "All"
+msgstr "Tutto"
+
+#. Default: "Back to search home"
+#: searchlib/components/SearchView/BackToHome
+msgid "Back to search home"
+msgstr "Torna alla ricerca di casa"
+
+#. Default: "Choices"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Choices"
-msgstr ""
+msgstr "Scelte"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Close
+#. Default: "Close"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Close"
-msgstr ""
+msgstr "Vicino"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Default
+#. Default: "Default"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Description
+#. Default: "Description"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No options
+#. Default: "Filters"
+#: searchlib/components/Facets/SidebarFacetsList
+msgid "Filters"
+msgstr "Filtri"
+
+#. Default: "Match all"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match all"
+msgstr "Abbina tutto"
+
+#. Default: "Match any"
+#: searchlib/components/Facets/lib/withMultiTypeFilter
+#: searchlib/components/Facets/Unconnected/MultiTermFacet
+msgid "Match any"
+msgstr "Abbina qualsiasi"
+
+#. Default: "More filters"
+#: searchlib/components/Facets/DropdownFacetsList
+msgid "More filters"
+msgstr "Più filtri"
+
+#. Default: "Newest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Newest"
+msgstr "Più recente"
+
+#. Default: "No options"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No options"
-msgstr ""
+msgstr "Nessuna opzione"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: No value
+#. Default: "No value"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "No value"
-msgstr ""
+msgstr "Nessun valore"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Required
+#. Default: "Oldest"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Oldest"
+msgstr "Il più antico"
+
+#. Default: "Or search by"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "Or search by"
+msgstr "Oppure cerca per"
+
+#. Default: "Required"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
-msgstr ""
+msgstr "Necessario"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Select…
+#. Default: "Select…"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Select…"
-msgstr ""
+msgstr "Selezionare…"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Short Name
+#. Default: "Short Name"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Short Name"
-msgstr ""
+msgstr "Nome breve"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Title
+#. Default: "Source:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Source:"
+msgstr "Fonte:"
+
+#. Default: "Title"
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
-#: SearchBlock/widgets/SelectWidget
-# defaultMessage: Used for programmatic access to the fieldset.
+#. Default: "Title a-z"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title a-z"
+msgstr "Titolo dalla a alla z"
+
+#. Default: "Title z-a"
+#: searchlib/components/Facets/DropdownFacetsList
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Title z-a"
+msgstr "Titolo z-a"
+
+#. Default: "Topics:"
+#: searchlib/components/Result/HorizontalCardItem
+msgid "Topics:"
+msgstr "Argomenti:"
+
+#. Default: "Used for programmatic access to the fieldset."
+#: src/SearchBlock/widgets/SelectWidget
 msgid "Used for programmatic access to the fieldset."
-msgstr ""
+msgstr "Utilizzato per l'accesso programmatico al fieldset."
+
+#. Default: "clear all"
+#: searchlib/components/Facets/SidebarFacetsList
+#: searchlib/components/FilterList/ActiveFilterList
+msgid "clear all"
+msgstr "cancella tutto"
+
+#. Default: "item"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "item"
+msgstr "articolo"
+
+#. Default: "items"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "items"
+msgstr "elementi"
+
+#. Default: "Show all {total} documents"
+#: searchlib/components/LandingPage/TilesLandingPage
+msgid "showAllTotalDocuments"
+msgstr "Mostra tutti i {totale} documenti"

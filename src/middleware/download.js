@@ -6,6 +6,7 @@ const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
 const download = (es_config, appConfig, req, res) => {
+  // console.log('appConfig', appConfig);
   const es_url = new URL(es_config);
   const es_path_parts = es_url.pathname.split('/');
 
@@ -31,6 +32,11 @@ const download = (es_config, appConfig, req, res) => {
   );
   delete dataQuery.highlight;
   delete dataQuery.aggs;
+  delete dataQuery.params;
+  delete dataQuery.index;
+  dataQuery._source = dataQuery.source;
+  dataQuery._source.exclude.push('nlp_250');
+  delete dataQuery.source;
   const linebreak = '\n';
   const delimiter = ',';
 
@@ -56,6 +62,7 @@ const download = (es_config, appConfig, req, res) => {
     host: es_host,
     type: 'stdio',
     levels: ['error'],
+    requestTimeout: 60000,
   });
 
   let offset = 0;
@@ -93,6 +100,7 @@ const download = (es_config, appConfig, req, res) => {
           const row = data.hits.hits[i];
           let csv_row = [];
           for (let j = 0; j < download_mapping.length; j++) {
+            // console.log(Object.keys(row['_source']));
             let value = row['_source'][download_mapping[j].field];
             if (value === undefined) {
               value = '';

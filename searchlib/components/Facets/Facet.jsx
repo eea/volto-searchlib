@@ -7,6 +7,7 @@
 import React from 'react';
 import { markSelectedFacetValuesFromFilters } from '@eeacms/search/lib/search/helpers';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useIntl } from 'react-intl';
 
 export const accentFold = (str = '') =>
   str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -18,7 +19,7 @@ const FacetContainer = (props) => {
     className,
     id,
     field,
-    filterType = 'all',
+    filterType,
     label,
     view,
     isFilterable = false,
@@ -32,6 +33,10 @@ const FacetContainer = (props) => {
   const { filters, facets, addFilter, removeFilter, setFilter } = searchContext;
 
   const facetsForField = facets[field];
+
+  const intl = useIntl();
+  const labelPrint =
+    typeof label === 'object' ? intl.formatMessage(label) : label;
 
   if (!facetsForField) return null;
 
@@ -66,7 +71,8 @@ const FacetContainer = (props) => {
   return (
     <View
       className={className}
-      label={label}
+      label={labelPrint}
+      dataId="dataId"
       onRemove={(value) => {
         removeFilter(field, value, filterType);
         onRemove && onRemove(field, value, filterType);
@@ -86,7 +92,9 @@ const FacetContainer = (props) => {
         setSearchTerm(v);
       }}
       searchPlaceholder={`Filter ${label}`}
+      facet={facet}
       field={field}
+      filterType={filterType}
       {...rest}
     />
   );
