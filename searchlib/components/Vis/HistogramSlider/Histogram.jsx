@@ -32,7 +32,7 @@ const DataTooltip = ({
 
 class Histogram extends Component {
   selectBucket(bucket) {
-    this.props.onChange([bucket.x0, bucket.x]);
+    this.props.onChange([bucket.x0, bucket.x0]);
   }
 
   tooltipTimeout = React.createRef();
