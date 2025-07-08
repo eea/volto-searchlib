@@ -21,7 +21,7 @@ const DataTooltip = ({
     }}
   >
     <div style={{ color: 'black' }}>
-      <strong>{`${tooltipData.x0} to ${tooltipData.x}`}</strong>
+      <strong>{`${tooltipData.x0}`}</strong>
       <br />
       {fieldName}
       <br />
