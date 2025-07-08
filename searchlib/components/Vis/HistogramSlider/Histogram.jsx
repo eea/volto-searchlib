@@ -109,7 +109,7 @@ class Histogram extends Component {
                         opacity = 0;
                       } else if (
                         selectionSorted[0] <= bucket.x0 &&
-                        selectionSorted[1] >= bucket.x
+                        selectionSorted[1] >= bucket.x - 1
                       ) {
                         // Entire block is covered
                         opacity = 1;
