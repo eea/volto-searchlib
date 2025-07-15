@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchView } from '@eeacms/search/components/SearchView/SearchView';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
 import { withLanguage } from '@eeacms/search/lib/hocs';
-import qs from 'querystring';
+import qs from 'query-string';
 
 import BasicSearchApp from './BasicSearchApp';
 

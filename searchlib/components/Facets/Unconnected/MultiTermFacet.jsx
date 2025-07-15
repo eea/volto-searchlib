@@ -25,6 +25,7 @@ function getFilterValueDisplay(filterValue) {
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
 
@@ -104,7 +105,7 @@ const MultiTermFacetViewComponent = (props) => {
     facet,
     filters,
     field,
-    filterType = 'any',
+    filterType,
   } = props;
   const prevFilterType = React.useRef(filterType);
 
@@ -135,7 +136,11 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {

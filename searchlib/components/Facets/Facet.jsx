@@ -19,7 +19,7 @@ const FacetContainer = (props) => {
     className,
     id,
     field,
-    filterType = 'all',
+    filterType,
     label,
     view,
     isFilterable = false,
@@ -33,6 +33,10 @@ const FacetContainer = (props) => {
   const { filters, facets, addFilter, removeFilter, setFilter } = searchContext;
 
   const facetsForField = facets[field];
+
+  const intl = useIntl();
+  const labelPrint =
+    typeof label === 'object' ? intl.formatMessage(label) : label;
 
   if (!facetsForField) return null;
 
@@ -63,9 +67,7 @@ const FacetContainer = (props) => {
   }
 
   const View = view; //  || MultiCheckboxFacet
-  const intl = useIntl();
-  const labelPrint =
-    typeof label === 'object' ? intl.formatMessage(label) : label;
+
   return (
     <View
       className={className}

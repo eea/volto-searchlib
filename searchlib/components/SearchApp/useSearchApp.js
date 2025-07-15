@@ -19,6 +19,7 @@ import {
   resetFilters,
   resetSearch,
   addFilter,
+  setSort,
 } from './request';
 import useFacetsWithAllOptions from './useFacetsWithAllOptions';
 import { useLoadingState } from './state';
@@ -87,10 +88,10 @@ export default function useSearchApp(props) {
     [appConfig, appName, paramOnSearch, setIsLoading],
   );
 
-  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
-    appConfig,
-    paramOnAutocomplete,
-  ]);
+  const onAutocomplete = React.useMemo(
+    () => paramOnAutocomplete(appConfig),
+    [appConfig, paramOnAutocomplete],
+  );
 
   const locationSearchTerm = React.useMemo(
     () =>
@@ -160,6 +161,7 @@ export default function useSearchApp(props) {
         clearFilters,
         removeFilter,
         addFilter,
+        setSort,
       };
       Object.keys(funcs).forEach((name) => {
         searchContext[name] = funcs[name].bind({
