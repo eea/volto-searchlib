@@ -201,7 +201,37 @@ export function getDateRangeFilter(filter, filterConfig) {
   return res;
 }
 
-export const getHistogramFilter = getRangeFilter;
+export function getHistogramFilter(filter) {
+  // Histogram facets use half-open intervals [start, end).
+  // Example: [2010, 2015), [2015, 2020), etc.
+  // Without fix, a query with from=2010 and to=2015 includes 2015.
+  // We adjust only the query to exclude the upper bound,
+  // ensuring results fall in [2010, 2015).
+  // Facet and display labels remain unchanged.
+  if (!filter || !Array.isArray(filter.values)) {
+    return;
+  }
+
+  const adjustedValues = filter.values.map((v, index) => {
+    let newTo = v.to;
+
+    if (typeof v.to === 'number' && v.to !== v.from) {
+      newTo = v.to - 1;
+    }
+
+    return {
+      ...v,
+      to: newTo,
+    };
+  });
+
+  const modifiedFilter = {
+    ...filter,
+    values: adjustedValues,
+  };
+
+  return getRangeFilter(modifiedFilter);
+}
 
 export function getBooleanFilter(filter, facetConfig) {
   const value = filter ? filter.values[0] : false;
