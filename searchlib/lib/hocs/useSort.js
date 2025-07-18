@@ -62,7 +62,9 @@ const useSort = (
   };
 
   useEffect(() => {
-    const data = sortList.find((item) => item.field === field);
+    console.log('SORTED LIST: ', sortList)
+    const data = sortList?.find((item) => item.field === field);
+
     if (data) {
       setSortOn(data.sortOn);
       setSortOrder(data.sortOrder);
