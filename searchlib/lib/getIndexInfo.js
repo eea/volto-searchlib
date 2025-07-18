@@ -1,5 +1,5 @@
 import superagent from 'superagent';
-import { DateTime } from 'luxon';
+// import { DateTime } from 'luxon';
 
 function trim_slash(text) {
   return text.replace(/^\/+|\/+$/g, '');
@@ -51,10 +51,12 @@ export default async function getInfo(appConfig) {
       update_ts = aliases[0].substring(11);
     }
 
-    const dt = DateTime.fromMillis(parseInt(update_ts));
+    // const dt = DateTime.fromMillis(parseInt(update_ts));
+    const dt = new Date(parseInt(update_ts));
     return dt;
   } catch {
-    console.log('info', info);
+    // eslint-disable-next-line no-console
+    console.warn('Error in parsing index settings', info);
     return '';
   }
 }

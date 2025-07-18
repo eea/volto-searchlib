@@ -1,5 +1,5 @@
 import registry from '@eeacms/search/registry';
-import { DateTime } from 'luxon';
+// import { DateTime } from 'luxon';
 
 function getHighlight(hit, fieldName) {
   if (
@@ -116,33 +116,61 @@ export class BasicModel {
 }
 
 export class ResultModel extends BasicModel {
+  // get daysSinceIssued() {
+  //   const raw = this._result['issued']?.raw;
+  //   const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+  //   const res = DateTime.local().diff(issued, 'days').as('days');
+  //   return res;
+  // }
+
   get daysSinceIssued() {
     const raw = this._result['issued']?.raw;
-    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
-    const res = DateTime.local().diff(issued, 'days').as('days');
-    return res;
+    const issuedDate = raw ? new Date(raw) : new Date();
+    const currentDate = new Date();
+
+    const diffInTime = currentDate.getTime() - issuedDate.getTime();
+    const diffInDays = diffInTime / (1000 * 3600 * 24);
+    return diffInDays;
   }
 
   get id() {
     return this.id?.raw;
   }
 
+  // get isNew() {
+  //   const raw = this._result['issued']?.raw;
+  //   const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+  //   const res = DateTime.local().diff(issued, 'days').as('days');
+  //
+  //   return res < 30;
+  // }
+
   get isNew() {
     const raw = this._result['issued']?.raw;
-    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
-    const res = DateTime.local().diff(issued, 'days').as('days');
+    const issuedDate = raw ? new Date(raw) : new Date();
+    const currentDate = new Date();
 
-    return res < 30;
+    const diffInTime = currentDate.getTime() - issuedDate.getTime();
+    const diffInDays = diffInTime / (1000 * 3600 * 24);
+    return diffInDays < 30;
   }
 
+  // get issued() {
+  //   const raw = this._result['issued']?.raw;
+  //   return raw ? DateTime.fromISO(raw) : null;
+  // }
   get issued() {
     const raw = this._result['issued']?.raw;
-    return raw ? DateTime.fromISO(raw) : null;
+    return raw ? new Date(raw) : null;
   }
 
+  // get expires() {
+  //   const raw = this._result['expires']?.raw;
+  //   return raw ? DateTime.fromISO(raw) : null;
+  // }
   get expires() {
     const raw = this._result['expires']?.raw;
-    return raw ? DateTime.fromISO(raw) : null;
+    return raw ? new Date(raw) : null;
   }
 
   // get isExpired() {
