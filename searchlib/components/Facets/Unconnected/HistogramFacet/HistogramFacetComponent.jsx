@@ -1,5 +1,4 @@
 import React from 'react';
-import { Input } from 'semantic-ui-react';
 import { HistogramSlider } from '@eeacms/search/components/Vis';
 
 import debounce from 'lodash.debounce';
@@ -43,8 +42,8 @@ const HistogramFacetComponent = (props) => {
     end = selection ? selection[1] : undefined ?? histogram_range.end,
   } = props;
 
-  const [startValue, handleChangeStartValue] = useDebouncedInput(start);
-  const [endValue, handleChangeEndValue] = useDebouncedInput(end);
+  const [startValue] = useDebouncedInput(start);
+  const [endValue] = useDebouncedInput(end);
 
   const debouncedSliderChangeHandler = React.useMemo(
     () =>
@@ -58,32 +57,8 @@ const HistogramFacetComponent = (props) => {
   return (
     <div className="histogram-facet">
       <div className="text-input">
-        <Input
-          type="number"
-          value={startValue}
-          onChange={(e, { value }) => {
-            handleChangeStartValue(value, () =>
-              onChange({ from: value, to: end }),
-            );
-            // console.log('selection', value, end, start);
-            // onChange({ from: value, to: end }); //selection?.[1]
-          }}
-          min={histogram_range.start}
-          max={histogram_range.end}
-        />
-        <Input
-          type="number"
-          value={endValue}
-          onChange={(e, { value }) => {
-            handleChangeEndValue(value, () =>
-              onChange({ from: start, to: value }),
-            );
-            // console.log('selection', value, end, start);
-            // onChange({ from: start, to: value }); // selection?.[0]
-          }}
-          min={histogram_range.start}
-          max={histogram_range.end}
-        />
+        <label>{startValue}</label>
+        <label>{endValue}</label>
       </div>
 
       <HistogramSlider

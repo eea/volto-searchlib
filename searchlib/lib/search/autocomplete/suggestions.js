@@ -49,10 +49,18 @@ export async function getAutocompleteSuggestions(props, config) {
   );
   const faqJson = await runRequest(faqRequestBody, config);
   const faqState = buildState(faqJson.body, props, config, false, true);
-  return {
-    didYouMean: didYouMeanState.state.slice(0,3),
-    faq: faqState.state.slice(0,3),
+
+  const suggestions = config?.autocomplete?.suggestions;
+  const hasFaq = suggestions?.faq && Object.keys(suggestions.faq).length > 0;
+  const hasDidYouMean =
+    suggestions?.didYouMean && Object.keys(suggestions.didYouMean).length > 0;
+
+  const res = {
+    didYouMean: hasDidYouMean ? didYouMeanState.state.slice(0, 3) : [],
+    faq: hasFaq ? faqState.state.slice(0, 3) : [],
   };
+
+  return res;
 }
 
 // const x = {
