@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -20,7 +20,7 @@
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
-    "@eeacms/volto-matomo": "5.0.0",
+    "@eeacms/volto-matomo": "*",
     "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",
     "@elastic/search-ui": "1.20.2",
