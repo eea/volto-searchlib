@@ -3,9 +3,12 @@ import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { Term } from '@eeacms/search/components';
 import { Label, Icon } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
+import * as reactIntl from 'react-intl';
 
 const ActiveFilterValue = (props) => {
   const { field, values, type, removeFilter } = props;
+
+  const intl = reactIntl.useIntl();
   const { appConfig } = useAppConfig();
   const { clearFilters } = useSearchContext();
 
@@ -38,7 +41,13 @@ const ActiveFilterValue = (props) => {
                   {value.from} - {value.to}
                 </>
               ) : (
-                <Term term={value} field={field} />
+                <Term
+                  term={intl.formatMessage({
+                    id: value,
+                    defaultMessage: value,
+                  })}
+                  field={field}
+                />
               )}
               <span style={{ display: 'none' }}>{` (${type}) `}</span>
             </span>

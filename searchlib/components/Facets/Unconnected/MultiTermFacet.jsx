@@ -28,6 +28,7 @@ function getFilterValueDisplay(filterValue) {
 
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
+  const intl = useIntl();
 
   return (
     <div className="sui-multi-checkbox-facet">
@@ -55,7 +56,14 @@ const FacetOptions = (props) => {
               />
               <span className="checkmark" />
               <span className="sui-multi-checkbox-facet__input-text">
-                <Term term={option.value} field={field} />
+                <Term
+                  term={intl.formatMessage({
+                    id: option.value,
+                    defaultMessage: option.value,
+                  })}
+                  field={field}
+                />
+                {/* <Term term={option.value} field={field} /> */}
               </span>
             </div>
             <span className="sui-multi-checkbox-facet__option-count">
@@ -160,6 +168,12 @@ const MultiTermFacetViewComponent = (props) => {
       prevFilterType.current = filterType;
     }
   }, [field, facet, filters, filterType, onSelect]);
+
+  console.log('sortedOptions', sortedOptions);
+  console.log(
+    'case study translations',
+    intl.formatMessage({ id: 'Case study', defaultMessage: 'Case study test' }),
+  );
 
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
