@@ -62,7 +62,7 @@ const FacetOptions = (props) => {
                   })}
                   field={field}
                 />
-                <Term term={option.value} field={field} />
+                {/* <Term term={option.value} field={field} /> */}
               </span>
             </div>
             <span className="sui-multi-checkbox-facet__option-count">
@@ -143,7 +143,11 @@ const MultiTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
