@@ -165,12 +165,6 @@ const MultiTermFacetViewComponent = (props) => {
     }
   }, [field, facet, filters, filterType, onSelect]);
 
-  console.log('sortedOptions', sortedOptions);
-  console.log(
-    'case study translations',
-    intl.formatMessage({ id: 'Case study', defaultMessage: 'Case study test' }),
-  );
-
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
       {/*<legend className="sui-facet__title">{label}</legend>*/}
