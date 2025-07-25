@@ -22,15 +22,16 @@ const messages = defineMessages({
 
 const withMultiTypeFilter = (options = {}) => {
   const { defaultType = 'any' } = options;
-  const intl = useIntl();
-
-  const filterTypes = [
-    { key: 2, text: intl.formatMessage(messages.matchAny), value: 'any' },
-    { key: 1, text: intl.formatMessage(messages.matchAll), value: 'all' },
-  ];
 
   const decorator = (WrappedComponent) => {
     function WithWrappedComponent(props) {
+      const intl = useIntl();
+
+      const filterTypes = [
+        { key: 2, text: intl.formatMessage(messages.matchAny), value: 'any' },
+        { key: 1, text: intl.formatMessage(messages.matchAll), value: 'all' },
+      ];
+
       const { appConfig } = useAppConfig();
       const { field = null, filters = {} } = props;
       const facet = appConfig.facets?.find((f) => f.field === field);

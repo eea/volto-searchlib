@@ -67,6 +67,7 @@ const Answers = (props) => {
           const primaryAnswer = filtered?.[0];
 
           if (!primaryAnswer) {
+            //eslint-disable-next-line no-console
             console.log('no primary answer', sortedClusters);
             return '';
           }

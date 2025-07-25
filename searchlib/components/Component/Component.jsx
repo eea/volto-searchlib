@@ -8,6 +8,7 @@ import { useIntl } from 'react-intl';
  */
 const Component = ({ name, factoryName, ...rest }) => {
   // TODO: use name?
+  const intl = useIntl();
   const { registry } = useAppConfig();
   const Component = registry.resolve[factoryName]?.component;
 
@@ -16,7 +17,6 @@ const Component = ({ name, factoryName, ...rest }) => {
     console.warn(`Component not found in registry: ${factoryName}`);
     return null;
   }
-  const intl = useIntl();
   rest.label =
     typeof rest.label === 'object'
       ? intl.formatMessage(rest.label)

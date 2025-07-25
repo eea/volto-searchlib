@@ -125,6 +125,10 @@ lint:			## ES Lint
 lint-fix:		## Fix ES Lint
 	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
 
+.PHONY: lint-fix
+lint-list-files:		## Fix ES Lint
+	$(NODE_MODULES)/.bin/eslint --format ./eslint-custom-format.js 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
+
 .PHONY: i18n
 i18n:			## i18n
 	rm -rf build/messages

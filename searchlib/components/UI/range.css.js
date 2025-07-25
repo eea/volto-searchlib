@@ -43,10 +43,8 @@ const styles = {
     left: '0',
     height: '20px',
     width: '20px',
-    background: '#fff linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -o-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    background: '#fff -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
+    background:
+      '#fff linear-gradient(transparent, rgba(0, 0, 0, 0.5)) -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.5)) -o-linear-gradient(transparent, rgba(0, 0, 0, 0.5)) -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
     borderRadius: '6px',
     backgroundColor: '#205c90',
     boxShadow:

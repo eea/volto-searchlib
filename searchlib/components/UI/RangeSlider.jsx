@@ -256,6 +256,7 @@ export class Slider extends Component {
     if (event.pageX) {
       pageX = event.pageX;
     } else {
+      //eslint-disable-next-line no-console
       console.log('PageX undefined');
     }
     let value = this.determineValue(this.innerLeft, this.innerRight, pageX);

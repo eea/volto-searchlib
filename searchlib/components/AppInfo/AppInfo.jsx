@@ -6,7 +6,7 @@ import { indexMetadataAtom, hasRequestAtom } from './state';
 
 function AppInfo({ appConfig, ...rest }) {
   const { app_name, app_version } = appConfig;
-  const hostname = window.runtimeConfig?.HOSTNAME || 'localhost';
+  // const hostname = window.runtimeConfig?.HOSTNAME || 'localhost';
 
   const [indexMetadata, setIndexMetadata] = useAtom(indexMetadataAtom);
   const [hasRequest, setHasRequest] = useAtom(hasRequestAtom);

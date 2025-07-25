@@ -209,6 +209,7 @@ export class ResultModel extends BasicModel {
 
   get title() {
     if (!this._result?.title) {
+      //eslint-disable-next-line no-console
       console.log('result', this._result);
     }
     return this._result.title?.raw;

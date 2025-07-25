@@ -1,22 +1,22 @@
-import React from 'react';
-import {
-  useSearchContext,
-  useAppConfig,
-  useIsMounted,
-} from '@eeacms/search/lib/hocs';
-import { Modal, Icon, List, Button } from 'semantic-ui-react';
-import { isLandingPageAtom } from '@eeacms/search/state';
-import { useAtom } from 'jotai';
-
-function toArray(s) {
-  let a = [];
-  if (typeof s === 'string') {
-    a = (s || '').split('\n').filter((n) => !!n.trim());
-  } else if (Array.isArray(s)) {
-    a = s;
-  }
-  return a;
-}
+// import React from 'react';
+// import {
+//   useSearchContext,
+//   useAppConfig,
+//   useIsMounted,
+// } from '@eeacms/search/lib/hocs';
+// import { Modal, Icon, List, Button } from 'semantic-ui-react';
+// import { isLandingPageAtom } from '@eeacms/search/state';
+// import { useAtom } from 'jotai';
+//
+// function toArray(s) {
+//   let a = [];
+//   if (typeof s === 'string') {
+//     a = (s || '').split('\n').filter((n) => !!n.trim());
+//   } else if (Array.isArray(s)) {
+//     a = s;
+//   }
+//   return a;
+// }
 
 export default function SampleQueryPrompt() {
   return null;
