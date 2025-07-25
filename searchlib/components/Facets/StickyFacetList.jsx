@@ -112,7 +112,7 @@ const LargeScreenFacets = ({ isLoading }) => {
 
 const SMALL_SCREEN_SIZE = 766;
 
-export default () => {
+export default function StickyFacetList() {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { appConfig } = useAppConfig();
   const { width } = useWindowDimensions();
@@ -132,4 +132,4 @@ export default () => {
   ) : (
     <LargeScreenFacets {...searchContext} />
   );
-};
+}
