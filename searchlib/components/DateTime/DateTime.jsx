@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 const FormatDateTime = (props) => {
   const { value, format = 'DATE_SHORT' } = props;
 
-  if (value === null){
+  if (value === null) {
     return null;
   }
   const dt = value

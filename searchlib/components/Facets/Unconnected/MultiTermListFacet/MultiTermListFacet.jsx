@@ -41,11 +41,7 @@ const MultiTermListFacet = (props) => {
     sortOn: facetConfig?.sortOn || 'value',
   };
 
-  const {
-    sortedValues: sortedOptions,
-    toggleSort,
-    sorting,
-  } = useSort(
+  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
     ['value', 'count', 'custom'],
     {

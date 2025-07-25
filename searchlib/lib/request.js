@@ -33,8 +33,11 @@ export const bindOnSearch = (config) =>
 
     const { body } = responseJson;
 
-    const responseJsonWithDisjunctiveFacetCounts =
-      await applyDisjunctiveFaceting(body, state, config);
+    const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
+      body,
+      state,
+      config,
+    );
 
     const newState = buildState(
       responseJsonWithDisjunctiveFacetCounts,

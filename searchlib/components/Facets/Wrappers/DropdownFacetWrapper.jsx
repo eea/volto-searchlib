@@ -36,8 +36,10 @@ const DropdownFacetWrapper = (props) => {
   } = props;
   const token = useSelector((state) => state.userSession.token);
   const rawSearchContext = useSearchContext();
-  const { searchContext: facetSearchContext, applySearch } =
-    useProxiedSearchContext(rawSearchContext);
+  const {
+    searchContext: facetSearchContext,
+    applySearch,
+  } = useProxiedSearchContext(rawSearchContext);
   const { facets, filters } = facetSearchContext;
 
   const { appConfig } = useAppConfig();
@@ -61,8 +63,9 @@ const DropdownFacetWrapper = (props) => {
 
   const hideActiveFilters = facet.hideActiveFilters || false;
   const [defaultTypeValue] = (defaultValue || '').split(':');
-  const [localFilterType, setLocalFilterType] =
-    React.useState(defaultTypeValue);
+  const [localFilterType, setLocalFilterType] = React.useState(
+    defaultTypeValue,
+  );
   const dropdownAtom = dropdownOpenFamily(field);
   const [isOpen, setIsOpen] = useAtom(dropdownAtom);
   const nodeRef = React.useRef();

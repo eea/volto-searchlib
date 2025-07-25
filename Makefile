@@ -119,11 +119,11 @@ prettier-fix:	## Fix prettier
 
 .PHONY: lint
 lint:			## ES Lint
-	$(NODE_MODULES)/.bin/eslint --max-warnings=0 'src/**/*.{js,jsx}'
+	$(NODE_MODULES)/.bin/eslint --max-warnings=0 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: lint-fix
 lint-fix:		## Fix ES Lint
-	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}'
+	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: i18n
 i18n:			## i18n
