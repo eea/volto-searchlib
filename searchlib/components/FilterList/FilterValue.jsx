@@ -10,15 +10,8 @@ const LABELS = {
   any: '',
 };
 const FilterValue = (props) => {
-  const {
-    value,
-    values,
-    field,
-    type,
-    appConfig,
-    onClear,
-    removeFilter,
-  } = props;
+  const { value, values, field, type, appConfig, onClear, removeFilter } =
+    props;
   const facetConfig =
     appConfig.facets.find((facet) => facet.field === field) || {};
   const { iconsFamily } = facetConfig;

@@ -44,7 +44,6 @@ const withAnswers = (WrappedComponent) => {
     const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
 
     useDeepCompareEffect(() => {
-      let mounted = true;
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
@@ -130,14 +129,13 @@ const withAnswers = (WrappedComponent) => {
               })),
             );
 
-            const sortedClusters = Object.values(
-              clusterizedAnswers,
-            ).sort((batchA, batchB) =>
-              batchA[0]?.score > batchB[0]?.score
-                ? -1
-                : batchA[0]?.score === batchB[0]?.score
-                ? 0
-                : 1,
+            const sortedClusters = Object.values(clusterizedAnswers).sort(
+              (batchA, batchB) =>
+                batchA[0]?.score > batchB[0]?.score
+                  ? -1
+                  : batchA[0]?.score === batchB[0]?.score
+                  ? 0
+                  : 1,
             );
 
             dispatch({
@@ -149,7 +147,7 @@ const withAnswers = (WrappedComponent) => {
         }, 100);
       }
 
-      return () => (mounted = false);
+      // return () => (mounted = false);
     }, [
       isQuestion,
       isMounted,

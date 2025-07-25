@@ -54,7 +54,7 @@ export default async function getInfo(appConfig) {
     const dt = DateTime.fromMillis(parseInt(update_ts));
     return dt;
   } catch {
-    console.log('info', info);
+    // console.log('info', info);
     return '';
   }
 }

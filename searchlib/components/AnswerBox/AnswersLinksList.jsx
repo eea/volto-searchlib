@@ -7,7 +7,7 @@ import { Icon, ResultSource } from '@eeacms/search/components'; //, StringList
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { highlightUrl } from './utils';
 
-export default ({ filtered, appConfig }) => {
+export default function AnswersLinksList({ filtered, appConfig }) {
   return filtered.map((item, i) => {
     const result = buildResult({ ...item, _source: item.source }, appConfig);
     const clusters = result.clusterInfo;
@@ -38,4 +38,4 @@ export default ({ filtered, appConfig }) => {
       </div>
     );
   });
-};
+}

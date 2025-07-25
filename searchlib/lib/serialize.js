@@ -28,7 +28,7 @@ const preserveTypesEncoder = {
   },
   decode(value, decode) {
     //eslint-disable-next-line
-        if (/n_-?[\d\.]*_n/.test(value)) {
+    if (/n_-?[\d\.]*_n/.test(value)) {
       const numericValueString = value.substring(2, value.length - 2);
       return Number(numericValueString);
     }
