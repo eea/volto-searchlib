@@ -87,7 +87,8 @@ export function setSort({ field, sortOn, sortOrder }) {
 
   const { driver } = this;
   const { sortList } = driver.state;
-  console.log({ sortList });
+
+  // console.log({ sortList });
 
   let sortOptions = [];
   const existingSort = sortList.filter((item) => item.field === field);

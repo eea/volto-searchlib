@@ -67,7 +67,8 @@ export function useFilterState(filterName, initialState) {
     state,
     dispatch,
     (v) => {
-      console.log('dispatch', filterName, v);
+      // eslint-disable-next-line no-console
+      console.log('filterStateReducer-dispatch', filterName, v);
       return dispatch(v);
     },
   ];

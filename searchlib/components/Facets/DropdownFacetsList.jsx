@@ -3,7 +3,6 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import {
   useSearchContext,
   useProxiedSearchContext,
-  // SearchContext,
 } from '@eeacms/search/lib/hocs';
 import { Button } from 'semantic-ui-react';
 import { isFilterValueDefaultValue } from '@eeacms/search/lib/search/helpers';
@@ -15,7 +14,7 @@ import { useAtom } from 'jotai';
 
 import { defineMessages, FormattedMessage } from 'react-intl';
 
-const messages = defineMessages({
+export const messages = defineMessages({
   sortTitleAZ: {
     id: 'Title a-z',
     defaultMessage: 'Title a-z',

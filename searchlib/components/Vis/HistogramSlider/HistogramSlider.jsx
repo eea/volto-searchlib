@@ -27,7 +27,7 @@ const HistogramSlider = ({
   const [width, setWidth] = React.useState(defaultWidth);
   const nodeRef = React.useRef();
   React.useEffect(() => {
-    console.log('update width', nodeRef.current?.clientWidth);
+    // console.log('update width', nodeRef.current?.clientWidth);
     nodeRef.current && setWidth(nodeRef.current.clientWidth);
   }, []);
 

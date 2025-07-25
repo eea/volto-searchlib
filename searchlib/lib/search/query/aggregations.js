@@ -18,9 +18,8 @@ export const buildAggregationsQuery = (config, includeAggs) => {
           : !!includeAggs,
       )
       .map((facet) => {
-        const { buildRequest: buildFacetRequest } = registry.resolve[
-          facet.factory
-        ];
+        const { buildRequest: buildFacetRequest } =
+          registry.resolve[facet.factory];
         return buildFacetRequest ? buildFacetRequest(facet, config) : {}; // include the aggregations
       }),
   );

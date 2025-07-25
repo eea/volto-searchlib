@@ -1,14 +1,14 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Card, Image, Label } from 'semantic-ui-react';
+import { Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { useAtom } from 'jotai';
-import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
 import ResultContext from './ResultContext';
-import { Icon } from '@eeacms/search/components';
+
+// import { useAtom } from 'jotai';
+// import { moreLikeThisAtom } from '@eeacms/search/state';
+// import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 // const normalizeStr = (str) => {
 //   let tmp = document.createElement('DIV');
@@ -35,10 +35,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   setFilter,
   removeFilter,
 }))((props) => {
-  // console.log('props', props);
   const { result } = props;
-  const context = useSearchContext();
-  const { setFilter, removeFilter, setSearchTerm } = context;
+
+  // console.log('props', props);
+  // const context = useSearchContext();
+  // const { setFilter, removeFilter, setSearchTerm } = context;
+
   const { appConfig, registry } = useAppConfig();
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
 
@@ -58,11 +60,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     .replace('https://', '')
     .replace('http://', '')
     .split('/')[0];
-  const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
+  // const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
 
   const [hovered, setHovered] = React.useState(false);
 
-  const clusters = result.clusterInfo;
+  // const clusters = result.clusterInfo;
 
   let metaType = result[props.metatypeField]?.raw || '';
   if (metaType.length === 0) {

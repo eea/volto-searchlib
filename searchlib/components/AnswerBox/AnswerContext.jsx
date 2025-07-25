@@ -16,17 +16,20 @@ const AnswerContext = ({ item, answerItem }) => {
   // const clusters = item.clusterInfo;
   const start = (full_context || context || '').indexOf(answer);
 
-  const pre = (full_context
-    ? full_context.slice(0, start)
-    : context.slice(0, answerItem.offset_start)
+  const pre = (
+    full_context
+      ? full_context.slice(0, start)
+      : context.slice(0, answerItem.offset_start)
   ).replace(WHITESPACE_RE, ' ');
-  const ans = (full_context
-    ? answer
-    : context.slice(answerItem.offset_start, answerItem.offset_end)
+  const ans = (
+    full_context
+      ? answer
+      : context.slice(answerItem.offset_start, answerItem.offset_end)
   ).replace(WHITESPACE_RE, ' ');
-  const post = (full_context
-    ? full_context.slice(start + answer.length, full_context.length)
-    : context.slice(answerItem.offset_end, answerItem.context.length)
+  const post = (
+    full_context
+      ? full_context.slice(start + answer.length, full_context.length)
+      : context.slice(answerItem.offset_end, answerItem.context.length)
   ).replace(WHITESPACE_RE, ' ');
 
   const answerItems = {

@@ -24,6 +24,7 @@ const messages = defineMessages({
 });
 
 const SectionTabs = (props) => {
+  const intl = useIntl();
   // const { width } = useWindowDimensions();
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
@@ -71,7 +72,6 @@ const SectionTabs = (props) => {
   sections.sort((s1, s2) =>
     cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
   );
-  const intl = useIntl();
 
   return (
     <div>

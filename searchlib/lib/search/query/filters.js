@@ -136,7 +136,7 @@ export function getRangeFilter(filter) {
 }
 
 const splitter_re =
-  /(?<now>now)\s?(?<op>[\+|\-])\s?(?<count>\d+)(?<quantifier>\w)/;
+  /(?<now>now)\s?(?<op>[+|-])\s?(?<count>\d+)(?<quantifier>\w)/;
 
 const DAY = 86400000; // 1000 * 60 * 60 * 24
 
@@ -152,12 +152,12 @@ export function getDateRangeFilter(filter, filterConfig) {
     quantifier === 'd'
       ? (x) => x * 1
       : quantifier === 'w'
-        ? (x) => x * 7
-        : quantifier === 'm'
-          ? (x) => x * 30
-          : quantifier === 'y'
-            ? (x) => x * 365
-            : (x) => x * 1;
+      ? (x) => x * 7
+      : quantifier === 'm'
+      ? (x) => x * 30
+      : quantifier === 'y'
+      ? (x) => x * 365
+      : (x) => x * 1;
 
   const toDate = (name) => {
     if (!name) return {};

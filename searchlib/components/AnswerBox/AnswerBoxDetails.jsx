@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import AnswerFeedback from './AnswerFeedback';
 
-export default (props) => {
+export default function AnswerBoxDetails(props) {
   const [open, setOpen] = React.useState(false);
   return (
     <Modal
@@ -53,4 +53,4 @@ export default (props) => {
       </Modal.Actions>
     </Modal>
   );
-};
+}

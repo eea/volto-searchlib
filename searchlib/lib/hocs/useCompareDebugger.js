@@ -1,5 +1,6 @@
 // A fork of https://github.com/IPWright83/react-use-compare-debugger
 // Solves transpilation problems
+/* eslint-disable no-console */
 
 import { useEffect, useRef } from 'react';
 
@@ -130,6 +131,7 @@ const deepCompare = (previous, current, ignoreKeys = [], depth = 0) => {
         mutations.push({
           key,
           type: 'Function',
+          //eslint-disable-next-line
           isNonReferentiallyEqual: currentF == previousF,
         });
         continue;
@@ -181,6 +183,8 @@ const logMutation = (m) => {
         console.log(`%c${m.key}`, styles.mutations.key);
         break;
       }
+      break;
+    default:
       break;
   }
 };
