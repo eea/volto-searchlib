@@ -8,13 +8,8 @@ import cx from 'classnames';
 
 function Paging({ className, onChange, ...rest }) {
   const searchContext = useSearchContext();
-  const {
-    current,
-    setCurrent,
-    totalPages,
-    totalResults,
-    resultsPerPage,
-  } = searchContext;
+  const { current, setCurrent, totalPages, totalResults, resultsPerPage } =
+    searchContext;
 
   const paginationRange = usePaging({
     current,

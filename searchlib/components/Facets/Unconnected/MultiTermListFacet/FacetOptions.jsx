@@ -52,32 +52,33 @@ const FacetOptions = (props) => {
   }
 
   const OptionButton = React.useMemo(
-    () => ({ option, checked, iconsFamily, field, onRemove, onSelect }) => (
-      <Card
-        key={`${getFilterValueDisplay(option.value)}`}
-        onClick={() =>
-          checked ? onRemove(option.value) : onSelect(option.value)
-        }
-        className={cx('term', { active: checked })}
-      >
-        <Card.Content>
-          <Card.Header>
-            {iconsFamily && (
-              <Icon
-                family={iconsFamily}
-                type={option.value}
-                className="facet-option-icon"
-              />
-            )}
+    () =>
+      ({ option, checked, iconsFamily, field, onRemove, onSelect }) => (
+        <Card
+          key={`${getFilterValueDisplay(option.value)}`}
+          onClick={() =>
+            checked ? onRemove(option.value) : onSelect(option.value)
+          }
+          className={cx('term', { active: checked })}
+        >
+          <Card.Content>
+            <Card.Header>
+              {iconsFamily && (
+                <Icon
+                  family={iconsFamily}
+                  type={option.value}
+                  className="facet-option-icon"
+                />
+              )}
 
-            <Term term={option.value} field={field} />
-          </Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <span className="count">({option.count.toLocaleString('en')})</span>
-        </Card.Content>
-      </Card>
-    ),
+              <Term term={option.value} field={field} />
+            </Card.Header>
+          </Card.Content>
+          <Card.Content extra>
+            <span className="count">({option.count.toLocaleString('en')})</span>
+          </Card.Content>
+        </Card>
+      ),
     [],
   );
 

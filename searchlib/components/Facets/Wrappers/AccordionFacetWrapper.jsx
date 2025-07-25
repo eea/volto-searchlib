@@ -32,9 +32,8 @@ const AccordionFacetWrapper = (props) => {
 
   const [defaultTypeValue] = (defaultValue || '').split(':');
 
-  const [localFilterType, setLocalFilterType] = React.useState(
-    defaultTypeValue,
-  );
+  const [localFilterType, setLocalFilterType] =
+    React.useState(defaultTypeValue);
 
   React.useEffect(() => {
     if (defaultValue !== localFilterType) {

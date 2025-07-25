@@ -88,10 +88,10 @@ export default function useSearchApp(props) {
     [appConfig, appName, paramOnSearch, setIsLoading],
   );
 
-  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
-    appConfig,
-    paramOnAutocomplete,
-  ]);
+  const onAutocomplete = React.useMemo(
+    () => paramOnAutocomplete(appConfig),
+    [appConfig, paramOnAutocomplete],
+  );
 
   const locationSearchTerm = React.useMemo(
     () =>

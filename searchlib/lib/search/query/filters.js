@@ -135,7 +135,8 @@ export function getRangeFilter(filter) {
   };
 }
 
-const splitter_re = /(?<now>now)\s?(?<op>[+|-])\s?(?<count>\d+)(?<quantifier>\w)/;
+const splitter_re =
+  /(?<now>now)\s?(?<op>[+|-])\s?(?<count>\d+)(?<quantifier>\w)/;
 
 const DAY = 86400000; // 1000 * 60 * 60 * 24
 

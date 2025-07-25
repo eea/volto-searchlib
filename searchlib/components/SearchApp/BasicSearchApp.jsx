@@ -93,9 +93,10 @@ export default function BasicSearchApp(props) {
   });
   // console.log('driver', driverInstance);
 
-  const mappedWithSearch = React.useMemo(() => withSearch(mapContextToProps), [
-    mapContextToProps,
-  ]);
+  const mappedWithSearch = React.useMemo(
+    () => withSearch(mapContextToProps),
+    [mapContextToProps],
+  );
 
   const stableContext = useDeepCompareMemoize({ appConfig, registry });
 

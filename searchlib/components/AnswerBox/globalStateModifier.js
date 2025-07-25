@@ -44,14 +44,13 @@ export default function extractAnswers(state, response, config) {
     })),
   );
 
-  const sortedClusters = Object.values(
-    clusterizedAnswers,
-  ).sort((batchA, batchB) =>
-    batchA[0]?.score > batchB[0]?.score
-      ? -1
-      : batchA[0]?.score === batchB[0]?.score
-      ? 0
-      : 1,
+  const sortedClusters = Object.values(clusterizedAnswers).sort(
+    (batchA, batchB) =>
+      batchA[0]?.score > batchB[0]?.score
+        ? -1
+        : batchA[0]?.score === batchB[0]?.score
+        ? 0
+        : 1,
   );
 
   state.answers = {
