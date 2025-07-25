@@ -129,13 +129,14 @@ const withAnswers = (WrappedComponent) => {
               })),
             );
 
-            const sortedClusters = Object.values(clusterizedAnswers).sort(
-              (batchA, batchB) =>
-                batchA[0]?.score > batchB[0]?.score
-                  ? -1
-                  : batchA[0]?.score === batchB[0]?.score
-                    ? 0
-                    : 1,
+            const sortedClusters = Object.values(
+              clusterizedAnswers,
+            ).sort((batchA, batchB) =>
+              batchA[0]?.score > batchB[0]?.score
+                ? -1
+                : batchA[0]?.score === batchB[0]?.score
+                ? 0
+                : 1,
             );
 
             dispatch({

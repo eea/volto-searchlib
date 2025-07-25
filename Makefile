@@ -111,11 +111,11 @@ stylelint-fix:	## Fix stylelint
 
 .PHONY: prettier
 prettier:		## Prettier
-	$(NODE_MODULES)/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'
+	$(NODE_MODULES)/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: prettier-fix
 prettier-fix:	## Fix prettier
-	$(NODE_MODULES)/.bin/prettier --single-quote  --write 'src/**/*.{js,jsx,json,css,less,md}'
+	$(NODE_MODULES)/.bin/prettier --single-quote  --write 'src/**/*.{js,jsx,json,css,less,md}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: lint
 lint:			## ES Lint

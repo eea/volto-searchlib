@@ -57,8 +57,10 @@ describe('searchResultsSchemaEnhancer', () => {
       enhancedSchema.properties.defaultFilters.schemaExtender,
     ).toBeInstanceOf(Function);
 
-    const modifiedSchema =
-      enhancedSchema.properties.defaultFilters.schemaExtender(schema, data);
+    const modifiedSchema = enhancedSchema.properties.defaultFilters.schemaExtender(
+      schema,
+      data,
+    );
 
     // Assertions for setFacetWidgetProps
     expect(modifiedSchema.properties.name.choices).toEqual([
@@ -115,8 +117,9 @@ describe('searchResultsSchemaEnhancer', () => {
       enhancedSchema.properties.defaultFilters.schemaExtender,
     ).toBeInstanceOf(Function);
 
-    const modifiedSchema =
-      enhancedSchema.properties.defaultFilters.schemaExtender(schema);
+    const modifiedSchema = enhancedSchema.properties.defaultFilters.schemaExtender(
+      schema,
+    );
 
     // Assertions for setFacetWidgetProps
     expect(modifiedSchema.properties.name.choices).toEqual([]);
@@ -186,8 +189,10 @@ describe('searchResultsSchemaEnhancer', () => {
       enhancedSchema.properties.defaultFilters.schemaExtender,
     ).toBeInstanceOf(Function);
 
-    const modifiedSchema =
-      enhancedSchema.properties.defaultFilters.schemaExtender(schema, data);
+    const modifiedSchema = enhancedSchema.properties.defaultFilters.schemaExtender(
+      schema,
+      data,
+    );
 
     expect(modifiedSchema.properties.name.choices).toEqual([
       ['facet1', 'Facet 1'],
