@@ -58,7 +58,7 @@ const FacetOptions = (props) => {
               <span className="sui-multi-checkbox-facet__input-text">
                 <Term
                   term={intl.formatMessage({
-                    id: option.value,
+                    id: option.value || 'no-id',
                     defaultMessage: option.value,
                   })}
                   field={field}
