@@ -27,7 +27,7 @@ import { useSearchContext, useIsMounted } from '@eeacms/search/lib/hocs';
 
 import FacetsList from './FacetsList';
 
-export default (props) => {
+export default function DefaultFacetsList(props) {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
@@ -47,4 +47,4 @@ export default (props) => {
       />
     </div>
   );
-};
+}

@@ -111,19 +111,23 @@ stylelint-fix:	## Fix stylelint
 
 .PHONY: prettier
 prettier:		## Prettier
-	$(NODE_MODULES)/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'
+	$(NODE_MODULES)/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: prettier-fix
 prettier-fix:	## Fix prettier
-	$(NODE_MODULES)/.bin/prettier --single-quote  --write 'src/**/*.{js,jsx,json,css,less,md}'
+	$(NODE_MODULES)/.bin/prettier --single-quote  --write 'src/**/*.{js,jsx,json,css,less,md}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: lint
 lint:			## ES Lint
-	$(NODE_MODULES)/.bin/eslint --max-warnings=0 'src/**/*.{js,jsx}'
+	$(NODE_MODULES)/.bin/eslint --max-warnings=0 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: lint-fix
 lint-fix:		## Fix ES Lint
-	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}'
+	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
+
+.PHONY: lint-fix
+lint-list-files:		## Fix ES Lint
+	$(NODE_MODULES)/.bin/eslint --format ./eslint-custom-format.js 'src/**/*.{js,jsx}' 'searchlib/**/*.{js,jsx}'
 
 .PHONY: i18n
 i18n:			## i18n

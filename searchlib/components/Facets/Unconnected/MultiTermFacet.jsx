@@ -28,6 +28,7 @@ function getFilterValueDisplay(filterValue) {
 
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove, field } = props;
+  const intl = useIntl();
 
   return (
     <div className="sui-multi-checkbox-facet">
@@ -55,7 +56,14 @@ const FacetOptions = (props) => {
               />
               <span className="checkmark" />
               <span className="sui-multi-checkbox-facet__input-text">
-                <Term term={option.value} field={field} />
+                <Term
+                  term={intl.formatMessage({
+                    id: option.value || 'no-id',
+                    defaultMessage: option.value,
+                  })}
+                  field={field}
+                />
+                {/* <Term term={option.value} field={field} /> */}
               </span>
             </div>
             <span className="sui-multi-checkbox-facet__option-count">

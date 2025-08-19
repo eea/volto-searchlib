@@ -4,15 +4,8 @@ import { Component } from '@eeacms/search/components';
 import { Label } from 'semantic-ui-react';
 
 const Filter = (props) => {
-  const {
-    field,
-    type,
-    values,
-    onClear,
-    removeFilter,
-    noTitle,
-    customClass,
-  } = props;
+  const { field, type, values, onClear, removeFilter, noTitle, customClass } =
+    props;
   const { appConfig, registry } = useAppConfig();
   const facetField = field;
   const { label } = appConfig.facets.find(

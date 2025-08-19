@@ -5,8 +5,10 @@ import { Button, Card } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 const ActiveFilters = (props) => {
+  const intl = useIntl();
   const { onRemove, field } = props;
   const { appConfig } = useAppConfig();
   const { clearFilters } = useSearchContext();
@@ -39,7 +41,13 @@ const ActiveFilters = (props) => {
                 <Card key={i} className="term active-term">
                   <Card.Content>
                     <Card.Header className="card-header">
-                      <Term term={option} field={field} />
+                      <Term
+                        term={intl.formatMessage({
+                          id: option,
+                          defaultMessage: option,
+                        })}
+                        field={field}
+                      />
                       <Button
                         className="clear-filters"
                         onClick={() => {

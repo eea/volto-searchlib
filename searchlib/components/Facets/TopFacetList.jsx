@@ -6,7 +6,7 @@ import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import FacetsList from './FacetsList';
 
-export default (props) => {
+export default function TopFacetList(props) {
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
@@ -29,4 +29,4 @@ export default (props) => {
       ) : null}
     </>
   );
-};
+}

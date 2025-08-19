@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { SearchDriver } from '@elastic/search-ui';
 import { atom, useAtom } from 'jotai';
 

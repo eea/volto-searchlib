@@ -12,7 +12,7 @@ const URLBreadcrumb = ({
   try {
     url = new URL(href || '');
   } catch {
-    // eslint-disable no-console
+    //eslint-disable-next-line no-console
     console.warn('Invalid href (not a URL) in SegmentedBreadcrumb', href);
 
     return `${href}`;

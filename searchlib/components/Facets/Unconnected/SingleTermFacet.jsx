@@ -86,7 +86,11 @@ const SingleTermFacetViewComponent = (props) => {
   };
 
   defaultSortOrder[configSortOn] = configSortOrder;
-  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+  const {
+    sortedValues: sortedOptions,
+    toggleSort,
+    sorting,
+  } = useSort(
     options,
     ['value', 'count'],
     {
