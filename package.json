@@ -20,6 +20,7 @@
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
+    "@eeacms/volto-design-tokens": "1.1.0",
     "@eeacms/volto-matomo": "*",
     "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",
