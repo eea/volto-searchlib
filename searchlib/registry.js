@@ -319,6 +319,18 @@ const config = {
       enableChatbotAnswer: false, // enables chatbot-powered AI answers
       chatbotAnswer: {
         personaId: null, // Required: Danswer persona ID
+        enableFeedback: true,
+        feedbackReasons: [
+          'Repetitive',
+          'Irrelevant',
+          'Inaccurate/Incomplete',
+          'Unclear',
+          'Slow',
+          'Wrong source(s)',
+          'Too long',
+          'Too short',
+          'Outdated sources',
+        ],
         summaryPrompt:
           'You are a search query classifier and summarizer. Respond instantly without additional context.\n\nCLASSIFICATION RULES:\nReturn "NOT_A_QUESTION" for:\n- Single words (e.g., "hello", "water", "test")\n- Greetings or pleasantries\n- Navigation commands (e.g., "go back", "show more")\n- Gibberish or unintelligible input\n- Ambiguous single-term searches\n\nPROVIDE A 3-SENTENCE SUMMARY for:\n- Questions (who, what, when, where, why, how)\n- Multi-word topic searches\n- Data or information requests\n- Specific queries about subjects, concepts, or facts\n\nRESPONSE FORMAT:\n- If uncertain, return "NOT_A_QUESTION"\n- If answerable, provide exactly 3 concise sentences\n- No citations, sources, or disclaimers\n- No preamble or explanation',
         prompt:

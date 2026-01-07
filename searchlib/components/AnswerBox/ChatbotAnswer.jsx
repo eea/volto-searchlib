@@ -14,6 +14,7 @@ import {
   sendMessage,
   MessageProcessor,
   RendererComponent,
+  UserActionsToolbar,
 } from '@eeacms/volto-chatbot';
 import {
   useAppConfig,
@@ -21,7 +22,13 @@ import {
   useSearchAssist,
 } from '@eeacms/search/lib/hocs';
 import infoSVG from '@plone/volto/icons/info.svg';
+import closeSVG from '@plone/volto/icons/clear.svg';
 import searchAssistSVG from '@eeacms/search/components/SearchInput/icons/search-assist.svg';
+
+function isEqual(a, b) {
+  if (!a && !b) return false;
+  return a === b;
+}
 
 const Answer = injectLazyLibs(['rehypePrism', 'remarkGfm'])(({
   message,
@@ -78,6 +85,7 @@ const ChatbotAnswer = () => {
   const [summaryError, setSummaryError] = useState(null);
   const [answer, setAnswer] = useState(null);
   const [answerError, setAnswerError] = useState(null);
+  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
 
   // Track displayed message IDs to determine if animation has completed
   const [displayedSummaryId, setDisplayedSummaryId] = useState(null);
@@ -86,16 +94,30 @@ const ChatbotAnswer = () => {
   const abort = useRef(null);
   const lastQuery = useRef('');
 
-  const { chatbotAnswer = {} } = appConfig;
-  const { personaId, summaryPrompt, prompt } = chatbotAnswer;
+  const { chatbotAnswer = {}, enableMatomoTracking } = appConfig;
+  const { personaId, summaryPrompt, prompt, enableFeedback } = chatbotAnswer;
 
   const summarySessionId = useRef(null);
   const summaryMessageId = useRef(null);
   const answerMessageId = useRef(null);
 
   // Derive displayed state from message ID comparison
-  const isSummaryDisplayed = displayedSummaryId === summaryMessageId.current;
-  const isAnswerDisplayed = displayedAnswerId === answerMessageId.current;
+  const isSummaryDisplayed = isEqual(
+    displayedSummaryId,
+    summaryMessageId.current,
+  );
+  const isAnswerDisplayed = isEqual(displayedAnswerId, answerMessageId.current);
+
+  const isRendering =
+    (summary?.isFinalMessageComing && !isSummaryDisplayed) ||
+    (answer?.isFinalMessageComing && !isAnswerDisplayed);
+
+  const currentMessage = isAnswerDisplayed ? answer : summary;
+
+  const persona = useMemo(
+    () => ({ id: personaId, name: 'Search Assist' }),
+    [personaId],
+  );
 
   // Fetch AI answer helper
   const danswer = useCallback(
@@ -155,13 +177,14 @@ const ChatbotAnswer = () => {
         onFinality?.(sessionId);
       }
     },
-    [personaId],
+    [personaId, setIsLoadingSummary, setIsLoadingAnswer],
   );
 
   // Fetch summary
   const fetchSummary = useCallback(
     async (query) => {
       if (!query || !personaId) return;
+      let finalMessageProcessed = false;
 
       await danswer({
         query,
@@ -169,14 +192,16 @@ const ChatbotAnswer = () => {
         messageId: summaryMessageId,
         onLoad: () => {
           setIsLoadingSummary(true);
-          setAnswer(null);
-          setAnswerError(null);
         },
         onProgress: (processor) => {
           const message = processor.getMessage();
           setSummary(message);
-          if (message.isFinalMessageComing) {
+          if (message.isFinalMessageComing && !finalMessageProcessed) {
+            finalMessageProcessed = true;
             setIsLoadingSummary(false);
+            setAnswer(null);
+            setAnswerError(null);
+            answerMessageId.current = null;
           }
         },
         onComplete: (processor) => {
@@ -258,7 +283,16 @@ const ChatbotAnswer = () => {
       lastQuery.current = term;
       fetchSummary(term);
     }
-  }, [searchTerm, resultSearchTerm, isLoading, isLoadingSummary, fetchSummary]);
+  }, [searchTerm, resultSearchTerm, isLoading, fetchSummary]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (abort.current) {
+        abort.current.abort();
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -269,7 +303,7 @@ const ChatbotAnswer = () => {
       <div className="chatbot-answer-collapse">
         <div
           className={cx('chatbot-answer', {
-            loading: isLoadingSummary || isLoadingAnswer,
+            loading: isLoadingSummary || isLoadingAnswer || isRendering,
           })}
         >
           <div className="chatbot-header">
@@ -278,14 +312,39 @@ const ChatbotAnswer = () => {
               <span className="label">Generative AI Summary</span>
             </div>
             <div className="chatbot-header-right">
+              <UserActionsToolbar
+                className={cx({
+                  disabled: isLoadingSummary || isLoadingAnswer || isRendering,
+                })}
+                message={{
+                  message: currentMessage?.message,
+                  messageId: currentMessage?.messageId,
+                }}
+                enableFeedback={enableFeedback}
+                feedbackReasons={chatbotAnswer.feedbackReasons || []}
+                enableMatomoTracking={enableMatomoTracking}
+                persona={persona}
+              />
               <Modal
+                className="chatbot-disclaimer-modal"
+                open={disclaimerOpen}
+                onOpen={() => setDisclaimerOpen(true)}
+                onClose={() => setDisclaimerOpen(false)}
                 trigger={
                   <button className="icon-btn outline">
                     <VIcon name={infoSVG} size="22px" />
                   </button>
                 }
               >
-                <ModalHeader>Disclaimer</ModalHeader>
+                <ModalHeader>
+                  <span>Disclaimer</span>
+                  <button
+                    className="icon-btn close"
+                    onClick={() => setDisclaimerOpen(false)}
+                  >
+                    <VIcon name={closeSVG} size="22px" />
+                  </button>
+                </ModalHeader>
                 <ModalContent>
                   <p>
                     This response was generated by artificial intelligence based
@@ -325,11 +384,14 @@ const ChatbotAnswer = () => {
                       aria-label="Get detailed answer"
                       onClick={() => fetchAnswer(lastQuery.current)}
                     >
-                      <Icon name="expand" /> Get detailed answer
+                      Read more <Icon name="chevron down" />
                     </button>
                   )}
                   {isLoadingAnswer && !answer?.isFinalMessageComing && (
-                    <button className="get-answer-btn" aria-label="Thinking...">
+                    <button
+                      className="get-answer-btn loading"
+                      aria-label="Thinking..."
+                    >
                       Thinking...
                     </button>
                   )}

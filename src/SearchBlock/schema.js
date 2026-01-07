@@ -30,7 +30,11 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
           {
             id: 'assistants',
             title: 'AI Answer Settings',
-            fields: ['chatbotAssistant'],
+            fields: [
+              'chatbotAssistant',
+              'enableFeedback',
+              ...(formData.enableFeedback ? ['feedbackReasons'] : []),
+            ],
           },
         ]
       : []),
@@ -62,6 +66,42 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       title: 'Assistant',
       choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
       configPath: 'chatbotAnswer.personaId',
+    },
+
+    enableFeedback: {
+      type: 'boolean',
+      title: 'Enable feedback?',
+      default: true,
+      configPath: 'chatbotAnswer.enableFeedback',
+    },
+
+    feedbackReasons: {
+      title: 'Feedback reasons',
+      description: 'Select the reasons for negative feedback.',
+      choices: [
+        ['Repetitive', 'Repetitive'],
+        ['Irrelevant', 'Irrelevant'],
+        ['Inaccurate/Incomplete', 'Inaccurate/Incomplete'],
+        ['Unclear', 'Unclear'],
+        ['Slow', 'Slow'],
+        ['Wrong source(s)', 'Wrong source(s)'],
+        ['Too long', 'Too long'],
+        ['Too short', 'Too short'],
+        ['Outdated sources', 'Outdated sources'],
+      ],
+      isMulti: true,
+      default: [
+        'Repetitive',
+        'Irrelevant',
+        'Inaccurate/Incomplete',
+        'Unclear',
+        'Slow',
+        'Wrong source(s)',
+        'Too long',
+        'Too short',
+        'Outdated sources',
+      ],
+      configPath: 'chatbotAnswer.feedbackReasons',
     },
 
     enableMatomoTracking: {
