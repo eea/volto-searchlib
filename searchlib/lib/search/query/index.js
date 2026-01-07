@@ -101,7 +101,7 @@ export default function buildRequest(state, config, includeAggs = null) {
       ...(config.index_name ? { index: config.index_name } : {}),
       ...(config.sourceExcludedFields?.length
         ? {
-            [config.enableNLP ? 'source' : '_source']: {
+            _source: {
               exclude: [...(config.sourceExcludedFields || [])],
             },
           }

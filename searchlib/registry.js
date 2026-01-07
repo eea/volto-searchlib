@@ -313,39 +313,16 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
-      // requestBodyModifiers: [addQAParams], // todo: use factory names
-      // stateModifiers: [extractAnswers], // todo: use factory names
       requestBodyModifiers: [], // todo: use factory names
       stateModifiers: [], // todo: use factory names
 
-      enableNLP: false, // enables NLP capabilities
       enableChatbotAnswer: false, // enables chatbot-powered AI answers
       chatbotAnswer: {
         personaId: null, // Required: Danswer persona ID
-        fallbackToNLP: false, // Fall back to NLP AnswerBox if chatbot fails
         summaryPrompt:
           'You are a search query classifier and summarizer. Respond instantly without additional context.\n\nCLASSIFICATION RULES:\nReturn "NOT_A_QUESTION" for:\n- Single words (e.g., "hello", "water", "test")\n- Greetings or pleasantries\n- Navigation commands (e.g., "go back", "show more")\n- Gibberish or unintelligible input\n- Ambiguous single-term searches\n\nPROVIDE A 3-SENTENCE SUMMARY for:\n- Questions (who, what, when, where, why, how)\n- Multi-word topic searches\n- Data or information requests\n- Specific queries about subjects, concepts, or facts\n\nRESPONSE FORMAT:\n- If uncertain, return "NOT_A_QUESTION"\n- If answerable, provide exactly 3 concise sentences\n- No citations, sources, or disclaimers\n- No preamble or explanation',
         prompt:
           "You are an expert assistant providing detailed answers.\n\nINSTRUCTIONS:\n- Answer the user's question thoroughly and accurately\n- Structure your response with clear paragraphs for readability\n- Include relevant context, background information, and explanations\n- Use specific facts, data points, and examples when applicable\n- Address different aspects or perspectives of the topic if relevant\n- Keep language clear and accessible while maintaining depth\n\nFORMAT:\n- Start directly with the answer (no preamble)\n- Use bullet points or numbered lists for multiple items\n- Bold key terms or concepts for emphasis when helpful\n- Aim for 3-5 paragraphs depending on complexity\n\nCONSTRAINTS:\n- Stay focused on the question asked\n- Never ask clarifying questions or request feedback\n- Do not prompt the user for more information\n- Provide your best answer with the information given\n- If information is uncertain, acknowledge limitations briefly and continue\n- Do not fabricate statistics or sources\n- Do not include sources or references\n- Be as fast as possible",
-      },
-      nlp: {
-        classifyQuestion: {
-          servicePath: 'query-classifier',
-        },
-        qa: {
-          servicePath: 'query',
-          cutoffScore: 0.5,
-        },
-        similarity: {
-          servicePath: 'similarity',
-          cutoffScore: 0.9,
-        },
-        spacy: {
-          servicePath: 'ner-spacy',
-        },
-        feedback: {
-          servicePath: 'feedback',
-        },
       },
 
       enableMatomoTracking: true,

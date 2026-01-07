@@ -12,14 +12,6 @@ export const NoResults = (props) => {
   const { resultSearchTerm, setSearchTerm, resetFilters, query_type } =
     useSearchContext();
   const { appConfig } = useAppConfig();
-  const {
-    qa_queryTypes = [
-      'query:interrogative',
-      'query:declarative',
-      'query:keyword',
-    ],
-  } = appConfig?.nlp?.qa || {};
-  const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
   const [suggestions, setSuggestions] = React.useState();
   React.useEffect(() => {
     if (resultSearchTerm.trim().length > 0) {
@@ -81,27 +73,25 @@ export const NoResults = (props) => {
           </ul>
         </>
       )}
-      {!isQuestion && (
-        <div className="answers-list">
-          <Message icon warning size="small">
-            <Icon name="exclamation circle" />
-            No results found, but you have active filters. You may try to{' '}
-            <Button
-              size="mini"
-              compact
-              primary
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                resetFilters();
-              }}
-            >
-              reset
-            </Button>{' '}
-            the filters.
-          </Message>
-        </div>
-      )}
+      <div className="answers-list">
+        <Message icon warning size="small">
+          <Icon name="exclamation circle" />
+          No results found, but you have active filters. You may try to{' '}
+          <Button
+            size="mini"
+            compact
+            primary
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              resetFilters();
+            }}
+          >
+            reset
+          </Button>{' '}
+          the filters.
+        </Message>
+      </div>
     </>
   );
 };

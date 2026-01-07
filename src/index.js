@@ -13,11 +13,9 @@ import {
 } from './SearchBlock/templates';
 
 import FacetValueWidget from './SearchBlock/widgets/FacetValueWidget';
-import SelectWidget from './SearchBlock/widgets/SelectWidget';
 import SortWidget from './SearchBlock/widgets/SortWidget';
 
 const applyConfig = (config) => {
-  config.widgets.id.qa_queryTypes = SelectWidget;
   config.widgets.widget.facet_value = FacetValueWidget;
   config.widgets.widget.sort_widget = SortWidget;
   config.settings.searchlib = registry;

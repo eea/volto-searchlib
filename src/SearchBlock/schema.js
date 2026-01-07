@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
   title: 'Searchlib Block',
 
@@ -23,7 +21,6 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
         'promptQueryInterval',
         'debugQuery',
         'customConfig',
-        'enableNLP',
         'enableChatbotAnswer',
         'enableMatomoTracking',
       ],
@@ -34,24 +31,6 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             id: 'assistants',
             title: 'AI Answer Settings',
             fields: ['chatbotAssistant'],
-          },
-        ]
-      : []),
-    ...(formData?.enableNLP
-      ? [
-          {
-            id: 'nlp',
-            title: 'NLP Capabilities Settings',
-            fields: [
-              'use_qa_dp',
-              'qa_use_qa_dp',
-              'qa_queryTypes',
-              'cutoffScore',
-              'rawIndex',
-              'dprIndex',
-              'topKRetriever',
-              'topKReader',
-            ],
           },
         ]
       : []),
@@ -71,12 +50,6 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
     searchEnginePath: {
       title: 'Search Engine path',
       configPath: 'searchEnginePath',
-    },
-
-    enableNLP: {
-      type: 'boolean',
-      title: 'Enable NLP capabilities?',
-      configPath: 'enableNLP',
     },
 
     enableChatbotAnswer: {
@@ -146,76 +119,6 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       configPath: 'promptQueryInterval',
       type: 'number',
       default: 10000,
-    },
-
-    use_qa_dp: {
-      title: 'Use DensePassageRetrieval for results?',
-      description: (
-        <>
-          If enabled, it will use{' '}
-          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
-          query retrieval instead of ES BM25
-        </>
-      ),
-      type: 'boolean',
-      configPath: 'nlp.qa.use_dp',
-    },
-    qa_use_qa_dp: {
-      title: 'Use DensePassageRetrieval for QA?',
-      description: (
-        <>
-          If enabled, it will use{' '}
-          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
-          query retrieval instead of ES BM25
-        </>
-      ),
-      type: 'boolean',
-      configPath: 'nlp.qa.qa_use_dp',
-    },
-
-    qa_queryTypes: {
-      title: 'QA Query types',
-      description: 'The QA system will be used for these types of queries',
-      choices: [
-        ['query:interrogative', 'Question'],
-        ['query:declarative', 'Statement'],
-        ['query:keyword', 'Keyword'],
-      ],
-      configPath: 'nlp.qa.qa_queryTypes',
-      isMulti: true,
-      // modifyConfig: (config) => config,
-      // default: ['query:interrogative']
-    },
-    cutoffScore: {
-      title: 'Cutoff score',
-      type: 'number',
-      description:
-        'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
-      maximum: 0.99,
-      minimum: 0.01,
-      step: 0.1,
-      default: 0.1,
-      configPath: 'nlp.qa.cutoffScore',
-    },
-    rawIndex: {
-      title: 'ElasticSearch Index',
-      configPath: 'nlp.qa.raw_index',
-    },
-    dprIndex: {
-      title: 'DPR ElasticSearch Index',
-      configPath: 'nlp.qa.dpr_index',
-    },
-    topKRetriever: {
-      title: 'TopK Retriever',
-      type: 'number',
-      defaultValue: 10,
-      configPath: 'nlp.qa.topk_retriever',
-    },
-    topKReader: {
-      title: 'TopK Reader',
-      type: 'number',
-      defaultValue: 10,
-      configPath: 'nlp.qa.topk_reader',
     },
   },
 

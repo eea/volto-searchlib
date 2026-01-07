@@ -49,9 +49,6 @@ export function buildRequestFilter(filters, config, options = {}) {
             : null),
         facetConfig,
       );
-      if (config.enableNLP && fc && facetConfig.ignoreFromNlp) {
-        fc.bool.ignoreFromNlp = true;
-      }
 
       return fc;
     }),

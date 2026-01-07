@@ -50,9 +50,6 @@ export function buildDidYouMeanRequest({ searchTerm }, config) {
         must: [], // TODO: predefined_filters
       },
     },
-    ...(config.enableNLP && {
-      ...config.requestParams,
-    }),
   };
   /*const query = {
     size: 0,
@@ -119,9 +116,6 @@ export function buildAutocompleteRequest({ searchTerm }, config) {
         must: [], // TODO: predefined_filters
       },
     },
-    ...(config.enableNLP && {
-      ...config.requestParams,
-    }),
   };
 
   return query;
@@ -187,9 +181,6 @@ export function buildFaqRequest({ searchTerm }, config) {
         ],
       },
     },
-    ...(config.enableNLP && {
-      ...config.requestParams,
-    }),
   };
   return query;
 }
