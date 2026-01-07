@@ -6,9 +6,9 @@ import {
   ViewSelectorWithLabel,
   FilterList,
   SortingDropdownWithLabel,
-  AnswerBox,
   DownloadButton,
 } from '@eeacms/search/components';
+import ChatbotAnswer from '@eeacms/search/components/AnswerBox/ChatbotAnswer';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useViews } from '@eeacms/search/lib/hocs';
 
@@ -35,7 +35,7 @@ export const DefaultContentView = (props) => {
   return (
     <>
       {appConfig.showFilters && <FilterList />}
-      {appConfig.enableNLP ? <AnswerBox /> : ''}
+      {appConfig.enableChatbotAnswer && <ChatbotAnswer />}
       <div className="above-results">
         <ViewSelectorWithLabel
           views={availableResultViews}

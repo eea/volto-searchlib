@@ -1,13 +1,16 @@
 import React from 'react';
+import { compose } from 'redux';
+import superagent from 'superagent';
 import { SearchBlockSchema } from './schema';
 import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
-import SearchBlockView from './SearchBlockView';
 import config from '@plone/volto/registry';
+import withDanswerData from '@eeacms/volto-chatbot/ChatBlock/hocs/withDanswerData';
+import SearchBlockView from './SearchBlockView';
 import { useDebouncedStableData } from './hocs';
 import './edit.less';
 
 const SearchBlockEdit = (props) => {
-  const { onChangeBlock, block, data } = props;
+  const { onChangeBlock, block, data, assistants } = props;
   const [selectedSlotFill, onSelectSlotfill] = React.useState();
 
   const stableData = useDebouncedStableData(
@@ -20,7 +23,7 @@ const SearchBlockEdit = (props) => {
   );
 
   const schema = React.useMemo(() => {
-    const schema = SearchBlockSchema({ formData: stableData });
+    const schema = SearchBlockSchema({ formData: stableData, assistants });
 
     const { searchui } = config.settings.searchlib;
 
@@ -97,4 +100,10 @@ const SearchBlockEdit = (props) => {
   );
 };
 
-export default SearchBlockEdit;
+export default compose(
+  withDanswerData(() => [
+    'assistants',
+    superagent.get('/_da/persona?include_deleted=false').type('json'),
+  ]),
+  // withDanswerData(() => ['tool', superagent.get('/_da/tool').type('json')]), // May be needed in the future
+)(SearchBlockEdit);

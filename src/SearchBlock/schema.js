@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SearchBlockSchema = ({ formData = {} }) => ({
+export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
   title: 'Searchlib Block',
 
   fieldsets: [
@@ -24,9 +24,19 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'debugQuery',
         'customConfig',
         'enableNLP',
+        'enableChatbotAnswer',
         'enableMatomoTracking',
       ],
     },
+    ...(formData?.enableChatbotAnswer && assistants?.length > 0
+      ? [
+          {
+            id: 'assistants',
+            title: 'AI Answer Settings',
+            fields: ['chatbotAssistant'],
+          },
+        ]
+      : []),
     ...(formData?.enableNLP
       ? [
           {
@@ -67,6 +77,18 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       type: 'boolean',
       title: 'Enable NLP capabilities?',
       configPath: 'enableNLP',
+    },
+
+    enableChatbotAnswer: {
+      type: 'boolean',
+      title: 'Enable AI-generated answers?',
+      configPath: 'enableChatbotAnswer',
+    },
+
+    chatbotAssistant: {
+      title: 'Assistant',
+      choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
+      configPath: 'chatbotAnswer.personaId',
     },
 
     enableMatomoTracking: {

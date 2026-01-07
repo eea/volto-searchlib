@@ -14,7 +14,8 @@ import { SectionTabs } from '@eeacms/search/components';
 import { useViews } from '@eeacms/search/lib/hocs';
 
 import registry from '@eeacms/search/registry';
-import { AnswerBox, Component } from '@eeacms/search/components';
+import { Component } from '@eeacms/search/components';
+import ChatbotAnswer from '@eeacms/search/components/AnswerBox/ChatbotAnswer';
 import { NoResults } from '@eeacms/search/components/Result/NoResults';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { loadingFamily } from '@eeacms/search/state';
@@ -141,7 +142,9 @@ export const FilterAsideContentView = (props) => {
 
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 
-        {current === 1 && appConfig.mode !== 'edit' ? <AnswerBox /> : ''}
+        {current === 1 &&
+          appConfig.mode !== 'edit' &&
+          appConfig.enableChatbotAnswer && <ChatbotAnswer />}
 
         {<ResultViewComponent>{children}</ResultViewComponent>}
 
