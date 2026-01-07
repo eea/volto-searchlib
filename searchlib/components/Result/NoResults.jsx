@@ -9,8 +9,7 @@ const getSuggestions = async (term, config) => {
   return suggestions.join(' ');
 };
 export const NoResults = (props) => {
-  const { resultSearchTerm, setSearchTerm, resetFilters, query_type } =
-    useSearchContext();
+  const { resultSearchTerm, setSearchTerm, resetFilters } = useSearchContext();
   const { appConfig } = useAppConfig();
   const [suggestions, setSuggestions] = React.useState();
   React.useEffect(() => {

@@ -177,7 +177,7 @@ const ChatbotAnswer = () => {
         onFinality?.(sessionId);
       }
     },
-    [personaId, setIsLoadingSummary, setIsLoadingAnswer],
+    [personaId],
   );
 
   // Fetch summary
@@ -233,7 +233,7 @@ const ChatbotAnswer = () => {
         retrieval_options: { run_search: 'never', real_time: true },
       });
     },
-    [personaId, summaryPrompt, danswer],
+    [personaId, summaryPrompt, setIsLoadingSummary, setIsQuestion, danswer],
   );
 
   // Fetch detailed answer
@@ -273,7 +273,7 @@ const ChatbotAnswer = () => {
         retrieval_options: { run_search: 'always', real_time: true },
       });
     },
-    [personaId, prompt, danswer],
+    [personaId, prompt, setIsLoadingAnswer, danswer],
   );
 
   // Trigger summary fetch when ES search starts

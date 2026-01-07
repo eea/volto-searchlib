@@ -38,7 +38,7 @@ const SearchBlockEdit = (props) => {
     schema.registry = config.settings.searchlib;
 
     return schema;
-  }, [stableData]);
+  }, [assistants, stableData]);
 
   const onChangeSlotfill = React.useCallback(
     (slotId, value) => {

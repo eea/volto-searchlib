@@ -6,12 +6,7 @@ import BasicSearchApp from './BasicSearchApp';
 import { SearchBox } from '@eeacms/search/components';
 
 const BootstrapSearchInputView = (props) => {
-  const {
-    mode = 'view',
-    appConfig,
-    onSubmitSearch,
-    ...searchContext
-  } = props;
+  const { mode = 'view', appConfig, onSubmitSearch, ...searchContext } = props;
   const { registry } = useAppConfig();
 
   const onSubmit = appConfig.url

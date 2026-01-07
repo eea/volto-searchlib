@@ -1,5 +1,9 @@
 import React from 'react';
-import { useViews, useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import {
+  useViews,
+  useSearchContext,
+  useAppConfig,
+} from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
