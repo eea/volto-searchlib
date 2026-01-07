@@ -1,7 +1,6 @@
 import React from 'react';
 
-import registry from '@eeacms/search/registry';
-import { AppConfigContext } from '@eeacms/search/lib/hocs';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 import BasicSearchApp from './BasicSearchApp';
 import { SearchBox } from '@eeacms/search/components';
@@ -9,11 +8,11 @@ import { SearchBox } from '@eeacms/search/components';
 const BootstrapSearchInputView = (props) => {
   const {
     mode = 'view',
-    appConfigContext,
     appConfig,
     onSubmitSearch,
     ...searchContext
   } = props;
+  const { registry } = useAppConfig();
 
   const onSubmit = appConfig.url
     ? (searchTerm) => {
@@ -54,13 +53,7 @@ const BootstrapSearchInputView = (props) => {
 };
 
 const SearchInputViewWrapper = (props) => {
-  return (
-    <AppConfigContext.Consumer>
-      {(context) => (
-        <BootstrapSearchInputView appConfigContext={context} {...props} />
-      )}
-    </AppConfigContext.Consumer>
-  );
+  return <BootstrapSearchInputView {...props} />;
 };
 
 export default function SearchInputApp(props) {

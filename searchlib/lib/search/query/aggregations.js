@@ -1,4 +1,4 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 
 /**
  * Build a suitable object for the aggregations part of the query.
@@ -19,7 +19,7 @@ export const buildAggregationsQuery = (config, includeAggs) => {
       )
       .map((facet) => {
         const { buildRequest: buildFacetRequest } =
-          registry.resolve[facet.factory];
+          getRegistry().resolve[facet.factory];
         return buildFacetRequest ? buildFacetRequest(facet, config) : {}; // include the aggregations
       }),
   );

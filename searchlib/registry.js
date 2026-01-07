@@ -62,10 +62,6 @@ import {
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
-import {
-  addQAParams,
-  extractAnswers,
-} from '@eeacms/search/components/AnswerBox';
 import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
 
 const config = {
@@ -317,8 +313,10 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
-      requestBodyModifiers: [addQAParams], // todo: use factory names
-      stateModifiers: [extractAnswers], // todo: use factory names
+      // requestBodyModifiers: [addQAParams], // todo: use factory names
+      // stateModifiers: [extractAnswers], // todo: use factory names
+      requestBodyModifiers: [], // todo: use factory names
+      stateModifiers: [], // todo: use factory names
 
       enableNLP: false, // enables NLP capabilities
       enableChatbotAnswer: false, // enables chatbot-powered AI answers

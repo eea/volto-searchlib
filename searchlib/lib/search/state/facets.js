@@ -1,11 +1,11 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 
 export default function buildStateFacets(aggregations, config) {
   const { facets } = config;
   const facetsMap = Object.assign(
     {},
     ...facets.map((facet) => {
-      return { [facet.field]: registry.resolve[facet.factory] };
+      return { [facet.field]: getRegistry().resolve[facet.factory] };
     }),
   );
 

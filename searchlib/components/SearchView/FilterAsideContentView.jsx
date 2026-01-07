@@ -11,9 +11,8 @@ import {
   DropdownFacetsList,
 } from '@eeacms/search/components';
 import { SectionTabs } from '@eeacms/search/components';
-import { useViews } from '@eeacms/search/lib/hocs';
+import { useViews, useAppConfig } from '@eeacms/search/lib/hocs';
 
-import registry from '@eeacms/search/registry';
 import { Component } from '@eeacms/search/components';
 import ChatbotAnswer from '@eeacms/search/components/AnswerBox/ChatbotAnswer';
 import { NoResults } from '@eeacms/search/components/Result/NoResults';
@@ -49,6 +48,7 @@ const messages = defineMessages({
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, children, current, wasInteracted } = props;
+  const { registry } = useAppConfig();
   const { sortOptions, resultViews } = appConfig;
   const views = useViews();
   const listingViewDef = resultViews.filter(

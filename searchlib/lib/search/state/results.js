@@ -1,7 +1,7 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 
 export function buildResult(hit, config, ...extras) {
-  const Model = registry.resolve[config.resultItemModel.factory];
+  const Model = getRegistry().resolve[config.resultItemModel.factory];
   return new Model(hit, config, ...extras);
 }
 

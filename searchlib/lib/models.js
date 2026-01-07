@@ -1,4 +1,4 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 import { DateTime } from 'luxon';
 
 function getHighlight(hit, fieldName) {
@@ -74,7 +74,7 @@ export const convertHitToResult = (record, field_filters) => {
 function _getThumb() {
   const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
   const getThumb =
-    registry.resolve[thumbFactoryName] ||
+    getRegistry().resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
 
   return getThumb(this._result, this.appConfig);
