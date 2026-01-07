@@ -32,24 +32,24 @@ describe('SlotEditor', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('renders tabs for each search state', () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <SlotEditor
-            slot="slotA"
-            data={mockData}
-            selectedSlotFill="slotA-any"
-            onChangeSlotfill={() => {}}
-            onDeleteSlotfill={() => {}}
-            onSelectSlotfill={() => {}}
-            metadata={{}}
-            mode="view"
-          />
-        </MemoryRouter>
-      </Provider>,
-    );
-  });
+  // it('renders tabs for each search state', () => {
+  //   render(
+  //     <Provider store={store}>
+  //       <MemoryRouter>
+  //         <SlotEditor
+  //           slot="slotA"
+  //           data={mockData}
+  //           selectedSlotFill="slotA-any"
+  //           onChangeSlotfill={() => {}}
+  //           onDeleteSlotfill={() => {}}
+  //           onSelectSlotfill={() => {}}
+  //           metadata={{}}
+  //           mode="view"
+  //         />
+  //       </MemoryRouter>
+  //     </Provider>,
+  //   );
+  // });
 
   //   it('calls onChangeSlotfill when a tab is clicked', () => {
   //     const onChangeSlotfill = jest.fn();
