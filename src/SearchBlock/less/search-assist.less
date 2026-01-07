@@ -1,9 +1,9 @@
 @toggleLabelOffset: 0.15em;
 
 @property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
   inherits: false;
+  initial-value: 0deg;
+  syntax: '<angle>';
 }
 
 .chatbot-answer-wrapper {
@@ -23,18 +23,16 @@
 
 .chatbot-answer {
   position: relative;
-  background-color: @grey-1;
-  border-radius: 14px;
   padding: 1em;
   border: 1px solid @lightGrey;
+  border-radius: 14px;
+  background-color: @grey-1;
 
   &::after {
-    content: '';
     position: absolute;
-    inset: 0;
-    opacity: 0;
-    border-radius: 14px;
     padding: 2px;
+    border-radius: 14px;
+    animation: 2s angle-spin linear infinite;
     background-image: conic-gradient(
       from var(--angle),
       transparent 0deg,
@@ -42,14 +40,16 @@
       transparent 180deg,
       transparent 360deg
     );
+    content: '';
+    inset: 0;
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease-in-out;
-    animation: 2s angle-spin linear infinite;
   }
 
   &.loading::after {
@@ -76,34 +76,34 @@
     margin: 1.5em 0 1em 0;
 
     &::before {
-      content: '';
       display: block;
       height: 1px;
       background-color: @lightGrey;
+      content: '';
     }
 
     .get-answer-btn {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       padding: 0 4px;
-      margin: 0;
       border: none;
-      color: @deepBlue;
+      margin: 0;
       background-color: @grey-1;
+      color: @deepBlue;
       cursor: pointer;
+      transform: translate(-50%, -50%);
     }
   }
 
   .icon-btn {
     display: inline-block;
-    background: none;
-    border: none;
-    cursor: pointer;
     padding: 0;
+    border: none;
     margin: 0;
+    background: none;
     color: @deepBlue;
+    cursor: pointer;
 
     i {
       margin: 0;
@@ -114,15 +114,15 @@
 .search-assist-toggle {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background-color: transparent;
   padding: 0;
-  margin: 0;
   border: none;
-  cursor: pointer;
+  margin: 0;
+  background-color: transparent;
   color: @deepBlue;
+  cursor: pointer;
   font-size: 13px;
   font-weight: bold;
+  gap: 8px;
 
   &.enabled {
     color: @secondaryColor;
@@ -133,8 +133,8 @@
   }
 
   &:disabled {
-    opacity: 0.7;
     cursor: not-allowed;
+    opacity: 0.7;
   }
 
   @media screen and (max-width: @largestSmallMonitor) {
@@ -156,6 +156,7 @@
   100% {
     opacity: 0.8;
   }
+
   50% {
     opacity: 0.4;
   }
@@ -165,6 +166,7 @@
   from {
     --angle: 0deg;
   }
+
   to {
     --angle: 360deg;
   }
