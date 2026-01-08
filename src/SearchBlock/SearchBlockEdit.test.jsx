@@ -13,6 +13,16 @@ jest.mock('@plone/volto/registry', () => ({
   },
 }));
 
+jest.mock(
+  '@eeacms/volto-chatbot/ChatBlock/hocs/withDanswerData',
+  () => {
+    return () => (Component) => Component;
+  },
+  { virtual: true },
+);
+
+jest.mock('./edit.less', () => ({}));
+
 jest.mock('./hocs', () => ({
   useDebouncedStableData: jest.fn((data) => data),
 }));
