@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import ChatbotAnswer from './ChatbotAnswer';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -66,14 +65,13 @@ jest.mock(
 jest.mock(
   '@plone/volto/helpers/Loadable',
   () => ({
-    injectLazyLibs: () => (Component) => (props) =>
-      (
-        <Component
-          {...props}
-          rehypePrism={{ default: jest.fn() }}
-          remarkGfm={{ default: jest.fn() }}
-        />
-      ),
+    injectLazyLibs: () => (Component) => (props) => (
+      <Component
+        {...props}
+        rehypePrism={{ default: jest.fn() }}
+        remarkGfm={{ default: jest.fn() }}
+      />
+    ),
   }),
   { virtual: true },
 );
@@ -196,7 +194,9 @@ describe('ChatbotAnswer', () => {
     });
 
     const { container } = render(<ChatbotAnswer />);
-    expect(container.querySelector('.chatbot-answer.loading')).toBeInTheDocument();
+    expect(
+      container.querySelector('.chatbot-answer.loading'),
+    ).toBeInTheDocument();
   });
 
   it('applies loading class when isLoadingAnswer is true', () => {
@@ -206,7 +206,9 @@ describe('ChatbotAnswer', () => {
     });
 
     const { container } = render(<ChatbotAnswer />);
-    expect(container.querySelector('.chatbot-answer.loading')).toBeInTheDocument();
+    expect(
+      container.querySelector('.chatbot-answer.loading'),
+    ).toBeInTheDocument();
   });
 
   it('applies expanded class when isQuestion is true and summary exists', async () => {
@@ -251,7 +253,9 @@ describe('ChatbotAnswer', () => {
     render(<ChatbotAnswer />);
 
     await waitFor(() => {
-      expect(defaultSearchAssist.setIsLoadingSummary).toHaveBeenCalledWith(true);
+      expect(defaultSearchAssist.setIsLoadingSummary).toHaveBeenCalledWith(
+        true,
+      );
     });
   });
 
