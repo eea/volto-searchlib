@@ -84,9 +84,9 @@ jest.mock('semantic-ui-react', () => ({
     </div>
   )),
   Icon: jest.fn(({ name }) => <i data-testid="sui-icon" data-name={name} />),
-  Modal: jest.fn(({ children, open, trigger, onOpen, onClose }) => (
+  Modal: jest.fn(({ children, open, trigger, onOpen }) => (
     <div data-testid="sui-modal" data-open={open}>
-      <div onClick={onOpen}>{trigger}</div>
+      <button onClick={onOpen}>{trigger}</button>
       {open && children}
     </div>
   )),
@@ -217,7 +217,7 @@ describe('ChatbotAnswer', () => {
       isQuestion: true,
     });
 
-    const { container, rerender } = render(<ChatbotAnswer />);
+    const { container } = render(<ChatbotAnswer />);
 
     // Initially not expanded (no summary)
     expect(
