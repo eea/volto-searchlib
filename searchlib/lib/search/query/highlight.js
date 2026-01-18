@@ -1,4 +1,4 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 import { extractExactPhrases } from '@eeacms/search/lib/search/query/fullText';
 
 const phraseBuilder = (fieldName, phrases) => {
@@ -44,7 +44,8 @@ export const highlightQueryBuilder = (searchTerm, fieldName) => {
 export const buildHighlight = (searchTerm, config) => {
   if (!searchTerm || !config.highlight) return {};
 
-  const _highlight = registry.resolve[config.highlight.queryBuilder.factory];
+  const _highlight =
+    getRegistry().resolve[config.highlight.queryBuilder.factory];
 
   return searchTerm && config.highlight?.fields
     ? {

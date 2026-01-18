@@ -62,11 +62,8 @@ import {
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
-import {
-  addQAParams,
-  extractAnswers,
-} from '@eeacms/search/components/AnswerBox';
 import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
+import { summaryPrompt, detailedPrompt } from './prompts';
 
 const config = {
   resolve: {
@@ -317,28 +314,26 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
-      requestBodyModifiers: [addQAParams], // todo: use factory names
-      stateModifiers: [extractAnswers], // todo: use factory names
+      requestBodyModifiers: [], // todo: use factory names
+      stateModifiers: [], // todo: use factory names
 
-      enableNLP: false, // enables NLP capabilities
-      nlp: {
-        classifyQuestion: {
-          servicePath: 'query-classifier',
-        },
-        qa: {
-          servicePath: 'query',
-          cutoffScore: 0.5,
-        },
-        similarity: {
-          servicePath: 'similarity',
-          cutoffScore: 0.9,
-        },
-        spacy: {
-          servicePath: 'ner-spacy',
-        },
-        feedback: {
-          servicePath: 'feedback',
-        },
+      enableChatbotAnswer: false, // enables chatbot-powered AI answers
+      chatbotAnswer: {
+        personaId: null, // Required: Danswer persona ID
+        enableFeedback: true,
+        feedbackReasons: [
+          'Repetitive',
+          'Irrelevant',
+          'Inaccurate/Incomplete',
+          'Unclear',
+          'Slow',
+          'Wrong source(s)',
+          'Too long',
+          'Too short',
+          'Outdated sources',
+        ],
+        summaryPrompt,
+        prompt: detailedPrompt,
       },
 
       enableMatomoTracking: true,

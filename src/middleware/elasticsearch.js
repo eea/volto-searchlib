@@ -54,32 +54,6 @@ function handleSearchRequest(req, res, params) {
     });
 }
 
-function handleNlpRequest(req, res, params) {
-  const { body } = req;
-  const { urlNLP } = params;
-  const { endpoint } = body;
-  delete body.endpoint;
-
-  if (body?.params?.config) {
-    delete body.params.config;
-  }
-
-  const url = `${urlNLP}/${endpoint}`;
-  log('handle nlp', url, urlNLP);
-
-  superagent
-    .post(url)
-    .send(body)
-    .set('accept', 'application/json')
-    .end((err, resp) => {
-      if (resp && resp.body) {
-        res.send(resp.body);
-      } else {
-        res.send({ error: 'Unknown' });
-      }
-    });
-}
-
 const handleSearch = (req, res, next, params) => {
   // This handler is used for both the main (search) request, but also for
   // requests coming for questions.
@@ -90,30 +64,24 @@ const handleSearch = (req, res, next, params) => {
 
   if (requestType) delete body.requestType; // TODO: is this safe?
 
-  switch (requestType) {
-    case 'nlp':
-      handleNlpRequest(req, res, params);
-      break;
-    default:
-      handleSearchRequest(req, res, params);
-  }
+  handleSearchRequest(req, res, params);
 };
 
-const handleSettings = (req, res, next, { appName, urlNLP, urlES }) => {
+const handleSettings = (req, res, next, { appName, urlES }) => {
   const url = `${urlES}/_settings`;
   superagent.get(url).end((err, resp) => {
     if (resp && resp.body) res.send(resp.body);
   });
 };
 
-const handleAlias = (req, res, next, { appName, urlNLP, urlES }) => {
+const handleAlias = (req, res, next, { appName, urlES }) => {
   const url = `${urlES}/_alias`;
   superagent.get(url).end((err, resp) => {
     if (resp && resp.body) res.send(resp.body);
   });
 };
 
-const handleDownload = (req, res, next, { appName, urlNLP, urlES }) => {
+const handleDownload = (req, res, next, { appName, urlES }) => {
   const body = req.body || {};
   const appConfig =
     body.params?.config || config.settings.searchlib.searchui[appName];
@@ -130,14 +98,6 @@ const handleDocRequest = (req, res, next, { urlES, docId }) => {
   });
 };
 
-const getUrlNLP = (appName) => {
-  return (
-    process.env[`RAZZLE_PROXY_QA_DSN_${appName}`] ||
-    process.env.RAZZLE_PROXY_QA_DSN ||
-    'http://localhost:8000/api'
-  );
-};
-
 const getUrlES = (appName) => {
   return (
     process.env[`RAZZLE_PROXY_ES_DSN_${appName}`] ||
@@ -148,7 +108,7 @@ const getUrlES = (appName) => {
 
 export const createHandler = () => {
   return function esProxyHandler(req, res, next) {
-    let urlES, urlNLP;
+    let urlES;
 
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
@@ -168,20 +128,11 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (searchRequestAppName) {
-      const body = req.body || {};
-      const conf =
-        body.params?.config ||
-        config.settings.searchlib.searchui[searchRequestAppName];
-
-      log('enableNLP:', searchRequestAppName, conf.enableNLP);
-
-      urlNLP = getUrlNLP(searchRequestAppName);
       urlES = getUrlES(searchRequestAppName);
 
       handleSearch(req, res, next, {
         appName: searchRequestAppName,
-        urlNLP,
-        urlES: conf.enableNLP ? urlNLP : urlES,
+        urlES,
       });
       return;
     }
@@ -191,12 +142,10 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (settingsAppName) {
-      urlNLP = getUrlNLP(settingsAppName);
       urlES = getUrlES(settingsAppName);
 
       handleSettings(req, res, next, {
         appName: settingsAppName,
-        urlNLP,
         urlES,
       });
       return;
@@ -207,12 +156,10 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (aliasAppName) {
-      urlNLP = getUrlNLP(aliasAppName);
       urlES = getUrlES(aliasAppName);
 
       handleAlias(req, res, next, {
         appName: aliasAppName,
-        urlNLP,
         urlES,
       });
       return;
@@ -223,12 +170,10 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (downloadAppName) {
-      urlNLP = getUrlNLP(downloadAppName);
       urlES = getUrlES(downloadAppName);
 
       handleDownload(req, res, next, {
         appName: downloadAppName,
-        urlNLP,
         urlES,
       });
       return;

@@ -1,4 +1,4 @@
-import registry from '@eeacms/search/registry';
+import getRegistry from '@eeacms/search/lib/getRegistry';
 
 const isFunction = (value) =>
   value &&
@@ -27,7 +27,7 @@ export function buildRequestFilter(filters, config, options = {}) {
     ...config.facets?.map((facetConfig) => {
       return {
         [facetConfig.id || facetConfig.field]: {
-          ...registry.resolve[facetConfig.factory],
+          ...getRegistry().resolve[facetConfig.factory],
           ...facetConfig,
         },
       };
@@ -49,9 +49,6 @@ export function buildRequestFilter(filters, config, options = {}) {
             : null),
         facetConfig,
       );
-      if (config.enableNLP && fc && facetConfig.ignoreFromNlp) {
-        fc.bool.ignoreFromNlp = true;
-      }
 
       return fc;
     }),
