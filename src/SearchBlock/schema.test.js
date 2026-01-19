@@ -7,32 +7,6 @@ describe('SearchBlockSchema', () => {
     expect(schema.required).toEqual(['appName']);
   });
 
-  it('should return schema with NLP settings when enableNLP is true', () => {
-    const schema = SearchBlockSchema({ formData: { enableNLP: true } });
-    const nlpFieldset = schema.fieldsets.find(
-      (fieldset) => fieldset.id === 'nlp',
-    );
-    expect(nlpFieldset).not.toBeUndefined();
-    expect(nlpFieldset.fields).toEqual([
-      'use_qa_dp',
-      'qa_use_qa_dp',
-      'qa_queryTypes',
-      'cutoffScore',
-      'rawIndex',
-      'dprIndex',
-      'topKRetriever',
-      'topKReader',
-    ]);
-  });
-
-  it('should not include NLP settings when enableNLP is false', () => {
-    const schema = SearchBlockSchema({ enableNLP: false });
-    const nlpFieldset = schema.fieldsets.find(
-      (fieldset) => fieldset.id === 'nlp',
-    );
-    expect(nlpFieldset).toBeUndefined();
-  });
-
   it('should modify the config with valid JSON', () => {
     const schema = SearchBlockSchema({});
     const modifyConfig = schema.properties.customConfig.modifyConfig;

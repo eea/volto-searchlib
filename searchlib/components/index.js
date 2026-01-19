@@ -33,7 +33,6 @@ import SortingDropdown from './Sorting/SortingDropdown';
 import SortingDropdownWithLabel from './Sorting/SortingDropdownWithLabel';
 import MoreLikeThisEntry from './FilterList/MoreLikeThisEntry';
 import Resizable from './UI/Resizable';
-import AnswerBox from './AnswerBox/AnswerBox';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
@@ -83,7 +82,6 @@ export {
   SortingDropdownWithLabel,
   MoreLikeThisEntry,
   Resizable,
-  AnswerBox,
   DownloadButton,
   AppInfo,
   ResultHeader,

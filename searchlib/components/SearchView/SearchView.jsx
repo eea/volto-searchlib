@@ -4,14 +4,13 @@
 
 import React from 'react';
 
-import { withAppConfig } from '@eeacms/search/lib/hocs';
+import { withAppConfig, useAppConfig } from '@eeacms/search/lib/hocs';
 import {
   SearchBox,
   AppInfo,
   SampleQueryPrompt,
   RenderSlot,
 } from '@eeacms/search/components';
-import registry from '@eeacms/search/registry';
 import { SearchContext as SUISearchContext } from '@elastic/react-search-ui';
 
 import { checkInteracted } from '@eeacms/search/lib/search/helpers';
@@ -53,6 +52,7 @@ const useWasInteracted = ({ searchedTerm, searchContext, appConfig }) => {
 
 export const SearchView = (props) => {
   const { appConfig, appName, mode = 'view' } = props;
+  const { registry } = useAppConfig();
 
   const searchContext = useSearchContext();
   const { driver } = React.useContext(SUISearchContext);

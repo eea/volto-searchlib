@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-searchlib",
-  "version": "2.1.10",
+  "version": "3.0.0",
   "description": "@eeacms/volto-searchlib: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -13,13 +13,15 @@
     "react"
   ],
   "addons": [
-    "@eeacms/volto-matomo"
+    "@eeacms/volto-matomo",
+    "@eeacms/volto-chatbot"
   ],
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
+    "@eeacms/volto-chatbot": "*",
     "@eeacms/volto-design-tokens": "*",
     "@eeacms/volto-matomo": "*",
     "@elastic/react-search-ui": "1.20.2",

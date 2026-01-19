@@ -1,9 +1,13 @@
 import React from 'react';
-import registry from '@eeacms/search/registry';
-import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
+import {
+  useViews,
+  useSearchContext,
+  useAppConfig,
+} from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
+  const { registry } = useAppConfig();
   const { showLandingPage = true } = appConfig;
   const searchContext = useSearchContext();
   const { results = [] } = searchContext;

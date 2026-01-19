@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const SearchBlockSchema = ({ formData = {} }) => ({
+export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
   title: 'Searchlib Block',
 
   fieldsets: [
@@ -23,24 +21,19 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
         'promptQueryInterval',
         'debugQuery',
         'customConfig',
-        'enableNLP',
+        'enableChatbotAnswer',
         'enableMatomoTracking',
       ],
     },
-    ...(formData?.enableNLP
+    ...(formData?.enableChatbotAnswer && assistants?.length > 0
       ? [
           {
-            id: 'nlp',
-            title: 'NLP Capabilities Settings',
+            id: 'assistants',
+            title: 'AI Answer Settings',
             fields: [
-              'use_qa_dp',
-              'qa_use_qa_dp',
-              'qa_queryTypes',
-              'cutoffScore',
-              'rawIndex',
-              'dprIndex',
-              'topKRetriever',
-              'topKReader',
+              'chatbotAssistant',
+              'enableFeedback',
+              ...(formData.enableFeedback ? ['feedbackReasons'] : []),
             ],
           },
         ]
@@ -63,10 +56,52 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       configPath: 'searchEnginePath',
     },
 
-    enableNLP: {
+    enableChatbotAnswer: {
       type: 'boolean',
-      title: 'Enable NLP capabilities?',
-      configPath: 'enableNLP',
+      title: 'Enable AI-generated answers?',
+      configPath: 'enableChatbotAnswer',
+    },
+
+    chatbotAssistant: {
+      title: 'Assistant',
+      choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
+      configPath: 'chatbotAnswer.personaId',
+    },
+
+    enableFeedback: {
+      type: 'boolean',
+      title: 'Enable feedback?',
+      default: true,
+      configPath: 'chatbotAnswer.enableFeedback',
+    },
+
+    feedbackReasons: {
+      title: 'Feedback reasons',
+      description: 'Select the reasons for negative feedback.',
+      choices: [
+        ['Repetitive', 'Repetitive'],
+        ['Irrelevant', 'Irrelevant'],
+        ['Inaccurate/Incomplete', 'Inaccurate/Incomplete'],
+        ['Unclear', 'Unclear'],
+        ['Slow', 'Slow'],
+        ['Wrong source(s)', 'Wrong source(s)'],
+        ['Too long', 'Too long'],
+        ['Too short', 'Too short'],
+        ['Outdated sources', 'Outdated sources'],
+      ],
+      isMulti: true,
+      default: [
+        'Repetitive',
+        'Irrelevant',
+        'Inaccurate/Incomplete',
+        'Unclear',
+        'Slow',
+        'Wrong source(s)',
+        'Too long',
+        'Too short',
+        'Outdated sources',
+      ],
+      configPath: 'chatbotAnswer.feedbackReasons',
     },
 
     enableMatomoTracking: {
@@ -124,76 +159,6 @@ export const SearchBlockSchema = ({ formData = {} }) => ({
       configPath: 'promptQueryInterval',
       type: 'number',
       default: 10000,
-    },
-
-    use_qa_dp: {
-      title: 'Use DensePassageRetrieval for results?',
-      description: (
-        <>
-          If enabled, it will use{' '}
-          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
-          query retrieval instead of ES BM25
-        </>
-      ),
-      type: 'boolean',
-      configPath: 'nlp.qa.use_dp',
-    },
-    qa_use_qa_dp: {
-      title: 'Use DensePassageRetrieval for QA?',
-      description: (
-        <>
-          If enabled, it will use{' '}
-          <a href="https://github.com/facebookresearch/DPR">DPR</a> for basic
-          query retrieval instead of ES BM25
-        </>
-      ),
-      type: 'boolean',
-      configPath: 'nlp.qa.qa_use_dp',
-    },
-
-    qa_queryTypes: {
-      title: 'QA Query types',
-      description: 'The QA system will be used for these types of queries',
-      choices: [
-        ['query:interrogative', 'Question'],
-        ['query:declarative', 'Statement'],
-        ['query:keyword', 'Keyword'],
-      ],
-      configPath: 'nlp.qa.qa_queryTypes',
-      isMulti: true,
-      // modifyConfig: (config) => config,
-      // default: ['query:interrogative']
-    },
-    cutoffScore: {
-      title: 'Cutoff score',
-      type: 'number',
-      description:
-        'Only answers with scores bigger then the cutoff score will be displayed. Enter a float number smaller then 1.',
-      maximum: 0.99,
-      minimum: 0.01,
-      step: 0.1,
-      default: 0.1,
-      configPath: 'nlp.qa.cutoffScore',
-    },
-    rawIndex: {
-      title: 'ElasticSearch Index',
-      configPath: 'nlp.qa.raw_index',
-    },
-    dprIndex: {
-      title: 'DPR ElasticSearch Index',
-      configPath: 'nlp.qa.dpr_index',
-    },
-    topKRetriever: {
-      title: 'TopK Retriever',
-      type: 'number',
-      defaultValue: 10,
-      configPath: 'nlp.qa.topk_retriever',
-    },
-    topKReader: {
-      title: 'TopK Reader',
-      type: 'number',
-      defaultValue: 10,
-      configPath: 'nlp.qa.topk_reader',
     },
   },
 
