@@ -47,7 +47,7 @@ const messages = defineMessages({
 });
 
 export const FilterAsideContentView = (props) => {
-  const { appConfig, children, current, wasInteracted } = props;
+  const { appConfig, children, wasInteracted } = props;
   const { registry } = useAppConfig();
   const { sortOptions, resultViews } = appConfig;
   const views = useViews();

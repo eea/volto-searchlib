@@ -252,10 +252,12 @@ const ChatbotAnswer = () => {
     },
     [
       personaId,
+      systemPrompt,
       summaryPrompt,
       setIsLoadingSummary,
       setIsQuestion,
       useSummarySearchTool,
+      usePredefinedSystemPrompt,
       danswer,
     ],
   );
@@ -298,7 +300,14 @@ const ChatbotAnswer = () => {
         retrieval_options: { run_search: 'always', real_time: true, limit: 5 },
       });
     },
-    [personaId, prompt, setIsLoadingAnswer, danswer],
+    [
+      personaId,
+      systemPrompt,
+      prompt,
+      setIsLoadingAnswer,
+      usePredefinedSystemPrompt,
+      danswer,
+    ],
   );
 
   // Trigger summary fetch when ES search starts
