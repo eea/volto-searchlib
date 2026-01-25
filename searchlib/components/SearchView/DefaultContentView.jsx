@@ -35,7 +35,6 @@ export const DefaultContentView = (props) => {
   return (
     <>
       {appConfig.showFilters && <FilterList />}
-      {appConfig.enableChatbotAnswer && <ChatbotAnswer />}
       <div className="above-results">
         <ViewSelectorWithLabel
           views={availableResultViews}
@@ -48,6 +47,7 @@ export const DefaultContentView = (props) => {
           view={SortingDropdownWithLabel}
         />
       </div>
+      {appConfig.enableChatbotAnswer && <ChatbotAnswer />}
 
       <ResultViewComponent>{children}</ResultViewComponent>
 

@@ -139,12 +139,11 @@ export const FilterAsideContentView = (props) => {
             </div>
           </div>
         )}
-
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 
-        {current === 1 &&
-          appConfig.mode !== 'edit' &&
-          appConfig.enableChatbotAnswer && <ChatbotAnswer />}
+        {appConfig.mode !== 'edit' && appConfig.enableChatbotAnswer && (
+          <ChatbotAnswer />
+        )}
 
         {<ResultViewComponent>{children}</ResultViewComponent>}
 

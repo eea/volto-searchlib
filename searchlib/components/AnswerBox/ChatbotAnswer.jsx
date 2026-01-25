@@ -95,7 +95,15 @@ const ChatbotAnswer = () => {
   const lastQuery = useRef('');
 
   const { chatbotAnswer = {}, enableMatomoTracking } = appConfig;
-  const { personaId, summaryPrompt, prompt, enableFeedback } = chatbotAnswer;
+  const {
+    personaId,
+    systemPrompt,
+    summaryPrompt,
+    prompt,
+    enableFeedback,
+    useSummarySearchTool,
+    usePredefinedSystemPrompt,
+  } = chatbotAnswer;
 
   const summarySessionId = useRef(null);
   const summaryMessageId = useRef(null);
@@ -208,7 +216,7 @@ const ChatbotAnswer = () => {
           const message = processor.getMessage();
           const messageText = message.message || '';
 
-          if (messageText.includes('NOT_A_QUESTION')) {
+          if (messageText?.toLowerCase().includes('not_a_question')) {
             setIsQuestion(false);
             setSummary(null);
             setSummaryError(null);
@@ -227,13 +235,29 @@ const ChatbotAnswer = () => {
           setIsLoadingSummary(false);
           summarySessionId.current = sessionId;
         },
-        systemPromptOverride: summaryPrompt,
+        systemPromptOverride: usePredefinedSystemPrompt ? systemPrompt : null,
+        taskPromptOverride: `${summaryPrompt}${
+          useSummarySearchTool
+            ? '\n\nIMPORTANT: use the internal search tool to find relevant documents.'
+            : '\n\nIMPORTANT: do not use the internal search tool, only use your knowledge.'
+        }`,
         regenerate: false,
         useAgentSearch: false,
-        retrieval_options: { run_search: 'never', real_time: true },
+        retrieval_options: {
+          run_search: useSummarySearchTool ? 'always' : 'never',
+          real_time: true,
+          limit: useSummarySearchTool ? 2 : 0,
+        },
       });
     },
-    [personaId, summaryPrompt, setIsLoadingSummary, setIsQuestion, danswer],
+    [
+      personaId,
+      summaryPrompt,
+      setIsLoadingSummary,
+      setIsQuestion,
+      useSummarySearchTool,
+      danswer,
+    ],
   );
 
   // Fetch detailed answer
@@ -267,10 +291,11 @@ const ChatbotAnswer = () => {
         onFinality: () => {
           setIsLoadingAnswer(false);
         },
-        systemPromptOverride: prompt,
+        systemPromptOverride: usePredefinedSystemPrompt ? systemPrompt : null,
+        taskPromptOverride: prompt,
         regenerate: false,
         useAgentSearch: false,
-        retrieval_options: { run_search: 'always', real_time: true },
+        retrieval_options: { run_search: 'always', real_time: true, limit: 5 },
       });
     },
     [personaId, prompt, setIsLoadingAnswer, danswer],
@@ -309,7 +334,7 @@ const ChatbotAnswer = () => {
           <div className="chatbot-header">
             <div className="chatbot-header-left">
               <VIcon name={searchAssistSVG} size="18px" />
-              <span className="label">Generative AI Summary</span>
+              <span className="label">AI Summary</span>
             </div>
             <div className="chatbot-header-right">
               <UserActionsToolbar

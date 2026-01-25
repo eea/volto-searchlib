@@ -32,6 +32,8 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             title: 'AI Answer Settings',
             fields: [
               'chatbotAssistant',
+              'useSummarySearchTool',
+              'usePredefinedSystemPrompt',
               'enableFeedback',
               ...(formData.enableFeedback ? ['feedbackReasons'] : []),
             ],
@@ -66,6 +68,20 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       title: 'Assistant',
       choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
       configPath: 'chatbotAnswer.personaId',
+    },
+
+    useSummarySearchTool: {
+      type: 'boolean',
+      title: 'Use summary search tool?',
+      default: true,
+      configPath: 'chatbotAnswer.useSummarySearchTool',
+    },
+
+    usePredefinedSystemPrompt: {
+      type: 'boolean',
+      title: 'Use predefined system prompt?',
+      default: false,
+      configPath: 'chatbotAnswer.usePredefinedSystemPrompt',
     },
 
     enableFeedback: {
