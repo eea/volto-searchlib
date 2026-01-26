@@ -98,7 +98,6 @@ export default function buildRequest(state, config, includeAggs = null) {
       }),
 
       ...config.requestParams,
-      ...(config.index_name ? { index: config.index_name } : {}),
       ...(config.sourceExcludedFields?.length
         ? {
             _source: {

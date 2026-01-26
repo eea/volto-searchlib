@@ -5,30 +5,41 @@ import debug from 'debug';
 
 const log = debug('esmiddleware');
 
+// Regex to extract optional prefix in format {prefix_} from path
+// Matches: /_es/{status_}appname or /_es/appname
+const PREFIX_REGEX = '/_es/(?:{([^}]+)})?';
+
+const extractPrefix = (path) => {
+  const match = path.match(`${PREFIX_REGEX}(.+)$`);
+  return match?.[1] || '';
+};
+
 const esProxyWhitelist = (name) => ({
-  GET: [`/_es/${name}/_search`],
-  POST: [`/_es/${name}/_search`],
+  GET: [`${PREFIX_REGEX}${name}/_search`],
+  POST: [`${PREFIX_REGEX}${name}/_search`],
 });
 
 const esDownloadWhitelist = (name) => ({
-  POST: [`/_es/${name}/_download`],
+  POST: [`${PREFIX_REGEX}${name}/_download`],
 });
 
 const esSettingsWhitelist = (name) => ({
-  GET: [`/_es/${name}/_settings`],
+  GET: [`${PREFIX_REGEX}${name}/_settings`],
 });
 
 const esAliasWhitelist = (name) => ({
-  GET: [`/_es/${name}/_alias`],
+  GET: [`${PREFIX_REGEX}${name}/_alias`],
 });
 
 const esGetDocWhitelist = (name) => ({
-  GET: [`/_es/${name}/_doc/.*`],
+  GET: [`${PREFIX_REGEX}${name}/_doc/.*`],
 });
 
 function filterRequests(req, whitelist, retVal) {
   const tomatch = whitelist[req.method] || [];
-  const matches = tomatch.filter((m) => req.url.match(m)).length;
+  const matches = tomatch.filter((m) => {
+    return decodeURI(req.url).match(m);
+  }).length;
   return matches > 0 ? retVal : false;
 }
 
@@ -98,12 +109,28 @@ const handleDocRequest = (req, res, next, { urlES, docId }) => {
   });
 };
 
-const getUrlES = (appName) => {
-  return (
+const getUrlES = (appName, prefix = '') => {
+  const baseUrl =
     process.env[`RAZZLE_PROXY_ES_DSN_${appName}`] ||
     process.env.RAZZLE_PROXY_ES_DSN ||
-    'http://localhost:9200/_all'
-  );
+    'http://localhost:9200/_all';
+
+  if (!prefix) return baseUrl;
+
+  // Apply prefix to the index name in the URL
+  try {
+    const url = new URL(baseUrl);
+    const pathParts = url.pathname.split('/').filter(Boolean);
+    if (pathParts.length > 0) {
+      pathParts[pathParts.length - 1] = `${prefix}${
+        pathParts[pathParts.length - 1]
+      }`;
+    }
+    url.pathname = '/' + pathParts.join('/');
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
 };
 
 export const createHandler = () => {
@@ -112,13 +139,16 @@ export const createHandler = () => {
 
     const appNames = Object.keys(config.settings.searchlib.searchui);
 
+    // Extract prefix from request path (e.g., {status_} from /_es/{status_}appname/_search)
+    const prefix = extractPrefix(decodeURI(req.path));
+
     const docRequestAppName = appNames
       .map((name) => filterRequests(req, esGetDocWhitelist(name), name))
       .find((b) => b);
 
     if (docRequestAppName) {
       const docId = req.path.match(DOC_ID_RE).groups['url'];
-      urlES = getUrlES(docRequestAppName);
+      urlES = getUrlES(docRequestAppName, prefix);
       handleDocRequest(req, res, next, { urlES, docId });
       return;
     }
@@ -128,7 +158,7 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (searchRequestAppName) {
-      urlES = getUrlES(searchRequestAppName);
+      urlES = getUrlES(searchRequestAppName, prefix);
 
       handleSearch(req, res, next, {
         appName: searchRequestAppName,
@@ -142,7 +172,7 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (settingsAppName) {
-      urlES = getUrlES(settingsAppName);
+      urlES = getUrlES(settingsAppName, prefix);
 
       handleSettings(req, res, next, {
         appName: settingsAppName,
@@ -156,7 +186,7 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (aliasAppName) {
-      urlES = getUrlES(aliasAppName);
+      urlES = getUrlES(aliasAppName, prefix);
 
       handleAlias(req, res, next, {
         appName: aliasAppName,
@@ -170,7 +200,7 @@ export const createHandler = () => {
       .find((b) => b);
 
     if (downloadAppName) {
-      urlES = getUrlES(downloadAppName);
+      urlES = getUrlES(downloadAppName, prefix);
 
       handleDownload(req, res, next, {
         appName: downloadAppName,

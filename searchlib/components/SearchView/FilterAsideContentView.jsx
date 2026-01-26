@@ -47,7 +47,7 @@ const messages = defineMessages({
 });
 
 export const FilterAsideContentView = (props) => {
-  const { appConfig, children, current, wasInteracted } = props;
+  const { appConfig, children, wasInteracted } = props;
   const { registry } = useAppConfig();
   const { sortOptions, resultViews } = appConfig;
   const views = useViews();
@@ -139,12 +139,11 @@ export const FilterAsideContentView = (props) => {
             </div>
           </div>
         )}
-
         {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 
-        {current === 1 &&
-          appConfig.mode !== 'edit' &&
-          appConfig.enableChatbotAnswer && <ChatbotAnswer />}
+        {appConfig.mode !== 'edit' && appConfig.enableChatbotAnswer && (
+          <ChatbotAnswer />
+        )}
 
         {<ResultViewComponent>{children}</ResultViewComponent>}
 

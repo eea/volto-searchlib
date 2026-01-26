@@ -63,7 +63,7 @@ import {
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
 import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
-import { summaryPrompt, detailedPrompt } from './prompts';
+import { summaryPrompt, detailedPrompt, systemPrompt } from './prompts';
 
 const config = {
   resolve: {
@@ -321,6 +321,8 @@ const config = {
       chatbotAnswer: {
         personaId: null, // Required: Danswer persona ID
         enableFeedback: true,
+        useSummarySearchTool: true,
+        usePredefinedSystemPrompt: false,
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',
@@ -332,6 +334,7 @@ const config = {
           'Too short',
           'Outdated sources',
         ],
+        systemPrompt,
         summaryPrompt,
         prompt: detailedPrompt,
       },

@@ -25,7 +25,10 @@ export default function healthcheck(req, res, next) {
   const { query } = req;
   let hc_params = getHCConf(id);
   hc_params = { ...hc_params, ...query };
-  const appConfig = registry.searchui[id];
+  const appConfig = {
+    id,
+    ...registry.searchui[id],
+  };
   const hc = registry.resolve[appConfig?.healthcheck];
   if (hc) {
     hc(appConfig, hc_params)
