@@ -174,7 +174,7 @@ describe('ChatbotAnswer', () => {
 
   it('renders the header with label', () => {
     render(<ChatbotAnswer />);
-    expect(screen.getByText('Generative AI Summary')).toBeInTheDocument();
+    expect(screen.getByText('AI Summary')).toBeInTheDocument();
   });
 
   it('renders the UserActionsToolbar', () => {
