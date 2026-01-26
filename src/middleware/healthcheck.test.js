@@ -1,5 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import healthcheck from './healthcheck';
+import { registry } from '@eeacms/search';
+
 // Mock @eeacms/search with module factory
 jest.mock('@eeacms/search', () => {
   const mockResolveObj = {};
@@ -14,9 +17,6 @@ jest.mock('@eeacms/search', () => {
     },
   };
 });
-
-import healthcheck from './healthcheck';
-import { registry } from '@eeacms/search';
 
 describe('healthcheck middleware', () => {
   let mockReq;

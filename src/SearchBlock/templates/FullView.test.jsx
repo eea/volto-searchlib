@@ -24,7 +24,9 @@ jest.mock('@eeacms/search', () => ({
 
 jest.mock('./../BlockContainer', () => ({
   SlotEditor: ({ slot }) => <div data-testid={`slot-editor-${slot}`} />,
-  BlockContainer: ({ block }) => <div data-testid={`block-container-${block}`} />,
+  BlockContainer: ({ block }) => (
+    <div data-testid={`block-container-${block}`} />
+  ),
 }));
 
 jest.mock('./schema', () => ({

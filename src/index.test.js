@@ -1,8 +1,8 @@
 // Define __SERVER__ global before importing the module
-global.__SERVER__ = false;
-
 import applyConfig from './index';
 import '@testing-library/jest-dom/extend-expect';
+
+global.__SERVER__ = false;
 
 // Mock the registry
 jest.mock('@eeacms/search', () => ({

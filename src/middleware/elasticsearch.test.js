@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { createHandler } from './elasticsearch';
+
 // Mock superagent with proper chaining
 const mockEnd = jest.fn();
 const mockSet = jest.fn(() => ({ end: mockEnd }));
@@ -32,8 +34,6 @@ jest.mock('@plone/volto/registry', () => ({
 
 // Mock download
 jest.mock('./download', () => jest.fn());
-
-import { createHandler } from './elasticsearch';
 
 describe('elasticsearch middleware', () => {
   let handler;
