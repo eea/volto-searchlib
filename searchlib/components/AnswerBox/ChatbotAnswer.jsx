@@ -127,6 +127,24 @@ const ChatbotAnswer = () => {
     [personaId],
   );
 
+  // Reset all AI answer states
+  const resetState = useCallback(() => {
+    if (abort.current) {
+      abort.current.abort();
+    }
+    lastQuery.current = '';
+    setSummary(null);
+    setSummaryError(null);
+    setAnswer(null);
+    setAnswerError(null);
+    setIsQuestion(false);
+    setDisplayedSummaryId(null);
+    setDisplayedAnswerId(null);
+    summarySessionId.current = null;
+    summaryMessageId.current = null;
+    answerMessageId.current = null;
+  }, [setIsQuestion]);
+
   // Fetch AI answer helper
   const danswer = useCallback(
     async ({
@@ -246,7 +264,6 @@ const ChatbotAnswer = () => {
         retrieval_options: {
           run_search: useSummarySearchTool ? 'always' : 'never',
           real_time: true,
-          limit: useSummarySearchTool ? 2 : 0,
         },
       });
     },
@@ -297,7 +314,7 @@ const ChatbotAnswer = () => {
         taskPromptOverride: prompt,
         regenerate: false,
         useAgentSearch: false,
-        retrieval_options: { run_search: 'always', real_time: true, limit: 5 },
+        retrieval_options: { run_search: 'always', real_time: true },
       });
     },
     [
@@ -310,22 +327,21 @@ const ChatbotAnswer = () => {
     ],
   );
 
-  // Trigger summary fetch when ES search starts
+  // Trigger summary fetch when ES search starts, or clear when search is cleared
   useEffect(() => {
     const term = isLoading ? searchTerm : resultSearchTerm;
     if (term && term !== lastQuery.current) {
       lastQuery.current = term;
       fetchSummary(term);
+    } else if (!resultSearchTerm && lastQuery.current && !isLoading) {
+      // Search completed with empty query (clear button pressed)
+      resetState();
     }
-  }, [searchTerm, resultSearchTerm, isLoading, fetchSummary]);
+  }, [searchTerm, resultSearchTerm, isLoading, fetchSummary, resetState]);
 
   // Cleanup on unmount
   useEffect(() => {
-    return () => {
-      if (abort.current) {
-        abort.current.abort();
-      }
-    };
+    return () => abort.current?.abort();
   }, []);
 
   return (
