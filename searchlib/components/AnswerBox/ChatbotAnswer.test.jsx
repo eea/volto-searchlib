@@ -17,12 +17,12 @@ jest.mock(
   { virtual: true },
 );
 
-// Mock @eeacms/volto-chatbot
+// Mock @eeacms/volto-eea-chatbot
 const mockCreateChatSession = jest.fn();
 const mockSendMessage = jest.fn();
 
 jest.mock(
-  '@eeacms/volto-chatbot',
+  '@eeacms/volto-eea-chatbot',
   () => ({
     createChatSession: (...args) => mockCreateChatSession(...args),
     sendMessage: (...args) => mockSendMessage(...args),

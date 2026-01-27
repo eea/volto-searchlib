@@ -15,7 +15,7 @@ import {
   MessageProcessor,
   RendererComponent,
   UserActionsToolbar,
-} from '@eeacms/volto-chatbot';
+} from '@eeacms/volto-eea-chatbot';
 import {
   useAppConfig,
   useSearchContext,
