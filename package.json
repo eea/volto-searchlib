@@ -14,15 +14,15 @@
   ],
   "addons": [
     "@eeacms/volto-matomo",
-    "@eeacms/volto-chatbot"
+    "@eeacms/volto-eea-chatbot"
   ],
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-searchlib.git"
   },
   "dependencies": {
-    "@eeacms/volto-chatbot": "*",
     "@eeacms/volto-design-tokens": "*",
+    "@eeacms/volto-eea-chatbot": "*",
     "@eeacms/volto-matomo": "*",
     "@elastic/react-search-ui": "1.20.2",
     "@elastic/react-search-ui-views": "1.20.2",

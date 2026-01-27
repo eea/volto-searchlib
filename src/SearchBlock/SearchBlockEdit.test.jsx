@@ -14,7 +14,7 @@ jest.mock('@plone/volto/registry', () => ({
 }));
 
 jest.mock(
-  '@eeacms/volto-chatbot/ChatBlock/hocs/withDanswerData',
+  '@eeacms/volto-eea-chatbot/ChatBlock/hocs/withOnyxData',
   () => {
     return () => (Component) => Component;
   },

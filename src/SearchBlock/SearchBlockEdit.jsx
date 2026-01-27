@@ -4,7 +4,7 @@ import superagent from 'superagent';
 import { SearchBlockSchema } from './schema';
 import { BlockDataForm, SidebarPortal } from '@plone/volto/components';
 import config from '@plone/volto/registry';
-import withDanswerData from '@eeacms/volto-chatbot/ChatBlock/hocs/withDanswerData';
+import withOnyxData from '@eeacms/volto-eea-chatbot/ChatBlock/hocs/withOnyxData';
 import SearchBlockView from './SearchBlockView';
 import { useDebouncedStableData } from './hocs';
 import './edit.less';
@@ -101,9 +101,9 @@ const SearchBlockEdit = (props) => {
 };
 
 export default compose(
-  withDanswerData(() => [
+  withOnyxData(() => [
     'assistants',
     superagent.get('/_da/persona?include_deleted=false').type('json'),
   ]),
-  // withDanswerData(() => ['tool', superagent.get('/_da/tool').type('json')]), // May be needed in the future
+  // withOnyxData(() => ['tool', superagent.get('/_da/tool').type('json')]), // May be needed in the future
 )(SearchBlockEdit);
