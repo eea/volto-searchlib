@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import FacetValueWidget from './FacetValueWidget';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 jest.mock('@eeacms/search', () => ({
   FacetApp: jest.fn((props) => (
