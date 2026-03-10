@@ -100,6 +100,11 @@ msgstr "Le plus ancien"
 msgid "Or search by"
 msgstr "Ou recherchez par"
 
+#. Default: "Relevance"
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Relevance"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
