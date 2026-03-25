@@ -1,6 +1,6 @@
 // Define __SERVER__ global before importing the module
 import applyConfig from './index';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 global.__SERVER__ = false;
 

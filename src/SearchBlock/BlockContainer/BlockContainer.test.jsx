@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import BlockContainer from './BlockContainer';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 const mockStore = configureStore();
 let store;

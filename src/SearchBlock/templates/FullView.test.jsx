@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import FullView from './FullView';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 jest.mock('@plone/volto/helpers', () => ({
   BodyClass: ({ children, className }) => (

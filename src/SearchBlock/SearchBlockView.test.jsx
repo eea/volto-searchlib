@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import SearchBlockView from './SearchBlockView';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 jest.mock('@eeacms/search/lib/hocs/useWhyDidYouUpdate', () => ({
   __esModule: true,

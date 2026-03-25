@@ -3,7 +3,7 @@ import { render, fireEvent, screen, act } from '@testing-library/react';
 import NewBlockAddButton from './NewBlockAddButton';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 const mockStore = configureStore();
 let store;

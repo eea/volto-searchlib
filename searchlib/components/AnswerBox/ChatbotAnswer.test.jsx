@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ChatbotAnswer from './ChatbotAnswer';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 // Mock @eeacms/search/lib/hocs
 const mockUseAppConfig = jest.fn();

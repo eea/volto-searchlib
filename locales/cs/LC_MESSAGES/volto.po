@@ -100,6 +100,11 @@ msgstr "Nejstarší"
 msgid "Or search by"
 msgstr "Nebo hledat podle"
 
+#. Default: "Relevance"
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Relevance"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"
