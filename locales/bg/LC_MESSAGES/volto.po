@@ -100,6 +100,11 @@ msgstr "Най-старият"
 msgid "Or search by"
 msgstr "Или търсете по"
 
+#. Default: "Relevance"
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Relevance"
+msgstr ""
+
 #. Default: "Required"
 #: src/SearchBlock/widgets/SelectWidget
 msgid "Required"

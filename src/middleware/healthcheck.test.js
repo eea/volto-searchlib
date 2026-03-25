@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 import healthcheck from './healthcheck';
 import { registry } from '@eeacms/search';

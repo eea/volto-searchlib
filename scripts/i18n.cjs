@@ -15,7 +15,8 @@ const path = require('path');
 const projectRootPath = path.resolve('.');
 const packageJson = require(path.join(projectRootPath, 'package.json'));
 
-const { program } = require('commander');
+const commander = require('commander');
+const program = commander.program || commander;
 const chalk = require('chalk');
 
 /**

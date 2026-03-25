@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2025-02-12T20:23:51.971Z\n"
+"POT-Creation-Date: 2026-03-10T22:23:00.267Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -100,6 +100,11 @@ msgstr ""
 #. Default: "Or search by"
 #: searchlib/components/LandingPage/TilesLandingPage
 msgid "Or search by"
+msgstr ""
+
+#. Default: "Relevance"
+#: searchlib/components/SearchView/FilterAsideContentView
+msgid "Relevance"
 msgstr ""
 
 #. Default: "Required"
