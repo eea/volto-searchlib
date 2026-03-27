@@ -11,6 +11,7 @@ import { Icon, Image } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import aiSearchSVG from './icons/ai-search.svg';
 import searchSVG from './icons/search.svg';
 
 const SVGIcon = ({ name, size, color, className, title, onClick }) =>
@@ -36,9 +37,10 @@ function SearchInput({
   onChange,
   onSubmit,
   mode,
+  ...props
 }) {
   const { appConfig } = useAppConfig();
-  const { sortOptions } = appConfig;
+  const { sortOptions, enableChatbotAnswer } = appConfig;
 
   const inputProps = getInputProps();
   const { setSearchTerm, setSort } = useSearchContext();
@@ -175,7 +177,7 @@ function SearchInput({
                 }
               }}
             >
-              <SVGIcon name={searchSVG} />
+              <SVGIcon name={enableChatbotAnswer ? aiSearchSVG : searchSVG} />
             </div>
           </div>
 
