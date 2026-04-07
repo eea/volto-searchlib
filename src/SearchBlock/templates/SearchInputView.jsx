@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SearchInputApp } from '@eeacms/search';
 import { useHistory } from 'react-router-dom';
-import { flattenToAppURL } from '@plone/volto/helpers';
+import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
 
 function SearchInputView(props) {
   const { registry, appName } = props;

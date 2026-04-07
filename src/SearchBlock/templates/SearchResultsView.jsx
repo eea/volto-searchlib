@@ -1,5 +1,5 @@
 import React from 'react';
-import { BodyClass } from '@plone/volto/helpers';
+import BodyClass from '@plone/volto/helpers/BodyClass/BodyClass';
 import { SearchResultsApp } from '@eeacms/search';
 import { searchResultsSchemaEnhancer } from './schema';
 

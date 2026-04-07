@@ -5,7 +5,7 @@
 import React from 'react';
 import { Tab, Button } from 'semantic-ui-react';
 import { SEARCH_STATES } from '@eeacms/search/constants';
-import { Icon } from '@plone/volto/components';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import BlockContainer from './BlockContainer';
 import clearSVG from '@plone/volto/icons/delete.svg';
 import cx from 'classnames';

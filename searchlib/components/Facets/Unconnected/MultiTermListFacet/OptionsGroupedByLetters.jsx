@@ -32,6 +32,9 @@ const OptionsGroupedByLetters = (props) => {
             <Card.Group itemsPerRow={5}>
               {groupedOptionsByLetters[letter].map((option, i) => (
                 <OptionButton
+                  key={
+                    option.key ?? option.value ?? option.id ?? `${letter}-${i}`
+                  }
                   option={option}
                   checked={option.selected}
                   iconsFamily={iconsFamily}

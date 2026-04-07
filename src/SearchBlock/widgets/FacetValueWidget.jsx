@@ -1,6 +1,6 @@
 import React from 'react';
 import { FacetApp } from '@eeacms/search';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 export default function FacetValueWidget(props) {
   const { facetName, value, onChange, id } = props;

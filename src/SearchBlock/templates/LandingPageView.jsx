@@ -1,7 +1,7 @@
 import React from 'react';
 import { LandingPageApp } from '@eeacms/search';
 import { useHistory } from 'react-router-dom';
-import { flattenToAppURL } from '@plone/volto/helpers';
+import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
 
 function LandingPageView(props) {
   const { registry, appName } = props;

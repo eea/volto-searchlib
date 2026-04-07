@@ -149,12 +149,12 @@ export function getDateRangeFilter(filter, filterConfig) {
     quantifier === 'd'
       ? (x) => x * 1
       : quantifier === 'w'
-      ? (x) => x * 7
-      : quantifier === 'm'
-      ? (x) => x * 30
-      : quantifier === 'y'
-      ? (x) => x * 365
-      : (x) => x * 1;
+        ? (x) => x * 7
+        : quantifier === 'm'
+          ? (x) => x * 30
+          : quantifier === 'y'
+            ? (x) => x * 365
+            : (x) => x * 1;
 
   const toDate = (name) => {
     if (!name) return {};

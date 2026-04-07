@@ -30,8 +30,8 @@ const HistogramFacet = (props) => {
   const value = state?.length
     ? [state[0].from, state[0].to]
     : filterValue
-    ? [filterValue.values?.[0]?.from, filterValue.values?.[0]?.to]
-    : null;
+      ? [filterValue.values?.[0]?.from, filterValue.values?.[0]?.to]
+      : null;
   const { data } = facet;
   const histogram_range = getRangeStartEndFromData(data, ranges);
 
