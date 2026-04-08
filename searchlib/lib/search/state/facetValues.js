@@ -1,4 +1,4 @@
-// import { indexOf } from 'lodash';
+// import indexOf from 'lodash/indexOf';
 
 export function getValueFacet({
   aggregations,

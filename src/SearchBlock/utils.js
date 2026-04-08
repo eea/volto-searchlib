@@ -1,4 +1,5 @@
-import { cloneDeep, isEqual } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
 
 /**
  * Reuse the schema to allow pinpointing in the config, to allow adjusting the

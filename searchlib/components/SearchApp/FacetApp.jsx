@@ -86,9 +86,6 @@ export default function FacetApp(props) {
     />
   );
 }
-
-// const { field, onChange, value } = props;
-// import { isEqual } from 'lodash';
 // import useDeepCompareEffect from 'use-deep-compare-effect';
 // const sorter = (fa, fb) =>
 //   fa.field === fb.field ? 0 : fa.field < fb.field ? -1 : 0;

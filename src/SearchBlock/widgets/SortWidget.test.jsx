@@ -12,17 +12,19 @@ jest.mock('@eeacms/search/lib/hocs', () => ({
   }),
 }));
 
-jest.mock('@plone/volto/components', () => ({
-  SelectWidget: (props) => (
-    <select
-      data-testid="select-widget"
-      onChange={(e) => props.onChange(props.id, e.target.value)}
-    >
-      <option value="title|asc">Title Ascending</option>
-      <option value="date|desc">Date Descending</option>
-    </select>
-  ),
-}));
+jest.mock('@plone/volto/components/manage/Widgets/SelectWidget', () => {
+  return function MockSelectWidget(props) {
+    return (
+      <select
+        data-testid="select-widget"
+        onChange={(e) => props.onChange(props.id, e.target.value)}
+      >
+        <option value="title|asc">Title Ascending</option>
+        <option value="date|desc">Date Descending</option>
+      </select>
+    );
+  };
+});
 
 describe('SortWidget', () => {
   beforeEach(() => {

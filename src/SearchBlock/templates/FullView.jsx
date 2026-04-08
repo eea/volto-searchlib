@@ -1,5 +1,5 @@
 import React from 'react';
-import { BodyClass } from '@plone/volto/helpers';
+import BodyClass from '@plone/volto/helpers/BodyClass/BodyClass';
 import { SEARCH_STATES, SLOTS, SearchApp } from '@eeacms/search';
 import { SlotEditor, BlockContainer } from './../BlockContainer';
 import { searchResultsSchemaEnhancer } from './schema';
@@ -56,8 +56,8 @@ function FullView(props) {
                           slotFills?.[blockId]
                             ? slotFills?.[blockId]
                             : mode === 'view'
-                            ? slotFills?.[fallbackId]
-                            : null
+                              ? slotFills?.[fallbackId]
+                              : null
                         }
                         onChangeSlotfill={onChangeSlotfill}
                         onDeleteSlotfill={onDeleteSlotfill}

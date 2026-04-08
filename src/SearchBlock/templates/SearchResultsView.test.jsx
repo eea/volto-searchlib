@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import SearchResultsView from './SearchResultsView';
 import '@testing-library/jest-dom';
 
-jest.mock('@plone/volto/helpers', () => ({
-  BodyClass: ({ children, className }) => (
+jest.mock('@plone/volto/helpers/BodyClass/BodyClass', () => {
+  return ({ children, className }) => (
     <div data-testid="body-class" data-classname={className}>
       {children}
     </div>
-  ),
-}));
+  );
+});
 
 jest.mock('@eeacms/search', () => ({
   SearchResultsApp: (props) => <div data-testid="search-results-app" />,

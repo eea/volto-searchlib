@@ -84,8 +84,8 @@ export const SearchView = (props) => {
   const searchState = !wasInteracted
     ? SEARCH_STATE_IDS.isLandingPage
     : wasSearched && results?.length > 0
-    ? SEARCH_STATE_IDS.hasResults
-    : SEARCH_STATE_IDS.hasNoResults;
+      ? SEARCH_STATE_IDS.hasResults
+      : SEARCH_STATE_IDS.hasNoResults;
 
   // React.useEffect(() => () => console.log('unmount SearchView'), []);
 

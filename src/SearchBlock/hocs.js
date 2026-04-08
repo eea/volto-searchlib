@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 export const useDebouncedStableData = (data, timeout = 1000) => {
   const [stableData, setStableData] = React.useState(data);

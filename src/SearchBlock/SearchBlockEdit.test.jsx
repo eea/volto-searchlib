@@ -27,21 +27,24 @@ jest.mock('./hocs', () => ({
   useDebouncedStableData: jest.fn((data) => data),
 }));
 
-jest.mock('@plone/volto/components', () => ({
-  SidebarPortal: jest.fn((props) => (
+jest.mock('@plone/volto/components/manage/Sidebar/SidebarPortal', () => {
+  return jest.fn((props) => (
     <div>
       <div>Mocked SidebarPortal</div>
       {props.children}
     </div>
-  )),
-  BlockDataForm: jest.fn((props) => (
+  ));
+});
+
+jest.mock('@plone/volto/components/manage/Form/BlockDataForm', () => {
+  return jest.fn((props) => (
     <div>
       <div>Mocked BlockDataForm</div>
       <input id="mocked-blockDataForm" onChange={props.onChangeField} />
       {props.children}
     </div>
-  )),
-}));
+  ));
+});
 
 jest.mock('./SearchBlockView', () => {
   return jest.fn((props) => (

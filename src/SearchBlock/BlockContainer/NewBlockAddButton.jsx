@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { BodyClass } from '@plone/volto/helpers';
-import { BlockChooser, Icon } from '@plone/volto/components';
+import BodyClass from '@plone/volto/helpers/BodyClass/BodyClass';
+import BlockChooser from '@plone/volto/components/manage/BlockChooser/BlockChooser';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import useOutsideClick from '@eeacms/search/lib/hocs/useOutsideClick';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 

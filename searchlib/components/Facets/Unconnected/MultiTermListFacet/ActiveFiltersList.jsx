@@ -20,8 +20,8 @@ const ActiveFilters = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   ]);
 
   const [activeFilter, setActiveFilter] = React.useState(initialValue);

@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalContent,
 } from 'semantic-ui-react';
-import { Icon as VIcon } from '@plone/volto/components';
+import VIcon from '@plone/volto/components/theme/Icon/Icon';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable';
 import {
   createChatSession,
