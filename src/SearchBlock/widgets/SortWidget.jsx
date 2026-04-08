@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectWidget } from '@plone/volto/components/manage/Widgets';
+import SelectWidget from '@plone/volto/components/manage/Widgets/SelectWidget';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export default function SortWidget(props) {

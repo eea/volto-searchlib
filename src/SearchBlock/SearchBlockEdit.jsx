@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import superagent from 'superagent';
 import { SearchBlockSchema } from './schema';
 import SidebarPortal from '@plone/volto/components/manage/Sidebar/SidebarPortal';
-import { BlockDataForm } from '@plone/volto/components/manage/Form';
+import BlockDataForm from '@plone/volto/components/manage/Form/BlockDataForm';
 import config from '@plone/volto/registry';
 import withOnyxData from '@eeacms/volto-eea-chatbot/ChatBlock/hocs/withOnyxData';
 import SearchBlockView from './SearchBlockView';
