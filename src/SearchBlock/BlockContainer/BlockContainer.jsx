@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { RenderBlocks } from '@plone/volto/components';
+import RenderBlocks from '@plone/volto/components/theme/View/RenderBlocks';
 import config from '@plone/volto/registry';
 import BlockEdit from '@plone/volto/components/manage/Blocks/Block/Edit';
 import NewBlockAddButton from './NewBlockAddButton';

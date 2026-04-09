@@ -1,7 +1,10 @@
 import React from 'react';
 import config from '@plone/volto/registry';
 import { SearchBlockSchema } from './schema';
-import { applySchemaEnhancer, withBlockExtensions } from '@plone/volto/helpers';
+import {
+  applySchemaEnhancer,
+  withBlockExtensions,
+} from '@plone/volto/helpers//Extensions';
 import { applyBlockSettings } from './utils';
 import { useDebouncedStableData } from './hocs';
 import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';

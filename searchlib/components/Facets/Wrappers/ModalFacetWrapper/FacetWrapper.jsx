@@ -46,8 +46,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   );
 
   const OptionsView = props.view;

@@ -53,10 +53,10 @@ const useSort = (
               : 0
             : -1
           : b[sortOn] > a[sortOn]
-          ? b[sortOn] !== a[sortOn]
-            ? 1
-            : 0
-          : -1;
+            ? b[sortOn] !== a[sortOn]
+              ? 1
+              : 0
+            : -1;
       });
     }
   };
