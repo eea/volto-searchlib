@@ -32,6 +32,7 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             title: 'AI Answer Settings',
             fields: [
               'chatbotAssistant',
+              'onyxVersion',
               'useSummarySearchTool',
               'usePredefinedSystemPrompt',
               'enableFeedback',
@@ -68,6 +69,16 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       title: 'Assistant',
       choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
       configPath: 'chatbotAnswer.personaId',
+    },
+    onyxVersion: {
+      title: 'Onyx API Version',
+      description: 'Select the Onyx backend version to use for AI answers.',
+      choices: [
+        ['2', 'Onyx 2.x (legacy)'],
+        ['3', 'Onyx 3.x'],
+      ],
+      default: '2',
+      configPath: 'chatbotAnswer.onyxVersion',
     },
 
     useSummarySearchTool: {
