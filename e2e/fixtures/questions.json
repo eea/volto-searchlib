@@ -1,0 +1,19 @@
+{
+  "test_cases": [
+    {
+      "id": "q001",
+      "question": "What are the main sources of air pollution in Europe?",
+      "expect_ai_summary": true
+    },
+    {
+      "id": "q002",
+      "question": "How does climate change affect biodiversity?",
+      "expect_ai_summary": true
+    },
+    {
+      "id": "q003",
+      "question": "water quality",
+      "expect_ai_summary": false
+    }
+  ]
+}

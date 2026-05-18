@@ -320,6 +320,7 @@ const config = {
       enableChatbotAnswer: false, // enables chatbot-powered AI answers
       chatbotAnswer: {
         personaId: null, // Required: Danswer persona ID
+        onyxVersion: '2', // '2' | '3'
         enableFeedback: true,
         useSummarySearchTool: true,
         usePredefinedSystemPrompt: false,

@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  tests:
+    build: .
+    image: volto-searchlib-e2e
+    volumes:
+      - ./reports:/app/reports
+    env_file:
+      - .env
