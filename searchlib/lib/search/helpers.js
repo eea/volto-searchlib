@@ -176,7 +176,7 @@ export function hasNonDefaultFilters(filters, appConfig) {
 
   const activeFilters = Object.assign(
     {},
-    ...filters.map((f) => ({ [f.field]: { ...f, values: f.values.sort() } })),
+    ...filters.map((f) => ({ [f.field]: { ...f, values: (f.values || []).sort() } })),
   );
   const defaultFilters = Object.assign(
     {},
