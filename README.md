@@ -24,9 +24,16 @@
 
 You can configure the proxied Elasticsearch with the env var:
 
-`RAZZLE_PROXY_ES_DSN_${appName}`, so for example `RAZZLE_PROXY_ES_DSN_datahub`.
+`PROXY_ES_DSN_${appName}`, so for example `PROXY_ES_DSN_datahub`.
 
-If you use only one ES server, you can simply set `RAZZLE_PROXY_ES_DSN`.
+If you use only one ES server, you can simply set `PROXY_ES_DSN`.
+
+#### Upgrading from 4.x to 5.x
+
+The `RAZZLE_` prefix has been removed from the Elasticsearch middleware environment variables. Update your deployment configuration:
+
+- `RAZZLE_PROXY_ES_DSN` → `PROXY_ES_DSN`
+- `RAZZLE_PROXY_ES_DSN_${appName}` → `PROXY_ES_DSN_${appName}`
 
 ## Getting started
 
