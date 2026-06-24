@@ -111,8 +111,8 @@ const handleDocRequest = (req, res, next, { urlES, docId }) => {
 
 const getUrlES = (appName, prefix = '') => {
   const baseUrl =
-    process.env[`RAZZLE_PROXY_ES_DSN_${appName}`] ||
-    process.env.RAZZLE_PROXY_ES_DSN ||
+    process.env[`PROXY_ES_DSN_${appName}`] ||
+    process.env.PROXY_ES_DSN ||
     'http://localhost:9200/_all';
 
   if (!prefix) return baseUrl;
