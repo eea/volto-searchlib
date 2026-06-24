@@ -27,6 +27,7 @@
     "@elastic/react-search-ui": "1.21.2",
     "@elastic/react-search-ui-views": "1.21.2",
     "@elastic/search-ui": "1.21.2",
+    "@plone/scripts": "^3.10.6",
     "@visx/group": "^1.7.0",
     "@visx/responsive": "^1.10.1",
     "@visx/scale": "^1.11.1",
@@ -62,7 +63,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
-    "@plone/scripts": "*",
+    "@plone/scripts": "^3.10.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "cypress": "13.1.0",
     "dotenv": "^16.3.2",

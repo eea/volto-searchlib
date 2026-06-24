@@ -103,6 +103,7 @@ const ChatbotAnswer = () => {
     enableFeedback,
     useSummarySearchTool,
     usePredefinedSystemPrompt,
+    onyxVersion = '2',
   } = chatbotAnswer;
 
   const summarySessionId = useRef(null);
@@ -183,6 +184,7 @@ const ChatbotAnswer = () => {
           chatSessionId: sessionId,
           parentMessageId: parentMessageId || null,
           signal: abort.current.signal,
+          onyxVersion,
         })) {
           processor.addPackets(packets);
           const message = processor.getMessage();
@@ -203,7 +205,7 @@ const ChatbotAnswer = () => {
         onFinality?.(sessionId);
       }
     },
-    [personaId],
+    [personaId, onyxVersion],
   );
 
   // Fetch summary
