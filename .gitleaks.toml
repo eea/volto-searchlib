@@ -87,3 +87,15 @@ regexTarget = "match"
 regexes = [
   '''SONAR_AUTH_TOKEN''',
 ]
+
+[[allowlists]]
+description = "Allow generated e2e HTML fixture"
+paths = [
+  '''^e2e/page\.html$''',
+]
+
+[[allowlists]]
+description = "Allow non-secret e2e env example"
+paths = [
+  '''^e2e/\.env\.example$''',
+]
