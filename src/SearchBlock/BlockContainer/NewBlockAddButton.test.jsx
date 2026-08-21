@@ -9,15 +9,17 @@ const mockStore = configureStore();
 let store;
 let outsideClickCallback;
 
-jest.mock('@eeacms/search/lib/hocs/useOutsideClick', () => {
-  return jest.fn((ref, callback) => {
-    outsideClickCallback = callback;
-  });
+vi.mock('@eeacms/search/lib/hocs/useOutsideClick', () => {
+  return {
+    default: vi.fn((ref, callback) => {
+      outsideClickCallback = callback;
+    }),
+  };
 });
 
 describe('NewBlockAddButton', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     store = mockStore({
       userSession: {
         token:
@@ -30,9 +32,9 @@ describe('NewBlockAddButton', () => {
     });
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
-  const mockOnMutateBlock = jest.fn();
+  const mockOnMutateBlock = vi.fn();
   const allowedBlocks = ['text', 'image'];
   const block = 'some-block-id';
 

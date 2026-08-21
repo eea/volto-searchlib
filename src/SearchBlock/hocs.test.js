@@ -1,10 +1,11 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useDebouncedStableData } from './hocs';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('useDebouncedStableData', () => {
   it('should clear previous timers when data changes', () => {
+    const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
     const { rerender } = renderHook(
       ({ data }) => useDebouncedStableData(data),
       {
@@ -15,7 +16,8 @@ describe('useDebouncedStableData', () => {
     rerender({ data: { key: 'first update' } });
     rerender({ data: { key: 'second update' } });
 
-    expect(clearTimeout).toHaveBeenCalledTimes(2);
+    expect(clearTimeoutSpy).toHaveBeenCalledTimes(2);
+    clearTimeoutSpy.mockRestore();
   });
 
   it('should return initial data immediately', () => {
@@ -44,7 +46,7 @@ describe('useDebouncedStableData', () => {
 
     // Fast-forward until all timers have been executed
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     // Now it should be updated

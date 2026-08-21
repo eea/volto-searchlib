@@ -17,7 +17,6 @@ const packageJson = require(path.join(projectRootPath, 'package.json'));
 
 const commander = require('commander');
 const program = commander.program || commander;
-const chalk = require('chalk');
 
 /**
  * Extract messages into separate JSON files
@@ -112,7 +111,12 @@ function messagesToPot(messages) {
   return map(keys(messages).sort(), (key) =>
     [
       `#. Default: "${messages[key].defaultMessage.trim()}"`,
-      ...map(messages[key].filenames, (filename) => `#: ${filename}`),
+      ...map(
+        [...messages[key].filenames].sort((left, right) =>
+          left.localeCompare(right),
+        ),
+        (filename) => `#: ${filename}`,
+      ),
       `msgid "${key}"`,
       'msgstr ""',
     ].join('\n'),
@@ -319,9 +323,7 @@ function main({ addonMode }) {
       }
     } catch {
       console.log(
-        chalk.red(
-          'Getting the addon registry failed. Are you executing i18n from inside an addon? Try the -a flag.',
-        ),
+        'Getting the addon registry failed. Are you executing i18n from inside an addon? Try the -a flag.',
       );
       process.exit();
     }

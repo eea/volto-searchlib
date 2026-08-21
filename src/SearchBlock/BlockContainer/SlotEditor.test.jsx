@@ -21,7 +21,7 @@ const mockData = {
 
 describe('SlotEditor', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     store = mockStore({
       intl: {
         locale: 'en',
@@ -30,7 +30,7 @@ describe('SlotEditor', () => {
     });
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders tabs for each search state', () => {
     render(
@@ -52,7 +52,7 @@ describe('SlotEditor', () => {
   });
 
   //   it('calls onChangeSlotfill when a tab is clicked', () => {
-  //     const onChangeSlotfill = jest.fn();
+  //     const onChangeSlotfill = vi.fn();
 
   //     const { queryByText } = render(
   //       <Provider store={store}>
@@ -79,7 +79,7 @@ describe('SlotEditor', () => {
   //   });
 
   //   it('calls onDeleteSlotfill when the delete button is clicked', () => {
-  //     const onDeleteSlotfill = jest.fn();
+  //     const onDeleteSlotfill = vi.fn();
 
   //     const { getByLabelText } = render(
   //       <MemoryRouter>

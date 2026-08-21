@@ -2,7 +2,7 @@ import { applyBlockSettings } from './utils';
 
 describe('applyBlockSettings', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should cache and reuse the result for the same input', () => {

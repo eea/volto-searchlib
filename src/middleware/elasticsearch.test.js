@@ -3,21 +3,23 @@ import '@testing-library/jest-dom';
 import { createHandler } from './elasticsearch';
 
 // Mock superagent with proper chaining
-const mockEnd = jest.fn();
-const mockSet = jest.fn(() => ({ end: mockEnd }));
-const mockSend = jest.fn(() => ({ set: mockSet }));
+const mockEnd = vi.fn();
+const mockSet = vi.fn(() => ({ end: mockEnd }));
+const mockSend = vi.fn(() => ({ set: mockSet }));
 
-jest.mock('superagent', () => ({
-  post: jest.fn(() => ({
-    send: mockSend,
-  })),
-  get: jest.fn(() => ({
-    end: mockEnd,
-  })),
+vi.mock('superagent', () => ({
+  default: {
+    post: vi.fn(() => ({
+      send: mockSend,
+    })),
+    get: vi.fn(() => ({
+      end: mockEnd,
+    })),
+  },
 }));
 
 // Mock @plone/volto/registry
-jest.mock('@plone/volto/registry', () => ({
+vi.mock('@plone/volto/registry', () => ({
   __esModule: true,
   default: {
     settings: {
@@ -33,7 +35,7 @@ jest.mock('@plone/volto/registry', () => ({
 }));
 
 // Mock download
-jest.mock('./download', () => jest.fn());
+vi.mock('./download', () => ({ default: vi.fn() }));
 
 describe('elasticsearch middleware', () => {
   let handler;
@@ -42,12 +44,12 @@ describe('elasticsearch middleware', () => {
   let mockNext;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     handler = createHandler();
     mockRes = {
-      send: jest.fn(),
+      send: vi.fn(),
     };
-    mockNext = jest.fn();
+    mockNext = vi.fn();
     mockEnd.mockImplementation((callback) => {
       callback(null, { body: { hits: [] } });
     });

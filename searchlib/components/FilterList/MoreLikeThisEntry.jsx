@@ -7,7 +7,8 @@ import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import { DateTime, StringList, Icon } from '@eeacms/search/components';
 import ExternalLink from '@eeacms/search/components/Result/ExternalLink';
-import { Image, Button } from 'semantic-ui-react';
+import Image from '@plone/volto/components/theme/Image/Image';
+import { Button } from 'semantic-ui-react';
 import { useResult } from '@eeacms/search/lib/hocs';
 
 const MoreLikeThisEntry = (props) => {

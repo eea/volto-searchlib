@@ -5,6 +5,10 @@
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
   "license": "MIT",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "homepage": "https://github.com/eea/volto-searchlib",
   "keywords": [
     "volto-addon",
@@ -45,11 +49,14 @@
     "jotai": "2.0.3",
     "lodash": "4.17.21",
     "lodash.clonedeep": "^4.5.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.isfunction": "^3.0.9",
     "lodash.uniq": "^4.5.0",
     "luxon": "^1.22.0",
     "node-fetch": "^2.6.1",
+    "qs": "^6.14.2",
     "re-resizable": "^6.9.0",
+    "regenerator-runtime": "^0.14.1",
     "react-compound-slider": "^3.4.0",
     "react-masonry-component": "6.3.0",
     "react-motion": "^0.5.2",
@@ -62,14 +69,26 @@
     "use-deep-compare-effect": "1.8.1"
   },
   "devDependencies": {
+    "@babel/core": "7.29.7",
     "@cypress/code-coverage": "^3.10.0",
     "@plone/scripts": "^3.10.6",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/react-hooks": "8.0.1",
+    "@vitejs/plugin-react": "4.7.0",
+    "@vitest/coverage-v8": "3.2.7",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "commander": "11.1.0",
     "cypress": "13.1.0",
     "dotenv": "^16.3.2",
+    "glob": "10.5.0",
     "husky": "^8.0.3",
+    "jsdom": "23.0.0",
     "lint-staged": "^14.0.1",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "pofile": "1.0.10",
+    "vite": "6.4.3",
+    "vitest": "3.2.7"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json}": [
@@ -98,9 +117,9 @@
     "release-beta": "release-it --preRelease=beta",
     "bootstrap": "npm install -g ejs; npm link ejs; node bootstrap",
     "postinstall": "node -e \"const fs=require('fs'); const path=require('path'); let file; try { file=path.join(path.dirname(require.resolve('@eeacms/volto-eea-chatbot/package.json')), 'src/ChatBlock/chat/AIMessage.tsx'); } catch (error) { process.exit(0); } const from=\\\"import visit from 'unist-util-visit';\\\"; const to=\\\"import { visit } from 'unist-util-visit';\\\"; const source=fs.readFileSync(file, 'utf8'); if (source.includes(from) && !source.includes(to)) { fs.writeFileSync(file, source.replace(from, to)); }\"",
-    "test": "make test",
-    "test:fix": "make test-update",
-    "pre-commit": "yarn stylelint:fix && yarn prettier:fix && yarn lint:fix",
+    "test": "vitest --config ./vitest.config.mjs run --passWithNoTests",
+    "test:fix": "vitest --config ./vitest.config.mjs run --passWithNoTests --update",
+    "pre-commit": "pnpm stylelint:fix && pnpm prettier:fix && pnpm lint:fix",
     "stylelint": "make stylelint",
     "stylelint:overrides": "make stylelint-overrides",
     "stylelint:fix": "make stylelint-fix",

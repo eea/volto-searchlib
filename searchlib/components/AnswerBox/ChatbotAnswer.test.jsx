@@ -3,11 +3,11 @@ import ChatbotAnswer from './ChatbotAnswer';
 import '@testing-library/jest-dom';
 
 // Mock @eeacms/search/lib/hocs
-const mockUseAppConfig = jest.fn();
-const mockUseSearchContext = jest.fn();
-const mockUseSearchAssist = jest.fn();
+const mockUseAppConfig = vi.fn();
+const mockUseSearchContext = vi.fn();
+const mockUseSearchAssist = vi.fn();
 
-jest.mock(
+vi.mock(
   '@eeacms/search/lib/hocs',
   () => ({
     useAppConfig: () => mockUseAppConfig(),
@@ -18,17 +18,17 @@ jest.mock(
 );
 
 // Mock @eeacms/volto-eea-chatbot
-const mockCreateChatSession = jest.fn();
-const mockSendMessage = jest.fn();
+const mockCreateChatSession = vi.fn();
+const mockSendMessage = vi.fn();
 
-jest.mock(
+vi.mock(
   '@eeacms/volto-eea-chatbot',
   () => ({
     createChatSession: (...args) => mockCreateChatSession(...args),
     sendMessage: (...args) => mockSendMessage(...args),
-    MessageProcessor: jest.fn().mockImplementation(() => ({
-      addPackets: jest.fn(),
-      getMessage: jest.fn(() => ({
+    MessageProcessor: vi.fn().mockImplementation(() => ({
+      addPackets: vi.fn(),
+      getMessage: vi.fn(() => ({
         messageId: 'test-message-id',
         message: 'Test response',
         groupedPackets: [],
@@ -38,10 +38,10 @@ jest.mock(
       })),
       isComplete: false,
     })),
-    RendererComponent: jest.fn(({ children }) =>
+    RendererComponent: vi.fn(({ children }) =>
       children({ content: <span>Rendered content</span> }),
     ),
-    UserActionsToolbar: jest.fn(() => (
+    UserActionsToolbar: vi.fn(() => (
       <div data-testid="user-actions-toolbar">UserActionsToolbar</div>
     )),
   }),
@@ -49,10 +49,10 @@ jest.mock(
 );
 
 // Mock @plone/volto/components
-jest.mock(
+vi.mock(
   '@plone/volto/components',
   () => ({
-    Icon: jest.fn(({ name, size }) => (
+    Icon: vi.fn(({ name, size }) => (
       <span data-testid="volto-icon" data-name={name} data-size={size}>
         Icon
       </span>
@@ -62,14 +62,14 @@ jest.mock(
 );
 
 // Mock @plone/volto/helpers/Loadable
-jest.mock(
+vi.mock(
   '@plone/volto/helpers/Loadable',
   () => ({
     injectLazyLibs: () => (Component) => (props) => (
       <Component
         {...props}
-        rehypePrism={{ default: jest.fn() }}
-        remarkGfm={{ default: jest.fn() }}
+        rehypePrism={{ default: vi.fn() }}
+        remarkGfm={{ default: vi.fn() }}
       />
     ),
   }),
@@ -77,51 +77,57 @@ jest.mock(
 );
 
 // Mock semantic-ui-react
-jest.mock('semantic-ui-react', () => ({
-  Message: jest.fn(({ children, icon, warning, size }) => (
+vi.mock('semantic-ui-react', () => ({
+  Message: vi.fn(({ children, icon, warning, size }) => (
     <div data-testid="sui-message" data-warning={warning} data-size={size}>
       {children}
     </div>
   )),
-  Icon: jest.fn(({ name }) => <i data-testid="sui-icon" data-name={name} />),
-  Modal: jest.fn(({ children, open, trigger, onOpen }) => (
+  Icon: vi.fn(({ name }) => <i data-testid="sui-icon" data-name={name} />),
+  Modal: vi.fn(({ children, open, trigger, onOpen }) => (
     <div data-testid="sui-modal" data-open={open}>
       <button onClick={onOpen}>{trigger}</button>
       {open && children}
     </div>
   )),
-  ModalHeader: jest.fn(({ children }) => (
+  ModalHeader: vi.fn(({ children }) => (
     <div data-testid="sui-modal-header">{children}</div>
   )),
-  ModalContent: jest.fn(({ children }) => (
+  ModalContent: vi.fn(({ children }) => (
     <div data-testid="sui-modal-content">{children}</div>
   )),
 }));
 
 // Mock SVG imports
-jest.mock('@plone/volto/icons/info.svg', () => 'info-svg', { virtual: true });
-jest.mock('@plone/volto/icons/clear.svg', () => 'clear-svg', { virtual: true });
-jest.mock(
+vi.mock('@plone/volto/icons/info.svg', () => ({ default: 'info-svg' }), {
+  virtual: true,
+});
+vi.mock('@plone/volto/icons/clear.svg', () => ({ default: 'clear-svg' }), {
+  virtual: true,
+});
+vi.mock(
   '@eeacms/search/components/SearchInput/icons/search-assist.svg',
-  () => 'search-assist-svg',
+  () => ({ default: 'search-assist-svg' }),
   { virtual: true },
 );
 
 // Mock classnames
-jest.mock('classnames', () => {
-  return (...args) => {
-    return args
-      .flatMap((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && arg !== null) {
-          return Object.entries(arg)
-            .filter(([, value]) => value)
-            .map(([key]) => key);
-        }
-        return [];
-      })
-      .filter(Boolean)
-      .join(' ');
+vi.mock('classnames', () => {
+  return {
+    default: (...args) => {
+      return args
+        .flatMap((arg) => {
+          if (typeof arg === 'string') return arg;
+          if (typeof arg === 'object' && arg !== null) {
+            return Object.entries(arg)
+              .filter(([, value]) => value)
+              .map(([key]) => key);
+          }
+          return [];
+        })
+        .filter(Boolean)
+        .join(' ');
+    },
   };
 });
 
@@ -149,13 +155,13 @@ describe('ChatbotAnswer', () => {
     isQuestion: false,
     isLoadingSummary: false,
     isLoadingAnswer: false,
-    setIsQuestion: jest.fn(),
-    setIsLoadingSummary: jest.fn(),
-    setIsLoadingAnswer: jest.fn(),
+    setIsQuestion: vi.fn(),
+    setIsLoadingSummary: vi.fn(),
+    setIsLoadingAnswer: vi.fn(),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockUseAppConfig.mockReturnValue(defaultAppConfig);
     mockUseSearchContext.mockReturnValue(defaultSearchContext);
     mockUseSearchAssist.mockReturnValue(defaultSearchAssist);
@@ -323,9 +329,9 @@ describe('ChatbotAnswer', () => {
 
   describe('abort behavior', () => {
     it('aborts previous request when new search starts', async () => {
-      const abortSpy = jest.fn();
+      const abortSpy = vi.fn();
       const originalAbortController = global.AbortController;
-      global.AbortController = jest.fn(() => ({
+      global.AbortController = vi.fn(() => ({
         abort: abortSpy,
         signal: {},
       }));

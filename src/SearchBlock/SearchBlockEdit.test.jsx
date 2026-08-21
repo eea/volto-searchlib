@@ -3,63 +3,71 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import SearchBlockEdit from './SearchBlockEdit';
 import '@testing-library/jest-dom';
 
-jest.mock('@plone/volto/registry', () => ({
-  settings: {
-    searchlib: {
-      searchui: {
-        default: {},
+vi.mock('@plone/volto/registry', () => ({
+  default: {
+    settings: {
+      searchlib: {
+        searchui: {
+          default: {},
+        },
       },
     },
   },
 }));
 
-jest.mock(
+vi.mock(
   '@eeacms/volto-eea-chatbot/ChatBlock/hocs/withOnyxData',
   () => {
-    return () => (Component) => Component;
+    return { default: () => (Component) => Component };
   },
   { virtual: true },
 );
 
-jest.mock('./edit.less', () => ({}));
+vi.mock('./edit.less', () => ({}));
 
-jest.mock('./hocs', () => ({
-  useDebouncedStableData: jest.fn((data) => data),
+vi.mock('./hocs', () => ({
+  useDebouncedStableData: vi.fn((data) => data),
 }));
 
-jest.mock('@plone/volto/components/manage/Sidebar/SidebarPortal', () => {
-  return jest.fn((props) => (
-    <div>
-      <div>Mocked SidebarPortal</div>
-      {props.children}
-    </div>
-  ));
+vi.mock('@plone/volto/components/manage/Sidebar/SidebarPortal', () => {
+  return {
+    default: vi.fn((props) => (
+      <div>
+        <div>Mocked SidebarPortal</div>
+        {props.children}
+      </div>
+    )),
+  };
 });
 
-jest.mock('@plone/volto/components/manage/Form/BlockDataForm', () => {
-  return jest.fn((props) => (
-    <div>
-      <div>Mocked BlockDataForm</div>
-      <input id="mocked-blockDataForm" onChange={props.onChangeField} />
-      {props.children}
-    </div>
-  ));
+vi.mock('@plone/volto/components/manage/Form/BlockDataForm', () => {
+  return {
+    default: vi.fn((props) => (
+      <div>
+        <div>Mocked BlockDataForm</div>
+        <input id="mocked-blockDataForm" onChange={props.onChangeField} />
+        {props.children}
+      </div>
+    )),
+  };
 });
 
-jest.mock('./SearchBlockView', () => {
-  return jest.fn((props) => (
-    <div>
-      <div>Mocked SearchBlockView</div>
-      <input id="mocked-searchBlockView" onChange={props.onChangeSlotfill} />
-      <input id="mocked-searchBlockView2" onChange={props.onDeleteSlotfill} />
-      {props.children}
-    </div>
-  ));
+vi.mock('./SearchBlockView', () => {
+  return {
+    default: vi.fn((props) => (
+      <div>
+        <div>Mocked SearchBlockView</div>
+        <input id="mocked-searchBlockView" onChange={props.onChangeSlotfill} />
+        <input id="mocked-searchBlockView2" onChange={props.onDeleteSlotfill} />
+        {props.children}
+      </div>
+    )),
+  };
 });
 
 describe('SearchBlockEdit', () => {
-  const mockOnChangeBlock = jest.fn();
-  const mockOnChangeField = jest.fn();
+  const mockOnChangeBlock = vi.fn();
+  const mockOnChangeField = vi.fn();
 
   it('renders the SearchBlockView component', () => {
     const { container } = render(

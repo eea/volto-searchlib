@@ -3,19 +3,19 @@ import { render, fireEvent } from '@testing-library/react';
 import LandingPageView from './LandingPageView';
 import '@testing-library/jest-dom';
 
-const mockPush = jest.fn();
+const mockPush = vi.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   useHistory: () => ({
     push: mockPush,
   }),
 }));
 
-jest.mock('@plone/volto/helpers', () => ({
+vi.mock('@plone/volto/helpers', () => ({
   flattenToAppURL: (url) => url || '',
 }));
 
-jest.mock('@eeacms/search', () => ({
+vi.mock('@eeacms/search', () => ({
   LandingPageApp: ({ onSubmitSearch, children }) => (
     <div data-testid="landing-page-app">
       <button
@@ -42,7 +42,7 @@ describe('LandingPageView', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render without crashing', () => {

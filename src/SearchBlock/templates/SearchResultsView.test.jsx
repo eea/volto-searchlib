@@ -3,20 +3,22 @@ import { render } from '@testing-library/react';
 import SearchResultsView from './SearchResultsView';
 import '@testing-library/jest-dom';
 
-jest.mock('@plone/volto/helpers/BodyClass/BodyClass', () => {
-  return ({ children, className }) => (
-    <div data-testid="body-class" data-classname={className}>
-      {children}
-    </div>
-  );
+vi.mock('@plone/volto/helpers/BodyClass/BodyClass', () => {
+  return {
+    default: ({ children, className }) => (
+      <div data-testid="body-class" data-classname={className}>
+        {children}
+      </div>
+    ),
+  };
 });
 
-jest.mock('@eeacms/search', () => ({
+vi.mock('@eeacms/search', () => ({
   SearchResultsApp: (props) => <div data-testid="search-results-app" />,
 }));
 
-jest.mock('./schema', () => ({
-  searchResultsSchemaEnhancer: jest.fn((props) => ({
+vi.mock('./schema', () => ({
+  searchResultsSchemaEnhancer: vi.fn((props) => ({
     fieldsets: [{ fields: [] }],
     properties: {},
   })),
@@ -29,7 +31,7 @@ describe('SearchResultsView', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render without crashing', () => {
@@ -65,8 +67,8 @@ describe('SearchResultsView', () => {
   });
 
   describe('schemaEnhancer', () => {
-    it('should call searchResultsSchemaEnhancer', () => {
-      const { searchResultsSchemaEnhancer } = require('./schema');
+    it('should call searchResultsSchemaEnhancer', async () => {
+      const { searchResultsSchemaEnhancer } = await import('./schema');
       const mockProps = {
         schema: {
           fieldsets: [{ fields: [] }],

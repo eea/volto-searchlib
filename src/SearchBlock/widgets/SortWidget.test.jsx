@@ -4,42 +4,42 @@ import { render, fireEvent } from '@testing-library/react';
 import SortWidget from './SortWidget';
 import '@testing-library/jest-dom';
 
-const mockSetSort = jest.fn();
+const mockSetSort = vi.fn();
 
-jest.mock('@eeacms/search/lib/hocs', () => ({
+vi.mock('@eeacms/search/lib/hocs', () => ({
   useSearchContext: () => ({
     setSort: mockSetSort,
   }),
 }));
 
-jest.mock('@plone/volto/components/manage/Widgets/SelectWidget', () => {
-  return function MockSelectWidget(props) {
-    return (
-      <select
-        data-testid="select-widget"
-        onChange={(e) => props.onChange(props.id, e.target.value)}
-      >
-        <option value="title|asc">Title Ascending</option>
-        <option value="date|desc">Date Descending</option>
-      </select>
-    );
+vi.mock('@plone/volto/components/manage/Widgets/SelectWidget', () => {
+  return {
+    default: function MockSelectWidget(props) {
+      return (
+        <select
+          data-testid="select-widget"
+          onChange={(e) => props.onChange(props.id, e.target.value)}
+        >
+          <option value="title|asc">Title Ascending</option>
+          <option value="date|desc">Date Descending</option>
+        </select>
+      );
+    },
   };
 });
 
 describe('SortWidget', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render without crashing', () => {
-    const { getByTestId } = render(
-      <SortWidget id="sort" onChange={jest.fn()} />,
-    );
+    const { getByTestId } = render(<SortWidget id="sort" onChange={vi.fn()} />);
     expect(getByTestId('select-widget')).toBeInTheDocument();
   });
 
   it('should call onChange and setSort when value changes', () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     const { getByTestId } = render(
       <SortWidget id="sort" onChange={mockOnChange} />,
     );
@@ -53,7 +53,7 @@ describe('SortWidget', () => {
   });
 
   it('should parse sort field and direction correctly', () => {
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     const { getByTestId } = render(
       <SortWidget id="sort" onChange={mockOnChange} />,
     );
@@ -70,7 +70,7 @@ describe('SortWidget', () => {
     const { getByTestId } = render(
       <SortWidget
         id="sort"
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         title="Sort by"
         description="Choose sort order"
       />,

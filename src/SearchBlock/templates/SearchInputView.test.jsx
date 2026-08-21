@@ -3,19 +3,19 @@ import { render, fireEvent } from '@testing-library/react';
 import SearchInputView from './SearchInputView';
 import '@testing-library/jest-dom';
 
-const mockPush = jest.fn();
+const mockPush = vi.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   useHistory: () => ({
     push: mockPush,
   }),
 }));
 
-jest.mock('@plone/volto/helpers', () => ({
+vi.mock('@plone/volto/helpers', () => ({
   flattenToAppURL: (url) => url || '',
 }));
 
-jest.mock('@eeacms/search', () => ({
+vi.mock('@eeacms/search', () => ({
   SearchInputApp: ({ onSubmitSearch, children }) => (
     <div data-testid="search-input-app">
       <button
@@ -42,7 +42,7 @@ describe('SearchInputView', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     delete window.searchContext;
   });
 
@@ -60,7 +60,7 @@ describe('SearchInputView', () => {
   });
 
   it('should use window.searchContext when url is not configured and context exists', () => {
-    const mockResetSearch = jest.fn();
+    const mockResetSearch = vi.fn();
     window.searchContext = {
       resetSearch: mockResetSearch,
     };

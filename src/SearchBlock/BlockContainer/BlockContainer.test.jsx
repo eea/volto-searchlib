@@ -9,17 +9,17 @@ import '@testing-library/jest-dom';
 const mockStore = configureStore();
 let store;
 
-jest.mock('@plone/volto/components/manage/Blocks/Block/Edit', () => ({
+vi.mock('@plone/volto/components/manage/Blocks/Block/Edit', () => ({
   __esModule: true,
   default: () => <div>Block Edit</div>,
 }));
 
-jest.mock('@plone/volto/components/theme/View/RenderBlocks', () => ({
+vi.mock('@plone/volto/components/theme/View/RenderBlocks', () => ({
   __esModule: true,
   default: () => <div>Render Blocks</div>,
 }));
 
-jest.mock('./NewBlockAddButton', () => ({
+vi.mock('./NewBlockAddButton', () => ({
   __esModule: true,
   default: () => <div>New Block Add Button</div>,
 }));
@@ -30,14 +30,14 @@ describe('BlockContainer', () => {
     block: 'someBlock',
     data: { '@type': 'someType' },
     selected: false,
-    onChangeSlotfill: jest.fn(),
-    onSelectSlotfill: jest.fn(),
+    onChangeSlotfill: vi.fn(),
+    onSelectSlotfill: vi.fn(),
     properties: {},
     metadata: {},
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     store = mockStore({
       intl: {
         locale: 'en',
@@ -46,7 +46,7 @@ describe('BlockContainer', () => {
     });
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should render RenderBlocks when mode is "view" and data is present', () => {
     const { queryByText } = render(

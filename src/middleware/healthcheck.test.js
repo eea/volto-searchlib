@@ -4,7 +4,7 @@ import healthcheck from './healthcheck';
 import { registry } from '@eeacms/search';
 
 // Mock @eeacms/search with module factory
-jest.mock('@eeacms/search', () => {
+vi.mock('@eeacms/search', () => {
   const mockResolveObj = {};
   return {
     registry: {
@@ -24,15 +24,15 @@ describe('healthcheck middleware', () => {
   let mockNext;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // Clear the resolve object
     Object.keys(registry.resolve).forEach((key) => {
       delete registry.resolve[key];
     });
     mockRes = {
-      send: jest.fn(),
+      send: vi.fn(),
     };
-    mockNext = jest.fn();
+    mockNext = vi.fn();
   });
 
   it('should return error when healthcheck function is not found', () => {
@@ -47,7 +47,7 @@ describe('healthcheck middleware', () => {
   });
 
   it('should call healthcheck function when found', async () => {
-    const mockHcFunction = jest.fn().mockResolvedValue({ status: 'ok' });
+    const mockHcFunction = vi.fn().mockResolvedValue({ status: 'ok' });
     registry.resolve.testHealthcheck = mockHcFunction;
 
     mockReq = {
@@ -65,7 +65,7 @@ describe('healthcheck middleware', () => {
 
   it('should handle healthcheck function errors', async () => {
     const mockError = { error: 'failed' };
-    const mockHcFunction = jest.fn().mockRejectedValue(mockError);
+    const mockHcFunction = vi.fn().mockRejectedValue(mockError);
     registry.resolve.testHealthcheck = mockHcFunction;
 
     mockReq = {
@@ -82,7 +82,7 @@ describe('healthcheck middleware', () => {
   });
 
   it('should merge query params with config', async () => {
-    const mockHcFunction = jest.fn().mockResolvedValue({ status: 'ok' });
+    const mockHcFunction = vi.fn().mockResolvedValue({ status: 'ok' });
     registry.resolve.testHealthcheck = mockHcFunction;
 
     mockReq = {

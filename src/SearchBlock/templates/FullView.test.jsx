@@ -3,15 +3,17 @@ import { render } from '@testing-library/react';
 import FullView from './FullView';
 import '@testing-library/jest-dom';
 
-jest.mock('@plone/volto/helpers/BodyClass/BodyClass', () => {
-  return ({ children, className }) => (
-    <div data-testid="body-class" data-classname={className}>
-      {children}
-    </div>
-  );
+vi.mock('@plone/volto/helpers/BodyClass/BodyClass', () => {
+  return {
+    default: ({ children, className }) => (
+      <div data-testid="body-class" data-classname={className}>
+        {children}
+      </div>
+    ),
+  };
 });
 
-jest.mock('@eeacms/search', () => ({
+vi.mock('@eeacms/search', () => ({
   SEARCH_STATES: [['default'], ['loading'], ['results']],
   SLOTS: ['top', 'bottom'],
   SearchApp: (props) => (
@@ -22,15 +24,15 @@ jest.mock('@eeacms/search', () => ({
   ),
 }));
 
-jest.mock('./../BlockContainer', () => ({
+vi.mock('./../BlockContainer', () => ({
   SlotEditor: ({ slot }) => <div data-testid={`slot-editor-${slot}`} />,
   BlockContainer: ({ block }) => (
     <div data-testid={`block-container-${block}`} />
   ),
 }));
 
-jest.mock('./schema', () => ({
-  searchResultsSchemaEnhancer: jest.fn(() => ({
+vi.mock('./schema', () => ({
+  searchResultsSchemaEnhancer: vi.fn(() => ({
     fieldsets: [{ fields: [] }, { fields: [] }],
     properties: {},
   })),
@@ -41,16 +43,16 @@ describe('FullView', () => {
     appName: 'testApp',
     mode: 'view',
     slotFills: {},
-    onChangeSlotfill: jest.fn(),
-    onDeleteSlotfill: jest.fn(),
-    onSelectSlotfill: jest.fn(),
+    onChangeSlotfill: vi.fn(),
+    onDeleteSlotfill: vi.fn(),
+    onSelectSlotfill: vi.fn(),
     selectedSlotFill: null,
     properties: {},
     metadata: {},
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render without crashing', () => {
@@ -82,7 +84,7 @@ describe('FullView', () => {
   });
 
   it('should call onSelectSlotfill when overlay is clicked', () => {
-    const mockOnSelectSlotfill = jest.fn();
+    const mockOnSelectSlotfill = vi.fn();
     const { container } = render(
       <FullView
         {...defaultProps}

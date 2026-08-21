@@ -9,9 +9,9 @@ import '@testing-library/jest-dom';
 const mockStore = configureStore();
 let store;
 
-jest.mock('@plone/volto/components/manage/Widgets/SelectUtils', () => {
+vi.mock('@plone/volto/components/manage/Widgets/SelectUtils', () => {
   return {
-    normalizeValue: jest.fn(() => 'option1'),
+    normalizeValue: vi.fn(() => 'option1'),
   };
 });
 
@@ -21,7 +21,7 @@ describe('SelectWidgetComponent', () => {
   const additional = { offset: 0 };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     store = mockStore({
       intl: {
         locale: 'en',
@@ -30,7 +30,7 @@ describe('SelectWidgetComponent', () => {
     });
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   const props = {
     id: 'mySelectField',
@@ -43,8 +43,8 @@ describe('SelectWidgetComponent', () => {
     ],
     loading: false,
     value: 'option1',
-    onChange: jest.fn(),
-    onBlur: jest.fn(),
+    onChange: vi.fn(),
+    onBlur: vi.fn(),
     reactSelect: {
       default: (props) => (
         <select
@@ -127,7 +127,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should call getVocabulary with correct parameters when search changes', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockChoices = ['Option 1', 'Option 2'];
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const search = 'searchQuery';
@@ -162,7 +162,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should return options when hasMore is true', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockChoices = ['Option 1', 'Option 2'];
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const search = 'searchQuery';
@@ -200,7 +200,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should return an empty array when hasMore is false', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockChoices = ['Option 1', 'Option 2'];
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const search = 'searchQuery';
@@ -240,7 +240,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should return an empty array when hasMore is false', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockChoices = ['Option 1', 'Option 2'];
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const search = 'searchQuery-no-match';
@@ -263,7 +263,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should return an empty array when hasMore is false', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockChoices = ['Option 1', 'Option 2'];
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const search = 'searchQuery';
@@ -299,7 +299,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should call getVocabulary when choices are empty and vocabBaseUrl is provided', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockVocabBaseUrl = 'http://example.com/vocab';
 
     // Render the component
@@ -320,7 +320,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should not call getVocabulary when choices are not empty', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
     const mockVocabBaseUrl = 'http://example.com/vocab';
     const mockChoices = ['Option 1', 'Option 2'];
 
@@ -342,7 +342,7 @@ describe('SelectWidgetComponent', () => {
 
   it('should not call getVocabulary when vocabBaseUrl is not provided', () => {
     // Mock props
-    const mockGetVocabulary = jest.fn();
+    const mockGetVocabulary = vi.fn();
 
     // Render the component without vocabBaseUrl
     render(

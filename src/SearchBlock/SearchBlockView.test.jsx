@@ -3,32 +3,34 @@ import { render, fireEvent } from '@testing-library/react';
 import SearchBlockView from './SearchBlockView';
 import '@testing-library/jest-dom';
 
-jest.mock('@eeacms/search/lib/hocs/useWhyDidYouUpdate', () => ({
+vi.mock('@eeacms/search/lib/hocs/useWhyDidYouUpdate', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: vi.fn(),
 }));
 
-jest.mock('@plone/volto/helpers/Extensions', () => ({
-  ...jest.requireActual('@plone/volto/helpers/Extensions'),
+vi.mock('@plone/volto/helpers/Extensions', async () => ({
+  ...(await vi.importActual('@plone/volto/helpers/Extensions')),
   withBlockExtensions: (Component) => Component,
 }));
 
-jest.mock('@plone/volto/registry', () => ({
-  settings: {
-    searchlib: {
-      searchui: {
-        default: {
-          facets: [
-            {
-              field: 'field1',
-            },
-          ],
+vi.mock('@plone/volto/registry', () => ({
+  default: {
+    settings: {
+      searchlib: {
+        searchui: {
+          default: {
+            facets: [
+              {
+                field: 'field1',
+              },
+            ],
+          },
         },
       },
     },
-  },
-  blocks: {
-    blocksConfig: {},
+    blocks: {
+      blocksConfig: {},
+    },
   },
 }));
 
@@ -65,7 +67,7 @@ describe('SearchBlockView', () => {
   });
 
   it('calls onChangeSlotfill when a slot is changed', () => {
-    const onChangeSlotfill = jest.fn();
+    const onChangeSlotfill = vi.fn();
     const props = {
       ...defaultProps,
       onChangeSlotfill,

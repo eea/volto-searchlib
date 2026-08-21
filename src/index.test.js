@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 global.__SERVER__ = false;
 
 // Mock the registry
-jest.mock('@eeacms/search', () => ({
+vi.mock('@eeacms/search', () => ({
   registry: {
     searchui: {
       default: {},
@@ -14,22 +14,28 @@ jest.mock('@eeacms/search', () => ({
 }));
 
 // Mock code icon
-jest.mock('@plone/volto/icons/code.svg', () => 'code-icon');
+vi.mock('@plone/volto/icons/code.svg', () => ({ default: 'code-icon' }));
 
 // Mock the components
-jest.mock('./SearchBlock/SearchBlockView', () => 'SearchBlockView');
-jest.mock('./SearchBlock/SearchBlockEdit', () => 'SearchBlockEdit');
-jest.mock('./SearchBlock/schema', () => ({
+vi.mock('./SearchBlock/SearchBlockView', () => ({
+  default: 'SearchBlockView',
+}));
+vi.mock('./SearchBlock/SearchBlockEdit', () => ({
+  default: 'SearchBlockEdit',
+}));
+vi.mock('./SearchBlock/schema', () => ({
   SearchBlockSchema: { title: 'Search Block' },
 }));
-jest.mock('./SearchBlock/templates', () => ({
-  FullView: Object.assign(() => null, { schemaEnhancer: jest.fn() }),
-  SearchInputView: Object.assign(() => null, { schemaEnhancer: jest.fn() }),
-  LandingPageView: Object.assign(() => null, { schemaEnhancer: jest.fn() }),
-  SearchResultsView: Object.assign(() => null, { schemaEnhancer: jest.fn() }),
+vi.mock('./SearchBlock/templates', () => ({
+  FullView: Object.assign(() => null, { schemaEnhancer: vi.fn() }),
+  SearchInputView: Object.assign(() => null, { schemaEnhancer: vi.fn() }),
+  LandingPageView: Object.assign(() => null, { schemaEnhancer: vi.fn() }),
+  SearchResultsView: Object.assign(() => null, { schemaEnhancer: vi.fn() }),
 }));
-jest.mock('./SearchBlock/widgets/FacetValueWidget', () => 'FacetValueWidget');
-jest.mock('./SearchBlock/widgets/SortWidget', () => 'SortWidget');
+vi.mock('./SearchBlock/widgets/FacetValueWidget', () => ({
+  default: 'FacetValueWidget',
+}));
+vi.mock('./SearchBlock/widgets/SortWidget', () => ({ default: 'SortWidget' }));
 
 describe('applyConfig', () => {
   let config;

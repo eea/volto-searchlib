@@ -4,7 +4,8 @@
  */
 import React from 'react';
 
-import { Icon as UiIcon, Image, Flag } from 'semantic-ui-react';
+import Image from '@plone/volto/components/theme/Image/Image';
+import { Icon as UiIcon, Flag } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search';
 
 const CountryFlag = ({ country }) => {

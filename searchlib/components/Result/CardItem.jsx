@@ -1,6 +1,7 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Card, Image, Label } from 'semantic-ui-react';
+import Image from '@plone/volto/components/theme/Image/Image';
+import { Card, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';

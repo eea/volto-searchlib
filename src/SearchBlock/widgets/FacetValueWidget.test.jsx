@@ -4,8 +4,8 @@ import { render, fireEvent } from '@testing-library/react';
 import FacetValueWidget from './FacetValueWidget';
 import '@testing-library/jest-dom';
 
-jest.mock('@eeacms/search', () => ({
-  FacetApp: jest.fn((props) => (
+vi.mock('@eeacms/search', () => ({
+  FacetApp: vi.fn((props) => (
     <div id="facetApp">
       <select
         name="exampleFacet"
@@ -22,11 +22,11 @@ jest.mock('@eeacms/search', () => ({
 describe('FacetValueWidget', () => {
   const facetName = 'exampleFacet';
   const value = ['option1', 'option2'];
-  const onChange = jest.fn((id, newValue) => newValue);
+  const onChange = vi.fn((id, newValue) => newValue);
   const id = 'facetId';
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render the FacetApp component with correct props', () => {
