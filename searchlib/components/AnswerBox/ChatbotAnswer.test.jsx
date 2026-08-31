@@ -243,10 +243,10 @@ describe('ChatbotAnswer', () => {
     expect(mockCreateChatSession).not.toHaveBeenCalled();
   });
 
-  it('fetches summary when search term changes', async () => {
+  it('fetches summary when search term changes to a question', async () => {
     mockUseSearchContext.mockReturnValue({
       ...defaultSearchContext,
-      searchTerm: 'test query',
+      searchTerm: 'How does test query work?',
       isLoading: true,
     });
 
@@ -257,6 +257,23 @@ describe('ChatbotAnswer', () => {
         true,
       );
     });
+  });
+
+  it.each([
+    'SOER',
+    'air quality report 2025',
+    'circular economy',
+  ])('does not fetch summary for non-AI query: %s', (query) => {
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: query,
+      isLoading: true,
+    });
+
+    render(<ChatbotAnswer />);
+
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
   });
 
   it('renders without crashing when chatbotAnswer config is empty', () => {
@@ -294,8 +311,8 @@ describe('ChatbotAnswer', () => {
   describe('when search results load', () => {
     it('uses resultSearchTerm when not loading', async () => {
       mockUseSearchContext.mockReturnValue({
-        searchTerm: 'initial query',
-        resultSearchTerm: 'result query',
+        searchTerm: 'What is result query?',
+        resultSearchTerm: 'What is result query?',
         isLoading: false,
       });
 
@@ -308,7 +325,7 @@ describe('ChatbotAnswer', () => {
 
     it('uses searchTerm when loading', async () => {
       mockUseSearchContext.mockReturnValue({
-        searchTerm: 'loading query',
+        searchTerm: 'How does loading work?',
         resultSearchTerm: '',
         isLoading: true,
       });
@@ -331,7 +348,7 @@ describe('ChatbotAnswer', () => {
       }));
 
       mockUseSearchContext.mockReturnValue({
-        searchTerm: 'first query',
+        searchTerm: 'How does first work?',
         resultSearchTerm: '',
         isLoading: true,
       });
@@ -340,7 +357,7 @@ describe('ChatbotAnswer', () => {
 
       // Trigger another search
       mockUseSearchContext.mockReturnValue({
-        searchTerm: 'second query',
+        searchTerm: 'How does second work?',
         resultSearchTerm: '',
         isLoading: true,
       });

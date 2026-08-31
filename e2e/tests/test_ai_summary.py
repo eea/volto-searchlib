@@ -65,7 +65,7 @@ class TestAISummary:
         print(f"\nTesting disclaimer. Current URL: {search_page.page.url}")
         search_page.page.goto(search_page.page.url) # ensure clean state if needed
         # We need AI summary to be visible to see the header icons
-        query = "pollution"
+        query = "What are the main causes of air pollution?"
         print(f"Searching for '{query}' to show header icons...")
         search_page.search(query)
         search_page.wait_for_ai_summary()

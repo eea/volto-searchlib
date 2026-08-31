@@ -21,6 +21,7 @@ import {
   useSearchContext,
   useSearchAssist,
 } from '@eeacms/search/lib/hocs';
+import { classifyQueryIntent } from './classifyQueryIntent';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
 import searchAssistSVG from '@eeacms/search/components/SearchInput/icons/search-assist.svg';
@@ -334,7 +335,12 @@ const ChatbotAnswer = () => {
     const term = isLoading ? searchTerm : resultSearchTerm;
     if (term && term !== lastQuery.current) {
       lastQuery.current = term;
-      fetchSummary(term);
+      // Pre-LLM intent gate: only natural-language questions, exploratory
+      // queries and claims warrant an AI summary. Keywords, document
+      // retrieval and short phrases must not trigger any chatbot call.
+      if (classifyQueryIntent(term).shouldGenerateAI) {
+        fetchSummary(term);
+      }
     } else if (!resultSearchTerm && lastQuery.current && !isLoading) {
       // Search completed with empty query (clear button pressed)
       resetState();
