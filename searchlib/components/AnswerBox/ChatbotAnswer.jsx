@@ -355,7 +355,13 @@ const ChatbotAnswer = () => {
   return (
     <div
       className={cx('chatbot-answer-wrapper', {
-        expanded: isQuestion && !isLoadingSummary && !!summary,
+        // Keep the box open from skeleton generation through streaming
+        // to the final rendered summary: the summary must fill the box
+        // where the loading skeletons were, without a collapse/re-expand.
+        expanded:
+          isLoadingSummary ||
+          summary?.isFinalMessageComing ||
+          (isQuestion && !!summary),
       })}
     >
       <div className="chatbot-answer-collapse">
@@ -415,6 +421,18 @@ const ChatbotAnswer = () => {
               </Modal>
             </div>
           </div>
+
+          {isLoadingSummary && !summary?.isFinalMessageComing && (
+            <div
+              className="chatbot-summary-loading"
+              role="status"
+              aria-label="Generating AI summary"
+            >
+              <div className="skeleton-line" />
+              <div className="skeleton-line" />
+              <div className="skeleton-line short" />
+            </div>
+          )}
 
           {summaryError && (
             <Message icon warning size="small">

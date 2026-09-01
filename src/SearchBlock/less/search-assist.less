@@ -157,6 +157,22 @@
   }
 }
 
+.chatbot-summary-loading {
+  padding: 0.75em 0;
+
+  .skeleton-line {
+    height: 0.75em;
+    border-radius: 4px;
+    margin-bottom: 0.5em;
+    animation: opacity-pulse 1.5s ease-in-out infinite;
+    background-color: @lightGrey;
+
+    &.short {
+      width: 60%;
+    }
+  }
+}
+
 .chatbot-answer .icon-btn,
 .chatbot-disclaimer-modal .icon-btn {
   display: inline-flex;

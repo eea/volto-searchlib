@@ -211,6 +211,109 @@ describe('ChatbotAnswer', () => {
     ).toBeInTheDocument();
   });
 
+  it('expands the wrapper while the summary is loading', () => {
+    mockUseSearchAssist.mockReturnValue({
+      ...defaultSearchAssist,
+      isLoadingSummary: true,
+    });
+
+    const { container } = render(<ChatbotAnswer />);
+    expect(
+      container.querySelector('.chatbot-answer-wrapper.expanded'),
+    ).toBeInTheDocument();
+  });
+
+  it('shows a loading placeholder inside the box while generating', () => {
+    mockUseSearchAssist.mockReturnValue({
+      ...defaultSearchAssist,
+      isLoadingSummary: true,
+    });
+
+    const { container } = render(<ChatbotAnswer />);
+    expect(
+      container.querySelector('.chatbot-summary-loading'),
+    ).toBeInTheDocument();
+  });
+
+  it('does not show a loading placeholder when idle', () => {
+    const { container } = render(<ChatbotAnswer />);
+    expect(
+      container.querySelector('.chatbot-summary-loading'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('keeps the box expanded while the summary text streams in', async () => {
+    const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
+    const defaultImplementation = MessageProcessor.getMockImplementation();
+
+    let releaseStream;
+    const streamGate = new Promise((resolve) => {
+      releaseStream = resolve;
+    });
+
+    MessageProcessor.mockImplementation(() => {
+      let stages = 0;
+      return {
+        addPackets: () => {
+          stages += 1;
+        },
+        getMessage: () => ({
+          messageId: 'stream-message-id',
+          message: 'Streaming summary text',
+          groupedPackets: [],
+          displayPackets: [],
+          isComplete: stages >= 2,
+          isFinalMessageComing: true,
+        }),
+        get isComplete() {
+          return stages >= 2;
+        },
+      };
+    });
+
+    mockSendMessage.mockImplementation(async function* () {
+      yield [];
+      await streamGate;
+      yield [];
+    });
+
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      isLoading: true,
+    });
+
+    try {
+      const { container } = render(<ChatbotAnswer />);
+
+      // Mid-stream: the final message is arriving (the component has
+      // already dropped the loading flag when the final message
+      // started). The box that showed the skeletons must stay expanded
+      // so the summary fills it in place.
+      await waitFor(() => {
+        expect(container.querySelector('.chatbot-summary')).toBeInTheDocument();
+      });
+
+      expect(
+        container.querySelector('.chatbot-summary-loading'),
+      ).not.toBeInTheDocument();
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).toBeInTheDocument();
+
+      // After the stream completes, the box must remain expanded.
+      releaseStream();
+      await waitFor(() => {
+        expect(defaultSearchAssist.setIsQuestion).toHaveBeenCalled();
+      });
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).toBeInTheDocument();
+    } finally {
+      MessageProcessor.mockImplementation(defaultImplementation);
+    }
+  });
+
   it('applies expanded class when isQuestion is true and summary exists', async () => {
     mockUseSearchAssist.mockReturnValue({
       ...defaultSearchAssist,
@@ -259,22 +362,21 @@ describe('ChatbotAnswer', () => {
     });
   });
 
-  it.each([
-    'SOER',
-    'air quality report 2025',
-    'circular economy',
-  ])('does not fetch summary for non-AI query: %s', (query) => {
-    mockUseSearchContext.mockReturnValue({
-      ...defaultSearchContext,
-      searchTerm: query,
-      isLoading: true,
-    });
+  it.each(['SOER', 'air quality report 2025', 'circular economy'])(
+    'does not fetch summary for non-AI query: %s',
+    (query) => {
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: query,
+        isLoading: true,
+      });
 
-    render(<ChatbotAnswer />);
+      render(<ChatbotAnswer />);
 
-    expect(mockCreateChatSession).not.toHaveBeenCalled();
-    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
-  });
+      expect(mockCreateChatSession).not.toHaveBeenCalled();
+      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+    },
+  );
 
   it('renders without crashing when chatbotAnswer config is empty', () => {
     mockUseAppConfig.mockReturnValue({
