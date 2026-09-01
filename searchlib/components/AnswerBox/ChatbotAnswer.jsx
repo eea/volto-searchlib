@@ -21,6 +21,7 @@ import {
   useSearchContext,
   useSearchAssist,
 } from '@eeacms/search/lib/hocs';
+import { useAISummaryToggle } from '../../lib/aiSummaryToggle';
 import { classifyQueryIntent } from './classifyQueryIntent';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
@@ -80,6 +81,8 @@ const ChatbotAnswer = () => {
     setIsLoadingSummary,
     setIsLoadingAnswer,
   } = useSearchAssist();
+
+  const [aiSummaryEnabled] = useAISummaryToggle();
 
   // Internal states
   const [summary, setSummary] = useState(null);
@@ -338,14 +341,30 @@ const ChatbotAnswer = () => {
       // Pre-LLM intent gate: only natural-language questions, exploratory
       // queries and claims warrant an AI summary. Keywords, document
       // retrieval and short phrases must not trigger any chatbot call.
-      if (classifyQueryIntent(term).shouldGenerateAI) {
+      if (classifyQueryIntent(term).shouldGenerateAI && aiSummaryEnabled) {
         fetchSummary(term);
       }
     } else if (!resultSearchTerm && lastQuery.current && !isLoading) {
       // Search completed with empty query (clear button pressed)
       resetState();
     }
-  }, [searchTerm, resultSearchTerm, isLoading, fetchSummary, resetState]);
+  }, [
+    searchTerm,
+    resultSearchTerm,
+    isLoading,
+    fetchSummary,
+    resetState,
+    aiSummaryEnabled,
+  ]);
+
+  // When the AI summary is turned off (e.g. from the header search
+  // toggle), stop any in-flight generation and hide the summary so no
+  // LLM request is in flight or displayed.
+  useEffect(() => {
+    if (!aiSummaryEnabled) {
+      resetState();
+    }
+  }, [aiSummaryEnabled, resetState]);
 
   // Cleanup on unmount
   useEffect(() => {

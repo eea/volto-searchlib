@@ -1,5 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import ChatbotAnswer from './ChatbotAnswer';
+import {
+  AI_SUMMARY_STORAGE_KEY,
+  AI_SUMMARY_TOGGLE_EVENT,
+} from '../../lib/aiSummaryToggle';
 import '@testing-library/jest-dom';
 
 // Mock @eeacms/search/lib/hocs
@@ -156,6 +160,7 @@ describe('ChatbotAnswer', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    window.localStorage.clear();
     mockUseAppConfig.mockReturnValue(defaultAppConfig);
     mockUseSearchContext.mockReturnValue(defaultSearchContext);
     mockUseSearchAssist.mockReturnValue(defaultSearchAssist);
@@ -377,6 +382,93 @@ describe('ChatbotAnswer', () => {
       expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     },
   );
+
+  it('does not fetch summary when the AI summary toggle is off', () => {
+    window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      isLoading: true,
+    });
+
+    render(<ChatbotAnswer />);
+
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+  });
+
+  it('aborts and hides the summary when the toggle is turned off mid-session', async () => {
+    const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
+    const defaultImplementation = MessageProcessor.getMockImplementation();
+
+    let releaseStream;
+    const streamGate = new Promise((resolve) => {
+      releaseStream = resolve;
+    });
+
+    MessageProcessor.mockImplementation(() => {
+      let stages = 0;
+      return {
+        addPackets: () => {
+          stages += 1;
+        },
+        getMessage: () => ({
+          messageId: 'stream-message-id',
+          message: 'Streaming summary text',
+          groupedPackets: [],
+          displayPackets: [],
+          isComplete: stages >= 2,
+          isFinalMessageComing: true,
+        }),
+        get isComplete() {
+          return stages >= 2;
+        },
+      };
+    });
+
+    mockSendMessage.mockImplementation(async function* () {
+      yield [];
+      await streamGate;
+      yield [];
+    });
+
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      isLoading: true,
+    });
+
+    try {
+      const { container } = render(<ChatbotAnswer />);
+
+      await waitFor(() => {
+        expect(
+          container.querySelector('.chatbot-answer-wrapper.expanded'),
+        ).toBeInTheDocument();
+      });
+
+      releaseStream();
+      await waitFor(() => {
+        expect(defaultSearchAssist.setIsQuestion).toHaveBeenCalled();
+      });
+      expect(container.querySelector('.chatbot-summary')).toBeInTheDocument();
+
+      // User turns the AI summary off from the header search toggle.
+      act(() => {
+        window.dispatchEvent(
+          new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: false }),
+        );
+      });
+
+      await waitFor(() => {
+        expect(
+          container.querySelector('.chatbot-summary'),
+        ).not.toBeInTheDocument();
+      });
+    } finally {
+      MessageProcessor.mockImplementation(defaultImplementation);
+    }
+  });
 
   it('renders without crashing when chatbotAnswer config is empty', () => {
     mockUseAppConfig.mockReturnValue({

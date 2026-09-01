@@ -6,11 +6,13 @@
  */
 
 import React from 'react';
+import cx from 'classnames';
 import { Icon, Image } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAISummaryToggle } from '../../lib/aiSummaryToggle';
 import aiSearchSVG from './icons/ai-search.svg';
 import searchSVG from './icons/search.svg';
 
@@ -53,6 +55,7 @@ function SearchInput({
 
   const inpRef = React.useRef();
   const [, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
+  const [aiSummaryEnabled, toggleAISummary] = useAISummaryToggle();
 
   // React.useEffect(() => {
   //   mode === 'view' && inpRef.current && inpRef.current.focus();
@@ -163,6 +166,24 @@ function SearchInput({
                 </div>
               )}
             </div>
+
+            {enableChatbotAnswer && (
+              <button
+                type="button"
+                role="switch"
+                aria-checked={aiSummaryEnabled}
+                aria-label="AI Summary"
+                className={cx('ai-summary-toggle', {
+                  enabled: aiSummaryEnabled,
+                })}
+                onClick={() => toggleAISummary()}
+              >
+                <span className="label">AI Summary</span>
+                <span className="switch" aria-hidden="true">
+                  <span className="knob" />
+                </span>
+              </button>
+            )}
 
             <div
               tabIndex={0}
