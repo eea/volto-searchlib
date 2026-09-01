@@ -324,6 +324,7 @@ const config = {
         enableFeedback: true,
         useSummarySearchTool: true,
         usePredefinedSystemPrompt: false,
+        minResults: 1, // minimum result count before an AI summary may be generated
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',

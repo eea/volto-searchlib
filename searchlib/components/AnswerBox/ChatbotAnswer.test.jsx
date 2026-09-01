@@ -285,7 +285,9 @@ describe('ChatbotAnswer', () => {
     mockUseSearchContext.mockReturnValue({
       ...defaultSearchContext,
       searchTerm: 'How does test query work?',
-      isLoading: true,
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
     });
 
     try {
@@ -355,7 +357,9 @@ describe('ChatbotAnswer', () => {
     mockUseSearchContext.mockReturnValue({
       ...defaultSearchContext,
       searchTerm: 'How does test query work?',
-      isLoading: true,
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
     });
 
     render(<ChatbotAnswer />);
@@ -435,7 +439,9 @@ describe('ChatbotAnswer', () => {
     mockUseSearchContext.mockReturnValue({
       ...defaultSearchContext,
       searchTerm: 'How does test query work?',
-      isLoading: true,
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
     });
 
     try {
@@ -508,6 +514,7 @@ describe('ChatbotAnswer', () => {
         searchTerm: 'What is result query?',
         resultSearchTerm: 'What is result query?',
         isLoading: false,
+        totalResults: 5,
       });
 
       render(<ChatbotAnswer />);
@@ -517,23 +524,76 @@ describe('ChatbotAnswer', () => {
       });
     });
 
-    it('uses searchTerm when loading', async () => {
+    it('waits for the search results before fetching the summary', async () => {
+      // While the Elasticsearch search is running, no summary may start:
+      // results render first, the summary is a progressive enhancement.
       mockUseSearchContext.mockReturnValue({
         searchTerm: 'How does loading work?',
         resultSearchTerm: '',
         isLoading: true,
       });
 
-      render(<ChatbotAnswer />);
+      const { rerender } = render(<ChatbotAnswer />);
+
+      await Promise.resolve();
+      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+
+      // Once the search completes with results, the summary may start.
+      mockUseSearchContext.mockReturnValue({
+        searchTerm: 'How does loading work?',
+        resultSearchTerm: 'How does loading work?',
+        isLoading: false,
+        totalResults: 3,
+      });
+      rerender(<ChatbotAnswer />);
 
       await waitFor(() => {
-        expect(defaultSearchAssist.setIsLoadingSummary).toHaveBeenCalled();
+        expect(defaultSearchAssist.setIsLoadingSummary).toHaveBeenCalledWith(
+          true,
+        );
       });
+    });
+
+    it('does not fetch summary when the search completes with zero results', () => {
+      mockUseSearchContext.mockReturnValue({
+        searchTerm: 'How does climate adaptation work?',
+        resultSearchTerm: 'How does climate adaptation work?',
+        isLoading: false,
+        totalResults: 0,
+      });
+
+      render(<ChatbotAnswer />);
+
+      expect(mockCreateChatSession).not.toHaveBeenCalled();
+      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+    });
+
+    it('does not fetch summary when the result count is below the configured minimum', () => {
+      mockUseAppConfig.mockReturnValue({
+        appConfig: {
+          chatbotAnswer: {
+            personaId: 'test-persona-id',
+            minResults: 10,
+          },
+          enableMatomoTracking: false,
+        },
+      });
+      mockUseSearchContext.mockReturnValue({
+        searchTerm: 'How does climate adaptation work?',
+        resultSearchTerm: 'How does climate adaptation work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      render(<ChatbotAnswer />);
+
+      expect(mockCreateChatSession).not.toHaveBeenCalled();
+      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     });
   });
 
   describe('abort behavior', () => {
-    it('aborts previous request when new search starts', async () => {
+    it('aborts the in-flight summary when a new search completes', async () => {
       const abortSpy = jest.fn();
       const originalAbortController = global.AbortController;
       global.AbortController = jest.fn(() => ({
@@ -543,19 +603,24 @@ describe('ChatbotAnswer', () => {
 
       mockUseSearchContext.mockReturnValue({
         searchTerm: 'How does first work?',
-        resultSearchTerm: '',
-        isLoading: true,
+        resultSearchTerm: 'How does first work?',
+        isLoading: false,
+        totalResults: 5,
       });
 
       const { rerender } = render(<ChatbotAnswer />);
 
-      // Trigger another search
-      mockUseSearchContext.mockReturnValue({
-        searchTerm: 'How does second work?',
-        resultSearchTerm: '',
-        isLoading: true,
+      await waitFor(() => {
+        expect(mockCreateChatSession).toHaveBeenCalled();
       });
 
+      // A new search completes with a different question.
+      mockUseSearchContext.mockReturnValue({
+        searchTerm: 'How does second work?',
+        resultSearchTerm: 'How does second work?',
+        isLoading: false,
+        totalResults: 5,
+      });
       rerender(<ChatbotAnswer />);
 
       await waitFor(() => {

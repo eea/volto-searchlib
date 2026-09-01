@@ -72,7 +72,7 @@ const Answer = injectLazyLibs(['rehypePrism', 'remarkGfm'])(({
 
 const ChatbotAnswer = () => {
   const { appConfig } = useAppConfig();
-  const { searchTerm, resultSearchTerm, isLoading } = useSearchContext();
+  const { resultSearchTerm, isLoading, totalResults } = useSearchContext();
   const {
     isQuestion,
     isLoadingSummary,
@@ -108,6 +108,7 @@ const ChatbotAnswer = () => {
     useSummarySearchTool,
     usePredefinedSystemPrompt,
     onyxVersion = '2',
+    minResults = 1,
   } = chatbotAnswer;
 
   const summarySessionId = useRef(null);
@@ -333,25 +334,35 @@ const ChatbotAnswer = () => {
     ],
   );
 
-  // Trigger summary fetch when ES search starts, or clear when search is cleared
+  // Results-first trigger: the summary only starts after the
+  // Elasticsearch search has finished, so results render immediately
+  // and the summary stays a purely progressive enhancement. A search
+  // that returned too few results (default: zero) must not spend an
+  // LLM call.
   useEffect(() => {
-    const term = isLoading ? searchTerm : resultSearchTerm;
+    if (isLoading) return;
+    const term = resultSearchTerm;
     if (term && term !== lastQuery.current) {
       lastQuery.current = term;
       // Pre-LLM intent gate: only natural-language questions, exploratory
       // queries and claims warrant an AI summary. Keywords, document
       // retrieval and short phrases must not trigger any chatbot call.
-      if (classifyQueryIntent(term).shouldGenerateAI && aiSummaryEnabled) {
+      if (
+        classifyQueryIntent(term).shouldGenerateAI &&
+        aiSummaryEnabled &&
+        (totalResults ?? 0) >= minResults
+      ) {
         fetchSummary(term);
       }
-    } else if (!resultSearchTerm && lastQuery.current && !isLoading) {
+    } else if (!term && lastQuery.current) {
       // Search completed with empty query (clear button pressed)
       resetState();
     }
   }, [
-    searchTerm,
     resultSearchTerm,
     isLoading,
+    totalResults,
+    minResults,
     fetchSummary,
     resetState,
     aiSummaryEnabled,
