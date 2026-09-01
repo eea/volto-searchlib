@@ -115,6 +115,75 @@
       }
     }
   }
+
+  .chatbot-sources {
+    margin-top: 0.25em;
+    font-size: 0.85rem;
+
+    .chatbot-sources-toggle {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5em 2px;
+      border: none;
+      margin: 0;
+      background-color: transparent;
+      color: @deepBlue;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      gap: 4px;
+      white-space: nowrap;
+
+      &:hover span {
+        text-decoration: underline;
+      }
+
+      i {
+        font-size: 0.8rem;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      &:focus-visible {
+        outline: 2px solid @secondaryColor;
+        outline-offset: 2px;
+      }
+    }
+
+    &.open .chatbot-sources-toggle i {
+      transform: rotate(180deg);
+    }
+
+    .sources-list {
+      padding: 0;
+      margin: 0 0 0.75em 0;
+      list-style: none;
+
+      li {
+        display: flex;
+        align-items: baseline;
+        padding: 0.25em 0;
+        gap: 0.6em;
+      }
+
+      .source-index {
+        color: @grey;
+        font-size: 0.75em;
+      }
+
+      .source-link {
+        color: @deepBlue;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .source-title {
+        color: @deepBlue;
+      }
+    }
+  }
 }
 
 .search-assist-toggle {

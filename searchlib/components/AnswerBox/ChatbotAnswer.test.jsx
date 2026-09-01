@@ -1,4 +1,10 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import ChatbotAnswer from './ChatbotAnswer';
 import {
   AI_SUMMARY_STORAGE_KEY,
@@ -628,6 +634,228 @@ describe('ChatbotAnswer', () => {
       });
 
       global.AbortController = originalAbortController;
+    });
+  });
+
+  describe('sources disclosure', () => {
+    const citedDocuments = [
+      {
+        document_id: 'doc-1',
+        semantic_identifier: 'Which pollutants cause air pollution?',
+        link: 'https://www.eea.europa.eu/en/topics/air-pollution',
+        source_type: 'web',
+      },
+      {
+        document_id: 'doc-2',
+        semantic_identifier: 'Air quality in Europe',
+        link: 'https://www.eea.europa.eu/en/analysis/air-quality',
+        source_type: 'web',
+      },
+      {
+        document_id: 'doc-3',
+        semantic_identifier: 'Retrieved but never cited',
+        link: 'https://www.eea.europa.eu/en/uncited',
+        source_type: 'web',
+      },
+    ];
+    const citedCitations = { 1: 'doc-1', 2: 'doc-2', 3: 'doc-2' };
+
+    // Streams a completed summary whose message carries citations and
+    // documents, and lets the mocked RendererComponent report that the
+    // summary display finished (so the Read more row is revealed).
+    const setupSummaryStream = ({
+      citations = citedCitations,
+      documents = citedDocuments,
+    } = {}) => {
+      const {
+        MessageProcessor,
+        RendererComponent,
+      } = require('@eeacms/volto-eea-chatbot');
+      const defaultProcessorImpl = MessageProcessor.getMockImplementation();
+      const defaultRendererImpl = RendererComponent.getMockImplementation();
+
+      let releaseStream;
+      const streamGate = new Promise((resolve) => {
+        releaseStream = resolve;
+      });
+
+      MessageProcessor.mockImplementation(() => {
+        let stages = 0;
+        return {
+          addPackets: () => {
+            stages += 1;
+          },
+          getMessage: () => ({
+            messageId: 'stream-message-id',
+            message: 'Streaming summary text',
+            groupedPackets: [{ ind: 0, packets: [] }],
+            displayPackets: [0],
+            citations,
+            documents,
+            isComplete: stages >= 2,
+            isFinalMessageComing: true,
+          }),
+          get isComplete() {
+            return stages >= 2;
+          },
+        };
+      });
+
+      RendererComponent.mockImplementation(({ children, onComplete }) => {
+        const rendered = children({ content: <span>Rendered content</span> });
+        Promise.resolve().then(() => onComplete?.());
+        return rendered;
+      });
+
+      mockSendMessage.mockImplementation(async function* () {
+        yield [];
+        await streamGate;
+        yield [];
+      });
+
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'What are the main causes of air pollution?',
+        resultSearchTerm: 'What are the main causes of air pollution?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      return {
+        releaseStream,
+        restore: () => {
+          MessageProcessor.mockImplementation(defaultProcessorImpl);
+          RendererComponent.mockImplementation(defaultRendererImpl);
+        },
+      };
+    };
+
+    it('shows the cited sources count once the summary is displayed', async () => {
+      const { releaseStream, restore } = setupSummaryStream();
+
+      try {
+        const { container } = render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        await waitFor(() => {
+          expect(
+            screen.getByText('Generated from 2 EEA documents'),
+          ).toBeInTheDocument();
+        });
+        expect(
+          container.querySelector('.chatbot-sources-toggle'),
+        ).toHaveAttribute('aria-expanded', 'false');
+      } finally {
+        restore();
+      }
+    });
+
+    it('lists only the cited documents with their links when expanded', async () => {
+      const { releaseStream, restore } = setupSummaryStream();
+
+      try {
+        render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        const sourcesToggle = await screen.findByRole('button', {
+          name: 'Generated from 2 EEA documents',
+        });
+        fireEvent.click(sourcesToggle);
+
+        await waitFor(() => {
+          expect(sourcesToggle).toHaveAttribute('aria-expanded', 'true');
+        });
+        expect(
+          screen.getByText('Which pollutants cause air pollution?'),
+        ).toHaveAttribute(
+          'href',
+          'https://www.eea.europa.eu/en/topics/air-pollution',
+        );
+        expect(screen.getByText('Air quality in Europe')).toHaveAttribute(
+          'href',
+          'https://www.eea.europa.eu/en/analysis/air-quality',
+        );
+        // Retrieved but never cited: must not appear in the list.
+        expect(
+          screen.queryByText('Retrieved but never cited'),
+        ).not.toBeInTheDocument();
+      } finally {
+        restore();
+      }
+    });
+
+    it('collapses the sources list again', async () => {
+      const { releaseStream, restore } = setupSummaryStream();
+
+      try {
+        render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        const sourcesToggle = await screen.findByRole('button', {
+          name: 'Generated from 2 EEA documents',
+        });
+        fireEvent.click(sourcesToggle);
+        await waitFor(() => {
+          expect(sourcesToggle).toHaveAttribute('aria-expanded', 'true');
+        });
+
+        fireEvent.click(sourcesToggle);
+        await waitFor(() => {
+          expect(sourcesToggle).toHaveAttribute('aria-expanded', 'false');
+        });
+        expect(
+          screen.queryByText('Air quality in Europe'),
+        ).not.toBeInTheDocument();
+      } finally {
+        restore();
+      }
+    });
+
+    it('does not show the sources row when the summary cites no documents', async () => {
+      const { releaseStream, restore } = setupSummaryStream({
+        citations: {},
+      });
+
+      try {
+        render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        // The Read more row proves the summary display has finished.
+        await screen.findByText('Read more');
+        expect(screen.queryByText(/Generated from/)).not.toBeInTheDocument();
+      } finally {
+        restore();
+      }
+    });
+
+    it('uses the singular form for a single cited document', async () => {
+      const { releaseStream, restore } = setupSummaryStream({
+        citations: { 1: 'doc-1' },
+        documents: [citedDocuments[0]],
+      });
+
+      try {
+        render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        await waitFor(() => {
+          expect(
+            screen.getByText('Generated from 1 EEA document'),
+          ).toBeInTheDocument();
+        });
+      } finally {
+        restore();
+      }
     });
   });
 });

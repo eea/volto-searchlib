@@ -23,6 +23,7 @@ import {
 } from '@eeacms/search/lib/hocs';
 import { useAISummaryToggle } from '../../lib/aiSummaryToggle';
 import { classifyQueryIntent } from './classifyQueryIntent';
+import { getSummarySources } from './summarySources';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
 import searchAssistSVG from '@eeacms/search/components/SearchInput/icons/search-assist.svg';
@@ -90,6 +91,7 @@ const ChatbotAnswer = () => {
   const [answer, setAnswer] = useState(null);
   const [answerError, setAnswerError] = useState(null);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
 
   // Track displayed message IDs to determine if animation has completed
   const [displayedSummaryId, setDisplayedSummaryId] = useState(null);
@@ -133,6 +135,9 @@ const ChatbotAnswer = () => {
     [personaId],
   );
 
+  // Documents the summary actually cites, for the sources disclosure.
+  const summarySources = useMemo(() => getSummarySources(summary), [summary]);
+
   // Reset all AI answer states
   const resetState = useCallback(() => {
     if (abort.current) {
@@ -143,6 +148,7 @@ const ChatbotAnswer = () => {
     setSummaryError(null);
     setAnswer(null);
     setAnswerError(null);
+    setSourcesOpen(false);
     setIsQuestion(false);
     setDisplayedSummaryId(null);
     setDisplayedAnswerId(null);
@@ -482,6 +488,49 @@ const ChatbotAnswer = () => {
                   onComplete={() => setDisplayedSummaryId(summary.messageId)}
                 />
               </div>
+              {isSummaryDisplayed && summarySources.length > 0 && (
+                <div className={cx('chatbot-sources', { open: sourcesOpen })}>
+                  <button
+                    type="button"
+                    className="chatbot-sources-toggle"
+                    aria-expanded={sourcesOpen}
+                    aria-controls="chatbot-sources-list"
+                    onClick={() => setSourcesOpen((open) => !open)}
+                  >
+                    <span>
+                      Generated from {summarySources.length} EEA{' '}
+                      {summarySources.length === 1 ? 'document' : 'documents'}
+                    </span>
+                    <Icon name="chevron down" size="small" />
+                  </button>
+                  {sourcesOpen && (
+                    <ul className="sources-list" id="chatbot-sources-list">
+                      {summarySources.map((source) => (
+                        <li key={source.document_id}>
+                          <span className="source-index" aria-hidden="true">
+                            {source.index}
+                          </span>
+                          {source.link ? (
+                            <a
+                              className="source-link"
+                              href={source.link}
+                              target="_blank"
+                              rel="noreferrer"
+                              title={source.semantic_identifier}
+                            >
+                              {source.semantic_identifier}
+                            </a>
+                          ) : (
+                            <span className="source-title">
+                              {source.semantic_identifier}
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
               {isSummaryDisplayed && (
                 <div className="chatbot-delimiter">
                   {!isLoadingAnswer && !answer && (
