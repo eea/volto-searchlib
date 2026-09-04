@@ -27,7 +27,8 @@ class TestAISummaryGating:
     """Network-level proofs for the issue 307513 acceptance criteria:
 
     * No LLM call for obvious keyword searches.
-    * No LLM request when the AI Summary toggle is disabled.
+    * No LLM request when the AI summary is disabled in user preferences.
+    * The preference persists across sessions (browser storage).
     * Search results visible without waiting for AI generation.
     * Search remains fully functional if AI generation fails.
     """
@@ -99,37 +100,76 @@ class TestAISummaryGating:
         expect(search_page.ai_summary_expanded).to_be_hidden()
         print("No LLM calls observed.")
 
-    def test_disabled_toggle_prevents_llm_calls_and_persists(
+    def test_disabled_preference_prevents_llm_calls_and_persists(
         self, search_page: SearchPage
     ):
-        """Toggle off: no LLM request even for a question, and the
-        preference persists across reloads (FR 2)."""
+        """AI summaries off: no LLM request even for a question, the box
+        shows the opt-in state, and the preference persists across
+        reloads (FR 2)."""
         query = "How does climate change affect biodiversity?"
-        print(f"\nTesting disabled toggle with question: '{query}'")
+        print(f"\nTesting disabled AI summary with question: '{query}'")
         search_page.set_ai_summary_toggle(False)
-        expect(search_page.ai_summary_toggle).to_have_attribute(
-            "aria-checked", "false"
-        )
 
         search_page.search(query)
         search_page.wait_for_chat_quiescence(CHAT_GRACE_MS)
         assert not search_page.chat_request_urls, (
-            f"No LLM calls expected with the toggle off, got: "
+            f"No LLM calls expected with AI summaries off, got: "
             f"{search_page.chat_request_urls}"
         )
-        expect(search_page.ai_summary_expanded).to_be_hidden()
+        # The question is intent-eligible, so the box stays visible in its
+        # disabled state with the opt-in button.
+        expect(search_page.ai_summary_disabled_box).to_be_visible()
+        expect(search_page.ai_summary_enable_button).to_be_visible()
 
         # The preference must survive a page reload.
         search_page.page.reload()
         search_page.search_input.wait_for(state="visible")
-        expect(search_page.ai_summary_toggle).to_have_attribute(
-            "aria-checked", "false"
-        )
+        expect(search_page.ai_summary_disabled_box).to_be_visible(timeout=30000)
         stored = search_page.page.evaluate(
             f"() => localStorage.getItem('{SearchPage.AI_SUMMARY_STORAGE_KEY}')"
         )
         assert stored == "0", f"Preference not persisted, got: {stored!r}"
-        print("Toggle off persisted across reload, no LLM calls observed.")
+        assert not search_page.chat_request_urls, (
+            f"No LLM calls expected after reload, got: "
+            f"{search_page.chat_request_urls}"
+        )
+        print("Disabled preference persisted across reload, no LLM calls observed.")
+
+    def test_in_box_opt_out_stops_llm_calls_and_shows_opt_in(
+        self, search_page: SearchPage
+    ):
+        """The opt-out in the summary box stops the LLM, persists the
+        preference and flips the box to its opt-in state."""
+        query = "How does climate change affect biodiversity?"
+        print(f"\nTesting in-box opt-out with question: '{query}'")
+        search_page.search(query)
+        search_page.wait_for_ai_summary()
+        search_page.wait_for_chat_request(
+            SearchPageSelectors.AI_CHAT_SESSION_ENDPOINT
+        )
+        search_page.wait_for_chat_request(
+            SearchPageSelectors.AI_CHAT_MESSAGE_ENDPOINT
+        )
+        calls_before = len(search_page.chat_request_urls)
+
+        expect(search_page.ai_summary_disable_button).to_be_visible()
+        search_page.ai_summary_disable_button.click()
+        print("Clicked the in-box opt-out.")
+
+        expect(search_page.ai_summary_disabled_box).to_be_visible()
+        expect(search_page.ai_summary_enable_button).to_be_visible()
+        stored = search_page.page.evaluate(
+            f"() => localStorage.getItem('{SearchPage.AI_SUMMARY_STORAGE_KEY}')"
+        )
+        assert stored == "0", f"Preference not persisted, got: {stored!r}"
+
+        # No further LLM traffic after the opt-out.
+        search_page.wait_for_chat_quiescence(CHAT_GRACE_MS)
+        assert len(search_page.chat_request_urls) == calls_before, (
+            f"No LLM calls expected after the opt-out, got new: "
+            f"{search_page.chat_request_urls[calls_before:]}"
+        )
+        print("Opt-out persisted, box shows the opt-in state, no new LLM calls.")
 
     def test_results_render_before_first_llm_call(self, search_page: SearchPage):
         """The first LLM request must not start before the Elasticsearch

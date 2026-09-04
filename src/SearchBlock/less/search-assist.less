@@ -85,6 +85,28 @@
         margin: 0;
       }
     }
+
+    .ai-summary-disable-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25em 0.5em;
+      border: none;
+      background-color: transparent;
+      color: @grey;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 500;
+
+      &:hover {
+        color: @deepBlue;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid @secondaryColor;
+        outline-offset: 2px;
+      }
+    }
   }
 
   .chatbot-delimiter {
@@ -98,20 +120,30 @@
       content: '';
     }
 
-    .get-answer-btn {
+    .continue-conversation-btn {
       position: absolute;
       top: 50%;
       left: 50%;
+      display: inline-flex;
+      align-items: center;
       padding: 0 4px;
       border: none;
       margin: 0;
       background-color: @grey-1;
       color: @deepBlue;
       cursor: pointer;
+      font-weight: 500;
+      gap: 4px;
+      text-decoration: none;
       transform: translate(-50%, -50%);
 
-      &.loading {
-        cursor: wait;
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid @secondaryColor;
+        outline-offset: 2px;
       }
     }
   }
@@ -226,6 +258,39 @@
   }
 }
 
+.chatbot-summary-disabled {
+  padding: 0.75em 0;
+  color: @grey;
+  font-size: 0.9rem;
+
+  p {
+    margin: 0 0 0.75em 0;
+  }
+
+  .ai-summary-enable-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4em 1em;
+    border: 1px solid @secondaryColor;
+    border-radius: 4px;
+    background-color: transparent;
+    color: @secondaryColor;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &:hover {
+      background-color: @secondaryColor;
+      color: @white;
+    }
+
+    &:focus-visible {
+      outline: 2px solid @secondaryColor;
+      outline-offset: 2px;
+    }
+  }
+}
+
 .chatbot-summary-loading {
   padding: 0.75em 0;
 
@@ -283,13 +348,5 @@
 
   to {
     --angle: 360deg;
-  }
-}
-
-.chatbot-detailed-content {
-  .message-actions {
-    padding-top: 1em;
-    border-top: 1px solid @lightGrey;
-    margin-top: 1em;
   }
 }

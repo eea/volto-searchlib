@@ -1,5 +1,6 @@
 import pytest
 import json
+from urllib.parse import urlsplit, parse_qs
 from playwright.sync_api import expect
 from page_objects.search_page import SearchPage
 from page_objects.response import StreamedResponse
@@ -44,21 +45,36 @@ class TestAISummary:
         search_page.wait_for_ai_summary()
         expect(search_page.ai_summary_loading).to_be_hidden()
 
-    def test_ai_summary_read_more(self, search_page: SearchPage):
-        """Verify 'Read more' button works and shows detailed content."""
+    def test_ai_summary_continue_conversation(self, search_page: SearchPage):
+        """Verify 'Continue conversation' links to the configured chatbot
+        page seeded with the question (in a new tab)."""
+        from config import get_settings
+
+        continue_url = get_settings().continue_conversation_url
+        if not continue_url:
+            pytest.skip(
+                "continue_conversation_url is not configured for this "
+                "environment; set CONTINUE_CONVERSATION_URL to enable"
+            )
+
         query = "What is the European Green Deal?"
-        print(f"\nTesting 'Read more' for query: {query}")
+        print(f"\nTesting 'Continue conversation' for query: {query}")
         search_page.search(query)
         search_page.wait_for_ai_summary()
-        
-        expect(search_page.read_more_button).to_be_visible()
-        print("Clicking 'Read more' button...")
-        search_page.read_more_button.click()
-        
-        expect(search_page.detailed_content).to_be_visible()
-        detailed_text = search_page.detailed_content.text_content()
-        print(f"Detailed content received (length: {len(detailed_text.strip())})")
-        assert len(detailed_text.strip()) > 0
+
+        expect(search_page.continue_conversation_button).to_be_visible()
+        href = search_page.continue_conversation_button.get_attribute("href")
+        parts = urlsplit(href)
+        base = urlsplit(continue_url)
+        assert parts.path == base.path, (
+            f"Unexpected target path: {parts.path!r}, wanted {base.path!r}"
+        )
+        seeded_query = parse_qs(parts.query).get("query")
+        assert seeded_query == [query], (
+            f"Query not seeded correctly: {seeded_query!r}, wanted {query!r}"
+        )
+        assert search_page.continue_conversation_button.get_attribute("target") == "_blank"
+        print(f"Continue conversation link verified: {href}")
 
     def test_ai_summary_disclaimer(self, search_page: SearchPage):
         """Verify disclaimer modal can be opened and contains expected text."""

@@ -325,6 +325,7 @@ const config = {
         useSummarySearchTool: true,
         usePredefinedSystemPrompt: false,
         minResults: 1, // minimum result count before an AI summary may be generated
+        continueConversationUrl: null, // chatbot page opened by "Continue conversation" (null = hidden)
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',

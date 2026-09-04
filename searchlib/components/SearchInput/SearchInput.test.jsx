@@ -1,90 +1,118 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen, act } from '@testing-library/react';
 import SearchInput from './SearchInput';
+import {
+  AI_SUMMARY_STORAGE_KEY,
+  AI_SUMMARY_TOGGLE_EVENT,
+} from '../../lib/aiSummaryToggle';
+import '@testing-library/jest-dom';
 
-let mockEnableChatbotAnswer = true;
+// Mock @eeacms/search/lib/hocs
+const mockUseAppConfig = jest.fn();
+const mockUseSearchContext = jest.fn();
 
 jest.mock(
   '@eeacms/search/lib/hocs',
   () => ({
-    useSearchContext: () => ({
-      setSearchTerm: jest.fn(),
-      setSort: jest.fn(),
-    }),
-    useAppConfig: () => ({
-      appConfig: {
-        sortOptions: [],
-        enableChatbotAnswer: mockEnableChatbotAnswer,
-      },
-    }),
+    useAppConfig: () => mockUseAppConfig(),
+    useSearchContext: () => mockUseSearchContext(),
   }),
   { virtual: true },
 );
 
-const renderSearchInput = (props = {}) =>
+// Mock semantic-ui-react
+jest.mock('semantic-ui-react', () => ({
+  Icon: jest.fn(({ name }) => <i data-testid="sui-icon" data-name={name} />),
+  Image: jest.fn(({ src }) => <img data-testid="sui-image" src={src} alt="" />),
+}));
+
+// Mock the SVG assets so the icon source is deterministic
+jest.mock('./icons/ai-search.svg', () => 'ai-search.svg');
+jest.mock('./icons/search.svg', () => 'search.svg');
+
+const getInputProps = () => ({
+  value: '',
+  placeholder: 'Search with a question or keyword...',
+  onChange: jest.fn(),
+  onKeyDown: jest.fn(),
+});
+
+const renderInput = () =>
   render(
     <SearchInput
       getAutocomplete={() => null}
       getButtonProps={() => ({})}
-      getInputProps={() => ({
-        value: '',
-        placeholder: 'Search',
-        onChange: jest.fn(),
-        onKeyDown: jest.fn(),
-      })}
+      getInputProps={getInputProps}
       onChange={jest.fn()}
       onSubmit={jest.fn()}
       mode="view"
-      {...props}
     />,
   );
 
-describe('SearchInput AI Summary toggle', () => {
+describe('SearchInput AI summary icon state', () => {
   beforeEach(() => {
-    mockEnableChatbotAnswer = true;
     window.localStorage.clear();
+    mockUseSearchContext.mockReturnValue({
+      setSearchTerm: jest.fn(),
+      setSort: jest.fn(),
+    });
+    mockUseAppConfig.mockReturnValue({
+      appConfig: {
+        sortOptions: [],
+        enableChatbotAnswer: true,
+      },
+    });
   });
 
-  it('renders the switch, on by default, when enableChatbotAnswer is true', () => {
-    const { getByRole } = renderSearchInput();
-
-    const toggle = getByRole('switch');
-    expect(toggle).toHaveAttribute('aria-checked', 'true');
-    expect(toggle).toHaveTextContent('AI Summary');
+  it('renders the AI sparkle icon when AI summaries are enabled', () => {
+    renderInput();
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/ai-search.svg`,
+    );
   });
 
-  it('does not render the switch when enableChatbotAnswer is false', () => {
-    mockEnableChatbotAnswer = false;
-
-    const { queryByRole } = renderSearchInput();
-
-    expect(queryByRole('switch')).not.toBeInTheDocument();
+  it('renders the plain search icon when AI summaries are turned off', () => {
+    window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+    renderInput();
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/search.svg`,
+    );
   });
 
-  it('persists the flipped state and dispatches the sync event', () => {
-    const listener = jest.fn();
-    window.addEventListener('eea:ai-summary-toggle', listener);
+  it('renders the plain search icon when chatbot answers are disabled', () => {
+    mockUseAppConfig.mockReturnValue({
+      appConfig: {
+        sortOptions: [],
+        enableChatbotAnswer: false,
+      },
+    });
+    renderInput();
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/search.svg`,
+    );
+  });
 
-    try {
-      const { getByRole } = renderSearchInput();
-      fireEvent.click(getByRole('switch'));
+  it('switches the icon live when the AI summary preference changes', () => {
+    renderInput();
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/ai-search.svg`,
+    );
 
-      expect(window.localStorage.getItem('eea-ai-summary-enabled')).toBe('0');
-      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
-      expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ detail: false }),
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: false }),
       );
-    } finally {
-      window.removeEventListener('eea:ai-summary-toggle', listener);
-    }
-  });
+    });
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/search.svg`,
+    );
 
-  it('starts off when disabled in a previous session', () => {
-    window.localStorage.setItem('eea-ai-summary-enabled', '0');
-
-    const { getByRole } = renderSearchInput();
-
-    expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: true }),
+      );
+    });
+    expect(screen.getByTestId('sui-image').src).toBe(
+      `${window.location.origin}/ai-search.svg`,
+    );
   });
 });

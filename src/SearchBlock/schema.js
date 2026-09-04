@@ -32,6 +32,7 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             title: 'AI Answer Settings',
             fields: [
               'chatbotAssistant',
+              'continueConversationUrl',
               'onyxVersion',
               'useSummarySearchTool',
               'usePredefinedSystemPrompt',
@@ -69,6 +70,14 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       title: 'Assistant',
       choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
       configPath: 'chatbotAnswer.personaId',
+    },
+
+    continueConversationUrl: {
+      title: 'Continue conversation page',
+      description:
+        'Internal URL of the chatbot page opened in a new tab by the "Continue conversation" button under the AI summary. The search query is passed as a ?query= parameter. Leave empty to hide the button.',
+      widget: 'internal_url',
+      configPath: 'chatbotAnswer.continueConversationUrl',
     },
     onyxVersion: {
       title: 'Onyx API Version',

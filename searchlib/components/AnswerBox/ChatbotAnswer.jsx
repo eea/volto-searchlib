@@ -21,7 +21,10 @@ import {
   useSearchContext,
   useSearchAssist,
 } from '@eeacms/search/lib/hocs';
-import { useAISummaryToggle } from '../../lib/aiSummaryToggle';
+import {
+  useAISummaryToggle,
+  writeAISummaryEnabled,
+} from '../../lib/aiSummaryToggle';
 import { classifyQueryIntent } from './classifyQueryIntent';
 import { getSummarySources } from './summarySources';
 import infoSVG from '@plone/volto/icons/info.svg';
@@ -74,28 +77,19 @@ const Answer = injectLazyLibs(['rehypePrism', 'remarkGfm'])(({
 const ChatbotAnswer = () => {
   const { appConfig } = useAppConfig();
   const { resultSearchTerm, isLoading, totalResults } = useSearchContext();
-  const {
-    isQuestion,
-    isLoadingSummary,
-    isLoadingAnswer,
-    setIsQuestion,
-    setIsLoadingSummary,
-    setIsLoadingAnswer,
-  } = useSearchAssist();
+  const { isQuestion, isLoadingSummary, setIsQuestion, setIsLoadingSummary } =
+    useSearchAssist();
 
   const [aiSummaryEnabled] = useAISummaryToggle();
 
   // Internal states
   const [summary, setSummary] = useState(null);
   const [summaryError, setSummaryError] = useState(null);
-  const [answer, setAnswer] = useState(null);
-  const [answerError, setAnswerError] = useState(null);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [sourcesOpen, setSourcesOpen] = useState(false);
 
   // Track displayed message IDs to determine if animation has completed
   const [displayedSummaryId, setDisplayedSummaryId] = useState(null);
-  const [displayedAnswerId, setDisplayedAnswerId] = useState(null);
 
   const abort = useRef(null);
   const lastQuery = useRef('');
@@ -105,30 +99,43 @@ const ChatbotAnswer = () => {
     personaId,
     systemPrompt,
     summaryPrompt,
-    prompt,
     enableFeedback,
     useSummarySearchTool,
     usePredefinedSystemPrompt,
     onyxVersion = '2',
     minResults = 1,
+    continueConversationUrl,
   } = chatbotAnswer;
 
-  const summarySessionId = useRef(null);
   const summaryMessageId = useRef(null);
-  const answerMessageId = useRef(null);
 
   // Derive displayed state from message ID comparison
   const isSummaryDisplayed = isEqual(
     displayedSummaryId,
     summaryMessageId.current,
   );
-  const isAnswerDisplayed = isEqual(displayedAnswerId, answerMessageId.current);
 
-  const isRendering =
-    (summary?.isFinalMessageComing && !isSummaryDisplayed) ||
-    (answer?.isFinalMessageComing && !isAnswerDisplayed);
+  const isRendering = summary?.isFinalMessageComing && !isSummaryDisplayed;
 
-  const currentMessage = isAnswerDisplayed ? answer : summary;
+  // Disabled state: when AI summaries are turned off, intent-eligible
+  // questions still show the box with an opt-in control (no LLM call).
+  const term = resultSearchTerm || '';
+  const showDisabledBox =
+    !aiSummaryEnabled &&
+    !isLoading &&
+    !!term &&
+    classifyQueryIntent(term).shouldGenerateAI &&
+    (totalResults ?? 0) >= minResults;
+
+  // "Continue conversation" target: the configured chatbot page seeded
+  // with the question the summary was generated from, opened in a new tab.
+  const continueConversationHref = useMemo(() => {
+    if (!continueConversationUrl || !term) return null;
+    const separator = continueConversationUrl.includes('?') ? '&' : '?';
+    return `${continueConversationUrl}${separator}query=${encodeURIComponent(
+      term,
+    )}`;
+  }, [continueConversationUrl, term]);
 
   const persona = useMemo(
     () => ({ id: personaId, name: 'Search Assist' }),
@@ -146,15 +153,10 @@ const ChatbotAnswer = () => {
     lastQuery.current = '';
     setSummary(null);
     setSummaryError(null);
-    setAnswer(null);
-    setAnswerError(null);
     setSourcesOpen(false);
     setIsQuestion(false);
     setDisplayedSummaryId(null);
-    setDisplayedAnswerId(null);
-    summarySessionId.current = null;
     summaryMessageId.current = null;
-    answerMessageId.current = null;
   }, [setIsQuestion]);
 
   // Fetch AI answer helper
@@ -238,9 +240,6 @@ const ChatbotAnswer = () => {
           if (message.isFinalMessageComing && !finalMessageProcessed) {
             finalMessageProcessed = true;
             setIsLoadingSummary(false);
-            setAnswer(null);
-            setAnswerError(null);
-            answerMessageId.current = null;
           }
         },
         onComplete: (processor) => {
@@ -262,9 +261,8 @@ const ChatbotAnswer = () => {
           setSummary(null);
           setSummaryError(err.message || 'Failed to analyze query');
         },
-        onFinality: (sessionId) => {
+        onFinality: () => {
           setIsLoadingSummary(false);
-          summarySessionId.current = sessionId;
         },
         systemPromptOverride: usePredefinedSystemPrompt ? systemPrompt : null,
         taskPromptOverride: `${summaryPrompt}${
@@ -292,53 +290,19 @@ const ChatbotAnswer = () => {
     ],
   );
 
-  // Fetch detailed answer
-  const fetchAnswer = useCallback(
-    async (query) => {
-      if (!query || !personaId) return;
-
-      await danswer({
-        query,
-        sessionDescription: 'Full answer',
-        messageId: answerMessageId,
-        parentSessionId: summarySessionId.current,
-        parentMessageId: summaryMessageId.current,
-        onLoad: () => {
-          setIsLoadingAnswer(true);
-          setAnswerError(null);
-        },
-        onProgress: (processor) => {
-          const message = processor.getMessage();
-          setAnswer(message);
-        },
-        onComplete: (processor) => {
-          const message = processor.getMessage();
-          if (message.error) throw new Error(message.error);
-          setAnswer(message);
-        },
-        onError: (err) => {
-          setAnswer(null);
-          setAnswerError(err.message || 'Failed to generate detailed answer');
-        },
-        onFinality: () => {
-          setIsLoadingAnswer(false);
-        },
-        systemPromptOverride: usePredefinedSystemPrompt ? systemPrompt : null,
-        taskPromptOverride: prompt,
-        regenerate: false,
-        useAgentSearch: false,
-        retrieval_options: { run_search: 'always', real_time: true },
-      });
-    },
-    [
-      personaId,
-      systemPrompt,
-      prompt,
-      setIsLoadingAnswer,
-      usePredefinedSystemPrompt,
-      danswer,
-    ],
-  );
+  // When the AI summary is turned off (via the in-box opt-out), stop
+  // any in-flight generation and clear the summary so no LLM request
+  // is in flight or displayed. The box then shows the opt-in state.
+  // When it is turned back on, re-evaluate the current search term so
+  // the summary is generated for the active question. Declared before
+  // the results-first trigger so the re-enable reset wins the render.
+  useEffect(() => {
+    if (!aiSummaryEnabled) {
+      resetState();
+    } else {
+      lastQuery.current = '';
+    }
+  }, [aiSummaryEnabled, resetState]);
 
   // Results-first trigger: the summary only starts after the
   // Elasticsearch search has finished, so results render immediately
@@ -374,15 +338,6 @@ const ChatbotAnswer = () => {
     aiSummaryEnabled,
   ]);
 
-  // When the AI summary is turned off (e.g. from the header search
-  // toggle), stop any in-flight generation and hide the summary so no
-  // LLM request is in flight or displayed.
-  useEffect(() => {
-    if (!aiSummaryEnabled) {
-      resetState();
-    }
-  }, [aiSummaryEnabled, resetState]);
-
   // Cleanup on unmount
   useEffect(() => {
     return () => abort.current?.abort();
@@ -397,13 +352,14 @@ const ChatbotAnswer = () => {
         expanded:
           isLoadingSummary ||
           summary?.isFinalMessageComing ||
-          (isQuestion && !!summary),
+          (isQuestion && !!summary) ||
+          showDisabledBox,
       })}
     >
       <div className="chatbot-answer-collapse">
         <div
           className={cx('chatbot-answer', {
-            loading: isLoadingSummary || isLoadingAnswer || isRendering,
+            loading: isLoadingSummary || isRendering,
           })}
         >
           <div className="chatbot-header">
@@ -412,13 +368,22 @@ const ChatbotAnswer = () => {
               <span className="label">AI Summary</span>
             </div>
             <div className="chatbot-header-right">
+              {aiSummaryEnabled && (
+                <button
+                  type="button"
+                  className="ai-summary-disable-btn"
+                  onClick={() => writeAISummaryEnabled(false)}
+                >
+                  Disable AI summary
+                </button>
+              )}
               <UserActionsToolbar
                 className={cx({
-                  disabled: isLoadingSummary || isLoadingAnswer || isRendering,
+                  disabled: isLoadingSummary || isRendering,
                 })}
                 message={{
-                  message: currentMessage?.message,
-                  messageId: currentMessage?.messageId,
+                  message: summary?.message,
+                  messageId: summary?.messageId,
                 }}
                 enableFeedback={enableFeedback}
                 feedbackReasons={chatbotAnswer.feedbackReasons || []}
@@ -467,6 +432,19 @@ const ChatbotAnswer = () => {
               <div className="skeleton-line" />
               <div className="skeleton-line" />
               <div className="skeleton-line short" />
+            </div>
+          )}
+
+          {showDisabledBox && (
+            <div className="chatbot-summary-disabled">
+              <p>AI summaries are turned off.</p>
+              <button
+                type="button"
+                className="ai-summary-enable-btn"
+                onClick={() => writeAISummaryEnabled(true)}
+              >
+                Enable AI summary
+              </button>
             </div>
           )}
 
@@ -531,49 +509,20 @@ const ChatbotAnswer = () => {
                   )}
                 </div>
               )}
-              {isSummaryDisplayed && (
+              {isSummaryDisplayed && continueConversationHref && (
                 <div className="chatbot-delimiter">
-                  {!isLoadingAnswer && !answer && (
-                    <button
-                      className="get-answer-btn"
-                      aria-label="Get detailed answer"
-                      onClick={() => fetchAnswer(lastQuery.current)}
-                    >
-                      Read more <Icon name="chevron down" />
-                    </button>
-                  )}
-                  {isLoadingAnswer && !answer?.isFinalMessageComing && (
-                    <button
-                      className="get-answer-btn loading"
-                      aria-label="Thinking..."
-                    >
-                      Thinking...
-                    </button>
-                  )}
+                  <a
+                    className="continue-conversation-btn"
+                    href={continueConversationHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Continue conversation <Icon name="arrow right" />
+                  </a>
                 </div>
               )}
             </div>
           )}
-
-          <div className="chatbot-detailed">
-            {answerError && (
-              <Message icon warning size="small">
-                <Icon name="exclamation circle" />
-                <Message.Content>
-                  Unable to generate detailed answer. Please try again later.
-                </Message.Content>
-              </Message>
-            )}
-            {!answerError && answer?.isFinalMessageComing && (
-              <div className="chatbot-detailed-content">
-                <Answer
-                  message={answer}
-                  animate={!isAnswerDisplayed}
-                  onComplete={() => setDisplayedAnswerId(answer.messageId)}
-                />
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

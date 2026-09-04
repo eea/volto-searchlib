@@ -141,7 +141,6 @@ describe('ChatbotAnswer', () => {
       chatbotAnswer: {
         personaId: 'test-persona-id',
         summaryPrompt: 'Summary prompt',
-        prompt: 'Full prompt',
         enableFeedback: true,
         feedbackReasons: ['reason1', 'reason2'],
       },
@@ -158,10 +157,8 @@ describe('ChatbotAnswer', () => {
   const defaultSearchAssist = {
     isQuestion: false,
     isLoadingSummary: false,
-    isLoadingAnswer: false,
     setIsQuestion: jest.fn(),
     setIsLoadingSummary: jest.fn(),
-    setIsLoadingAnswer: jest.fn(),
   };
 
   beforeEach(() => {
@@ -202,18 +199,6 @@ describe('ChatbotAnswer', () => {
     mockUseSearchAssist.mockReturnValue({
       ...defaultSearchAssist,
       isLoadingSummary: true,
-    });
-
-    const { container } = render(<ChatbotAnswer />);
-    expect(
-      container.querySelector('.chatbot-answer.loading'),
-    ).toBeInTheDocument();
-  });
-
-  it('applies loading class when isLoadingAnswer is true', () => {
-    mockUseSearchAssist.mockReturnValue({
-      ...defaultSearchAssist,
-      isLoadingAnswer: true,
     });
 
     const { container } = render(<ChatbotAnswer />);
@@ -465,7 +450,7 @@ describe('ChatbotAnswer', () => {
       });
       expect(container.querySelector('.chatbot-summary')).toBeInTheDocument();
 
-      // User turns the AI summary off from the header search toggle.
+      // User turns the AI summary off via the in-box opt-out button.
       act(() => {
         window.dispatchEvent(
           new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: false }),
@@ -477,6 +462,18 @@ describe('ChatbotAnswer', () => {
           container.querySelector('.chatbot-summary'),
         ).not.toBeInTheDocument();
       });
+
+      // The question is intent-eligible, so the box stays visible in
+      // its disabled state with the opt-in button.
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('AI summaries are turned off.'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Enable AI summary' }),
+      ).toBeInTheDocument();
     } finally {
       MessageProcessor.mockImplementation(defaultImplementation);
     }
@@ -497,15 +494,6 @@ describe('ChatbotAnswer', () => {
     render(<ChatbotAnswer />);
     expect(
       screen.queryByText('Unable to analyze query. Please try again later.'),
-    ).not.toBeInTheDocument();
-  });
-
-  it('does not show answer error message initially', () => {
-    render(<ChatbotAnswer />);
-    expect(
-      screen.queryByText(
-        'Unable to generate detailed answer. Please try again later.',
-      ),
     ).not.toBeInTheDocument();
   });
 
@@ -662,10 +650,11 @@ describe('ChatbotAnswer', () => {
 
     // Streams a completed summary whose message carries citations and
     // documents, and lets the mocked RendererComponent report that the
-    // summary display finished (so the Read more row is revealed).
+    // summary display finished (so the bottom action row is revealed).
     const setupSummaryStream = ({
       citations = citedCitations,
       documents = citedDocuments,
+      appConfig = defaultAppConfig,
     } = {}) => {
       const {
         MessageProcessor,
@@ -713,6 +702,7 @@ describe('ChatbotAnswer', () => {
         yield [];
       });
 
+      mockUseAppConfig.mockReturnValue(appConfig);
       mockUseSearchContext.mockReturnValue({
         ...defaultSearchContext,
         searchTerm: 'What are the main causes of air pollution?',
@@ -820,17 +810,29 @@ describe('ChatbotAnswer', () => {
     it('does not show the sources row when the summary cites no documents', async () => {
       const { releaseStream, restore } = setupSummaryStream({
         citations: {},
+        appConfig: {
+          appConfig: {
+            chatbotAnswer: {
+              personaId: 'test-persona-id',
+              continueConversationUrl: '/en/ask-ai',
+            },
+            enableMatomoTracking: false,
+          },
+        },
       });
 
       try {
-        render(<ChatbotAnswer />);
+        const { container } = render(<ChatbotAnswer />);
 
         await act(async () => {
           releaseStream();
         });
-        // The Read more row proves the summary display has finished.
-        await screen.findByText('Read more');
-        expect(screen.queryByText(/Generated from/)).not.toBeInTheDocument();
+        // The continue conversation row proves the summary display
+        // has finished.
+        await screen.findByText('Continue conversation');
+        expect(
+          container.querySelector('.chatbot-sources-toggle'),
+        ).not.toBeInTheDocument();
       } finally {
         restore();
       }
@@ -853,6 +855,279 @@ describe('ChatbotAnswer', () => {
             screen.getByText('Generated from 1 EEA document'),
           ).toBeInTheDocument();
         });
+      } finally {
+        restore();
+      }
+    });
+  });
+
+  describe('in-box AI summary preference', () => {
+    it('shows the disabled box with an opt-in button for eligible questions when AI summaries are off', () => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      const { container } = render(<ChatbotAnswer />);
+
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('AI summaries are turned off.'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Enable AI summary' }),
+      ).toBeInTheDocument();
+      // No LLM call for the disabled state.
+      expect(mockCreateChatSession).not.toHaveBeenCalled();
+      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+    });
+
+    it('does not show the disabled box for non-AI queries when AI summaries are off', () => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'SOER',
+        resultSearchTerm: 'SOER',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      const { container } = render(<ChatbotAnswer />);
+
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Enable AI summary' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('does not show the disabled box when the search completes with zero results', () => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 0,
+      });
+
+      const { container } = render(<ChatbotAnswer />);
+
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('shows the disable button in the box header and switches to the disabled state on click', async () => {
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      const { container } = render(<ChatbotAnswer />);
+
+      // The summary fetch has started (the opt-out is available in the
+      // box header as soon as the box renders).
+      await waitFor(() => {
+        expect(mockCreateChatSession).toHaveBeenCalled();
+      });
+      const disableButton = screen.getByRole('button', {
+        name: 'Disable AI summary',
+      });
+
+      fireEvent.click(disableButton);
+
+      expect(window.localStorage.getItem(AI_SUMMARY_STORAGE_KEY)).toBe('0');
+      expect(
+        container.querySelector('.chatbot-answer-wrapper.expanded'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('AI summaries are turned off.'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Enable AI summary' }),
+      ).toBeInTheDocument();
+    });
+
+    it('enables AI summaries again from the disabled box opt-in button', () => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      render(<ChatbotAnswer />);
+
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Enable AI summary' }),
+      );
+
+      expect(window.localStorage.getItem(AI_SUMMARY_STORAGE_KEY)).toBe('1');
+    });
+
+    it('generates the summary for the current question when re-enabled', async () => {
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      render(<ChatbotAnswer />);
+
+      // The initial (enabled) state fetches the summary once.
+      await waitFor(() => {
+        expect(mockCreateChatSession).toHaveBeenCalledTimes(1);
+      });
+
+      // Disable, then re-enable from the box: the current question must
+      // be re-evaluated and a new summary generated.
+      act(() => {
+        window.dispatchEvent(
+          new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: false }),
+        );
+      });
+      act(() => {
+        window.dispatchEvent(
+          new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: true }),
+        );
+      });
+
+      await waitFor(() => {
+        expect(mockCreateChatSession).toHaveBeenCalledTimes(2);
+      });
+    });
+  });
+
+  describe('continue conversation', () => {
+    const question = 'What are the main causes of air pollution?';
+
+    const streamedQuestionContext = {
+      ...defaultSearchContext,
+      searchTerm: question,
+      resultSearchTerm: question,
+      isLoading: false,
+      totalResults: 5,
+    };
+
+    const setupDisplayedSummary = (continueConversationUrl) => {
+      const {
+        MessageProcessor,
+        RendererComponent,
+      } = require('@eeacms/volto-eea-chatbot');
+      const defaultProcessorImpl = MessageProcessor.getMockImplementation();
+      const defaultRendererImpl = RendererComponent.getMockImplementation();
+
+      let stages = 0;
+      MessageProcessor.mockImplementation(() => ({
+        addPackets: () => {
+          stages += 1;
+        },
+        getMessage: () => ({
+          messageId: 'stream-message-id',
+          message: 'Streaming summary text',
+          groupedPackets: [{ ind: 0, packets: [] }],
+          displayPackets: [0],
+          isComplete: stages >= 1,
+          isFinalMessageComing: true,
+        }),
+        get isComplete() {
+          return stages >= 1;
+        },
+      }));
+      RendererComponent.mockImplementation(({ children, onComplete }) => {
+        const rendered = children({ content: <span>Rendered content</span> });
+        Promise.resolve().then(() => onComplete?.());
+        return rendered;
+      });
+      mockSendMessage.mockImplementation(async function* () {
+        yield [];
+        yield [];
+      });
+      mockUseAppConfig.mockReturnValue({
+        appConfig: {
+          chatbotAnswer: {
+            personaId: 'test-persona-id',
+            continueConversationUrl,
+          },
+          enableMatomoTracking: false,
+        },
+      });
+      mockUseSearchContext.mockReturnValue(streamedQuestionContext);
+
+      return () => {
+        MessageProcessor.mockImplementation(defaultProcessorImpl);
+        RendererComponent.mockImplementation(defaultRendererImpl);
+      };
+    };
+
+    it('links to the configured chatbot page seeded with the question', async () => {
+      const restore = setupDisplayedSummary('/en/ask-ai');
+
+      try {
+        render(<ChatbotAnswer />);
+
+        const link = await screen.findByRole('link', {
+          name: /Continue conversation/,
+        });
+        expect(link).toHaveAttribute(
+          'href',
+          `/en/ask-ai?query=${encodeURIComponent(question)}`,
+        );
+        expect(link).toHaveAttribute('target', '_blank');
+        expect(link).toHaveAttribute('rel', 'noreferrer');
+      } finally {
+        restore();
+      }
+    });
+
+    it('appends to an existing query string in the configured URL', async () => {
+      const restore = setupDisplayedSummary('/en/ask-ai?lang=en');
+
+      try {
+        render(<ChatbotAnswer />);
+
+        const link = await screen.findByRole('link', {
+          name: /Continue conversation/,
+        });
+        expect(link).toHaveAttribute(
+          'href',
+          `/en/ask-ai?lang=en&query=${encodeURIComponent(question)}`,
+        );
+      } finally {
+        restore();
+      }
+    });
+
+    it('is hidden when no chatbot page is configured', async () => {
+      const restore = setupDisplayedSummary(undefined);
+
+      try {
+        const { container } = render(<ChatbotAnswer />);
+
+        // Let the summary fully stream and display.
+        await waitFor(() => {
+          expect(
+            container.querySelector('.chatbot-answer-wrapper.expanded'),
+          ).toBeInTheDocument();
+        });
+        expect(
+          screen.queryByRole('link', { name: /Continue conversation/ }),
+        ).not.toBeInTheDocument();
       } finally {
         restore();
       }

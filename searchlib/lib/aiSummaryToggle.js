@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
 /**
- * AI Summary toggle state.
+ * AI Summary opt-in/opt-out state.
  *
- * Shared contract with the header search toggle in
- * @eeacms/volto-eea-design-system (HeaderSearchPopUp):
+ * Shared contract with the header search icon in
+ * @eeacms/volto-eea-design-system (ui/Header/useAISummaryToggle):
+ * - the advanced-search AI Summary box (this addon) hosts the
+ *   user-facing opt-in/opt-out controls and gates the summary on it
+ * - the header search icons use the state to decide between the AI
+ *   sparkle and the plain magnifier
  * - localStorage key: `eea-ai-summary-enabled` ("1" on, "0" off, default on)
  * - CustomEvent `eea:ai-summary-toggle` (detail: boolean) for same-tab sync
  * - native `storage` event for cross-tab sync

@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import cx from 'classnames';
 import { Icon, Image } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
@@ -43,6 +42,9 @@ function SearchInput({
 }) {
   const { appConfig } = useAppConfig();
   const { sortOptions, enableChatbotAnswer } = appConfig;
+  // The AI sparkle only appears while AI summaries are enabled, so the
+  // icon always matches what the search can actually produce.
+  const [aiSummaryEnabled] = useAISummaryToggle();
 
   const inputProps = getInputProps();
   const { setSearchTerm, setSort } = useSearchContext();
@@ -55,7 +57,6 @@ function SearchInput({
 
   const inpRef = React.useRef();
   const [, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
-  const [aiSummaryEnabled, toggleAISummary] = useAISummaryToggle();
 
   // React.useEffect(() => {
   //   mode === 'view' && inpRef.current && inpRef.current.focus();
@@ -167,24 +168,6 @@ function SearchInput({
               )}
             </div>
 
-            {enableChatbotAnswer && (
-              <button
-                type="button"
-                role="switch"
-                aria-checked={aiSummaryEnabled}
-                aria-label="AI Summary"
-                className={cx('ai-summary-toggle', {
-                  enabled: aiSummaryEnabled,
-                })}
-                onClick={() => toggleAISummary()}
-              >
-                <span className="label">AI Summary</span>
-                <span className="switch" aria-hidden="true">
-                  <span className="knob" />
-                </span>
-              </button>
-            )}
-
             <div
               tabIndex={0}
               role="button"
@@ -198,7 +181,13 @@ function SearchInput({
                 }
               }}
             >
-              <SVGIcon name={enableChatbotAnswer ? aiSearchSVG : searchSVG} />
+              <SVGIcon
+                name={
+                  enableChatbotAnswer && aiSummaryEnabled
+                    ? aiSearchSVG
+                    : searchSVG
+                }
+              />
             </div>
           </div>
 
