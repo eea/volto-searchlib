@@ -961,6 +961,32 @@ describe('ChatbotAnswer', () => {
       expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     });
 
+    it('hides the copy, feedback, and disclaimer controls when AI summaries are off', () => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'How does test query work?',
+        resultSearchTerm: 'How does test query work?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      const { container } = render(<ChatbotAnswer />);
+
+      // The opt-in box is shown for the eligible question...
+      expect(
+        screen.getByText('AI summaries are turned off.'),
+      ).toBeInTheDocument();
+      // ...but the header carries no AI summary controls: no copy,
+      // no feedback, no disclaimer.
+      expect(
+        document.querySelector('[data-testid="user-actions-toolbar"]'),
+      ).not.toBeInTheDocument();
+      expect(
+        container.querySelector('button.icon-btn.outline'),
+      ).not.toBeInTheDocument();
+    });
+
     it('does not show the disabled box for non-AI queries when AI summaries are off', () => {
       window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
       mockUseSearchContext.mockReturnValue({
