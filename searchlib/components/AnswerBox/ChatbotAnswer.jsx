@@ -104,8 +104,16 @@ const ChatbotAnswer = () => {
     usePredefinedSystemPrompt,
     onyxVersion = '2',
     minResults = 1,
+    minClaimWords = 4,
+    maxQueryWords = 20,
     continueConversationUrl,
   } = chatbotAnswer;
+
+  // Intent classifier thresholds, configurable per search block.
+  const intentOptions = useMemo(
+    () => ({ minimumClaimWords: minClaimWords, maxQueryWords }),
+    [minClaimWords, maxQueryWords],
+  );
 
   const summaryMessageId = useRef(null);
 
@@ -124,7 +132,7 @@ const ChatbotAnswer = () => {
     !aiSummaryEnabled &&
     !isLoading &&
     !!term &&
-    classifyQueryIntent(term).shouldGenerateAI &&
+    classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
     (totalResults ?? 0) >= minResults;
 
   // "Continue conversation" target: the configured chatbot page seeded
@@ -318,7 +326,7 @@ const ChatbotAnswer = () => {
       // queries and claims warrant an AI summary. Keywords, document
       // retrieval and short phrases must not trigger any chatbot call.
       if (
-        classifyQueryIntent(term).shouldGenerateAI &&
+        classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
         aiSummaryEnabled &&
         (totalResults ?? 0) >= minResults
       ) {
@@ -336,6 +344,7 @@ const ChatbotAnswer = () => {
     fetchSummary,
     resetState,
     aiSummaryEnabled,
+    intentOptions,
   ]);
 
   // Cleanup on unmount
