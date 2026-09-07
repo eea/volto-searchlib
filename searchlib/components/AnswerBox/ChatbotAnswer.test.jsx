@@ -898,7 +898,11 @@ describe('ChatbotAnswer', () => {
         });
         // The continue conversation row proves the summary display
         // has finished.
-        await screen.findByText('Continue conversation');
+        await waitFor(() => {
+          expect(
+            container.querySelector('.continue-conversation-btn'),
+          ).toBeInTheDocument();
+        });
         expect(
           container.querySelector('.chatbot-sources-toggle'),
         ).not.toBeInTheDocument();

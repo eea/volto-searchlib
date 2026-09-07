@@ -526,7 +526,8 @@ const ChatbotAnswer = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Continue conversation <Icon name="arrow right" />
+                    <span>Continue conversation</span>{' '}
+                    <Icon name="arrow right" />
                   </a>
                 </div>
               )}
