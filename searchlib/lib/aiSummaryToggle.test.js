@@ -26,9 +26,17 @@ describe('aiSummaryToggle', () => {
       window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
       expect(readAISummaryEnabled()).toBe(false);
     });
+
+    it('defaults to enabled when no storage is available (SSR)', () => {
+      expect(readAISummaryEnabled(null)).toBe(true);
+    });
   });
 
   describe('writeAISummaryEnabled', () => {
+    it('is a no-op when no storage is available (SSR)', () => {
+      expect(() => writeAISummaryEnabled(true, null)).not.toThrow();
+    });
+
     it('persists the value in localStorage', () => {
       writeAISummaryEnabled(false);
       expect(window.localStorage.getItem(AI_SUMMARY_STORAGE_KEY)).toBe('0');

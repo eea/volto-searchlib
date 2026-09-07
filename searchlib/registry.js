@@ -63,7 +63,7 @@ import {
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
 import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
-import { summaryPrompt, detailedPrompt, systemPrompt } from './prompts';
+import { summaryPrompt, systemPrompt } from './prompts';
 
 const config = {
   resolve: {
@@ -341,7 +341,6 @@ const config = {
         ],
         systemPrompt,
         summaryPrompt,
-        prompt: detailedPrompt,
       },
 
       enableMatomoTracking: true,

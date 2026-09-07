@@ -586,6 +586,75 @@ describe('ChatbotAnswer', () => {
     });
   });
 
+  describe('model refusal', () => {
+    it('hides the summary silently when the model rejects the query with NOT_A_QUESTION', async () => {
+      // A question-shaped query can still pass the local gate while the
+      // retrieved documents are irrelevant; the model's NOT_A_QUESTION
+      // reply is the low-confidence safety net and must hide the box
+      // without surfacing an error.
+      mockUseSearchContext.mockReturnValue({
+        ...defaultSearchContext,
+        searchTerm: 'What is the zorpflimble blargh?',
+        resultSearchTerm: 'What is the zorpflimble blargh?',
+        isLoading: false,
+        totalResults: 5,
+      });
+
+      const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
+      const defaultProcessorImpl = MessageProcessor.getMockImplementation();
+
+      let releaseStream;
+      const streamGate = new Promise((resolve) => {
+        releaseStream = resolve;
+      });
+
+      MessageProcessor.mockImplementation(() => {
+        let stages = 0;
+        return {
+          addPackets: () => {
+            stages += 1;
+          },
+          getMessage: () => ({
+            messageId: 'refusal-message-id',
+            message: 'NOT_A_QUESTION',
+            groupedPackets: [{ ind: 0, packets: [] }],
+            displayPackets: [0],
+            isComplete: stages >= 2,
+            isFinalMessageComing: true,
+          }),
+          get isComplete() {
+            return stages >= 2;
+          },
+        };
+      });
+      mockSendMessage.mockImplementation(async function* () {
+        yield [];
+        await streamGate;
+        yield [];
+      });
+
+      try {
+        const { container } = render(<ChatbotAnswer />);
+
+        await act(async () => {
+          releaseStream();
+        });
+        await waitFor(() => {
+          expect(defaultSearchAssist.setIsQuestion).toHaveBeenCalled();
+        });
+
+        expect(mockCreateChatSession).toHaveBeenCalled();
+        expect(container.querySelector('.chatbot-summary')).toBeNull();
+        expect(
+          container.querySelector('.chatbot-answer-wrapper.expanded'),
+        ).toBeNull();
+        expect(screen.queryByText(/unable to analyze|failed/i)).toBeNull();
+      } finally {
+        MessageProcessor.mockImplementation(defaultProcessorImpl);
+      }
+    });
+  });
+
   describe('abort behavior', () => {
     it('aborts the in-flight summary when a new search completes', async () => {
       const abortSpy = jest.fn();
