@@ -3,7 +3,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import { isLandingPageAtom, loadingFamily } from '@eeacms/search/state';
-import { isLoadingSummaryAtom } from '@eeacms/search/lib/hocs/useSearchAssist';
 
 const TopFilterLayout = (props) => {
   const {
@@ -18,13 +17,10 @@ const TopFilterLayout = (props) => {
   const [isLandingPage] = useAtom(isLandingPageAtom);
   const loadingAtom = loadingFamily(appConfig.appName);
   const isLoading = useAtomValue(loadingAtom);
-  const isLoadingSummary = useAtomValue(isLoadingSummaryAtom);
-  const showLoader =
-    isLoading || (appConfig.enableChatbotAnswer && isLoadingSummary);
 
   return (
     <div className="top-filter-layout">
-      {showLoader && (
+      {isLoading && (
         <Dimmer active inverted>
           <Loader active size="big" />
         </Dimmer>

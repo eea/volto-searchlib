@@ -63,7 +63,7 @@ import {
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
 import { getActiveFilters } from '@eeacms/search/lib/search/helpers';
-import { summaryPrompt, detailedPrompt, systemPrompt } from './prompts';
+import { summaryPrompt, systemPrompt } from './prompts';
 
 const config = {
   resolve: {
@@ -324,6 +324,10 @@ const config = {
         enableFeedback: true,
         useSummarySearchTool: true,
         usePredefinedSystemPrompt: false,
+        minResults: 1, // minimum result count before an AI summary may be generated
+        minClaimWords: 4, // minimum words for a query to count as a claim
+        maxQueryWords: 20, // queries longer than this never trigger AI
+        continueConversationUrl: null, // chatbot page opened by "Continue conversation" (null = hidden)
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',
@@ -337,7 +341,6 @@ const config = {
         ],
         systemPrompt,
         summaryPrompt,
-        prompt: detailedPrompt,
       },
 
       enableMatomoTracking: true,

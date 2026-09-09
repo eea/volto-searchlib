@@ -21,6 +21,14 @@ class Settings(BaseSettings):
         description="Path to the search page",
     )
 
+    # AI summary "Continue conversation" target (issue 307513).
+    # Must match the chatbotAnswer.continueConversationUrl configured on
+    # the search block of the tested site; the test is skipped when empty.
+    continue_conversation_url: str = Field(
+        default="",
+        description="Chatbot page URL configured on the search block",
+    )
+
     # Browser settings
     headless: bool = Field(
         default=True,

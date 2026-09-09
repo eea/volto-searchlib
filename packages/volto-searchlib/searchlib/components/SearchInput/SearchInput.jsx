@@ -12,6 +12,7 @@ import { Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAISummaryToggle } from '../../lib/aiSummaryToggle';
 import aiSearchSVG from './icons/ai-search.svg';
 import searchSVG from './icons/search.svg';
 
@@ -42,6 +43,9 @@ function SearchInput({
 }) {
   const { appConfig } = useAppConfig();
   const { sortOptions, enableChatbotAnswer } = appConfig;
+  // The AI sparkle only appears while AI summaries are enabled, so the
+  // icon always matches what the search can actually produce.
+  const [aiSummaryEnabled] = useAISummaryToggle();
 
   const inputProps = getInputProps();
   const { setSearchTerm, setSort } = useSearchContext();
@@ -178,7 +182,13 @@ function SearchInput({
                 }
               }}
             >
-              <SVGIcon name={enableChatbotAnswer ? aiSearchSVG : searchSVG} />
+              <SVGIcon
+                name={
+                  enableChatbotAnswer && aiSummaryEnabled
+                    ? aiSearchSVG
+                    : searchSVG
+                }
+              />
             </div>
           </div>
 
