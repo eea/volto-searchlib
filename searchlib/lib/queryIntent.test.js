@@ -114,6 +114,44 @@ describe('classifyQuery (query-intent client)', () => {
     );
   });
 
+  it('treats a partial payload (eligible without abstained/intent) as not eligible', async () => {
+    mockFetch.mockResolvedValue(okResponse({ eligible: true }));
+
+    await expect(classifyQuery('Why are wetlands important?')).resolves.toEqual(
+      expect.objectContaining({ eligible: false }),
+    );
+  });
+
+  it('treats a non-boolean abstained field as not eligible', async () => {
+    mockFetch.mockResolvedValue(
+      okResponse({
+        intent: 'question',
+        eligible: true,
+        abstained: 'false',
+        reason: 'classified',
+      }),
+    );
+
+    await expect(classifyQuery('Why are wetlands important?')).resolves.toEqual(
+      expect.objectContaining({ eligible: false }),
+    );
+  });
+
+  it('treats an eligible flag with a non-eligible intent label as not eligible', async () => {
+    mockFetch.mockResolvedValue(
+      okResponse({
+        intent: 'retrieval',
+        eligible: true,
+        abstained: false,
+        reason: 'classified',
+      }),
+    );
+
+    await expect(classifyQuery('water framework directive')).resolves.toEqual(
+      expect.objectContaining({ eligible: false }),
+    );
+  });
+
   it('treats a non-2xx response as not eligible (fail closed)', async () => {
     mockFetch.mockResolvedValue({ ok: false, status: 503 });
 

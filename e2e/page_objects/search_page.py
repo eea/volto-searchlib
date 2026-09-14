@@ -53,6 +53,7 @@ class SearchPage:
         self.chat_request_urls = []
         self.classify_request_urls = []
         self.first_chat_request_at = None
+        self.first_classify_request_at = None
         self.es_search_response_times = []
         self.page.on("request", self._on_request)
         self.page.on("response", self._on_response)
@@ -63,6 +64,8 @@ class SearchPage:
                 self.first_chat_request_at = time.monotonic()
             self.chat_request_urls.append(request.url)
         if self.selectors.QUERY_INTENT_ENDPOINT in request.url:
+            if self.first_classify_request_at is None:
+                self.first_classify_request_at = time.monotonic()
             self.classify_request_urls.append(request.url)
 
     def _on_response(self, response):

@@ -154,7 +154,7 @@ describe('queryIntent middleware', () => {
     );
   });
 
-  it('returns 502 when the service times out', async () => {
+  it('returns 502 with a fixed message when the service times out (no URL leak)', async () => {
     process.env.QUERY_INTENT_SERVICE_URL = 'http://qi:8100';
     process.env.QUERY_INTENT_TIMEOUT_MS = '1';
     middleware = require('./queryIntent').default;
@@ -167,11 +167,49 @@ describe('queryIntent middleware', () => {
     await middleware(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(502);
-    expect(res.send).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.stringContaining('request timed out'),
-      }),
+    expect(res.send).toHaveBeenCalledWith({
+      error: 'Query intent service unavailable',
+    });
+  });
+
+  it('never forwards the internal service URL from connection errors', async () => {
+    process.env.QUERY_INTENT_SERVICE_URL = 'http://qi.internal:8100';
+    middleware = require('./queryIntent').default;
+    const mockedFetch = require('node-fetch');
+
+    mockedFetch.mockRejectedValue(
+      new Error(
+        "request to 'http://qi.internal:8100/v1/classify' failed, reason: connect ECONNREFUSED",
+      ),
     );
+
+    await middleware(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(502);
+    const payload = res.send.mock.calls[0][0];
+    expect(JSON.stringify(payload)).not.toContain('qi.internal');
+    expect(JSON.stringify(payload)).not.toContain('http://');
+  });
+
+  it('falls back to the 2000ms timeout for invalid QUERY_INTENT_TIMEOUT_MS values', async () => {
+    for (const bad of ['abc', '0', '-5', '']) {
+      process.env.QUERY_INTENT_SERVICE_URL = 'http://qi:8100';
+      process.env.QUERY_INTENT_TIMEOUT_MS = bad;
+      middleware = require('./queryIntent').default;
+      const mockedFetch = require('node-fetch');
+      mockedFetch.mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({ eligible: false }),
+      });
+
+      await middleware(req, res, next);
+
+      expect(mockedFetch).toHaveBeenCalledWith(
+        'http://qi:8100/v1/classify',
+        expect.objectContaining({ timeout: 2000 }),
+      );
+    }
   });
 
   it('forwards the upstream error status and body when the service fails', async () => {
@@ -191,11 +229,9 @@ describe('queryIntent middleware', () => {
     await middleware(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(503);
-    expect(res.send).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.stringContaining('Query intent service error'),
-      }),
-    );
+    expect(res.send).toHaveBeenCalledWith({
+      error: 'Query intent service error (503)',
+    });
   });
 
   it('returns 503 when QUERY_INTENT_SERVICE_URL is not configured', async () => {

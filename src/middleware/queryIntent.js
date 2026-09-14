@@ -67,7 +67,9 @@ export default async function middleware(req, res, next) {
   const servicePath = ALLOWED_PATHS.find(
     (entry) => entry.clientPath === path.split('?')[0],
   ).servicePath;
-  const timeoutMs = parseInt(process.env.QUERY_INTENT_TIMEOUT_MS || '2000', 10);
+  const parsedTimeout = parseInt(process.env.QUERY_INTENT_TIMEOUT_MS, 10);
+  const timeoutMs =
+    Number.isInteger(parsedTimeout) && parsedTimeout > 0 ? parsedTimeout : 2000;
 
   const reqUrl = `${serviceUrl.replace(/\/+$/, '')}${servicePath}`;
 
@@ -95,8 +97,10 @@ export default async function middleware(req, res, next) {
     if (!response.ok) {
       const text = await response.text();
       log(`Query intent service error: ${response.status} ${text}`);
+      // Fixed public message: the upstream body is logged server-side
+      // only and never forwarded to the browser.
       res.status(response.status).send({
-        error: `Query intent service error: ${text || response.status}`,
+        error: `Query intent service error (${response.status})`,
       });
       return;
     }
@@ -107,9 +111,12 @@ export default async function middleware(req, res, next) {
     // Timeout, connection refused, DNS failure, ...
     // The client fails closed on any non-2xx, so the summary is
     // simply skipped and the search page keeps working.
+    // node-fetch error messages include the internal service URL,
+    // so they stay in the server log; the browser gets a fixed
+    // public message.
     log(`Query intent service unavailable: ${error.message}`);
     res.status(502).send({
-      error: `Query intent service unavailable: ${error.message || 'connection failed'}`,
+      error: 'Query intent service unavailable',
     });
   }
 }

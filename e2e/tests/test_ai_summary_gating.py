@@ -192,6 +192,12 @@ class TestAISummaryGating:
 
         search_page.wait_for_chat_quiescence(CHAT_GRACE_MS)
         expect(search_page.ai_summary_expanded).to_be_hidden()
+        # The intent gate must have actually been consulted: without
+        # this the test would also pass if intent gating were disabled.
+        assert search_page.classify_request_urls, (
+            "Expected the page to attempt an intent-classification call, "
+            "got none — is intent gating disabled?"
+        )
         assert not search_page.chat_request_urls, (
             "No LLM calls expected when the classifier is unavailable, got: "
             f"{search_page.chat_request_urls}"
@@ -217,6 +223,15 @@ class TestAISummaryGating:
         print(f"ES response at {es_at:.3f}s, first LLM request at {chat_at:.3f}s")
         assert chat_at >= es_at - 0.25, (
             "LLM request started before the search results were available"
+        )
+
+        # The intent classification itself must also start only after the
+        # Elasticsearch response — the gate runs on completed results.
+        classify_at = search_page.first_classify_request_at
+        assert classify_at is not None, "No intent-classification request observed"
+        print(f"first classify request at {classify_at:.3f}s")
+        assert classify_at >= es_at - 0.25, (
+            "Intent classification started before the search results were available"
         )
 
     def test_search_still_works_when_ai_fails(self, search_page: SearchPage):

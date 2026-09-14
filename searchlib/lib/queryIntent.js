@@ -19,6 +19,11 @@ const MAX_QUERY_CHARS = 500; // service schema limit
 const MAX_QUERY_WORDS = 20; // service local guard
 const DEFAULT_TIMEOUT_MS = 2000;
 
+// The service's AI-eligible intent labels. A payload only opens the
+// gate when it matches the full contract shape — anything partial or
+// malformed fails closed.
+const ELIGIBLE_INTENTS = ['question', 'exploratory', 'claim'];
+
 const countWords = (query) => query.match(/\S+/g)?.length || 0;
 
 /**
@@ -81,8 +86,13 @@ export function classifyQuery(
       return response.json().then(
         (data) => ({
           // The service guarantees eligible=false on abstention and on
-          // retrieval/unknown; only an explicit true may open the gate.
-          eligible: data?.eligible === true && data?.abstained !== true,
+          // retrieval/unknown; only a payload matching the full contract
+          // (eligible true, abstained false, eligible intent label) may
+          // open the gate. Anything partial or malformed fails closed.
+          eligible:
+            data?.eligible === true &&
+            data?.abstained === false &&
+            ELIGIBLE_INTENTS.includes(data?.intent),
           reason: data?.reason || 'classified',
         }),
         () => ({ eligible: false, reason: 'bad-response' }),

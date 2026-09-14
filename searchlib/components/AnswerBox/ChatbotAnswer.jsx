@@ -183,13 +183,23 @@ const ChatbotAnswer = () => {
       if (abort.current) {
         abort.current.abort();
       }
-      abort.current = new AbortController();
+      const controller = new AbortController();
+      abort.current = controller;
 
       onLoad?.();
 
       try {
         if (!sessionId) {
           sessionId = await createChatSession(personaId, sessionDescription);
+        }
+
+        // A newer run (new search, reset, or unmount) replaced the
+        // controller while we awaited: stop here so this stale stream
+        // can never pump packets into the replacement's state or use
+        // the replacement's live signal.
+        if (abort.current !== controller) {
+          controller.abort();
+          return;
         }
 
         const processor = new MessageProcessor(1, null);
@@ -199,7 +209,7 @@ const ChatbotAnswer = () => {
           message: query,
           chatSessionId: sessionId,
           parentMessageId: parentMessageId || null,
-          signal: abort.current.signal,
+          signal: controller.signal,
           onyxVersion,
         })) {
           processor.addPackets(packets);
@@ -375,9 +385,12 @@ const ChatbotAnswer = () => {
 
   // Cleanup on unmount: abort both the LLM stream and any in-flight
   // intent classification so a late "eligible" answer can never start
-  // a summary (and an LLM session) for an unmounted component.
+  // a summary (and an LLM session) for an unmounted component. The
+  // sequence bump also invalidates a classification that already
+  // resolved but whose continuation has not run yet.
   useEffect(() => {
     return () => {
+      intentSeq.current += 1;
       abort.current?.abort();
       intentAbort.current?.abort();
     };

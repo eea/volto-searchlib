@@ -46,11 +46,16 @@ the middleware forwards them to the service configured with the env var:
 - `QUERY_INTENT_SERVICE_URL` — the service **origin only**
   (e.g. `http://eea-query-intent:8100`). The middleware appends
   `/v1/classify` and `/health` itself, so a value with a path prefix
-  will not work. When unset, `/v1/classify` returns 503 and the search
-  page works normally without AI summaries (fail closed).
+  will not work. When unset, `/_qi/classify` returns 503 and the
+  search page works normally without AI summaries (fail closed).
 - `QUERY_INTENT_TIMEOUT_MS` — optional upstream request timeout in
-  milliseconds (default `2000`). The client gives up after 2000 ms
-  regardless.
+  milliseconds (default `2000`); invalid values fall back to the
+  default. The browser client gives up after 2000 ms regardless.
+
+Note: the `/_qi/*` proxy routes only exist in the SSR Node process
+(`src/index.js`, `__SERVER__` block). A static export has no proxy, so
+the AI summary fails closed on such deployments. Upstream error details
+stay in the server log; the browser only receives fixed error messages.
 
 ## Getting started
 
