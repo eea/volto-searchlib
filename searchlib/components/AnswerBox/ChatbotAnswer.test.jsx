@@ -27,6 +27,14 @@ jest.mock(
   { virtual: true },
 );
 
+// Mock the query-intent client (service-backed classifier)
+const mockClassifyQuery = jest.fn();
+
+jest.mock('../../lib/queryIntent', () => ({
+  classifyQuery: (...args) => mockClassifyQuery(...args),
+  default: (...args) => mockClassifyQuery(...args),
+}));
+
 // Mock @eeacms/volto-eea-chatbot
 const mockCreateChatSession = jest.fn();
 const mockSendMessage = jest.fn();
@@ -167,6 +175,12 @@ describe('ChatbotAnswer', () => {
     mockUseAppConfig.mockReturnValue(defaultAppConfig);
     mockUseSearchContext.mockReturnValue(defaultSearchContext);
     mockUseSearchAssist.mockReturnValue(defaultSearchAssist);
+    // By default the query-intent service judges the term eligible, so
+    // the summary flow tests behave as before.
+    mockClassifyQuery.mockResolvedValue({
+      eligible: true,
+      reason: 'classified',
+    });
     mockCreateChatSession.mockResolvedValue('test-session-id');
     mockSendMessage.mockImplementation(async function* () {
       yield [];
@@ -362,32 +376,163 @@ describe('ChatbotAnswer', () => {
     });
   });
 
-  it.each(['SOER', 'air quality report 2025', 'circular economy'])(
-    'does not fetch summary for non-AI query: %s',
-    (query) => {
-      mockUseSearchContext.mockReturnValue({
-        ...defaultSearchContext,
-        searchTerm: query,
-        isLoading: true,
-      });
-
-      render(<ChatbotAnswer />);
-
-      expect(mockCreateChatSession).not.toHaveBeenCalled();
-      expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
-    },
-  );
-
-  it('does not fetch summary when the AI summary toggle is off', () => {
-    window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+  it('does not fetch summary when the classifier judges the query not eligible', async () => {
+    mockClassifyQuery.mockResolvedValue({
+      eligible: false,
+      reason: 'classified',
+    });
     mockUseSearchContext.mockReturnValue({
       ...defaultSearchContext,
-      searchTerm: 'How does test query work?',
-      isLoading: true,
+      searchTerm: 'SOER',
+      resultSearchTerm: 'SOER',
+      isLoading: false,
+      totalResults: 5,
     });
 
     render(<ChatbotAnswer />);
 
+    await waitFor(() => {
+      expect(mockClassifyQuery).toHaveBeenCalled();
+    });
+    await act(async () => {});
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+  });
+
+  it('does not fetch summary when the classifier abstains (below threshold)', async () => {
+    mockClassifyQuery.mockResolvedValue({
+      eligible: false,
+      reason: 'below_threshold',
+    });
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'water framework directive',
+      resultSearchTerm: 'water framework directive',
+      isLoading: false,
+      totalResults: 5,
+    });
+
+    render(<ChatbotAnswer />);
+
+    await waitFor(() => {
+      expect(mockClassifyQuery).toHaveBeenCalled();
+    });
+    await act(async () => {});
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+  });
+
+  it('fails closed (no summary, no crash) when the classifier reports a service error', async () => {
+    mockClassifyQuery.mockResolvedValue({
+      eligible: false,
+      reason: 'service-error',
+    });
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
+    });
+
+    const { container } = render(<ChatbotAnswer />);
+
+    await waitFor(() => {
+      expect(mockClassifyQuery).toHaveBeenCalled();
+    });
+    await act(async () => {});
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
+    // No error banner: the search page simply goes on without a summary.
+    expect(
+      screen.queryByText('Unable to analyze query. Please try again later.'),
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('.chatbot-answer-wrapper'),
+    ).toBeInTheDocument();
+  });
+
+  it('fails closed when the classifier promise rejects', async () => {
+    mockClassifyQuery.mockRejectedValue(new Error('boom'));
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
+    });
+
+    const { container } = render(<ChatbotAnswer />);
+
+    await act(async () => {});
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+    expect(
+      container.querySelector('.chatbot-answer-wrapper'),
+    ).toBeInTheDocument();
+  });
+
+  it('ignores a stale classification when the search term changes in flight', async () => {
+    let resolveStale;
+    mockClassifyQuery.mockImplementation((query) =>
+      query === 'stale question?'
+        ? new Promise((resolve) => {
+            resolveStale = () =>
+              resolve({ eligible: true, reason: 'classified' });
+          })
+        : Promise.resolve({ eligible: false, reason: 'classified' }),
+    );
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'stale question?',
+      resultSearchTerm: 'stale question?',
+      isLoading: false,
+      totalResults: 5,
+    });
+
+    const { rerender } = render(<ChatbotAnswer />);
+
+    await waitFor(() => {
+      expect(mockClassifyQuery).toHaveBeenCalledWith(
+        'stale question?',
+        expect.anything(),
+      );
+    });
+
+    // A new search completes while the first classification is in flight.
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'fresh keywords',
+      resultSearchTerm: 'fresh keywords',
+      isLoading: false,
+      totalResults: 5,
+    });
+    rerender(<ChatbotAnswer />);
+
+    // Now the stale classification resolves as eligible: it must be
+    // discarded, and the fresh (ineligible) term decides instead.
+    await act(async () => {
+      resolveStale();
+    });
+    await act(async () => {});
+
+    expect(mockCreateChatSession).not.toHaveBeenCalled();
+  });
+
+  it('does not fetch summary when the AI summary toggle is off', async () => {
+    window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+    mockUseSearchContext.mockReturnValue({
+      ...defaultSearchContext,
+      searchTerm: 'How does test query work?',
+      resultSearchTerm: 'How does test query work?',
+      isLoading: false,
+      totalResults: 5,
+    });
+
+    render(<ChatbotAnswer />);
+
+    await act(async () => {});
+    // No classification request either: AI disabled means no AI traffic.
+    expect(mockClassifyQuery).not.toHaveBeenCalled();
     expect(mockCreateChatSession).not.toHaveBeenCalled();
     expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
   });
@@ -463,17 +608,17 @@ describe('ChatbotAnswer', () => {
         ).not.toBeInTheDocument();
       });
 
-      // The question is intent-eligible, so the box stays visible in
-      // its disabled state with the opt-in button.
+      // The question becomes ineligible once AI is off: the summary is
+      // hidden and the box collapses; no opt-in box is shown.
       expect(
         container.querySelector('.chatbot-answer-wrapper.expanded'),
-      ).toBeInTheDocument();
+      ).not.toBeInTheDocument();
       expect(
-        screen.getByText('AI summaries are turned off.'),
-      ).toBeInTheDocument();
+        screen.queryByText('AI summaries are turned off.'),
+      ).not.toBeInTheDocument();
       expect(
-        screen.getByRole('button', { name: 'Enable AI summary' }),
-      ).toBeInTheDocument();
+        screen.queryByRole('button', { name: 'Enable AI summary' }),
+      ).not.toBeInTheDocument();
     } finally {
       MessageProcessor.mockImplementation(defaultImplementation);
     }
@@ -558,6 +703,7 @@ describe('ChatbotAnswer', () => {
 
       render(<ChatbotAnswer />);
 
+      expect(mockClassifyQuery).not.toHaveBeenCalled();
       expect(mockCreateChatSession).not.toHaveBeenCalled();
       expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     });
@@ -581,6 +727,7 @@ describe('ChatbotAnswer', () => {
 
       render(<ChatbotAnswer />);
 
+      expect(mockClassifyQuery).not.toHaveBeenCalled();
       expect(mockCreateChatSession).not.toHaveBeenCalled();
       expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     });
@@ -661,7 +808,10 @@ describe('ChatbotAnswer', () => {
       const originalAbortController = global.AbortController;
       global.AbortController = jest.fn(() => ({
         abort: abortSpy,
-        signal: {},
+        signal: {
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
+        },
       }));
 
       mockUseSearchContext.mockReturnValue({
@@ -935,7 +1085,7 @@ describe('ChatbotAnswer', () => {
   });
 
   describe('in-box AI summary preference', () => {
-    it('shows the disabled box with an opt-in button for eligible questions when AI summaries are off', () => {
+    it('shows no AI box and makes no classification request when AI summaries are off', async () => {
       window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
       mockUseSearchContext.mockReturnValue({
         ...defaultSearchContext,
@@ -947,16 +1097,18 @@ describe('ChatbotAnswer', () => {
 
       const { container } = render(<ChatbotAnswer />);
 
+      await act(async () => {});
       expect(
         container.querySelector('.chatbot-answer-wrapper.expanded'),
-      ).toBeInTheDocument();
+      ).not.toBeInTheDocument();
       expect(
-        screen.getByText('AI summaries are turned off.'),
-      ).toBeInTheDocument();
+        screen.queryByText('AI summaries are turned off.'),
+      ).not.toBeInTheDocument();
       expect(
-        screen.getByRole('button', { name: 'Enable AI summary' }),
-      ).toBeInTheDocument();
-      // No LLM call for the disabled state.
+        screen.queryByRole('button', { name: 'Enable AI summary' }),
+      ).not.toBeInTheDocument();
+      // No AI traffic of any kind for the disabled state.
+      expect(mockClassifyQuery).not.toHaveBeenCalled();
       expect(mockCreateChatSession).not.toHaveBeenCalled();
       expect(defaultSearchAssist.setIsLoadingSummary).not.toHaveBeenCalled();
     });
@@ -973,11 +1125,7 @@ describe('ChatbotAnswer', () => {
 
       const { container } = render(<ChatbotAnswer />);
 
-      // The opt-in box is shown for the eligible question...
-      expect(
-        screen.getByText('AI summaries are turned off.'),
-      ).toBeInTheDocument();
-      // ...but the header carries no AI summary controls: no copy,
+      // The header carries no AI summary controls: no copy,
       // no feedback, no disclaimer.
       expect(
         document.querySelector('[data-testid="user-actions-toolbar"]'),
@@ -987,44 +1135,7 @@ describe('ChatbotAnswer', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('does not show the disabled box for non-AI queries when AI summaries are off', () => {
-      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
-      mockUseSearchContext.mockReturnValue({
-        ...defaultSearchContext,
-        searchTerm: 'SOER',
-        resultSearchTerm: 'SOER',
-        isLoading: false,
-        totalResults: 5,
-      });
-
-      const { container } = render(<ChatbotAnswer />);
-
-      expect(
-        container.querySelector('.chatbot-answer-wrapper.expanded'),
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole('button', { name: 'Enable AI summary' }),
-      ).not.toBeInTheDocument();
-    });
-
-    it('does not show the disabled box when the search completes with zero results', () => {
-      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
-      mockUseSearchContext.mockReturnValue({
-        ...defaultSearchContext,
-        searchTerm: 'How does test query work?',
-        resultSearchTerm: 'How does test query work?',
-        isLoading: false,
-        totalResults: 0,
-      });
-
-      const { container } = render(<ChatbotAnswer />);
-
-      expect(
-        container.querySelector('.chatbot-answer-wrapper.expanded'),
-      ).not.toBeInTheDocument();
-    });
-
-    it('shows the disable button in the box header and switches to the disabled state on click', async () => {
+    it('shows the disable button in the box header and clears the summary on click', async () => {
       mockUseSearchContext.mockReturnValue({
         ...defaultSearchContext,
         searchTerm: 'How does test query work?',
@@ -1047,34 +1158,18 @@ describe('ChatbotAnswer', () => {
       fireEvent.click(disableButton);
 
       expect(window.localStorage.getItem(AI_SUMMARY_STORAGE_KEY)).toBe('0');
+      await waitFor(() => {
+        expect(
+          container.querySelector('.chatbot-summary'),
+        ).not.toBeInTheDocument();
+      });
+      // No opt-in box: the box collapses entirely.
       expect(
         container.querySelector('.chatbot-answer-wrapper.expanded'),
-      ).toBeInTheDocument();
+      ).not.toBeInTheDocument();
       expect(
-        screen.getByText('AI summaries are turned off.'),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Enable AI summary' }),
-      ).toBeInTheDocument();
-    });
-
-    it('enables AI summaries again from the disabled box opt-in button', () => {
-      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
-      mockUseSearchContext.mockReturnValue({
-        ...defaultSearchContext,
-        searchTerm: 'How does test query work?',
-        resultSearchTerm: 'How does test query work?',
-        isLoading: false,
-        totalResults: 5,
-      });
-
-      render(<ChatbotAnswer />);
-
-      fireEvent.click(
-        screen.getByRole('button', { name: 'Enable AI summary' }),
-      );
-
-      expect(window.localStorage.getItem(AI_SUMMARY_STORAGE_KEY)).toBe('1');
+        screen.queryByText('AI summaries are turned off.'),
+      ).not.toBeInTheDocument();
     });
 
     it('generates the summary for the current question when re-enabled', async () => {

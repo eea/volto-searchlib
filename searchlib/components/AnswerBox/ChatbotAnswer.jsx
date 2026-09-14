@@ -25,7 +25,7 @@ import {
   useAISummaryToggle,
   writeAISummaryEnabled,
 } from '../../lib/aiSummaryToggle';
-import { classifyQueryIntent } from './classifyQueryIntent';
+import { classifyQuery } from '../../lib/queryIntent';
 import { getSummarySources } from './summarySources';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
@@ -93,6 +93,10 @@ const ChatbotAnswer = () => {
 
   const abort = useRef(null);
   const lastQuery = useRef('');
+  // In-flight query-intent classification request: aborting it (and
+  // bumping the sequence) invalidates any stale response.
+  const intentAbort = useRef(null);
+  const intentSeq = useRef(0);
 
   const { chatbotAnswer = {}, enableMatomoTracking } = appConfig;
   const {
@@ -104,16 +108,8 @@ const ChatbotAnswer = () => {
     usePredefinedSystemPrompt,
     onyxVersion = '2',
     minResults = 1,
-    minClaimWords = 4,
-    maxQueryWords = 20,
     continueConversationUrl,
   } = chatbotAnswer;
-
-  // Intent classifier thresholds, configurable per search block.
-  const intentOptions = useMemo(
-    () => ({ minimumClaimWords: minClaimWords, maxQueryWords }),
-    [minClaimWords, maxQueryWords],
-  );
 
   const summaryMessageId = useRef(null);
 
@@ -125,15 +121,10 @@ const ChatbotAnswer = () => {
 
   const isRendering = summary?.isFinalMessageComing && !isSummaryDisplayed;
 
-  // Disabled state: when AI summaries are turned off, intent-eligible
-  // questions still show the box with an opt-in control (no LLM call).
+  // Disabled state: when AI summaries are turned off, nothing
+  // AI-related is shown or requested for the search (no classification
+  // call, no LLM call); the user re-enables via the header search icon.
   const term = resultSearchTerm || '';
-  const showDisabledBox =
-    !aiSummaryEnabled &&
-    !isLoading &&
-    !!term &&
-    classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
-    (totalResults ?? 0) >= minResults;
 
   // "Continue conversation" target: the configured chatbot page seeded
   // with the question the summary was generated from, opened in a new tab.
@@ -159,6 +150,10 @@ const ChatbotAnswer = () => {
       abort.current.abort();
     }
     lastQuery.current = '';
+    // Invalidate any in-flight intent classification so its (stale)
+    // response can never start a summary for a superseded search.
+    intentSeq.current += 1;
+    intentAbort.current?.abort();
     setSummary(null);
     setSummaryError(null);
     setSourcesOpen(false);
@@ -298,12 +293,46 @@ const ChatbotAnswer = () => {
     ],
   );
 
+  // Ask the query-intent service whether this search term warrants an
+  // AI summary, and start generating one if it does. The service is the
+  // pre-LLM intent gate: keywords, document retrieval and short phrases
+  // must not trigger any chatbot call. Any classification failure
+  // (timeout, service error, abstention) fails closed: the summary is
+  // skipped and the search results are unaffected.
+  const classifyAndFetch = useCallback(
+    async (term) => {
+      intentSeq.current += 1;
+      const seq = intentSeq.current;
+      intentAbort.current?.abort();
+      const controller = new AbortController();
+      intentAbort.current = controller;
+
+      try {
+        const { eligible } = await classifyQuery(term, {
+          signal: controller.signal,
+        });
+        // Stale response: a newer search (or a reset) superseded this
+        // classification while it was in flight.
+        if (seq !== intentSeq.current) return;
+        if (eligible) {
+          fetchSummary(term);
+        }
+      } catch (err) {
+        // classifyQuery never throws (it fails closed); keep the
+        // boundary honest just in case.
+        // eslint-disable-next-line no-console
+        console.error('query intent classification failed', err);
+      }
+    },
+    [fetchSummary],
+  );
+
   // When the AI summary is turned off (via the in-box opt-out), stop
   // any in-flight generation and clear the summary so no LLM request
-  // is in flight or displayed. The box then shows the opt-in state.
-  // When it is turned back on, re-evaluate the current search term so
-  // the summary is generated for the active question. Declared before
-  // the results-first trigger so the re-enable reset wins the render.
+  // is in flight or displayed. When it is turned back on, re-evaluate
+  // the current search term so the summary is generated for the active
+  // question. Declared before the results-first trigger so the
+  // re-enable reset wins the render.
   useEffect(() => {
     if (!aiSummaryEnabled) {
       resetState();
@@ -316,21 +345,18 @@ const ChatbotAnswer = () => {
   // Elasticsearch search has finished, so results render immediately
   // and the summary stays a purely progressive enhancement. A search
   // that returned too few results (default: zero) must not spend an
-  // LLM call.
+  // LLM call, and no intent-classification request is made while AI
+  // summaries are turned off.
   useEffect(() => {
     if (isLoading) return;
     const term = resultSearchTerm;
     if (term && term !== lastQuery.current) {
+      // A new search supersedes any previous summary: abort the
+      // in-flight stream (if any) and clear the box.
+      resetState();
       lastQuery.current = term;
-      // Pre-LLM intent gate: only natural-language questions, exploratory
-      // queries and claims warrant an AI summary. Keywords, document
-      // retrieval and short phrases must not trigger any chatbot call.
-      if (
-        classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
-        aiSummaryEnabled &&
-        (totalResults ?? 0) >= minResults
-      ) {
-        fetchSummary(term);
+      if (aiSummaryEnabled && (totalResults ?? 0) >= minResults) {
+        classifyAndFetch(term);
       }
     } else if (!term && lastQuery.current) {
       // Search completed with empty query (clear button pressed)
@@ -341,10 +367,10 @@ const ChatbotAnswer = () => {
     isLoading,
     totalResults,
     minResults,
+    classifyAndFetch,
     fetchSummary,
     resetState,
     aiSummaryEnabled,
-    intentOptions,
   ]);
 
   // Cleanup on unmount
@@ -361,8 +387,7 @@ const ChatbotAnswer = () => {
         expanded:
           isLoadingSummary ||
           summary?.isFinalMessageComing ||
-          (isQuestion && !!summary) ||
-          showDisabledBox,
+          (isQuestion && !!summary),
       })}
     >
       <div className="chatbot-answer-collapse">
@@ -445,19 +470,6 @@ const ChatbotAnswer = () => {
               <div className="skeleton-line" />
               <div className="skeleton-line" />
               <div className="skeleton-line short" />
-            </div>
-          )}
-
-          {showDisabledBox && (
-            <div className="chatbot-summary-disabled">
-              <p>AI summaries are turned off.</p>
-              <button
-                type="button"
-                className="ai-summary-enable-btn"
-                onClick={() => writeAISummaryEnabled(true)}
-              >
-                Enable AI summary
-              </button>
             </div>
           )}
 
