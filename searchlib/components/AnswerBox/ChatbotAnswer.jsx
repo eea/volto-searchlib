@@ -373,9 +373,14 @@ const ChatbotAnswer = () => {
     aiSummaryEnabled,
   ]);
 
-  // Cleanup on unmount
+  // Cleanup on unmount: abort both the LLM stream and any in-flight
+  // intent classification so a late "eligible" answer can never start
+  // a summary (and an LLM session) for an unmounted component.
   useEffect(() => {
-    return () => abort.current?.abort();
+    return () => {
+      abort.current?.abort();
+      intentAbort.current?.abort();
+    };
   }, []);
 
   return (

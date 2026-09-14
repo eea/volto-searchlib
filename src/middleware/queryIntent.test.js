@@ -154,7 +154,7 @@ describe('queryIntent middleware', () => {
     );
   });
 
-  it('returns 503 when the service times out', async () => {
+  it('returns 502 when the service times out', async () => {
     process.env.QUERY_INTENT_SERVICE_URL = 'http://qi:8100';
     process.env.QUERY_INTENT_TIMEOUT_MS = '1';
     middleware = require('./queryIntent').default;

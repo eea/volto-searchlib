@@ -99,6 +99,21 @@ describe('classifyQuery (query-intent client)', () => {
     );
   });
 
+  it('treats a contract-violating payload (eligible + abstained) as not eligible', async () => {
+    mockFetch.mockResolvedValue(
+      okResponse({
+        intent: 'question',
+        eligible: true,
+        abstained: true,
+        reason: 'classified',
+      }),
+    );
+
+    await expect(classifyQuery('Why are wetlands important?')).resolves.toEqual(
+      expect.objectContaining({ eligible: false }),
+    );
+  });
+
   it('treats a non-2xx response as not eligible (fail closed)', async () => {
     mockFetch.mockResolvedValue({ ok: false, status: 503 });
 

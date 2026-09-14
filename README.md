@@ -35,6 +35,23 @@ The `RAZZLE_` prefix has been removed from the Elasticsearch middleware environm
 - `RAZZLE_PROXY_ES_DSN` → `PROXY_ES_DSN`
 - `RAZZLE_PROXY_ES_DSN_${appName}` → `PROXY_ES_DSN_${appName}`
 
+### Query intent service middleware
+
+When AI summaries are enabled on a search block, the frontend asks a
+query-intent classifier service whether a search term warrants an AI
+summary before any LLM call. The browser only ever calls the same-origin
+proxy paths `POST /_qi/classify` and `GET /_qi/health`;
+the middleware forwards them to the service configured with the env var:
+
+- `QUERY_INTENT_SERVICE_URL` — the service **origin only**
+  (e.g. `http://eea-query-intent:8100`). The middleware appends
+  `/v1/classify` and `/health` itself, so a value with a path prefix
+  will not work. When unset, `/v1/classify` returns 503 and the search
+  page works normally without AI summaries (fail closed).
+- `QUERY_INTENT_TIMEOUT_MS` — optional upstream request timeout in
+  milliseconds (default `2000`). The client gives up after 2000 ms
+  regardless.
+
 ## Getting started
 
 ### Try volto-searchlib with Docker
