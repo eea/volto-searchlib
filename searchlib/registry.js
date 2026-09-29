@@ -326,6 +326,8 @@ const config = {
         usePredefinedSystemPrompt: false,
         minResults: 1, // minimum result count before an AI summary may be generated
         continueConversationUrl: null, // chatbot page opened by "Continue conversation" (null = hidden)
+        continueConversationLabel: null, // button label (null = built-in "Continue conversation")
+        aiDisclaimer: null, // info modal text (null = built-in EEA disclaimer)
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',

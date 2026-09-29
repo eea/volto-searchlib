@@ -33,6 +33,8 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             fields: [
               'chatbotAssistant',
               'continueConversationUrl',
+              'continueConversationLabel',
+              'aiDisclaimer',
               'onyxVersion',
               'useSummarySearchTool',
               'usePredefinedSystemPrompt',
@@ -78,6 +80,20 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
         'Internal URL of the chatbot page opened in a new tab by the "Continue conversation" button under the AI summary. The search query is passed as a ?query= parameter. Leave empty to hide the button.',
       widget: 'internal_url',
       configPath: 'chatbotAnswer.continueConversationUrl',
+    },
+    continueConversationLabel: {
+      title: 'Continue conversation button label',
+      description:
+        'Label of the button under the AI summary that opens the chatbot page. Leave empty to use the default "Continue conversation".',
+      widget: 'textarea',
+      configPath: 'chatbotAnswer.continueConversationLabel',
+    },
+    aiDisclaimer: {
+      title: 'AI disclaimer',
+      description:
+        'Text shown in the info (i) modal next to the AI summary. Leave empty to use the default EEA disclaimer.',
+      widget: 'textarea',
+      configPath: 'chatbotAnswer.aiDisclaimer',
     },
     onyxVersion: {
       title: 'Onyx API Version',
