@@ -2,12 +2,12 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import { Label } from 'semantic-ui-react';
 import { DateTime } from 'luxon';
 import config from '@plone/volto/registry';
 import UniversalCard from '@eeacms/volto-listing-block/components/UniversalCard/UniversalCard';
-import VisualizationCard from '@eeacms/volto-listing-block/blocks/Listing/item-templates/VisualizationCard';
+import CardTemplate from '@eeacms/volto-listing-block/blocks/Listing/item-templates/CardTemplate';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { ResultModel } from '@eeacms/search/lib/models';
 import CardItem from './CardItem';
@@ -49,12 +49,10 @@ beforeEach(() => {
   config.settings.dateLocale = 'en-gb';
   config.blocks.blocksConfig.listing = {
     extensions: {
-      cardTemplates: [{ id: 'visualizationCard', template: VisualizationCard }],
+      cardTemplates: [{ id: 'card', isDefault: true, template: CardTemplate }],
     },
   };
-  config.blocks.blocksConfig.teaser = {
-    renderTag: (tag, index) => <Label key={index}>{tag}</Label>,
-  };
+  config.blocks.blocksConfig.teaser = { renderTag: (tag) => tag };
   useAppConfig.mockReturnValue({
     registry: { resolve: { UniversalCard: { component: UniversalCard } } },
   });
@@ -80,18 +78,43 @@ const renderResult = (overrides = {}, { highlight, children } = {}) => {
   );
 
   return render(
-    <Provider store={mockStore({ screen: { width: 1920 }, vocabularies: {} })}>
-      <CardItem result={result}>{children}</CardItem>
+    <Provider
+      store={mockStore({
+        screen: { width: 1920 },
+        vocabularies: {},
+        userSession: { token: null },
+        search: { subrequests: {} },
+      })}
+    >
+      <MemoryRouter>
+        <CardItem result={result}>{children}</CardItem>
+      </MemoryRouter>
     </Provider>,
   );
 };
 
-it('renders the shared visualization card with search metadata and preview', () => {
-  const { container } = renderResult();
+it('renders the shared visualization card layout', () => {
+  const { container } = renderResult({
+    about: 'https://www.eea.europa.eu/en/analysis/maps-and-charts/example',
+  });
 
   expect(
     container.querySelector('.ui.card.u-card.title-max-4-lines'),
   ).toBeInTheDocument();
+  const content = container.querySelector('.content');
+  // content type above the title, date below it, then the preview
+  const kinds = [
+    'content-type',
+    'header',
+    'publishing-date',
+    'image',
+    'card-source',
+  ];
+  expect(
+    Array.from(content.children).map((el) =>
+      kinds.find((kind) => el.classList.contains(kind)),
+    ),
+  ).toEqual(kinds);
   expect(screen.getByText('Figure (chart/map)')).toHaveClass('content-type');
   expect(screen.getByText('04 Jun 2025').closest('time')).toHaveAttribute(
     'datetime',
@@ -102,22 +125,52 @@ it('renders the shared visualization card with search metadata and preview', () 
     'alt',
     'Agricultural land use in Europe',
   );
-  expect(screen.getByRole('link', { name: 'Read more' })).toBeInTheDocument();
-  expect(screen.getByText('Search description')).toBeInTheDocument();
-  expect(screen.getByText('Agriculture and food')).toBeInTheDocument();
-  expect(container.querySelector('.card-item')).not.toBeInTheDocument();
+});
+
+it('shows no description, tags, label or Read more button', () => {
+  const { container } = renderResult({
+    issued: DateTime.local().minus({ days: 5 }).toISO(),
+  });
+  expect(screen.queryByText('Search description')).not.toBeInTheDocument();
+  expect(container.querySelector('.description')).not.toBeInTheDocument();
+  expect(screen.queryByText('Agriculture and food')).not.toBeInTheDocument();
+  expect(container.querySelector('.tags')).not.toBeInTheDocument();
+  expect(screen.queryByText('New')).not.toBeInTheDocument();
+  expect(screen.queryByText('Read more')).not.toBeInTheDocument();
+  expect(container.querySelector('.extra.content')).not.toBeInTheDocument();
+});
+
+it('shows no Archived label for expired results', () => {
+  renderResult({
+    issued: DateTime.local().minus({ years: 1 }).toISO(),
+    expires: DateTime.local().minus({ days: 1 }).toISO(),
+  });
+  expect(screen.queryByText('Archived')).not.toBeInTheDocument();
+});
+
+it('ignores highlighted excerpts and supplied descriptions', () => {
+  renderResult(
+    { description: 'Trends in agriculture.' },
+    {
+      highlight: { description: ['Trends in <em>agriculture</em>.'] },
+      children: <span>Custom result description</span>,
+    },
+  );
+  expect(
+    screen.queryByText('Custom result description'),
+  ).not.toBeInTheDocument();
+  expect(screen.queryByText(/Trends in/)).not.toBeInTheDocument();
 });
 
 it.each([
   '/en/analysis/maps-and-charts/example',
   'https://industry.eea.europa.eu/industrial-emissions/dashboard/example',
-])('uses the same destination for title, image and CTA: %s', (about) => {
+])('links the title and the image to the result: %s', (about) => {
   renderResult({ about });
 
   const links = [
     screen.getByText('Agricultural land use in Europe').closest('a'),
     screen.getByRole('img').closest('a'),
-    screen.getByRole('link', { name: 'Read more' }),
   ];
   links.forEach((link) => {
     expect(link).toHaveAttribute('href', about);
@@ -154,72 +207,14 @@ it.each([
   ['https://www.eea.europa.eu/en/example', 'www.eea.europa.eu'],
   ['https://industry.eea.europa.eu/example', 'industry.eea.europa.eu'],
   ['http://example.org/figure', 'example.org'],
-])('retains the linked source website for %s', (about, source) => {
+])('shows the linked source website for %s', (about, source) => {
   renderResult({ about });
   const link = screen.getByRole('link', { name: source });
   expect(link).toHaveAttribute('href', about);
   expect(link).toHaveAttribute('target', '_blank');
-  expect(link.parentElement).toHaveTextContent(`Source: ${source}`);
-});
-
-it.each([
-  ['Agriculture and food'],
-  [['Agriculture and food', 'Water', 'Pollution']],
-])('retains all topic tags: %s', (topic) => {
-  const { container } = renderResult({ topic });
-  const expected = Array.isArray(topic) ? topic : [topic];
-  expect(
-    Array.from(container.querySelectorAll('.tags.labels > .label')).map(
-      (tag) => tag.textContent,
-    ),
-  ).toEqual(expected);
-});
-
-it.each([undefined, []])('omits unavailable topics: %s', (topic) => {
-  const { container } = renderResult({ topic });
-  expect(container.querySelector('.tags.labels')).not.toBeInTheDocument();
-});
-
-it('retains the original description excerpt and text normalization', () => {
-  const description = 'Agricultural land use across Europe. '.repeat(12);
-  renderResult({ description: `<p>${description}</p>` });
-  expect(screen.getByText(`${description.slice(0, 250)}…`)).toBeInTheDocument();
-});
-
-it('retains highlighted search excerpts', () => {
-  const { container } = renderResult(
-    {},
-    { highlight: { description: ['Trends in <em>agriculture</em>.'] } },
-  );
-  expect(container.querySelector('.description em')).toHaveTextContent(
-    'agriculture',
-  );
-  expect(screen.queryByText('Search description')).not.toBeInTheDocument();
-});
-
-it('retains a supplied result description', () => {
-  renderResult({}, { children: <span>Custom result description</span> });
-  expect(screen.getByText('Custom result description')).toBeInTheDocument();
-  expect(screen.queryByText('Search description')).not.toBeInTheDocument();
-});
-
-it('marks recently published results as New', () => {
-  renderResult({ issued: DateTime.local().minus({ days: 5 }).toISO() });
-  expect(screen.getByText('New')).toHaveClass('label');
-});
-
-it('marks expired results as Archived', () => {
-  renderResult({
-    issued: DateTime.local().minus({ years: 1 }).toISO(),
-    expires: DateTime.local().minus({ days: 1 }).toISO(),
-  });
-  expect(screen.getByText('Archived')).toHaveClass('label');
-});
-
-it('does not mark undated or current older results as New or Archived', () => {
-  renderResult({ issued: undefined });
-  expect(screen.queryByText('New')).not.toBeInTheDocument();
-  expect(screen.queryByText('Archived')).not.toBeInTheDocument();
+  // shown with a small font, below the card content
+  expect(link.closest('.meta')).toHaveClass('card-source');
+  expect(link.closest('.meta')).toHaveTextContent(`Source: ${source}`);
 });
 
 it.each([undefined, '', 'https://www.eea.europa.eu/example/portal_depiction'])(
