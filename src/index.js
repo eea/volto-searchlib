@@ -79,6 +79,10 @@ const applyConfig = (config) => {
 
     const healthCheckMiddleware = require('./middleware/healthcheck').default;
     middleware.all('**/_es_healthcheck/:id', healthCheckMiddleware);
+
+    const queryIntentMiddleware = require('./middleware/queryIntent').default;
+    middleware.all('**/_qi/**', queryIntentMiddleware);
+
     middleware.id = 'esHealthcheck';
 
     config.settings.expressMiddleware = [

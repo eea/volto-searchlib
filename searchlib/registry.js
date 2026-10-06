@@ -327,9 +327,9 @@ const config = {
         useSummarySearchTool: true,
         usePredefinedSystemPrompt: false,
         minResults: 1, // minimum result count before an AI summary may be generated
-        minClaimWords: 4, // minimum words for a query to count as a claim
-        maxQueryWords: 20, // queries longer than this never trigger AI
         continueConversationUrl: null, // chatbot page opened by "Continue conversation" (null = hidden)
+        continueConversationLabel: null, // button label (null = built-in "Continue conversation")
+        aiDisclaimer: null, // info modal text (null = built-in EEA disclaimer)
         feedbackReasons: [
           'Repetitive',
           'Irrelevant',
