@@ -3,11 +3,11 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import ExternalLink from './ExternalLink';
 
 // The visualisation card of the Listing Block (volto-listing-block): content
-// type above the title, publishing date below it, then the preview image.
+// type and publishing date in one row above the title, then the preview image.
 const ELEMENTS_ORDER = [
   'contentType',
-  'title',
   'date',
+  'title',
   'benchmark',
   'description',
   'image',
@@ -23,6 +23,9 @@ const itemModel = {
   elementsOrder: ELEMENTS_ORDER,
   hasMetaType: true,
   hasDate: true,
+  // the source (head title) below the content, not instead of the content
+  // type in the metadata row
+  headTitleBelow: true,
   maxTitle: 4,
   hasDescription: false,
   hasTags: false,
@@ -30,6 +33,7 @@ const itemModel = {
   hasBenchmarkLevel: false,
   enableCTAPopup: false,
   callToAction: { enable: false },
+  styles: { 'dropShadow:bool': true },
 };
 
 const CardItem = ({ result }) => {

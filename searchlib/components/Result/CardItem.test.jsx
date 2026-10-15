@@ -20,8 +20,15 @@ jest.mock('@eeacms/search/lib/getRegistry', () => () => ({
     getThumbnail: (result) => result.preview?.raw,
   },
 }));
+// the style classes as Volto builds them: `:noprefix` values and the names
+// of the `:bool` fields that are on
 jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
-  buildStyleClassNamesFromData: () => [],
+  buildStyleClassNamesFromData: (styles = {}) =>
+    Object.entries(styles)
+      .filter(([, value]) => value)
+      .map(([key, value]) =>
+        key.endsWith(':noprefix') ? value : key.replace(/:bool$/, ''),
+      ),
 }));
 jest.mock('@eeacms/volto-listing-block/components/UniversalCard/schema', () =>
   jest.fn(),
@@ -99,26 +106,28 @@ it('renders the shared visualization card layout', () => {
   });
 
   expect(
-    container.querySelector('.ui.card.u-card.title-max-4-lines'),
+    container.querySelector('.ui.card.u-card.title-max-4-lines.drop-shadow'),
   ).toBeInTheDocument();
   const content = container.querySelector('.content');
-  // content type above the title, date below it, then the preview
-  const kinds = [
-    'content-type',
-    'header',
-    'publishing-date',
-    'image',
-    'card-source',
-  ];
+  // content type and date in one row above the title, then the preview and
+  // the source
+  const kinds = ['meta', 'header', 'image', 'card-source'];
+  // the source is a `.meta` too: look for the specific classes first
+  const lookup = ['card-source', 'meta', 'header', 'image'];
   expect(
     Array.from(content.children).map((el) =>
-      kinds.find((kind) => el.classList.contains(kind)),
+      lookup.find((kind) => el.classList.contains(kind)),
     ),
   ).toEqual(kinds);
-  expect(screen.getByText('Figure (chart/map)')).toHaveClass('content-type');
-  expect(screen.getByText('04 Jun 2025').closest('time')).toHaveAttribute(
-    'datetime',
-    expect.stringMatching(/^2025-06-04T/),
+  const meta = content.querySelector(':scope > .meta');
+  expect(meta.querySelector('.text-left')).toHaveTextContent(
+    'Figure (chart/map)',
+  );
+  expect(meta.querySelector('.date')).toHaveTextContent('04 Jun 2025');
+  // the source stays below, it does not replace the content type
+  expect(meta).not.toHaveTextContent('Source');
+  expect(content.querySelector('.card-source')).toHaveTextContent(
+    'Source: www.eea.europa.eu',
   );
   expect(screen.getByRole('img')).toHaveAttribute('src', preview);
   expect(screen.getByRole('img')).toHaveAttribute(
@@ -190,16 +199,19 @@ it.each([
   ['an empty array', [], 'Other'],
   ['a missing type', undefined, 'Other'],
 ])('supports content types supplied as %s', (_, objectProvides, label) => {
-  renderResult({ objectProvides });
-  expect(screen.getByText(label)).toHaveClass('content-type');
+  const { container } = renderResult({ objectProvides });
+  expect(container.querySelector('.meta .text-left')).toHaveTextContent(label);
 });
 
 it.each([undefined, '', 'not-a-date'])(
   'omits an unavailable date: %s',
   (issued) => {
     const { container } = renderResult({ issued });
-    expect(container.querySelector('time')).not.toBeInTheDocument();
-    expect(container.querySelector('.publishing-date')).not.toBeInTheDocument();
+    expect(container.querySelector('.meta .date')).not.toBeInTheDocument();
+    // the content type keeps its row
+    expect(container.querySelector('.meta .text-left')).toHaveTextContent(
+      'Figure (chart/map)',
+    );
   },
 );
 
