@@ -32,6 +32,7 @@ module.exports = {
             '@eeacms/volto-searchlib',
             './packages/volto-searchlib/src',
           ],
+          ['@eeacms/search', './packages/volto-searchlib/searchlib'],
           ...addonAliases,
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
