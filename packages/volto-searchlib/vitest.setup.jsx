@@ -72,3 +72,20 @@ global.store = mockStore({
     },
   },
 });
+
+// Volto 19.5's test-setup-globals stubs localStorage with no-op mocks, which
+// breaks the storage-backed AI summary toggle (searchlib/lib/aiSummaryToggle).
+// Restore a functional in-memory implementation; this setup file runs after
+// the Volto one, so the override wins.
+const localStorageData = new Map();
+vi.stubGlobal('localStorage', {
+  getItem: (key) =>
+    localStorageData.has(key) ? localStorageData.get(key) : null,
+  setItem: (key, value) => localStorageData.set(key, String(value)),
+  removeItem: (key) => localStorageData.delete(key),
+  clear: () => localStorageData.clear(),
+  key: (index) => Array.from(localStorageData.keys())[index] ?? null,
+  get length() {
+    return localStorageData.size;
+  },
+});
