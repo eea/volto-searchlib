@@ -1,4 +1,5 @@
 import { render, screen, act } from '@testing-library/react';
+import { vi } from 'vitest';
 import SearchInput from './SearchInput';
 import {
   AI_SUMMARY_STORAGE_KEY,
@@ -7,33 +8,38 @@ import {
 import '@testing-library/jest-dom';
 
 // Mock @eeacms/search/lib/hocs
-const mockUseAppConfig = jest.fn();
-const mockUseSearchContext = jest.fn();
+const { mockUseAppConfig, mockUseSearchContext } = vi.hoisted(() => ({
+  mockUseAppConfig: vi.fn(),
+  mockUseSearchContext: vi.fn(),
+}));
 
-jest.mock(
-  '@eeacms/search/lib/hocs',
-  () => ({
-    useAppConfig: () => mockUseAppConfig(),
-    useSearchContext: () => mockUseSearchContext(),
-  }),
-  { virtual: true },
-);
+vi.mock('@eeacms/search/lib/hocs', () => ({
+  useAppConfig: () => mockUseAppConfig(),
+  useSearchContext: () => mockUseSearchContext(),
+}));
 
 // Mock semantic-ui-react
-jest.mock('semantic-ui-react', () => ({
-  Icon: jest.fn(({ name }) => <i data-testid="sui-icon" data-name={name} />),
-  Image: jest.fn(({ src }) => <img data-testid="sui-image" src={src} alt="" />),
+vi.mock('semantic-ui-react', () => ({
+  Icon: ({ name }) => <i data-testid="sui-icon" data-name={name} />,
+  Image: ({ src }) => <img data-testid="sui-image" src={src} alt="" />,
+}));
+
+// Volto's Image is redux-connected; the icon assertion only needs the src it
+// receives, so render it directly instead of pulling in the store.
+vi.mock('@plone/volto/components/theme/Image/Image', () => ({
+  __esModule: true,
+  default: ({ src }) => <img data-testid="sui-image" src={src} alt="" />,
 }));
 
 // Mock the SVG assets so the icon source is deterministic
-jest.mock('./icons/ai-search.svg', () => 'ai-search.svg');
-jest.mock('./icons/search.svg', () => 'search.svg');
+vi.mock('./icons/ai-search.svg', () => ({ default: 'ai-search.svg' }));
+vi.mock('./icons/search.svg', () => ({ default: 'search.svg' }));
 
 const getInputProps = () => ({
   value: '',
   placeholder: 'Search with a question or keyword...',
-  onChange: jest.fn(),
-  onKeyDown: jest.fn(),
+  onChange: vi.fn(),
+  onKeyDown: vi.fn(),
 });
 
 const renderInput = () =>
@@ -42,8 +48,8 @@ const renderInput = () =>
       getAutocomplete={() => null}
       getButtonProps={() => ({})}
       getInputProps={getInputProps}
-      onChange={jest.fn()}
-      onSubmit={jest.fn()}
+      onChange={vi.fn()}
+      onSubmit={vi.fn()}
       mode="view"
     />,
   );
@@ -52,8 +58,8 @@ describe('SearchInput AI summary icon state', () => {
   beforeEach(() => {
     window.localStorage.clear();
     mockUseSearchContext.mockReturnValue({
-      setSearchTerm: jest.fn(),
-      setSort: jest.fn(),
+      setSearchTerm: vi.fn(),
+      setSort: vi.fn(),
     });
     mockUseAppConfig.mockReturnValue({
       appConfig: {

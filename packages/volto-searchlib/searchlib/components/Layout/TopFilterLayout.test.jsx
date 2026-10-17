@@ -1,33 +1,9 @@
 import React, { useEffect } from 'react';
 import { render } from '@testing-library/react';
-import { Provider, useSetAtom, atom } from 'jotai';
+import { Provider, useSetAtom } from 'jotai';
+import { loadingFamily } from '@eeacms/search/state';
 import TopFilterLayout from './TopFilterLayout';
 import '@testing-library/jest-dom';
-
-const mockIsLandingPageAtom = atom(false);
-const mockLoadingAtom = atom(false);
-const mockIsLoadingSummaryAtom = atom(false);
-
-jest.mock(
-  '@eeacms/search/state',
-  () => ({
-    get isLandingPageAtom() {
-      return mockIsLandingPageAtom;
-    },
-    loadingFamily: () => mockLoadingAtom,
-  }),
-  { virtual: true },
-);
-
-jest.mock(
-  '@eeacms/search/lib/hocs/useSearchAssist',
-  () => ({
-    get isLoadingSummaryAtom() {
-      return mockIsLoadingSummaryAtom;
-    },
-  }),
-  { virtual: true },
-);
 
 describe('TopFilterLayout', () => {
   const appConfig = {
@@ -36,14 +12,15 @@ describe('TopFilterLayout', () => {
     enableChatbotAnswer: true,
   };
 
+  // Drive the real state atoms instead of mocking the module: the component
+  // reads `loadingFamily(appName)` and `isLandingPageAtom` from
+  // @eeacms/search/state.
   const SetAtoms = ({ isLoading, isLoadingSummary }) => {
-    const setLoading = useSetAtom(mockLoadingAtom);
-    const setIsLoadingSummary = useSetAtom(mockIsLoadingSummaryAtom);
+    const setLoading = useSetAtom(loadingFamily(appConfig.appName));
 
     useEffect(() => {
       setLoading(isLoading);
-      setIsLoadingSummary(isLoadingSummary);
-    }, [isLoading, isLoadingSummary, setLoading, setIsLoadingSummary]);
+    }, [isLoading, isLoadingSummary, setLoading]);
 
     return null;
   };
