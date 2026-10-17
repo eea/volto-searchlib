@@ -6,6 +6,10 @@ import {
   fireEvent,
 } from '@testing-library/react';
 import ChatbotAnswer from './ChatbotAnswer';
+// Mocked below; imported through ESM so the mock is the one in effect (a
+// `require(...)` inside a test would load the real package through Node's
+// loader instead of the factory).
+import { MessageProcessor, RendererComponent } from '@eeacms/volto-eea-chatbot';
 import {
   AI_SUMMARY_STORAGE_KEY,
   AI_SUMMARY_TOGGLE_EVENT,
@@ -245,7 +249,6 @@ describe('ChatbotAnswer', () => {
   });
 
   it('keeps the box expanded while the summary text streams in', async () => {
-    const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
     const defaultImplementation = MessageProcessor.getMockImplementation();
 
     let releaseStream;
@@ -399,7 +402,6 @@ describe('ChatbotAnswer', () => {
   });
 
   it('aborts and hides the summary when the toggle is turned off mid-session', async () => {
-    const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
     const defaultImplementation = MessageProcessor.getMockImplementation();
 
     let releaseStream;
@@ -606,7 +608,6 @@ describe('ChatbotAnswer', () => {
         totalResults: 5,
       });
 
-      const { MessageProcessor } = require('@eeacms/volto-eea-chatbot');
       const defaultProcessorImpl = MessageProcessor.getMockImplementation();
 
       let releaseStream;
@@ -731,10 +732,6 @@ describe('ChatbotAnswer', () => {
       documents = citedDocuments,
       appConfig = defaultAppConfig,
     } = {}) => {
-      const {
-        MessageProcessor,
-        RendererComponent,
-      } = require('@eeacms/volto-eea-chatbot');
       const defaultProcessorImpl = MessageProcessor.getMockImplementation();
       const defaultRendererImpl = RendererComponent.getMockImplementation();
 
@@ -1130,10 +1127,6 @@ describe('ChatbotAnswer', () => {
     };
 
     const setupDisplayedSummary = (continueConversationUrl) => {
-      const {
-        MessageProcessor,
-        RendererComponent,
-      } = require('@eeacms/volto-eea-chatbot');
       const defaultProcessorImpl = MessageProcessor.getMockImplementation();
       const defaultRendererImpl = RendererComponent.getMockImplementation();
 
