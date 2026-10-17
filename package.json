@@ -41,7 +41,8 @@
   "devDependencies": {
     "babel-plugin-istanbul": "^6.1.1",
     "lint-staged": "^14.0.1",
-    "mrs-developer": "^2.2.0"
+    "mrs-developer": "^2.2.0",
+    "razzle-dev-utils": "^4.2.18"
   },
   "pnpm": {
     "overrides": {
