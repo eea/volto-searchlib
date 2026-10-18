@@ -17,8 +17,10 @@ class SearchPageSelectors:
     AI_SUMMARY_ERROR = ".chatbot-answer .ui.warning.message, .chatbot-answer .error"
     CONTINUE_CONVERSATION_BUTTON = ".continue-conversation-btn"
 
-    # AI Summary preference: in-box opt-out (issue 307513)
+    # AI Summary preference: in-box opt-out and recovery (issue 307513)
     AI_SUMMARY_DISABLE_BUTTON = ".chatbot-header .ai-summary-disable-btn"
+    AI_SUMMARY_ENABLE_BUTTON = ".chatbot-header .ai-summary-enable-btn"
+    AI_SUMMARY_DISABLED_DESCRIPTION = ".chatbot-summary-disabled"
     NO_RESULTS_MESSAGE = ".content-area:has-text('could not find any results')"
 
     # Backend endpoints
@@ -86,6 +88,14 @@ class SearchPage:
     @property
     def ai_summary_disable_button(self) -> Locator:
         return self.page.locator(self.selectors.AI_SUMMARY_DISABLE_BUTTON).first
+
+    @property
+    def ai_summary_enable_button(self) -> Locator:
+        return self.page.locator(self.selectors.AI_SUMMARY_ENABLE_BUTTON).first
+
+    @property
+    def ai_summary_disabled_description(self) -> Locator:
+        return self.page.locator(self.selectors.AI_SUMMARY_DISABLED_DESCRIPTION).first
 
     @property
     def continue_conversation_button(self) -> Locator:

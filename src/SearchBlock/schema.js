@@ -35,6 +35,7 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
               'continueConversationUrl',
               'continueConversationLabel',
               'aiDisclaimer',
+              'aiSummaryDisabledDescription',
               'onyxVersion',
               'useSummarySearchTool',
               'usePredefinedSystemPrompt',
@@ -86,14 +87,27 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       description:
         'Label of the button under the AI summary that opens the chatbot page. Leave empty to use the default "Continue conversation".',
       widget: 'textarea',
-      configPath: 'chatbotAnswer.continueConversationLabel',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.continueConversationLabel = value;
+      },
     },
     aiDisclaimer: {
       title: 'AI disclaimer',
       description:
         'Text shown in the info (i) modal next to the AI summary. Leave empty to use the default EEA disclaimer.',
       widget: 'textarea',
-      configPath: 'chatbotAnswer.aiDisclaimer',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.aiDisclaimer = value;
+      },
+    },
+    aiSummaryDisabledDescription: {
+      title: 'Disabled AI summary description',
+      description:
+        'Text shown in the AI summary box when summaries are turned off. Leave empty to use the default explanation.',
+      widget: 'textarea',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.aiSummaryDisabledDescription = value;
+      },
     },
     onyxVersion: {
       title: 'Onyx API Version',
