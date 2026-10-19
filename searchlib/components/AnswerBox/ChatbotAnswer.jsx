@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import cx from 'classnames';
+import { trackEvent } from '@eeacms/volto-matomo/utils';
 import {
   Message,
   Icon,
@@ -27,6 +28,8 @@ import {
 } from '../../lib/aiSummaryToggle';
 import { classifyQuery } from '../../lib/queryIntent';
 import { getSummarySources } from './summarySources';
+import useSummaryExposure from './useSummaryExposure';
+import { MATOMO_CATEGORY } from './constants';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
 import searchAssistSVG from '@eeacms/search/components/SearchInput/icons/search-assist.svg';
@@ -138,6 +141,25 @@ const ChatbotAnswer = () => {
   // When summaries are off, keep the explanation and re-enable control
   // visible without making classification or LLM requests.
   const term = resultSearchTerm || '';
+
+  const exposureAction = !aiSummaryEnabled
+    ? 'Disabled box displayed'
+    : showSummary && isSummaryDisplayed && summary?.isComplete
+      ? 'Summary displayed'
+      : null;
+  const exposureRef = useSummaryExposure({
+    enabled: enableMatomoTracking,
+    searchTerm: term,
+    isLoading,
+    action: exposureAction,
+    exposureKey: aiSummaryEnabled ? 'summary' : 'disabled',
+  });
+
+  const trackSummaryAction = (action) => {
+    if (enableMatomoTracking) {
+      trackEvent({ category: MATOMO_CATEGORY, action });
+    }
+  };
 
   // "Continue conversation" target: the configured chatbot page seeded
   // with the question the summary was generated from, opened in a new tab.
@@ -451,7 +473,12 @@ const ChatbotAnswer = () => {
                     ? 'ai-summary-disable-btn'
                     : 'ai-summary-enable-btn'
                 }
-                onClick={() => writeAISummaryEnabled(!aiSummaryEnabled)}
+                onClick={() => {
+                  writeAISummaryEnabled(!aiSummaryEnabled);
+                  trackSummaryAction(
+                    aiSummaryEnabled ? 'Summary disabled' : 'Summary enabled',
+                  );
+                }}
               >
                 {aiSummaryEnabled ? 'Disable AI summary' : 'Enable AI summary'}
               </button>
@@ -467,6 +494,7 @@ const ChatbotAnswer = () => {
                   enableFeedback={enableFeedback}
                   feedbackReasons={chatbotAnswer.feedbackReasons || []}
                   enableMatomoTracking={enableMatomoTracking}
+                  matomoCategory={MATOMO_CATEGORY}
                   persona={persona}
                 />
               )}
@@ -474,7 +502,10 @@ const ChatbotAnswer = () => {
                 <Modal
                   className="chatbot-disclaimer-modal"
                   open={disclaimerOpen}
-                  onOpen={() => setDisclaimerOpen(true)}
+                  onOpen={() => {
+                    setDisclaimerOpen(true);
+                    trackSummaryAction('Disclaimer opened');
+                  }}
                   onClose={() => setDisclaimerOpen(false)}
                   trigger={
                     <button className="icon-btn outline">
@@ -500,7 +531,7 @@ const ChatbotAnswer = () => {
           </div>
 
           {!aiSummaryEnabled && (
-            <p className="chatbot-summary-disabled">
+            <p className="chatbot-summary-disabled" ref={exposureRef}>
               {disabledDescriptionText}
             </p>
           )}
@@ -528,7 +559,7 @@ const ChatbotAnswer = () => {
 
           {showSummary && (
             <div className="chatbot-summary">
-              <div className="chatbot-summary-content">
+              <div className="chatbot-summary-content" ref={exposureRef}>
                 <Answer
                   message={summary}
                   animate={!isSummaryDisplayed}
@@ -542,7 +573,10 @@ const ChatbotAnswer = () => {
                     className="chatbot-sources-toggle"
                     aria-expanded={sourcesOpen}
                     aria-controls="chatbot-sources-list"
-                    onClick={() => setSourcesOpen((open) => !open)}
+                    onClick={() => {
+                      if (!sourcesOpen) trackSummaryAction('Sources opened');
+                      setSourcesOpen((open) => !open);
+                    }}
                   >
                     <span>
                       Generated from {summarySources.length} EEA{' '}
@@ -560,6 +594,13 @@ const ChatbotAnswer = () => {
                           {source.link ? (
                             <a
                               className="source-link"
+                              onClick={() =>
+                                trackSummaryAction('Source clicked')
+                              }
+                              onAuxClick={(event) => {
+                                if (event.button === 1)
+                                  trackSummaryAction('Source clicked');
+                              }}
                               href={source.link}
                               target="_blank"
                               rel="noreferrer"
@@ -582,6 +623,13 @@ const ChatbotAnswer = () => {
                 <div className="chatbot-delimiter">
                   <a
                     className="continue-conversation-btn"
+                    onClick={() =>
+                      trackSummaryAction('"Continue conversation" clicked')
+                    }
+                    onAuxClick={(event) => {
+                      if (event.button === 1)
+                        trackSummaryAction('"Continue conversation" clicked');
+                    }}
                     href={continueConversationHref}
                     target="_blank"
                     rel="noreferrer"

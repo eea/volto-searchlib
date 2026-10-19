@@ -57,6 +57,36 @@ Note: the `/_qi/*` proxy routes only exist in the SSR Node process
 the AI summary fails closed on such deployments. Upstream error details
 stay in the server log; the browser only receives fixed error messages.
 
+### AI Summary analytics
+
+With `enableMatomoTracking` enabled, AI Summary uses `trackEvent` from
+`@eeacms/volto-matomo/utils` with category **Search - AI summary**:
+
+| Action | When counted |
+| --- | --- |
+| `Summary enabled` / `Summary disabled` | Explicit in-box button activation, not preference synchronization |
+| `Response copied` | Clipboard write succeeds |
+| `Sources opened` | The cited-document area is expanded, not collapsed |
+| `Source clicked` | A cited-document link is activated |
+| `"Continue conversation" clicked` | The continuation link is activated (primary or middle button), not destination-page load |
+| `Summary displayed` | Completed, fully rendered answer enters the viewport |
+| `Disabled box displayed` | Disabled explanation enters the viewport after a search completes |
+| `Disclaimer opened` | The AI disclosure dialog is opened |
+
+A view requires at least 1% of the respective content to intersect the viewport.
+Each summary/disabled state is counted once per completed search, not on rerenders,
+scrolling back into view, or toggling the same state again. Browsers without
+`IntersectionObserver` omit view events rather than treating renders as views.
+Exposure events supply denominators for feature-usage analysis; raw click/view
+ratios are not unique-user percentages. Use Matomo visitor/visit reporting for
+people-based percentages, accounting for consent and tracking opt-out.
+
+The added event fields do not include queries, answer text, document URLs, or
+message IDs. Matomo's standard page URL/title context and existing site-search
+tracking are unchanged. Existing feedback analytics is unchanged. The full chatbot retains its own
+Chatbot/persona categories, separate from this summary context. No manual outlink
+tracking is added alongside Matomo's existing automatic link tracking.
+
 ## Getting started
 
 ### Try volto-searchlib with Docker
