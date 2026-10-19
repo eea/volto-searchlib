@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   render,
   screen,
@@ -12,6 +12,9 @@ import {
   AI_SUMMARY_TOGGLE_EVENT,
 } from '../../lib/aiSummaryToggle';
 import '@testing-library/jest-dom';
+import { trackEvent } from '@eeacms/volto-matomo/utils';
+
+jest.mock('@eeacms/volto-matomo/utils', () => ({ trackEvent: jest.fn() }));
 
 // Mock @eeacms/search/lib/hocs
 const mockUseAppConfig = jest.fn();
@@ -198,6 +201,40 @@ describe('ChatbotAnswer', () => {
       container.querySelector('.chatbot-answer-wrapper'),
     ).toBeInTheDocument();
   });
+
+  it.each([true, false])(
+    'tracks only explicit enable/disable controls when tracking=%s',
+    (enabled) => {
+      window.localStorage.setItem(AI_SUMMARY_STORAGE_KEY, '0');
+      mockUseAppConfig.mockReturnValue({
+        appConfig: {
+          ...defaultAppConfig.appConfig,
+          enableMatomoTracking: enabled,
+        },
+      });
+      const { rerender } = render(<ChatbotAnswer />);
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Enable AI summary' }),
+      );
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Disable AI summary' }),
+      );
+      rerender(<ChatbotAnswer />);
+      act(() =>
+        window.dispatchEvent(
+          new CustomEvent(AI_SUMMARY_TOGGLE_EVENT, { detail: true }),
+        ),
+      );
+      if (enabled) {
+        expect(trackEvent.mock.calls).toEqual([
+          [{ category: 'Search - AI summary', action: 'Summary enabled' }],
+          [{ category: 'Search - AI summary', action: 'Summary disabled' }],
+        ]);
+      } else {
+        expect(trackEvent).not.toHaveBeenCalled();
+      }
+    },
+  );
 
   it('renders the header with label', () => {
     render(<ChatbotAnswer />);
@@ -906,6 +943,7 @@ describe('ChatbotAnswer', () => {
     const setupSummaryStream = ({
       citations = citedCitations,
       documents = citedDocuments,
+      messageIds = ['stream-message-id'],
       appConfig = defaultAppConfig,
     } = {}) => {
       const {
@@ -920,14 +958,16 @@ describe('ChatbotAnswer', () => {
         releaseStream = resolve;
       });
 
+      let processorCount = 0;
       MessageProcessor.mockImplementation(() => {
+        const messageId = messageIds[processorCount++];
         let stages = 0;
         return {
           addPackets: () => {
             stages += 1;
           },
           getMessage: () => ({
-            messageId: 'stream-message-id',
+            messageId,
             message: 'Streaming summary text',
             groupedPackets: [{ ind: 0, packets: [] }],
             displayPackets: [0],
@@ -942,10 +982,14 @@ describe('ChatbotAnswer', () => {
         };
       });
 
-      RendererComponent.mockImplementation(({ children, onComplete }) => {
-        const rendered = children({ content: <span>Rendered content</span> });
-        Promise.resolve().then(() => onComplete?.());
-        return rendered;
+      RendererComponent.mockImplementation(function MockRenderer({
+        children,
+        onComplete,
+      }) {
+        useEffect(() => {
+          onComplete?.();
+        }, [onComplete]);
+        return children({ content: <span>Rendered content</span> });
       });
 
       mockSendMessage.mockImplementation(async function* () {
@@ -971,6 +1015,180 @@ describe('ChatbotAnswer', () => {
         },
       };
     };
+
+    it.each([true, false])(
+      'tracks source opening and continuation without query text when tracking=%s',
+      async (enabled) => {
+        const { releaseStream, restore } = setupSummaryStream({
+          appConfig: {
+            appConfig: {
+              ...defaultAppConfig.appConfig,
+              enableMatomoTracking: enabled,
+              chatbotAnswer: {
+                ...defaultAppConfig.appConfig.chatbotAnswer,
+                continueConversationUrl: '/en/ask-ai',
+              },
+            },
+          },
+        });
+        try {
+          const { container } = render(<ChatbotAnswer />);
+          await act(async () => releaseStream());
+          const toggle = await screen.findByRole('button', {
+            name: 'Generated from 2 EEA documents',
+          });
+          fireEvent.click(toggle);
+          fireEvent.click(toggle); // closing must not count as opening
+          const continuation = container.querySelector(
+            '.continue-conversation-btn',
+          );
+          fireEvent.click(continuation);
+          fireEvent(
+            continuation,
+            new MouseEvent('auxclick', { bubbles: true, button: 1 }),
+          );
+          fireEvent(
+            continuation,
+            new MouseEvent('auxclick', { bubbles: true, button: 2 }),
+          );
+          const { UserActionsToolbar } = require('@eeacms/volto-eea-chatbot');
+          expect(UserActionsToolbar).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+              matomoCategory: 'Search - AI summary',
+              enableMatomoTracking: enabled,
+            }),
+            {},
+          );
+          if (enabled) {
+            expect(trackEvent.mock.calls).toEqual([
+              [{ category: 'Search - AI summary', action: 'Sources opened' }],
+              [
+                {
+                  category: 'Search - AI summary',
+                  action: '"Continue conversation" clicked',
+                },
+              ],
+              [
+                {
+                  category: 'Search - AI summary',
+                  action: '"Continue conversation" clicked',
+                },
+              ],
+            ]);
+          } else {
+            expect(trackEvent).not.toHaveBeenCalled();
+          }
+        } finally {
+          restore();
+        }
+      },
+    );
+
+    it('does not recount the summary after re-enable generates a different message for the same search', async () => {
+      const originalObserver = global.IntersectionObserver;
+      const observers = [];
+      global.IntersectionObserver = jest.fn((callback) => {
+        const observer = {
+          callback,
+          observe: jest.fn(),
+          disconnect: jest.fn(),
+        };
+        observers.push(observer);
+        return observer;
+      });
+      const { releaseStream, restore } = setupSummaryStream({
+        messageIds: ['first-answer', 'regenerated-answer'],
+        appConfig: {
+          appConfig: {
+            ...defaultAppConfig.appConfig,
+            enableMatomoTracking: true,
+          },
+        },
+      });
+      const notify = () =>
+        act(() => {
+          observers.forEach((observer) =>
+            observer.callback([
+              {
+                target: observer.observe.mock.calls[0][0],
+                isIntersecting: true,
+                intersectionRatio: 1,
+              },
+            ]),
+          );
+        });
+      try {
+        render(<ChatbotAnswer />);
+        await act(async () => releaseStream());
+        await waitFor(() => expect(observers).toHaveLength(1));
+        notify();
+        fireEvent.click(
+          screen.getByRole('button', { name: 'Disable AI summary' }),
+        );
+        fireEvent.click(
+          screen.getByRole('button', { name: 'Enable AI summary' }),
+        );
+        const { UserActionsToolbar } = require('@eeacms/volto-eea-chatbot');
+        await waitFor(() =>
+          expect(UserActionsToolbar).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+              message: expect.objectContaining({
+                messageId: 'regenerated-answer',
+              }),
+            }),
+            {},
+          ),
+        );
+        notify();
+        expect(mockCreateChatSession).toHaveBeenCalledTimes(2);
+        expect(
+          trackEvent.mock.calls.filter(
+            ([event]) => event.action === 'Summary displayed',
+          ),
+        ).toHaveLength(1);
+      } finally {
+        restore();
+        global.IntersectionObserver = originalObserver;
+      }
+    });
+
+    it('observes only the completed summary content for exposure', async () => {
+      const originalObserver = global.IntersectionObserver;
+      const observe = jest.fn();
+      const disconnect = jest.fn();
+      let notify;
+      global.IntersectionObserver = jest.fn((callback) => {
+        notify = callback;
+        return { observe, disconnect };
+      });
+      const { releaseStream, restore } = setupSummaryStream({
+        appConfig: {
+          appConfig: {
+            ...defaultAppConfig.appConfig,
+            enableMatomoTracking: true,
+          },
+        },
+      });
+      try {
+        const { container } = render(<ChatbotAnswer />);
+        await screen.findByText('Generated from 2 EEA documents');
+        expect(observe).not.toHaveBeenCalled();
+        await act(async () => releaseStream());
+        await waitFor(() => expect(observe).toHaveBeenCalledTimes(1));
+        const target = container.querySelector('.chatbot-summary-content');
+        expect(observe).toHaveBeenCalledWith(target);
+        act(() =>
+          notify([{ target, isIntersecting: true, intersectionRatio: 1 }]),
+        );
+        expect(trackEvent).toHaveBeenCalledWith({
+          category: 'Search - AI summary',
+          action: 'Summary displayed',
+        });
+      } finally {
+        restore();
+        global.IntersectionObserver = originalObserver;
+      }
+    });
 
     it('shows the cited sources count once the summary is displayed', async () => {
       const { releaseStream, restore } = setupSummaryStream();
@@ -1527,10 +1745,14 @@ describe('ChatbotAnswer', () => {
           return stages >= 1;
         },
       }));
-      RendererComponent.mockImplementation(({ children, onComplete }) => {
-        const rendered = children({ content: <span>Rendered content</span> });
-        Promise.resolve().then(() => onComplete?.());
-        return rendered;
+      RendererComponent.mockImplementation(function MockRenderer({
+        children,
+        onComplete,
+      }) {
+        useEffect(() => {
+          onComplete?.();
+        }, [onComplete]);
+        return children({ content: <span>Rendered content</span> });
       });
       mockSendMessage.mockImplementation(async function* () {
         yield [];
