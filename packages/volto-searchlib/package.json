@@ -63,7 +63,7 @@
     "react-toastify": "5.4.1",
     "redux": "4.1.0",
     "semantic-ui-react": "2.0.3",
-    "superagent": "3.8.2",
+    "superagent": "^10.3.0",
     "svg-loader": "0.0.2",
     "use-deep-compare-effect": "1.8.1"
   },

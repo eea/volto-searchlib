@@ -78,18 +78,25 @@ const handleSearch = (req, res, next, params) => {
   handleSearchRequest(req, res, params);
 };
 
+// superagent may call back without a response (e.g. connection errors), so
+// always answer the client instead of leaving the request hanging.
+const sendResponse = (res) => (err, resp) => {
+  if (resp && resp.body) {
+    res.send(resp.body);
+  } else {
+    log('err', err);
+    res.status(err?.status || 502).send({ error: 'Error' });
+  }
+};
+
 const handleSettings = (req, res, next, { appName, urlES }) => {
   const url = `${urlES}/_settings`;
-  superagent.get(url).end((err, resp) => {
-    if (resp && resp.body) res.send(resp.body);
-  });
+  superagent.get(url).end(sendResponse(res));
 };
 
 const handleAlias = (req, res, next, { appName, urlES }) => {
   const url = `${urlES}/_alias`;
-  superagent.get(url).end((err, resp) => {
-    if (resp && resp.body) res.send(resp.body);
-  });
+  superagent.get(url).end(sendResponse(res));
 };
 
 const handleDownload = (req, res, next, { appName, urlES }) => {
@@ -104,9 +111,7 @@ const DOC_ID_RE = /.*_doc\/(?<url>.+)/m;
 const handleDocRequest = (req, res, next, { urlES, docId }) => {
   const url = `${urlES}/_doc/${docId}`;
   log(`Get document: ${url}`);
-  superagent.get(url).end((err, resp) => {
-    if (resp && resp.body) res.send(resp.body);
-  });
+  superagent.get(url).end(sendResponse(res));
 };
 
 const getUrlES = (appName, prefix = '') => {
