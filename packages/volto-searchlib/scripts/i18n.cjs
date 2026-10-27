@@ -5,18 +5,46 @@
  * @module scripts/i18n
  */
 
-const { find, keys, map, concat, reduce } = require('lodash');
-const glob = require('glob').sync;
 const fs = require('fs');
-const Pofile = require('pofile');
-const babel = require('@babel/core');
 
 const path = require('path');
 const projectRootPath = path.resolve('.');
-const packageJson = require(path.join(projectRootPath, 'package.json'));
 
-const commander = require('commander');
-const program = commander.program || commander;
+// This is the @plone/scripts i18n, extended to also extract the messages of
+// the searchlib folder, so it loads its dependencies the same way
+const requireFromScripts = require('module').createRequire(
+  require.resolve('@plone/scripts/package.json'),
+);
+const { find, keys, map, concat, reduce } = requireFromScripts('lodash');
+const glob = requireFromScripts('glob').globSync;
+const Pofile = requireFromScripts('pofile');
+const babel = requireFromScripts('@babel/core');
+
+// The Volto babel config names plugins that pnpm links only for @plone/volto,
+// so let babel find them there, like the @plone/scripts bin shim does
+process.env.NODE_PATH = [
+  path.join(
+    path.dirname(require.resolve('@plone/volto/package.json')),
+    'node_modules',
+  ),
+  process.env.NODE_PATH,
+]
+  .filter(Boolean)
+  .join(path.delimiter);
+require('module').Module._initPaths();
+const { program } = requireFromScripts('commander');
+const chalk = requireFromScripts('chalk');
+
+/**
+ * Replace appearances of " to convert to \"
+ * to keep gettext compatibility in PO files
+ * Avoid double escaping
+ * @function escapeDoubleQuotes
+ * @return {string}
+ */
+function escapeDoubleQuotes(value) {
+  return value.replace(/\\"/g, '"').replace(/"/g, '\\"');
+}
 
 /**
  * Extract messages into separate JSON files
@@ -24,21 +52,19 @@ const program = commander.program || commander;
  * @return {undefined}
  */
 function extractMessages() {
-  const locations = [
-    ...glob('src/**/*.{js,jsx,ts,tsx}', {
-      ignore: ['src/customizations/**', 'src/addons/**'],
-    }),
-    ...glob('searchlib/**/*.{js,jsx,ts,tsx}', {
-      ignore: ['src/customizations/**', 'src/addons/**'],
-    }),
-  ];
   map(
     // We ignore the existing customized shadowed components ones, since most
     // probably we won't be overriding them
     // If so, we should do it in the config object or somewhere else
     // We also ignore the addons folder since they are populated using
     // their own locales files and taken care separatedly in this script
-    locations,
+    [
+      ...glob('src/**/*.{js,jsx,ts,tsx}', {
+        ignore: ['src/customizations/**', 'src/addons/**'],
+      }),
+      // The search UI library lives outside src
+      ...glob('searchlib/**/*.{js,jsx,ts,tsx}'),
+    ],
     (filename) => {
       babel.transformFileSync(filename, {}, (err) => {
         if (err) {
@@ -64,12 +90,12 @@ function getMessages() {
         // If so, we should do it in the config object or somewhere else
         // We also ignore the addons folder since they are populated using
         // their own locales files and taken care separatedly in this script
-        glob('build/messages/**/*.json', {
+        glob('build/messages/{src,searchlib}/**/*.json', {
           ignore: [
             'build/messages/src/customizations/**',
             'build/messages/src/addons/**',
           ],
-        }),
+        }).sort((a, b) => a.localeCompare(b, 'en')),
         (filename) =>
           map(JSON.parse(fs.readFileSync(filename, 'utf8')), (message) => ({
             ...message,
@@ -110,14 +136,9 @@ function getMessages() {
 function messagesToPot(messages) {
   return map(keys(messages).sort(), (key) =>
     [
-      `#. Default: "${messages[key].defaultMessage.trim()}"`,
-      ...map(
-        [...messages[key].filenames].sort((left, right) =>
-          left.localeCompare(right),
-        ),
-        (filename) => `#: ${filename}`,
-      ),
-      `msgid "${key}"`,
+      `#. Default: "${escapeDoubleQuotes(messages[key].defaultMessage.trim())}"`,
+      ...map(messages[key].filenames, (filename) => `#: ${filename}`),
+      `msgid "${escapeDoubleQuotes(key)}"`,
       'msgstr ""',
     ].join('\n'),
   ).join('\n\n');
@@ -193,9 +214,14 @@ function poToJson({ registry, addonMode }) {
     }
 
     if (!addonMode) {
-      // Merge addons locales
-      if (packageJson.addons) {
-        registry.getAddonDependencies().forEach((addon) => {
+      // Merge addons locales - using getAddonDependencies because it preserves
+      // the order of the addons in the registry, even if they are add-on dependencies
+      // of an add-on
+      registry.getAddonDependencies().forEach((addonDep) => {
+        // What comes from getAddonDependencies is in the form of `@package/addon:profile`
+        const addon = addonDep.split(':')[0];
+        // Check if the addon is available in the registry, just in case
+        if (registry.packages[addon]) {
           const addonlocale = `${registry.packages[addon].modulePath}/../${filename}`;
           if (fs.existsSync(addonlocale)) {
             const addonItems = Pofile.parse(
@@ -208,9 +234,10 @@ function poToJson({ registry, addonMode }) {
               console.log(`Merging ${addon} locales for ${lang}`);
             }
           }
-        });
-      }
+        }
+      });
     }
+
     // Merge project locales, the project customization wins
     mergeMessages(result, projectLocalesItems, lang);
     fs.writeFileSync(`locales/${lang}.json`, JSON.stringify(result));
@@ -252,8 +279,10 @@ ${map(pot.items, (item) => {
   return [
     `#. ${item.extractedComments[0]}`,
     `${map(item.references, (ref) => `#: ${ref}`).join('\n')}`,
-    `msgid "${item.msgid}"`,
-    `msgstr "${poItem ? poItem.msgstr : ''}"`,
+    `msgid "${escapeDoubleQuotes(item.msgid)}"`,
+    `msgstr "${
+      poItem && poItem.msgstr[0] ? escapeDoubleQuotes(poItem.msgstr[0]) : ''
+    }"`,
   ].join('\n');
 }).join('\n\n')}\n`,
     );
@@ -282,10 +311,25 @@ function main({ addonMode }) {
   console.log('Synchronizing messages to po files...');
   syncPoByPot();
   if (!addonMode) {
-    let AddonConfigurationRegistry;
+    let AddonRegistry, AddonConfigurationRegistry, registry;
     try {
       // Detect where is the registry (if we are in Volto 18 or above for either core and projects)
       if (
+        fs.existsSync(
+          path.join(
+            projectRootPath,
+            '/node_modules/@plone/registry/dist/addon-registry/addon-registry.cjs',
+          ),
+        )
+      ) {
+        AddonRegistry = require(
+          path.join(
+            projectRootPath,
+            '/node_modules/@plone/registry/dist/addon-registry/addon-registry.cjs',
+          ),
+        ).AddonRegistry;
+        // Detect where is the registry (if we are in Volto 18-alpha.46 or below)
+      } else if (
         fs.existsSync(
           path.join(
             projectRootPath,
@@ -323,12 +367,18 @@ function main({ addonMode }) {
       }
     } catch {
       console.log(
-        'Getting the addon registry failed. Are you executing i18n from inside an addon? Try the -a flag.',
+        chalk.red(
+          'Getting the addon registry failed. Are you executing i18n from inside an addon? Try the -a flag.',
+        ),
       );
       process.exit();
     }
     console.log('Generating the language JSON files...');
-    const registry = new AddonConfigurationRegistry(projectRootPath);
+    if (AddonConfigurationRegistry) {
+      registry = new AddonConfigurationRegistry(projectRootPath);
+    } else if (AddonRegistry) {
+      registry = AddonRegistry.init(projectRootPath).registry;
+    }
     poToJson({ registry, addonMode });
   }
   console.log('done!');
@@ -342,4 +392,4 @@ if (require.main === module) {
   main({ addonMode: options.addon });
 }
 
-module.exports = { poToJson };
+module.exports = { poToJson, escapeDoubleQuotes };

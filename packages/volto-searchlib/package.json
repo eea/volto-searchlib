@@ -125,7 +125,7 @@
     "postinstall": "node -e \"const fs=require('fs'); const path=require('path'); let file; try { file=path.join(path.dirname(require.resolve('@eeacms/volto-eea-chatbot/package.json')), 'src/ChatBlock/chat/AIMessage.tsx'); } catch (error) { process.exit(0); } const from=\\\"import visit from 'unist-util-visit';\\\"; const to=\\\"import { visit } from 'unist-util-visit';\\\"; const source=fs.readFileSync(file, 'utf8'); if (source.includes(from) && !source.includes(to)) { fs.writeFileSync(file, source.replace(from, to)); }\"",
     "test": "vitest --config ./vitest.config.mjs run --passWithNoTests",
     "test:fix": "vitest --config ./vitest.config.mjs run --passWithNoTests --update",
-    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
+    "i18n": "rm -rf build/messages && NODE_ENV=production node scripts/i18n.cjs --addon",
     "husky:install": "cd ../.. && husky install || true",
     "dry-release": "release-it --dry-run",
     "release-major-alpha": "release-it major --preRelease=alpha",
