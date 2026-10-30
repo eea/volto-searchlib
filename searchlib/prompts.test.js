@@ -1,9 +1,9 @@
 import { systemPrompt, summaryPrompt } from './prompts';
 
-// Contract for the prompts sent to the summary agent. The local intent
-// gate (classifyQueryIntent) already decides which queries may spend an
-// LLM call, so the prompts must not re-do that classification - they only
-// steer how an eligible query is answered.
+// Contract for the prompts sent to the summary agent. The query-intent
+// service already decides which queries may spend an LLM call, so the
+// prompts must not re-do that classification - they only steer how an
+// eligible query is answered.
 describe('AI summary prompts', () => {
   it('keeps the NOT_A_QUESTION refusal token the component checks for', () => {
     expect(summaryPrompt).toContain('NOT_A_QUESTION');

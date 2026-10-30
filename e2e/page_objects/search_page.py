@@ -17,16 +17,18 @@ class SearchPageSelectors:
     AI_SUMMARY_ERROR = ".chatbot-answer .ui.warning.message, .chatbot-answer .error"
     CONTINUE_CONVERSATION_BUTTON = ".continue-conversation-btn"
 
-    # AI Summary preference: in-box opt-out / opt-in (issue 307513)
+    # AI Summary preference: in-box opt-out and recovery (issue 307513)
     AI_SUMMARY_DISABLE_BUTTON = ".chatbot-header .ai-summary-disable-btn"
-    AI_SUMMARY_DISABLED_BOX = ".chatbot-summary-disabled"
-    AI_SUMMARY_ENABLE_BUTTON = ".chatbot-summary-disabled .ai-summary-enable-btn"
+    AI_SUMMARY_ENABLE_BUTTON = ".chatbot-header .ai-summary-enable-btn"
+    AI_SUMMARY_DISABLED_DESCRIPTION = ".chatbot-summary-disabled"
     NO_RESULTS_MESSAGE = ".content-area:has-text('could not find any results')"
 
     # Backend endpoints
     AI_CHAT_ENDPOINT = "/_da/chat/"
     AI_CHAT_SESSION_ENDPOINT = "/_da/chat/create-chat-session"
     AI_CHAT_MESSAGE_ENDPOINT = "/_da/chat/send-chat-message"
+    QUERY_INTENT_ENDPOINT = "/_qi/"
+    QUERY_INTENT_CLASSIFY_ENDPOINT = "/_qi/classify"
     ES_SEARCH_ENDPOINT = "/_search"
 
     # Search results
@@ -48,9 +50,12 @@ class SearchPage:
     def __init__(self, page: Page):
         self.page = page
         self.selectors = SearchPageSelectors
-        # Issue 307513: network-level tracking of LLM and search traffic
+        # Issue 307513: network-level tracking of LLM, intent-classifier
+        # and search traffic
         self.chat_request_urls = []
+        self.classify_request_urls = []
         self.first_chat_request_at = None
+        self.first_classify_request_at = None
         self.es_search_response_times = []
         self.page.on("request", self._on_request)
         self.page.on("response", self._on_response)
@@ -60,6 +65,10 @@ class SearchPage:
             if self.first_chat_request_at is None:
                 self.first_chat_request_at = time.monotonic()
             self.chat_request_urls.append(request.url)
+        if self.selectors.QUERY_INTENT_ENDPOINT in request.url:
+            if self.first_classify_request_at is None:
+                self.first_classify_request_at = time.monotonic()
+            self.classify_request_urls.append(request.url)
 
     def _on_response(self, response):
         if (
@@ -77,16 +86,16 @@ class SearchPage:
         return self.page.locator(self.selectors.AI_SUMMARY_EXPANDED)
 
     @property
-    def ai_summary_disabled_box(self) -> Locator:
-        return self.page.locator(self.selectors.AI_SUMMARY_DISABLED_BOX).first
+    def ai_summary_disable_button(self) -> Locator:
+        return self.page.locator(self.selectors.AI_SUMMARY_DISABLE_BUTTON).first
 
     @property
     def ai_summary_enable_button(self) -> Locator:
         return self.page.locator(self.selectors.AI_SUMMARY_ENABLE_BUTTON).first
 
     @property
-    def ai_summary_disable_button(self) -> Locator:
-        return self.page.locator(self.selectors.AI_SUMMARY_DISABLE_BUTTON).first
+    def ai_summary_disabled_description(self) -> Locator:
+        return self.page.locator(self.selectors.AI_SUMMARY_DISABLED_DESCRIPTION).first
 
     @property
     def continue_conversation_button(self) -> Locator:
