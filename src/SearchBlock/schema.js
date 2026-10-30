@@ -32,6 +32,10 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
             title: 'AI Answer Settings',
             fields: [
               'chatbotAssistant',
+              'continueConversationUrl',
+              'continueConversationLabel',
+              'aiDisclaimer',
+              'aiSummaryDisabledDescription',
               'onyxVersion',
               'useSummarySearchTool',
               'usePredefinedSystemPrompt',
@@ -69,6 +73,41 @@ export const SearchBlockSchema = ({ formData = {}, assistants }) => ({
       title: 'Assistant',
       choices: assistants?.map(({ id, name }) => [id.toString(), name]) || [],
       configPath: 'chatbotAnswer.personaId',
+    },
+
+    continueConversationUrl: {
+      title: 'Continue conversation page',
+      description:
+        'Internal URL of the chatbot page opened in a new tab by the "Continue conversation" button under the AI summary. The search query is passed as a ?query= parameter. Leave empty to hide the button.',
+      widget: 'internal_url',
+      configPath: 'chatbotAnswer.continueConversationUrl',
+    },
+    continueConversationLabel: {
+      title: 'Continue conversation button label',
+      description:
+        'Label of the button under the AI summary that opens the chatbot page. Leave empty to use the default "Continue conversation".',
+      widget: 'textarea',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.continueConversationLabel = value;
+      },
+    },
+    aiDisclaimer: {
+      title: 'AI disclaimer',
+      description:
+        'Text shown in the info (i) modal next to the AI summary. Leave empty to use the default EEA disclaimer.',
+      widget: 'textarea',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.aiDisclaimer = value;
+      },
+    },
+    aiSummaryDisabledDescription: {
+      title: 'Disabled AI summary description',
+      description:
+        'Text shown in the AI summary box when summaries are turned off. Leave empty to use the default explanation.',
+      widget: 'textarea',
+      modifyConfig: (settings, value) => {
+        if (value) settings.chatbotAnswer.aiSummaryDisabledDescription = value;
+      },
     },
     onyxVersion: {
       title: 'Onyx API Version',

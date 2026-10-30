@@ -6,6 +6,11 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
 import '@testing-library/jest-dom';
 
+jest.mock('@plone/volto/components/theme/View/RenderBlocks', () => ({
+  __esModule: true,
+  default: () => <div>Render Blocks</div>,
+}));
+
 const mockStore = configureStore();
 let store;
 const mockData = {
