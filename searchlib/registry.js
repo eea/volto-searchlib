@@ -145,7 +145,9 @@ const config = {
     },
     'Card.Group': {
       component: (props) => (
-        <Card.Group {...props} stackable itemsPerRow={4} doubling />
+        <div className="cardsVisualization">
+          <Card.Group {...props} stackable itemsPerRow={4} doubling />
+        </div>
       ),
     },
     VerticalCardsGroup: {
