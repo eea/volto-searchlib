@@ -87,6 +87,68 @@ tracking are unchanged. Existing feedback analytics is unchanged. The full chatb
 Chatbot/persona categories, separate from this summary context. No manual outlink
 tracking is added alongside Matomo's existing automatic link tracking.
 
+## Upgrade
+
+### Upgrading from 6.x to 7.x
+
+The cards of the search results now use the `UniversalCard` of
+[volto-listing-block](https://github.com/eea/volto-listing-block) 11.x, the
+same card as the Grid layout of the Listing block. The results look like the
+listing cards: the content type and the date in one row above the title, then
+the preview image and the source of the result below.
+
+#### What changed
+
+- `CardItem` renders a `UniversalCard` with a fixed card model (`@type: card`)
+  instead of its own Semantic UI card:
+  - the elements order puts the content type and the date above the title and
+    the preview image below it;
+  - `headTitleBelow` shows the source ("Source: <domain>") below the content,
+    instead of in the metadata row;
+  - the title is limited to 4 lines and the card has a drop shadow;
+  - the description (highlights), the tags, the call to action and the
+    New / Archived labels are not shown anymore.
+- The `Card.Group` of the card view is wrapped in a `div.cardsVisualization`,
+  so the results grid gets the styles of the listing cards.
+- `CardItem` reads the result model (`href`, `title`, `metaTypes`, `issued`,
+  `hasImage`, `thumbUrl`). The `urlField` and `metatypeField` props and
+  `cardViewParams.getThumbnailUrl` are not used by the card anymore: the
+  thumbnail comes from `resultItemModel.getThumbnailUrl`. Results without an
+  image get the placeholder of the listing cards.
+- The card does not render the `.card-item` class anymore.
+
+#### How to upgrade
+
+1. Update the add-ons in your project's `package.json` and run `yarn`. The
+   cards need `@eeacms/volto-listing-block` 11.x:
+
+   ```JSON
+   "dependencies": {
+       "@eeacms/volto-searchlib": "^7.0.0",
+       "@eeacms/volto-listing-block": "^11.0.0"
+   }
+   ```
+
+2. Register the `UniversalCard` in the search app registry, as
+   [volto-globalsearch](https://github.com/eea/volto-globalsearch) does. The
+   horizontal cards already needed it, now the card view needs it too:
+
+   ```js
+   import { UniversalCard } from '@eeacms/volto-listing-block';
+
+   config.resolve.UniversalCard = { component: UniversalCard };
+   ```
+
+3. If your app sets `cardViewParams.getThumbnailUrl`, move it to
+   `resultItemModel.getThumbnailUrl`.
+
+4. Update the CSS customizations that target `.card-item` (e.g.
+   `.ui.card.card-item`), they don't match the new cards. Style the listing
+   cards inside `.cardsVisualization` instead.
+
+5. Check the search pages in the card view: the content type, the date, the
+   preview image and the source of the results.
+
 ## Getting started
 
 ### Try volto-searchlib with Docker
