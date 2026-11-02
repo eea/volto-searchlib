@@ -119,17 +119,18 @@ the preview image and the source of the result below.
 
 #### How to upgrade
 
-1. Update the add-on in your project's `package.json` and run `yarn`:
+1. Update the add-ons in your project's `package.json` and run `yarn`. The
+   cards need `@eeacms/volto-listing-block` 11.x:
 
    ```JSON
    "dependencies": {
-       "@eeacms/volto-searchlib": "^7.0.0"
+       "@eeacms/volto-searchlib": "^7.0.0",
+       "@eeacms/volto-listing-block": "^11.0.0"
    }
    ```
 
-   volto-searchlib now depends on `@eeacms/volto-listing-block` `^11.0.0` and
-   loads it as an add-on. If your project pins volto-listing-block to an
-   older version, update it to 11.x.
+   volto-searchlib depends on `@eeacms/volto-listing-block` `^11.0.0` and
+   loads it as an add-on.
 
 2. Register the `UniversalCard` in the search app registry, as
    [volto-globalsearch](https://github.com/eea/volto-globalsearch) does. The
