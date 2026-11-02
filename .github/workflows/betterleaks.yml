@@ -28,7 +28,11 @@ jobs:
         continue-on-error: true
         uses: dortort/betterleaks-action@v0.1.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # The betterleaks GitHub org has an IP allow list that rejects
+          # token-authenticated requests from the runners: pin the version
+          # and download the public release anonymously
+          version: v1.9.0
+          github-token: ""
           scan-mode: dir
           scan-path: .
           config: .gitleaks.toml
