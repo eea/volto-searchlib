@@ -35,6 +35,58 @@ The `RAZZLE_` prefix has been removed from the Elasticsearch middleware environm
 - `RAZZLE_PROXY_ES_DSN` → `PROXY_ES_DSN`
 - `RAZZLE_PROXY_ES_DSN_${appName}` → `PROXY_ES_DSN_${appName}`
 
+### Query intent service middleware
+
+When AI summaries are enabled on a search block, the frontend asks a
+query-intent classifier service whether a search term warrants an AI
+summary before any LLM call. The browser only ever calls the same-origin
+proxy paths `POST /_qi/classify` and `GET /_qi/health`;
+the middleware forwards them to the service configured with the env var:
+
+- `QUERY_INTENT_SERVICE_URL` — the service **origin only**
+  (e.g. `http://eea-query-intent:8100`). The middleware appends
+  `/v1/classify` and `/health` itself, so a value with a path prefix
+  will not work. When unset, `/_qi/classify` returns 503 and the
+  search page works normally without AI summaries (fail closed).
+- `QUERY_INTENT_TIMEOUT_MS` — optional upstream request timeout in
+  milliseconds (default `2000`); invalid values fall back to the
+  default. The browser client gives up after 2000 ms regardless.
+
+Note: the `/_qi/*` proxy routes only exist in the SSR Node process
+(`src/index.js`, `__SERVER__` block). A static export has no proxy, so
+the AI summary fails closed on such deployments. Upstream error details
+stay in the server log; the browser only receives fixed error messages.
+
+### AI Summary analytics
+
+With `enableMatomoTracking` enabled, AI Summary uses `trackEvent` from
+`@eeacms/volto-matomo/utils` with category **Search - AI summary**:
+
+| Action | When counted |
+| --- | --- |
+| `Summary enabled` / `Summary disabled` | Explicit in-box button activation, not preference synchronization |
+| `Response copied` | Clipboard write succeeds |
+| `Sources opened` | The cited-document area is expanded, not collapsed |
+| `Source clicked` | A cited-document link is activated |
+| `"Continue conversation" clicked` | The continuation link is activated (primary or middle button), not destination-page load |
+| `Summary displayed` | Completed, fully rendered answer enters the viewport |
+| `Disabled box displayed` | Disabled explanation enters the viewport after a search completes |
+| `Disclaimer opened` | The AI disclosure dialog is opened |
+
+A view requires at least 1% of the respective content to intersect the viewport.
+Each summary/disabled state is counted once per completed search, not on rerenders,
+scrolling back into view, or toggling the same state again. Browsers without
+`IntersectionObserver` omit view events rather than treating renders as views.
+Exposure events supply denominators for feature-usage analysis; raw click/view
+ratios are not unique-user percentages. Use Matomo visitor/visit reporting for
+people-based percentages, accounting for consent and tracking opt-out.
+
+The added event fields do not include queries, answer text, document URLs, or
+message IDs. Matomo's standard page URL/title context and existing site-search
+tracking are unchanged. Existing feedback analytics is unchanged. The full chatbot retains its own
+Chatbot/persona categories, separate from this summary context. No manual outlink
+tracking is added alongside Matomo's existing automatic link tracking.
+
 ## Getting started
 
 ### Try volto-searchlib with Docker

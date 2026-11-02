@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import cx from 'classnames';
+import { trackEvent } from '@eeacms/volto-matomo/utils';
 import {
   Message,
   Icon,
@@ -25,8 +26,10 @@ import {
   useAISummaryToggle,
   writeAISummaryEnabled,
 } from '../../lib/aiSummaryToggle';
-import { classifyQueryIntent } from './classifyQueryIntent';
+import { classifyQuery } from '../../lib/queryIntent';
 import { getSummarySources } from './summarySources';
+import useSummaryExposure from './useSummaryExposure';
+import { MATOMO_CATEGORY } from './constants';
 import infoSVG from '@plone/volto/icons/info.svg';
 import closeSVG from '@plone/volto/icons/clear.svg';
 import searchAssistSVG from '@eeacms/search/components/SearchInput/icons/search-assist.svg';
@@ -81,6 +84,11 @@ const ChatbotAnswer = () => {
     useSearchAssist();
 
   const [aiSummaryEnabled] = useAISummaryToggle();
+  // Preserve the disabled box through the next re-enable's eligibility check.
+  // Set this while disabled so even the first enabled render stays expanded.
+  const [keepSummaryBoxOpen, setKeepSummaryBoxOpen] =
+    useState(!aiSummaryEnabled);
+  const isPreparingSummary = aiSummaryEnabled && keepSummaryBoxOpen;
 
   // Internal states
   const [summary, setSummary] = useState(null);
@@ -93,6 +101,10 @@ const ChatbotAnswer = () => {
 
   const abort = useRef(null);
   const lastQuery = useRef('');
+  // In-flight query-intent classification request: aborting it (and
+  // bumping the sequence) invalidates any stale response.
+  const intentAbort = useRef(null);
+  const intentSeq = useRef(0);
 
   const { chatbotAnswer = {}, enableMatomoTracking } = appConfig;
   const {
@@ -104,16 +116,11 @@ const ChatbotAnswer = () => {
     usePredefinedSystemPrompt,
     onyxVersion = '2',
     minResults = 1,
-    minClaimWords = 4,
-    maxQueryWords = 20,
     continueConversationUrl,
+    continueConversationLabel: continueConversationButtonText,
+    aiDisclaimer: disclaimerText,
+    aiSummaryDisabledDescription: disabledDescriptionText,
   } = chatbotAnswer;
-
-  // Intent classifier thresholds, configurable per search block.
-  const intentOptions = useMemo(
-    () => ({ minimumClaimWords: minClaimWords, maxQueryWords }),
-    [minClaimWords, maxQueryWords],
-  );
 
   const summaryMessageId = useRef(null);
 
@@ -124,16 +131,35 @@ const ChatbotAnswer = () => {
   );
 
   const isRendering = summary?.isFinalMessageComing && !isSummaryDisplayed;
+  const showLoadingPlaceholder =
+    aiSummaryEnabled &&
+    (isPreparingSummary || isLoadingSummary) &&
+    !summary?.isFinalMessageComing;
+  const showSummary =
+    aiSummaryEnabled && !summaryError && summary?.isFinalMessageComing;
 
-  // Disabled state: when AI summaries are turned off, intent-eligible
-  // questions still show the box with an opt-in control (no LLM call).
+  // When summaries are off, keep the explanation and re-enable control
+  // visible without making classification or LLM requests.
   const term = resultSearchTerm || '';
-  const showDisabledBox =
-    !aiSummaryEnabled &&
-    !isLoading &&
-    !!term &&
-    classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
-    (totalResults ?? 0) >= minResults;
+
+  const exposureAction = !aiSummaryEnabled
+    ? 'Disabled box displayed'
+    : showSummary && isSummaryDisplayed && summary?.isComplete
+      ? 'Summary displayed'
+      : null;
+  const exposureRef = useSummaryExposure({
+    enabled: enableMatomoTracking,
+    searchTerm: term,
+    isLoading,
+    action: exposureAction,
+    exposureKey: aiSummaryEnabled ? 'summary' : 'disabled',
+  });
+
+  const trackSummaryAction = (action) => {
+    if (enableMatomoTracking) {
+      trackEvent({ category: MATOMO_CATEGORY, action });
+    }
+  };
 
   // "Continue conversation" target: the configured chatbot page seeded
   // with the question the summary was generated from, opened in a new tab.
@@ -159,6 +185,10 @@ const ChatbotAnswer = () => {
       abort.current.abort();
     }
     lastQuery.current = '';
+    // Invalidate any in-flight intent classification so its (stale)
+    // response can never start a summary for a superseded search.
+    intentSeq.current += 1;
+    intentAbort.current?.abort();
     setSummary(null);
     setSummaryError(null);
     setSourcesOpen(false);
@@ -188,13 +218,23 @@ const ChatbotAnswer = () => {
       if (abort.current) {
         abort.current.abort();
       }
-      abort.current = new AbortController();
+      const controller = new AbortController();
+      abort.current = controller;
 
       onLoad?.();
 
       try {
         if (!sessionId) {
           sessionId = await createChatSession(personaId, sessionDescription);
+        }
+
+        // A newer run (new search, reset, or unmount) replaced the
+        // controller while we awaited: stop here so this stale stream
+        // can never pump packets into the replacement's state or use
+        // the replacement's live signal.
+        if (abort.current !== controller) {
+          controller.abort();
+          return;
         }
 
         const processor = new MessageProcessor(1, null);
@@ -204,7 +244,7 @@ const ChatbotAnswer = () => {
           message: query,
           chatSessionId: sessionId,
           parentMessageId: parentMessageId || null,
-          signal: abort.current.signal,
+          signal: controller.signal,
           onyxVersion,
         })) {
           processor.addPackets(packets);
@@ -298,14 +338,52 @@ const ChatbotAnswer = () => {
     ],
   );
 
+  // Ask the query-intent service whether this search term warrants an
+  // AI summary, and start generating one if it does. The service is the
+  // pre-LLM intent gate: keywords, document retrieval and short phrases
+  // must not trigger any chatbot call. Any classification failure
+  // (timeout, service error, abstention) fails closed: the summary is
+  // skipped and the search results are unaffected.
+  const classifyAndFetch = useCallback(
+    async (term) => {
+      intentSeq.current += 1;
+      const seq = intentSeq.current;
+      intentAbort.current?.abort();
+      const controller = new AbortController();
+      intentAbort.current = controller;
+
+      try {
+        const { eligible } = await classifyQuery(term, {
+          signal: controller.signal,
+        });
+        // Stale response: a newer search (or a reset) superseded this
+        // classification while it was in flight.
+        if (seq !== intentSeq.current) return;
+        if (eligible) {
+          fetchSummary(term);
+        }
+      } catch (err) {
+        // classifyQuery never throws (it fails closed); keep the
+        // boundary honest just in case.
+        // eslint-disable-next-line no-console
+        console.error('query intent classification failed', err);
+      } finally {
+        // An older classification must not clear a newer re-enable's pending UI.
+        if (seq === intentSeq.current) setKeepSummaryBoxOpen(false);
+      }
+    },
+    [fetchSummary],
+  );
+
   // When the AI summary is turned off (via the in-box opt-out), stop
   // any in-flight generation and clear the summary so no LLM request
-  // is in flight or displayed. The box then shows the opt-in state.
-  // When it is turned back on, re-evaluate the current search term so
-  // the summary is generated for the active question. Declared before
-  // the results-first trigger so the re-enable reset wins the render.
+  // is in flight or displayed. When it is turned back on, re-evaluate
+  // the current search term so the summary is generated for the active
+  // question. Declared before the results-first trigger so the
+  // re-enable reset wins the render.
   useEffect(() => {
     if (!aiSummaryEnabled) {
+      setKeepSummaryBoxOpen(true);
       resetState();
     } else {
       lastQuery.current = '';
@@ -316,40 +394,48 @@ const ChatbotAnswer = () => {
   // Elasticsearch search has finished, so results render immediately
   // and the summary stays a purely progressive enhancement. A search
   // that returned too few results (default: zero) must not spend an
-  // LLM call.
+  // LLM call, and no intent-classification request is made while AI
+  // summaries are turned off.
   useEffect(() => {
     if (isLoading) return;
     const term = resultSearchTerm;
     if (term && term !== lastQuery.current) {
-      lastQuery.current = term;
-      // Pre-LLM intent gate: only natural-language questions, exploratory
-      // queries and claims warrant an AI summary. Keywords, document
-      // retrieval and short phrases must not trigger any chatbot call.
-      if (
-        classifyQueryIntent(term, intentOptions).shouldGenerateAI &&
-        aiSummaryEnabled &&
-        (totalResults ?? 0) >= minResults
-      ) {
-        fetchSummary(term);
-      }
-    } else if (!term && lastQuery.current) {
-      // Search completed with empty query (clear button pressed)
+      // A new search supersedes any previous summary: abort the
+      // in-flight stream (if any) and clear the box.
       resetState();
+      lastQuery.current = term;
+      if (aiSummaryEnabled && (totalResults ?? 0) >= minResults) {
+        classifyAndFetch(term);
+      } else if (aiSummaryEnabled) {
+        setKeepSummaryBoxOpen(false);
+      }
+    } else if (!term) {
+      // Search completed with empty query (clear button pressed).
+      if (lastQuery.current) resetState();
+      if (aiSummaryEnabled) setKeepSummaryBoxOpen(false);
     }
   }, [
     resultSearchTerm,
     isLoading,
     totalResults,
     minResults,
+    classifyAndFetch,
     fetchSummary,
     resetState,
     aiSummaryEnabled,
-    intentOptions,
   ]);
 
-  // Cleanup on unmount
+  // Cleanup on unmount: abort both the LLM stream and any in-flight
+  // intent classification so a late "eligible" answer can never start
+  // a summary (and an LLM session) for an unmounted component. The
+  // sequence bump also invalidates a classification that already
+  // resolved but whose continuation has not run yet.
   useEffect(() => {
-    return () => abort.current?.abort();
+    return () => {
+      intentSeq.current += 1;
+      abort.current?.abort();
+      intentAbort.current?.abort();
+    };
   }, []);
 
   return (
@@ -359,16 +445,19 @@ const ChatbotAnswer = () => {
         // to the final rendered summary: the summary must fill the box
         // where the loading skeletons were, without a collapse/re-expand.
         expanded:
+          !aiSummaryEnabled ||
+          isPreparingSummary ||
           isLoadingSummary ||
           summary?.isFinalMessageComing ||
-          (isQuestion && !!summary) ||
-          showDisabledBox,
+          (isQuestion && !!summary),
       })}
     >
       <div className="chatbot-answer-collapse">
         <div
           className={cx('chatbot-answer', {
-            loading: isLoadingSummary || isRendering,
+            loading:
+              aiSummaryEnabled &&
+              (isPreparingSummary || isLoadingSummary || isRendering),
           })}
         >
           <div className="chatbot-header">
@@ -377,16 +466,23 @@ const ChatbotAnswer = () => {
               <span className="label">AI Summary</span>
             </div>
             <div className="chatbot-header-right">
-              {aiSummaryEnabled && (
-                <button
-                  type="button"
-                  className="ai-summary-disable-btn"
-                  onClick={() => writeAISummaryEnabled(false)}
-                >
-                  Disable AI summary
-                </button>
-              )}
-              {aiSummaryEnabled && (
+              <button
+                type="button"
+                className={
+                  aiSummaryEnabled
+                    ? 'ai-summary-disable-btn'
+                    : 'ai-summary-enable-btn'
+                }
+                onClick={() => {
+                  writeAISummaryEnabled(!aiSummaryEnabled);
+                  trackSummaryAction(
+                    aiSummaryEnabled ? 'Summary disabled' : 'Summary enabled',
+                  );
+                }}
+              >
+                {aiSummaryEnabled ? 'Disable AI summary' : 'Enable AI summary'}
+              </button>
+              {aiSummaryEnabled && isSummaryDisplayed && summary?.messageId && (
                 <UserActionsToolbar
                   className={cx({
                     disabled: isLoadingSummary || isRendering,
@@ -398,6 +494,7 @@ const ChatbotAnswer = () => {
                   enableFeedback={enableFeedback}
                   feedbackReasons={chatbotAnswer.feedbackReasons || []}
                   enableMatomoTracking={enableMatomoTracking}
+                  matomoCategory={MATOMO_CATEGORY}
                   persona={persona}
                 />
               )}
@@ -405,7 +502,10 @@ const ChatbotAnswer = () => {
                 <Modal
                   className="chatbot-disclaimer-modal"
                   open={disclaimerOpen}
-                  onOpen={() => setDisclaimerOpen(true)}
+                  onOpen={() => {
+                    setDisclaimerOpen(true);
+                    trackSummaryAction('Disclaimer opened');
+                  }}
                   onClose={() => setDisclaimerOpen(false)}
                   trigger={
                     <button className="icon-btn outline">
@@ -423,20 +523,20 @@ const ChatbotAnswer = () => {
                     </button>
                   </ModalHeader>
                   <ModalContent>
-                    <p>
-                      This response was generated by artificial intelligence
-                      based on EEA's authoritative data and sources, but may not
-                      be exhaustive. We encourage users to double-check facts
-                      and consult additional sources for critical decisions or
-                      detailed research.
-                    </p>
+                    <p>{disclaimerText}</p>
                   </ModalContent>
                 </Modal>
               )}
             </div>
           </div>
 
-          {isLoadingSummary && !summary?.isFinalMessageComing && (
+          {!aiSummaryEnabled && (
+            <p className="chatbot-summary-disabled" ref={exposureRef}>
+              {disabledDescriptionText}
+            </p>
+          )}
+
+          {showLoadingPlaceholder && (
             <div
               className="chatbot-summary-loading"
               role="status"
@@ -448,20 +548,7 @@ const ChatbotAnswer = () => {
             </div>
           )}
 
-          {showDisabledBox && (
-            <div className="chatbot-summary-disabled">
-              <p>AI summaries are turned off.</p>
-              <button
-                type="button"
-                className="ai-summary-enable-btn"
-                onClick={() => writeAISummaryEnabled(true)}
-              >
-                Enable AI summary
-              </button>
-            </div>
-          )}
-
-          {summaryError && (
+          {aiSummaryEnabled && summaryError && (
             <Message icon warning size="small">
               <Icon name="exclamation circle" />
               <Message.Content>
@@ -470,9 +557,9 @@ const ChatbotAnswer = () => {
             </Message>
           )}
 
-          {!summaryError && summary?.isFinalMessageComing && (
+          {showSummary && (
             <div className="chatbot-summary">
-              <div className="chatbot-summary-content">
+              <div className="chatbot-summary-content" ref={exposureRef}>
                 <Answer
                   message={summary}
                   animate={!isSummaryDisplayed}
@@ -486,7 +573,10 @@ const ChatbotAnswer = () => {
                     className="chatbot-sources-toggle"
                     aria-expanded={sourcesOpen}
                     aria-controls="chatbot-sources-list"
-                    onClick={() => setSourcesOpen((open) => !open)}
+                    onClick={() => {
+                      if (!sourcesOpen) trackSummaryAction('Sources opened');
+                      setSourcesOpen((open) => !open);
+                    }}
                   >
                     <span>
                       Generated from {summarySources.length} EEA{' '}
@@ -504,6 +594,13 @@ const ChatbotAnswer = () => {
                           {source.link ? (
                             <a
                               className="source-link"
+                              onClick={() =>
+                                trackSummaryAction('Source clicked')
+                              }
+                              onAuxClick={(event) => {
+                                if (event.button === 1)
+                                  trackSummaryAction('Source clicked');
+                              }}
                               href={source.link}
                               target="_blank"
                               rel="noreferrer"
@@ -526,11 +623,18 @@ const ChatbotAnswer = () => {
                 <div className="chatbot-delimiter">
                   <a
                     className="continue-conversation-btn"
+                    onClick={() =>
+                      trackSummaryAction('"Continue conversation" clicked')
+                    }
+                    onAuxClick={(event) => {
+                      if (event.button === 1)
+                        trackSummaryAction('"Continue conversation" clicked');
+                    }}
                     href={continueConversationHref}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>Continue conversation</span>{' '}
+                    <span>{continueConversationButtonText}</span>{' '}
                     <Icon name="arrow right" />
                   </a>
                 </div>
