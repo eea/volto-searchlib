@@ -46,7 +46,7 @@ describe('aiSummaryToggle', () => {
     });
 
     it('dispatches the toggle event with the new value', () => {
-      const listener = jest.fn();
+      const listener = vi.fn();
       window.addEventListener(AI_SUMMARY_TOGGLE_EVENT, listener);
       try {
         writeAISummaryEnabled(false);

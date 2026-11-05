@@ -103,9 +103,9 @@ class TestAISummaryGating:
     def test_disabled_preference_prevents_llm_calls_and_persists(
         self, search_page: SearchPage
     ):
-        """AI summaries off: no LLM request even for a question, the box
-        shows the opt-in state, and the preference persists across
-        reloads (FR 2)."""
+        """AI summaries off: no intent-classification or LLM request even
+        for a question, the opt-in box stays visible, and the preference
+        persists across reloads (FR 2)."""
         query = "How does climate change affect biodiversity?"
         print(f"\nTesting disabled AI summary with question: '{query}'")
         search_page.set_ai_summary_toggle(False)
@@ -116,15 +116,23 @@ class TestAISummaryGating:
             f"No LLM calls expected with AI summaries off, got: "
             f"{search_page.chat_request_urls}"
         )
-        # The question is intent-eligible, so the box stays visible in its
-        # disabled state with the opt-in button.
-        expect(search_page.ai_summary_disabled_box).to_be_visible()
+        assert not search_page.classify_request_urls, (
+            f"No intent-classification calls expected with AI summaries "
+            f"off, got: {search_page.classify_request_urls}"
+        )
+        # The disabled state explains the feature and offers recovery.
+        expect(search_page.ai_summary_expanded).to_be_visible()
         expect(search_page.ai_summary_enable_button).to_be_visible()
+        expect(search_page.ai_summary_disabled_description).to_contain_text(
+            "AI-generated overview of relevant EEA content"
+        )
+        expect(search_page.ai_summary_content).to_be_hidden()
 
-        # The preference must survive a page reload.
+        # The preference and recovery control must survive a page reload.
         search_page.page.reload()
         search_page.search_input.wait_for(state="visible")
-        expect(search_page.ai_summary_disabled_box).to_be_visible(timeout=30000)
+        expect(search_page.ai_summary_expanded).to_be_visible()
+        expect(search_page.ai_summary_enable_button).to_be_visible()
         stored = search_page.page.evaluate(
             f"() => localStorage.getItem('{SearchPage.AI_SUMMARY_STORAGE_KEY}')"
         )
@@ -133,13 +141,17 @@ class TestAISummaryGating:
             f"No LLM calls expected after reload, got: "
             f"{search_page.chat_request_urls}"
         )
-        print("Disabled preference persisted across reload, no LLM calls observed.")
+        assert not search_page.classify_request_urls, (
+            f"No intent-classification calls expected after reload, got: "
+            f"{search_page.classify_request_urls}"
+        )
+        print("Disabled preference persisted across reload, no AI calls observed.")
 
-    def test_in_box_opt_out_stops_llm_calls_and_shows_opt_in(
+    def test_in_box_opt_out_stops_llm_calls_and_can_be_reenabled(
         self, search_page: SearchPage
     ):
-        """The opt-out in the summary box stops the LLM, persists the
-        preference and flips the box to its opt-in state."""
+        """Opting out stops the LLM and persists the preference, while
+        keeping a visible control to re-enable it for a later search."""
         query = "How does climate change affect biodiversity?"
         print(f"\nTesting in-box opt-out with question: '{query}'")
         search_page.search(query)
@@ -156,8 +168,11 @@ class TestAISummaryGating:
         search_page.ai_summary_disable_button.click()
         print("Clicked the in-box opt-out.")
 
-        expect(search_page.ai_summary_disabled_box).to_be_visible()
+        # The summary disappears, but the explanation and opt-in remain.
+        expect(search_page.ai_summary_expanded).to_be_visible()
+        expect(search_page.ai_summary_content).to_be_hidden(timeout=30000)
         expect(search_page.ai_summary_enable_button).to_be_visible()
+        expect(search_page.ai_summary_disabled_description).to_be_visible()
         stored = search_page.page.evaluate(
             f"() => localStorage.getItem('{SearchPage.AI_SUMMARY_STORAGE_KEY}')"
         )
@@ -169,7 +184,59 @@ class TestAISummaryGating:
             f"No LLM calls expected after the opt-out, got new: "
             f"{search_page.chat_request_urls[calls_before:]}"
         )
-        print("Opt-out persisted, box shows the opt-in state, no new LLM calls.")
+        # A subsequent search must retain the control without AI traffic.
+        classifications_before = len(search_page.classify_request_urls)
+        next_query = "What are the main sources of air pollution in Europe?"
+        search_page.search(next_query)
+        expect(search_page.ai_summary_enable_button).to_be_visible()
+        search_page.wait_for_chat_quiescence(CHAT_GRACE_MS)
+        assert len(search_page.chat_request_urls) == calls_before
+        assert len(search_page.classify_request_urls) == classifications_before
+
+        # Re-enable through the visible button: evaluate the current query.
+        search_page.chat_request_urls.clear()
+        search_page.classify_request_urls.clear()
+        search_page.ai_summary_enable_button.click()
+        search_page.wait_for_chat_request(
+            SearchPageSelectors.AI_CHAT_SESSION_ENDPOINT
+        )
+        search_page.wait_for_chat_request(
+            SearchPageSelectors.AI_CHAT_MESSAGE_ENDPOINT
+        )
+        expect(search_page.ai_summary_disable_button).to_be_visible()
+        expect(search_page.ai_summary_disabled_description).to_be_hidden()
+        stored = search_page.page.evaluate(
+            f"() => localStorage.getItem('{SearchPage.AI_SUMMARY_STORAGE_KEY}')"
+        )
+        assert stored == "1", f"Re-enabled preference not persisted: {stored!r}"
+        print("Opt-out persisted and re-enabling restarted AI for the current query.")
+
+    def test_search_still_works_when_query_intent_service_unavailable(
+        self, search_page: SearchPage
+    ):
+        """If the query-intent classifier is unreachable, the search page
+        stays fully functional and no LLM call is made (fail closed)."""
+        query = "How does climate change affect biodiversity?"
+        print(f"\nTesting query-intent failure path for: '{query}'")
+        search_page.page.route("**/_qi/**", lambda route: route.abort())
+
+        search_page.search(query)
+        expect(search_page.result_items.first).to_be_visible()
+        print("Results visible despite the classifier failure.")
+
+        search_page.wait_for_chat_quiescence(CHAT_GRACE_MS)
+        expect(search_page.ai_summary_expanded).to_be_hidden()
+        # The intent gate must have actually been consulted: without
+        # this the test would also pass if intent gating were disabled.
+        assert search_page.classify_request_urls, (
+            "Expected the page to attempt an intent-classification call, "
+            "got none — is intent gating disabled?"
+        )
+        assert not search_page.chat_request_urls, (
+            "No LLM calls expected when the classifier is unavailable, got: "
+            f"{search_page.chat_request_urls}"
+        )
+        print("No AI summary, search remains functional.")
 
     def test_results_render_before_first_llm_call(self, search_page: SearchPage):
         """The first LLM request must not start before the Elasticsearch
@@ -190,6 +257,15 @@ class TestAISummaryGating:
         print(f"ES response at {es_at:.3f}s, first LLM request at {chat_at:.3f}s")
         assert chat_at >= es_at - 0.25, (
             "LLM request started before the search results were available"
+        )
+
+        # The intent classification itself must also start only after the
+        # Elasticsearch response — the gate runs on completed results.
+        classify_at = search_page.first_classify_request_at
+        assert classify_at is not None, "No intent-classification request observed"
+        print(f"first classify request at {classify_at:.3f}s")
+        assert classify_at >= es_at - 0.25, (
+            "Intent classification started before the search results were available"
         )
 
     def test_search_still_works_when_ai_fails(self, search_page: SearchPage):
