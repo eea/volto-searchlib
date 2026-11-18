@@ -145,7 +145,11 @@ export const FilterAsideContentView = (props) => {
           <ChatbotAnswer />
         )}
 
-        {<ResultViewComponent>{children}</ResultViewComponent>}
+        {ResultViewComponent ? (
+          <ResultViewComponent>{children}</ResultViewComponent>
+        ) : (
+          children
+        )}
 
         {children.length > 0 && (
           <div className="search-body-footer">
