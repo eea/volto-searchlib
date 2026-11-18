@@ -5,6 +5,8 @@ import {
   useAppConfig,
 } from '@eeacms/search/lib/hocs';
 
+const NoItem = () => null;
+
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
   const { registry } = useAppConfig();
@@ -17,7 +19,9 @@ export const BodyContent = (props) => {
   const itemViewProps = appConfig[`${activeViewId}ViewParams`];
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
 
-  const Item = registry.resolve[listingViewDef?.factories?.item]?.component;
+  // an unknown item factory renders no item instead of crashing the view
+  const Item =
+    registry.resolve[listingViewDef?.factories?.item]?.component || NoItem;
 
   const NoResultsComponent =
     appConfig.noResultsView?.factory &&

@@ -3,6 +3,8 @@ import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 import { getDefaultFilters } from '@eeacms/search/lib/utils';
 
 import BasicSearchApp from './BasicSearchApp';
+
+const NoItem = () => null;
 // import useWhyDidYouUpdate from '@eeacms/search/lib/hocs/useWhyDidYouUpdate';
 
 function BootstrapSearchResultsView(props) {
@@ -16,7 +18,9 @@ function BootstrapSearchResultsView(props) {
   const itemViewProps = appConfig[`${activeViewId}ViewParams`];
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
 
-  const Item = registry.resolve[listingViewDef?.factories?.item]?.component;
+  // an unknown item factory renders no item instead of crashing the view
+  const Item =
+    registry.resolve[listingViewDef?.factories?.item]?.component || NoItem;
 
   const NoResultsComponent =
     appConfig.noResultsView?.factory &&
