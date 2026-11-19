@@ -79,6 +79,32 @@ tracking is added alongside Matomo's existing automatic link tracking.
 
 ## Upgrade
 
+### Upgrading from 7.x to 8.x
+
+> This version requires `Volto 18` or `Volto 19` and Node.js 22.
+
+No API change: the extension points, the facet widget ids, the templates and the stored block data are
+the same as 7.x, so an upgrade renders the same search app. The release adds Volto 19 support and
+moves the repository to the Volto 19 layout, where the published package lives in
+`packages/volto-searchlib`, with the library next to it in `packages/volto-searchlib/searchlib`.
+
+#### Fixes
+
+- `MoreLikeThisEntry`, `Icon` and `SearchInput` render images through Volto's
+  `@plone/volto/components/theme/Image` instead of the Semantic UI `Image`, so Volto's image scaling
+  and the `picture` handling apply to search results and to icons served from a repository.
+- The Elasticsearch middleware always answers the client. When the upstream call comes back without a
+  response, it now returns `502` with an error body instead of leaving the request open until it
+  times out.
+
+#### Breaking changes
+
+- **Node.js 22 or newer is required** (`engines.node >= 22`), 7.x declared no engine.
+- **React 18 is required.** The package declares `react` and `react-dom` as `^18.2.0` peers, 7.x
+  declared no peers.
+- **The package no longer ships the repository tooling.** The Cypress specs and the Jest setup are
+  gone and the unit tests moved to Vitest next to the add-on, so nothing a site imports was removed.
+
 ### Upgrading from 6.x to 7.x
 
 The cards of the search results now use the `UniversalCard` of
