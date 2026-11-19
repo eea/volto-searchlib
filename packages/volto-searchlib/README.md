@@ -90,9 +90,10 @@ moves the repository to the Volto 19 layout, where the published package lives i
 
 #### Fixes
 
-- `MoreLikeThisEntry`, `Icon` and `SearchInput` render images through Volto's
-  `@plone/volto/components/theme/Image` instead of the Semantic UI `Image`, so Volto's image scaling
-  and the `picture` handling apply to search results and to icons served from a repository.
+- `Icon` and `SearchInput` render images through Volto's `@plone/volto/components/theme/Image`
+  instead of the Semantic UI `Image`, so Volto's image handling applies to repository icons and to
+  the search input. `MoreLikeThisEntry` keeps the Semantic UI `Image`, because its thumbnail is a
+  link: Volto's `Image` renders an `<img>` and would drop the `as`/`href` wrapper.
 - The Elasticsearch middleware always answers the client. When the upstream call comes back without a
   response, it now returns `502` with an error body instead of leaving the request open until it
   times out.
